@@ -1,0 +1,8 @@
+.text-right {
+  text-align: right;
+}
+
+.home__options--item {
+  background-color: lightgray;
+  margin: 1rem;
+}
