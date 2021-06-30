@@ -1,0 +1,27 @@
+.header {
+  background-color: #000 ;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+}
+
+.notification__button {
+  margin: 10px;
+  color: white;
+}
+
+.toggle__button {
+  margin: 10px;
+  color: #F6DD06;
+}
+
+.profile__options {
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+}
+
+.profile__options:hover {
+  color: #F6DD06;
+  cursor: pointer;
+}
