@@ -1,8 +1,42 @@
-<div>
-  <button mat-button>click me</button>
+<div class="home__wrapper">
+  <mat-drawer-container class="example-container mat-typography" autosize>
+    <mat-drawer #drawer mode="side" disableClose="true" opened="true">
+      <mat-nav-list class="nav__list">
+        <figure class="logo__expanded" routerLink="/home" >
+          <img src="../../../assets/logo.png" width="200px" alt="">
+        </figure>
+<!--        <figure class="w-75 text-end" *ngIf="!isExpanded">-->
+<!--          <img src="../../../assets/logo.png" width="200px" alt="">-->
+<!--        </figure>-->
+        <figure class="avatar">
+          <img src="../../../assets/example-user.png" alt="">
+        </figure>
+        <mat-list-item routerLink="/profile" class="sidenav__item">
+          <mat-icon mat-list-icon>person</mat-icon>
+          <h4 mat-line *ngIf="isExpanded">Editar Perfil</h4>
+        </mat-list-item>
+        <mat-list-item [ngClass]="{'nav__list--item--padding': isExpanded}"   class="sidenav__item">
+          <mat-icon mat-list-icon>business_center</mat-icon>
+          <h4 mat-line *ngIf="isExpanded">Quinielas</h4>
+        </mat-list-item>
+        <mat-list-item routerLink="/calendar" class="sidenav__item">
+          <mat-icon mat-list-icon>calendar_today</mat-icon>
+          <h4 mat-line *ngIf="isExpanded">Calendario</h4>
+        </mat-list-item>
+        <mat-list-item>
+          <mat-icon mat-list-icon>folder_shared</mat-icon>
+          <h4 mat-line *ngIf="isExpanded">Management X</h4>
+        </mat-list-item>
+      </mat-nav-list>
+    </mat-drawer>
+  </mat-drawer-container>
+
   <main>
-    <p>header works</p>
+    <app-header
+      (toggleValue)="toggleValue($event)"
+    ></app-header>
     <router-outlet></router-outlet>
-    <p>footer works</p>
+    <div>footer</div>
   </main>
+
 </div>
