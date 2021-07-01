@@ -1,0 +1,130 @@
+.login__wrapper {
+  background-image: url("../../../../assets/login-cover.png");
+  background-repeat: no-repeat;
+  background-size: cover;
+  /*background-attachment: fixed;*/
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.login__form {
+  max-width: 30rem;
+  max-height: 27rem;
+  padding: 2rem;
+  background-color: white;
+  border-radius: 15px;
+  /*height: 100%;*/
+  margin-bottom: 2rem;
+}
+
+.login__logo {
+  max-width: 65rem;
+}
+
+.login__form--input {
+  width: 100%;
+}
+
+.login__register--button {
+  background-color: black;
+  /*border: 1px solid #F6DD06;*/
+  color: #F6DD06;
+}
+
+.login__button {
+  background-color: #F6DD06;
+  color: black;
+  font-size: 20px;
+  padding: 0.5rem 4rem;
+}
+
+.forgot__password {
+  font-weight: bold;
+  font-size: 16px;
+  margin: 0 0 1rem 0;
+}
+
+.forgot__password:hover {
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.no__account {
+  font-size: 36px;
+  margin: 2rem 0;
+}
+
+.footer {
+  color: white;
+  background-color: black;
+  padding: 1rem 0;
+  border-top: 3px solid #F6DD06;
+  display: flex;
+  justify-content: center;
+}
+
+.footer__options {
+  max-width: 35rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.social__media--icon {
+  width: 40px;
+  margin: 0 0.5rem;
+}
+
+.email {
+  color: #F6DD06;
+  text-decoration: none;
+  font-size:24px;
+  padding: 0.5rem;
+}
+
+.email:hover {
+  background-color: #F6DD06;
+  color: black;
+  border-radius: 15px;
+}
+
+
+
+@media (max-width: 1200px ) {
+  .login__logo {
+    max-width: 60rem;
+  }
+}
+
+@media (max-width: 968px ) {
+  .login__logo {
+    max-width: 50rem;
+  }
+}
+
+@media (max-width: 770px ) {
+  .login__logo {
+    max-width: 40rem;
+  }
+}
+
+@media (max-width: 650px ) {
+  .login__logo {
+    max-width: 30rem;
+  }
+}
+
+@media (max-width: 450px ) {
+  .login__logo {
+    max-width: 20rem;
+  }
+
+  .login__form {
+    padding: 1rem 0;
+  }
+}

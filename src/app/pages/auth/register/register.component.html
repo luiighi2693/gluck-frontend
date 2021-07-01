@@ -1,1 +1,141 @@
-<p>register works!</p>
+<div class="login__wrapper">
+  <img src="../../../../assets/login-logo.png" class="login__logo" alt="login logo">
+  <div class="login__form">
+    <div class="container">
+      <div class="row">
+        <div class="col-12 text-center">
+          <h1 class="fw-bold">Registarse</h1>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-4">
+          <figure class="avatar__wrapper">
+            <img src="../../../../assets/default-user-example.jpg" class="avatar" alt="">
+            <button class="avatar__button" mat-fab aria-label="change picture">
+              <mat-icon>camera_alt</mat-icon>
+            </button>
+          </figure>
+        </div>
+        <div class="col-12 col-md-8">
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <mat-form-field appearance="outline" class="dual__input--item">
+                <mat-label>Nombre</mat-label>
+                <input matInput type="text" placeholder="Nombre" autocomplete="off">
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-6">
+              <mat-form-field appearance="outline" class="dual__input--item">
+                <mat-label>Apellido</mat-label>
+                <input matInput type="text" placeholder="Apellido" autocomplete="off">
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <mat-form-field appearance="outline" class="dual__input--item">
+                <mat-label>Nombre de Usuario</mat-label>
+                <input matInput type="text" placeholder="Ej. pepito12345" autocomplete="off">
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-6">
+              <mat-form-field appearance="outline" class="dual__input--item">
+                <mat-label>Numero de Telefono</mat-label>
+                <input matInput type="number" placeholder="Ej. 0424123456789" autocomplete="off">
+              </mat-form-field>
+            </div>
+            <div class="col-12">
+              <mat-form-field appearance="outline" class="dual__input--item">
+                <mat-label>Correo Electronico</mat-label>
+                <input matInput type="text" placeholder="Ej. correo@correo.com" autocomplete="off">
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-6">
+          <mat-form-field appearance="outline" class="unique__input--item">
+            <mat-label>Contrasena</mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'" placeholder="Contrasena" autocomplete="off">
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-6">
+          <mat-form-field appearance="outline" class="unique__input--item">
+            <mat-label>Confirmar Contrasena</mat-label>
+            <input matInput [type]="hide ? 'password' : 'text'" placeholder="Confirmar Contrasena" autocomplete="off">
+            <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+                    [attr.aria-pressed]="hide">
+              <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+            </button>
+          </mat-form-field>
+        </div>
+      </div>
+      <mat-divider class="my-3"></mat-divider>
+      <div class="row">
+        <div class="col-12">
+          <mat-form-field appearance="outline" class="dual__input--item">
+            <mat-label>Direccion</mat-label>
+            <input matInput type="text" placeholder="Ej. Calle 190 - Urb Santa Ana..." autocomplete="off">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 col-md-4">
+          <mat-form-field appearance="outline" class="dual__input--item">
+            <mat-label>Estado</mat-label>
+            <input matInput type="text" placeholder="Ej. Carabobo" autocomplete="off">
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4">
+          <mat-form-field appearance="outline" class="dual__input--item">
+            <mat-label>Ciudad</mat-label>
+            <input matInput type="text" placeholder="Ej. Valencia" autocomplete="off">
+          </mat-form-field>
+        </div>
+        <div class="col-12 col-md-4">
+          <mat-form-field appearance="outline" class="dual__input--item">
+            <mat-label>Codigo Postal</mat-label>
+            <input matInput type="text" placeholder="Ej. 2005" autocomplete="off">
+          </mat-form-field>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 text-center">
+          <button mat-flat-button class="login__button">
+            Registrar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="footer">
+  <div class="footer__options">
+    <div class="footer__options--item text-center">
+      <h1>Contact us</h1>
+      <a href="" class="email" >
+        info@getluck.com
+      </a>
+    </div>
+    <div class="footer__options--item text-center">
+      <h1>Social</h1>
+      <div class="d-flex align-items-center justify-content-center">
+        <a href="">
+          <img src="../../../../assets/instagram.png" class="social__media--icon" alt="">
+        </a>
+        <a href="">
+          <img src="../../../../assets/facebook.png" class="social__media--icon" alt="">
+        </a>
+        <a href="">
+          <img src="../../../../assets/whatsapp.png" class="social__media--icon" alt="">
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+

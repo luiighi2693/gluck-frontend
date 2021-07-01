@@ -5,21 +5,31 @@
         <figure class="logo__expanded" routerLink="/home" >
           <img src="../../../assets/logo.png" width="200px" alt="">
         </figure>
-<!--        <figure class="w-75 text-end" *ngIf="!isExpanded">-->
-<!--          <img src="../../../assets/logo.png" width="200px" alt="">-->
-<!--        </figure>-->
         <figure class="avatar">
           <img src="../../../assets/example-user.png" alt="">
         </figure>
-        <mat-list-item routerLink="/profile" class="sidenav__item">
+        <h2 *ngIf="isExpanded" class="welcome__message">¡Bienvenido/a Jose!</h2>
+        <mat-list-item [ngClass]="{'nav__list--item--padding': isExpanded}"  routerLink="/profile" class="sidenav__item">
           <mat-icon mat-list-icon>person</mat-icon>
           <h4 mat-line *ngIf="isExpanded">Editar Perfil</h4>
         </mat-list-item>
-        <mat-list-item [ngClass]="{'nav__list--item--padding': isExpanded}"   class="sidenav__item">
+        <mat-list-item [ngClass]="{'nav__list--item--padding': isExpanded}" (click)="showFootballPoolsOptions()"  class="sidenav__item">
           <mat-icon mat-list-icon>business_center</mat-icon>
-          <h4 mat-line *ngIf="isExpanded">Quinielas</h4>
+          <h4 mat-line class="d-flex align-items-center" *ngIf="isExpanded">
+            Quinielas
+            <mat-icon *ngIf="!footballPoolsOptions" >keyboard_arrow_right</mat-icon>
+            <mat-icon *ngIf="footballPoolsOptions" >keyboard_arrow_down</mat-icon>
+          </h4>
         </mat-list-item>
-        <mat-list-item routerLink="/calendar" class="sidenav__item">
+        <mat-list-item class="sidenav__item--expanded" *ngIf="footballPoolsOptions" routerLink="/football-pools">
+          <mat-icon mat-list-icon>list</mat-icon>
+          <h4 mat-line>Lista de Quinielas</h4>
+        </mat-list-item>
+        <mat-list-item class="sidenav__item--expanded" *ngIf="footballPoolsOptions" routerLink="/results">
+          <mat-icon mat-list-icon>done_outline</mat-icon>
+          <h4 mat-line>Resultados</h4>
+        </mat-list-item>
+        <mat-list-item [ngClass]="{'nav__list--item--padding': isExpanded}"  routerLink="/calendar" class="sidenav__item">
           <mat-icon mat-list-icon>calendar_today</mat-icon>
           <h4 mat-line *ngIf="isExpanded">Calendario</h4>
         </mat-list-item>

@@ -24,6 +24,16 @@ main {
   background-color: #333232;
 }
 
+.sidenav__item--expanded{
+  color: white;
+  padding-left: 2rem!important;
+}
+
+.sidenav__item--expanded:hover {
+  color: #F6DD06;
+  background-color: #333232;
+}
+
 .nav__list {
   height: 100%;
   background-color: black;
@@ -56,5 +66,11 @@ main {
   width: 75%;
   height: auto;
   border-radius: 75px;
+}
+
+.welcome__message {
+  color: white;
+  width: 90%;
+  text-align: center;
 }
 

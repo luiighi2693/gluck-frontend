@@ -2,3 +2,19 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+::ng-deep .success-snackBar {
+  background-color: #4caf50;
+  border: 1px solid #4caf50;
+  border-radius: 15px;
+  color: white;
+  font-weight: bold;
+}
+
+::ng-deep .error-snackBar {
+  background-color: #f44336;
+  border: 1px solid #f44336;
+  border-radius: 15px;
+  color: white;
+  font-weight: bold;
+}
