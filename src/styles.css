@@ -3,7 +3,7 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-::ng-deep .success-snackBar {
+.success-snackBar {
   background-color: #4caf50;
   border: 1px solid #4caf50;
   border-radius: 15px;
@@ -11,7 +11,7 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   font-weight: bold;
 }
 
-::ng-deep .error-snackBar {
+ .error-snackBar {
   background-color: #f44336;
   border: 1px solid #f44336;
   border-radius: 15px;

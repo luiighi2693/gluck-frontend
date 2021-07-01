@@ -4,6 +4,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import { AlertsModule } from './shared/alerts/alerts.module';
 import { SharedModule } from './shared/shared.module';
 
 @NgModule({
@@ -16,6 +17,7 @@ import { SharedModule } from './shared/shared.module';
     BrowserAnimationsModule,
     NgbModule,
     SharedModule,
+    AlertsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

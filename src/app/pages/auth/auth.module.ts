@@ -5,13 +5,15 @@ import { RegisterComponent } from './register/register.component';
 import { RouterModule} from '@angular/router';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { MaterialModule } from '../../material/material.module';
+import { ChangePasswordComponent } from './change-password/change-password.component';
 
 
 @NgModule({
   declarations: [
     LoginComponent,
     RegisterComponent,
-    ForgotPasswordComponent
+    ForgotPasswordComponent,
+    ChangePasswordComponent
   ],
   imports: [
     CommonModule,
@@ -29,6 +31,10 @@ import { MaterialModule } from '../../material/material.module';
         path: 'forgot-password',
         component: ForgotPasswordComponent
       },
+      {
+        path: 'change-password',
+        component: ChangePasswordComponent
+      }
     ])
   ]
 })
