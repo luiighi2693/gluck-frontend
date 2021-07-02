@@ -8,7 +8,6 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   border: 1px solid #4caf50;
   border-radius: 15px;
   color: white;
-  font-weight: bold;
 }
 
  .error-snackBar {
@@ -16,5 +15,4 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   border: 1px solid #f44336;
   border-radius: 15px;
   color: white;
-  font-weight: bold;
 }
