@@ -4,7 +4,6 @@ import { RouterModule } from '@angular/router';
 import { LayoutComponent } from './layout/layout.component';
 import {MaterialModule} from '../material/material.module';
 import { HeaderComponent } from './layout/header/header.component';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FooterComponent } from './layout/footer/footer.component';
 
 
@@ -17,8 +16,8 @@ import { FooterComponent } from './layout/footer/footer.component';
   imports: [
     CommonModule,
     RouterModule,
-    BrowserAnimationsModule,
     MaterialModule,
-  ]
+  ],
+  exports: [FooterComponent]
 })
 export class SharedModule { }

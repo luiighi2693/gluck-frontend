@@ -1,0 +1,43 @@
+
+.footer {
+  color: white;
+  background-color: black;
+  padding: 0.5rem 0;
+  border-top: 3px solid #F6DD06;
+  display: flex;
+  justify-content: center;
+  /*position: absolute;*/
+  /*bottom: 0;*/
+  /*left: 0;*/
+  /*right: 0;*/
+}
+
+.footer__options {
+  max-width: 35rem;
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+}
+
+.social__media--icon {
+  width: 40px;
+  margin: 0 0.5rem;
+  transition: transform .2s;
+}
+
+.social__media--icon:hover {
+  transform: scale(1.5);
+}
+
+.email {
+  color: #F6DD06;
+  text-decoration: none;
+  font-size:24px;
+  padding: 0.5rem;
+}
+
+.email:hover {
+  background-color: #F6DD06;
+  color: black;
+  border-radius: 15px;
+}

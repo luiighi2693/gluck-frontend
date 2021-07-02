@@ -6,18 +6,19 @@ import { RouterModule} from '@angular/router';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
 import { MaterialModule } from '../../material/material.module';
 import { ChangePasswordComponent } from './change-password/change-password.component';
-
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   declarations: [
     LoginComponent,
     RegisterComponent,
     ForgotPasswordComponent,
-    ChangePasswordComponent
+    ChangePasswordComponent,
   ],
   imports: [
     CommonModule,
     MaterialModule,
+    SharedModule,
     RouterModule.forChild([
       {
         path: '',
