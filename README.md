@@ -40,4 +40,4 @@ docker push pruebacontainerluighi2693/gluck-frontend:latest
 deploy 
 
 docker pull pruebacontainerluighi2693/gluck-frontend:latest
-docker run -d -p 81:80 pruebacontainerluighi2693/gluck-frontend:latest
+docker run -d -p 82:80 pruebacontainerluighi2693/gluck-frontend:latest
