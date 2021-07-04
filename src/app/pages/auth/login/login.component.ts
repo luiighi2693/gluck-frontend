@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-login',
@@ -7,10 +9,19 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
   hide = true;
+  loginForm = this.fb.group({
+    userName: ['', Validators.required],
+    password: ['', Validators.required],
+    // recaptcha: ['', Validators.required],
+  });
+  siteKey: string;
 
-  constructor() { }
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
   }
 
+  login() {
+    alert(this.loginForm.status);
+  }
 }

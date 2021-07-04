@@ -7,6 +7,8 @@ import { ForgotPasswordComponent } from './forgot-password/forgot-password.compo
 import { MaterialModule } from '../../material/material.module';
 import { ChangePasswordComponent } from './change-password/change-password.component';
 import { SharedModule } from '../../shared/shared.module';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NgxCaptchaModule } from 'ngx-captcha';
 
 @NgModule({
   declarations: [
@@ -19,6 +21,9 @@ import { SharedModule } from '../../shared/shared.module';
     CommonModule,
     MaterialModule,
     SharedModule,
+    ReactiveFormsModule,
+    FormsModule,
+    NgxCaptchaModule,
     RouterModule.forChild([
       {
         path: '',
