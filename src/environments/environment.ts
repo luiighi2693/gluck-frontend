@@ -5,6 +5,7 @@
 export const environment = {
   production: false,
   // siteKey: "",
+  basePath: 'http://206.189.65.211/3001',
 };
 
 /*

@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
+import { AuthService } from '../../../services/auth.service';
+import { HandleAlertsProvider } from '../../../utilities/providers/handle-alerts-provider';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -16,12 +19,27 @@ export class LoginComponent implements OnInit {
   });
   siteKey: string;
 
-  constructor(private fb: FormBuilder) { }
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private handleAlertsProvider: HandleAlertsProvider,
+    private router: Router,
+  ) { }
 
   ngOnInit(): void {
   }
 
   login() {
-    alert(this.loginForm.status);
+    const username = JSON.stringify(this.loginForm.value.userName);
+    const password = JSON.stringify(this.loginForm.value.password);
+    this.authService.login(username, password).subscribe(data => {
+      if (data.hasError) {
+        this.handleAlertsProvider.presentSnackbarError('No se ha encontrado el usuario solicitado... intente de nuevo ')
+      }
+      else {
+        this.router.navigate(['/home']);
+        this.handleAlertsProvider.presentSnackbarSuccess('Bienvenido!');
+      }
+    });
   }
 }
