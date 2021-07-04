@@ -30,8 +30,8 @@ export class LoginComponent implements OnInit {
   }
 
   login() {
-    const username = JSON.stringify(this.loginForm.value.userName);
-    const password = JSON.stringify(this.loginForm.value.password);
+    const username = this.loginForm.value.userName;
+    const password = this.loginForm.value.password;
     this.authService.login(username, password).subscribe(data => {
       if (data.hasError) {
         this.handleAlertsProvider.presentSnackbarError('No se ha encontrado el usuario solicitado... intente de nuevo ')

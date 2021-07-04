@@ -4,16 +4,11 @@ import {LayoutComponent} from './shared/layout/layout.component';
 
 const routes: Routes = [
   {
-    path: '',
+    path: 'home',
     component: LayoutComponent,
     children: [
       {
         path: '',
-        redirectTo: '/home',
-        pathMatch: 'full',
-      },
-      {
-        path: 'home',
         loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule)
       },
       {
@@ -43,10 +38,12 @@ const routes: Routes = [
     path: 'auth',
     loadChildren: () => import('./pages/auth/auth.module').then(m => m.AuthModule)
   },
+  {path: '', redirectTo: 'auth', pathMatch: 'full'},
   {
     path: '**',
     loadChildren: () => import('./pages/page-not-found/page-not-found.module').then(m => m.PageNotFoundModule)
   },
+
 ];
 
 @NgModule({

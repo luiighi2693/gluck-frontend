@@ -19,12 +19,21 @@ export class AuthService {
     };
     return this.http.post<any>(`${environment.basePath}/api/auth/login`, params );
   }
-  //
-  // register() {
-  //   const params = {
-  //
-  //   };
-  //   return this.http.post<any>(`${environment.basePath}/register`, params);
-  // }
+
+  register(name: string, lastname: string, username: string, password: any, email: string, phone: number, address: string, state: string, city: string, code: number) {
+    const params = {
+      username,
+      name,
+      lastname,
+      email,
+      password,
+      phone,
+      address,
+      state,
+      city,
+      code,
+    };
+    return this.http.post<any>(`${environment.basePath}/api/auth/register`, params);
+  }
 }
 
