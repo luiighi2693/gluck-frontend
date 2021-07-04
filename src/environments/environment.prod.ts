@@ -1,3 +1,4 @@
 export const environment = {
-  production: true
+  production: true,
+  basePath: 'http://206.189.65.211:3001',
 };
