@@ -48,7 +48,7 @@ export class RegisterComponent implements OnInit {
     const code = this.registerForm.value.code;
     this.authService.register(name, lastname, username, password, email, phone, address, state, city, code ).subscribe(data => {
       if (data.hasError) {
-        this.handleAlertsProvider.presentSnackbarError(data.message);
+        this.handleAlertsProvider.presentGenericAlert(data.message, '¡Ha Ocurrido un Error!');
       }
       else {
         this.handleAlertsProvider.presentSnackbarSuccess('Se ha enviado un link de verificacion a su email, por favor revise su bandeja de entrada!');
