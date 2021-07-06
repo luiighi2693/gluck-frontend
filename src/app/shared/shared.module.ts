@@ -5,6 +5,7 @@ import { LayoutComponent } from './layout/layout.component';
 import {MaterialModule} from '../material/material.module';
 import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
+import { LoaderComponent } from './loader/loader.component';
 
 
 @NgModule({
@@ -12,12 +13,13 @@ import { FooterComponent } from './layout/footer/footer.component';
     LayoutComponent,
     HeaderComponent,
     FooterComponent,
+    LoaderComponent,
   ],
   imports: [
     CommonModule,
     RouterModule,
     MaterialModule,
   ],
-  exports: [FooterComponent]
+  exports: [FooterComponent, LoaderComponent]
 })
 export class SharedModule { }
