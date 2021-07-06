@@ -37,11 +37,11 @@ export class LoginComponent implements OnInit {
     this.authService.login(username, password).subscribe(data => {
       this.isLoaded = false;
       if (data.hasError) {
-        this.handleAlertsProvider.presentSnackbarError('No se ha encontrado el usuario solicitado... intente de nuevo ')
+        this.handleAlertsProvider.presentGenericAlert('No se ha encontrado el usuario solicitado... intente de nuevo', 'No se Pudo completar la accion...')
       }
       else {
         this.router.navigate(['/home']);
-        this.handleAlertsProvider.presentSnackbarSuccess('Bienvenido!');
+        // this.handleAlertsProvider.presentSnackbarSuccess('Bienvenido!');
       }
     });
   }

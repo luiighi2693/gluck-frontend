@@ -7,6 +7,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 import { OkConfirmationAlertComponent } from '../../shared/alerts/ok-confirmation-alert/ok-confirmation-alert.component';
 import { ErrorSnackbarComponent } from '../../shared/alerts/error-snackbar/error-snackbar.component';
 import { SuccessSnackbarComponent } from '../../shared/alerts/success-snackbar/success-snackbar.component';
+import {GenericAlertComponent} from '../../shared/alerts/generic-alert/generic-alert.component';
 
 @Injectable({
   providedIn: 'root'
@@ -36,6 +37,13 @@ export class  HandleAlertsProvider {
       data
     });
   }
+
+  presentGenericAlert(message: string, title = '¡Ha ocurrido un error!') {
+    return this.dialog.open(GenericAlertComponent, {
+      data: {title, message}
+    });
+  }
+
 
   presentErrorDialogOk(message: string, title = '¡Ha ocurrido un error!') {
     return this.dialog.open(OkConfirmationAlertComponent, {
