@@ -12,6 +12,7 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
   hide = true;
+  isLoaded = false;
   loginForm = this.fb.group({
     userName: ['', Validators.required],
     password: ['', Validators.required],
@@ -32,7 +33,9 @@ export class LoginComponent implements OnInit {
   login() {
     const username = this.loginForm.value.userName;
     const password = this.loginForm.value.password;
+    this.isLoaded = true;
     this.authService.login(username, password).subscribe(data => {
+      this.isLoaded = false;
       if (data.hasError) {
         this.handleAlertsProvider.presentSnackbarError('No se ha encontrado el usuario solicitado... intente de nuevo ')
       }
