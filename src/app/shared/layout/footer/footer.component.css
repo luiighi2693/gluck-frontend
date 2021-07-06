@@ -41,3 +41,17 @@
   color: black;
   border-radius: 15px;
 }
+
+@media screen and (max-width: 768px) {
+  .social__media--icon {
+    width: 25px;
+  }
+
+  .footer__options--item > h1 {
+    font-size: 18px;
+  }
+
+  .email {
+    font-size: 20px;
+  }
+}
