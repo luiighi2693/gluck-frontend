@@ -41,3 +41,10 @@
   padding: 0.5rem 4rem;
 }
 
+@media screen and (max-width: 660px) {
+  .submit {
+    padding: 0.5rem 2rem;
+    font-size: 16px;
+  }
+}
+
