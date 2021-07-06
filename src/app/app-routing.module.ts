@@ -1,10 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes} from '@angular/router';
 import {LayoutComponent} from './shared/layout/layout.component';
+import { AuthClientGuard } from './guards/auth-client.guard';
 
 const routes: Routes = [
   {
     path: 'home',
+    canActivate: [AuthClientGuard],
     component: LayoutComponent,
     children: [
       {
