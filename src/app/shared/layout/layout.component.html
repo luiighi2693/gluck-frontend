@@ -1,4 +1,4 @@
-<div class="home__wrapper">
+<div class="home__wrapper" *ngIf="!isAdmin">
   <mat-drawer-container class="example-container mat-typography" autosize>
     <mat-drawer #drawer mode="side" disableClose="true" opened="true">
       <mat-nav-list class="nav__list">
@@ -13,19 +13,19 @@
           <mat-icon mat-list-icon>person</mat-icon>
           <h4 mat-line *ngIf="isExpanded">Editar Perfil</h4>
         </mat-list-item>
-        <mat-list-item [ngClass]="{'nav__list--item--padding': isExpanded}" (click)="showFootballPoolsOptions()"  class="sidenav__item">
+        <mat-list-item [ngClass]="{'nav__list--item--padding': isExpanded}" (click)="togglePoolsOptions()"  class="sidenav__item">
           <mat-icon mat-list-icon>business_center</mat-icon>
           <h4 mat-line class="d-flex align-items-center" *ngIf="isExpanded">
             Quinielas
-            <mat-icon *ngIf="!footballPoolsOptions" >keyboard_arrow_right</mat-icon>
-            <mat-icon *ngIf="footballPoolsOptions" >keyboard_arrow_down</mat-icon>
+            <mat-icon *ngIf="!poolsOptions" >keyboard_arrow_right</mat-icon>
+            <mat-icon *ngIf="poolsOptions" >keyboard_arrow_down</mat-icon>
           </h4>
         </mat-list-item>
-        <mat-list-item class="sidenav__item--expanded" *ngIf="footballPoolsOptions" routerLink="football-pools">
+        <mat-list-item class="sidenav__item--expanded" *ngIf="poolsOptions" routerLink="football-pools">
           <mat-icon mat-list-icon>list</mat-icon>
           <h4 mat-line>Lista de Quinielas</h4>
         </mat-list-item>
-        <mat-list-item class="sidenav__item--expanded" *ngIf="footballPoolsOptions" routerLink="results">
+        <mat-list-item class="sidenav__item--expanded" *ngIf="poolsOptions" routerLink="results">
           <mat-icon mat-list-icon>done_outline</mat-icon>
           <h4 mat-line>Resultados</h4>
         </mat-list-item>
@@ -33,9 +33,109 @@
           <mat-icon mat-list-icon>calendar_today</mat-icon>
           <h4 mat-line *ngIf="isExpanded">Calendario</h4>
         </mat-list-item>
-        <mat-list-item>
-          <mat-icon mat-list-icon>folder_shared</mat-icon>
-          <h4 mat-line *ngIf="isExpanded">Management X</h4>
+      </mat-nav-list>
+    </mat-drawer>
+  </mat-drawer-container>
+
+  <main>
+    <app-header
+      (toggleValue)="toggleSidenav($event)"
+    ></app-header>
+    <router-outlet></router-outlet>
+    <app-footer></app-footer>
+  </main>
+
+</div>
+
+<div class="home__wrapper" *ngIf="isAdmin">
+  <mat-drawer-container class="example-container mat-typography" autosize>
+    <mat-drawer #drawer mode="side" disableClose="true" opened="true">
+      <mat-nav-list class="nav__list">
+        <figure class="logo__expanded" routerLink="/admin" >
+          <img src="../../../assets/logo.png" width="200px" alt="">
+        </figure>
+        <figure class="avatar">
+          <img src="../../../assets/example-user.png" alt="">
+        </figure>
+        <h2 *ngIf="isExpanded" class="welcome__message">¡Bienvenido/a Jose!</h2>
+
+<!--       clients-->
+        <mat-list-item [ngClass]="{'nav__list--item--padding': isExpanded}" (click)="toggleClientsOptions()" class="sidenav__item">
+          <mat-icon mat-list-icon>person</mat-icon>
+          <h4 mat-line class="d-flex align-items-center "  *ngIf="isExpanded">Clientes
+            <mat-icon *ngIf="!clientOptions" >keyboard_arrow_right</mat-icon>
+            <mat-icon *ngIf="clientOptions" >keyboard_arrow_down</mat-icon></h4>
+        </mat-list-item>
+        <mat-list-item class="sidenav__item--expanded" *ngIf="clientOptions" routerLink="clients/add-client">
+          <mat-icon mat-list-icon>add_box</mat-icon>
+          <h4 mat-line>Agregar Cliente</h4>
+        </mat-list-item>
+        <mat-list-item class="sidenav__item--expanded" *ngIf="clientOptions" routerLink="clients/list-of-clients">
+          <mat-icon mat-list-icon>list</mat-icon>
+          <h4 mat-line>Lista de Clientes</h4>
+        </mat-list-item>
+<!--        clients-->
+
+        <!--       sports-->
+        <mat-list-item [ngClass]="{'nav__list--item--padding': isExpanded}" (click)="toggleSportsOptions()" class="sidenav__item">
+          <mat-icon mat-list-icon>person</mat-icon>
+          <h4 mat-line class="d-flex align-items-center "  *ngIf="isExpanded">Deportes
+            <mat-icon *ngIf="!sportOptions" >keyboard_arrow_right</mat-icon>
+            <mat-icon *ngIf="sportOptions" >keyboard_arrow_down</mat-icon></h4>
+        </mat-list-item>
+        <mat-list-item class="sidenav__item--expanded" *ngIf="sportOptions" routerLink="sports/add-sport">
+          <mat-icon mat-list-icon>add_box</mat-icon>
+          <h4 mat-line>Agregar Deporte</h4>
+        </mat-list-item>
+        <mat-list-item class="sidenav__item--expanded" *ngIf="sportOptions" routerLink="sports/list-of-sports">
+          <mat-icon mat-list-icon>list</mat-icon>
+          <h4 mat-line>Lista de Deportes</h4>
+        </mat-list-item>
+        <!--        sports-->
+
+        <!--       sports-->
+        <mat-list-item [ngClass]="{'nav__list--item--padding': isExpanded}" (click)="toggleTeamsOptions()" class="sidenav__item">
+          <mat-icon mat-list-icon>person</mat-icon>
+          <h4 mat-line class="d-flex align-items-center "  *ngIf="isExpanded">Equipos
+            <mat-icon *ngIf="!teamOptions" >keyboard_arrow_right</mat-icon>
+            <mat-icon *ngIf="teamOptions" >keyboard_arrow_down</mat-icon></h4>
+        </mat-list-item>
+        <mat-list-item class="sidenav__item--expanded" *ngIf="teamOptions" routerLink="teams/add-team">
+          <mat-icon mat-list-icon>add_box</mat-icon>
+          <h4 mat-line>Agregar Equipo</h4>
+        </mat-list-item>
+        <mat-list-item class="sidenav__item--expanded" *ngIf="teamOptions" routerLink="teams/list-of-teams">
+          <mat-icon mat-list-icon>list</mat-icon>
+          <h4 mat-line>Lista de Equipos</h4>
+        </mat-list-item>
+        <!--        sports-->
+
+<!--      pools-->
+        <mat-list-item [ngClass]="{'nav__list--item--padding': isExpanded}" (click)="togglePoolsOptions()"  class="sidenav__item">
+          <mat-icon mat-list-icon>business_center</mat-icon>
+          <h4 mat-line class="d-flex align-items-center" *ngIf="isExpanded">
+            Quinielas
+            <mat-icon *ngIf="!poolsOptions" >keyboard_arrow_right</mat-icon>
+            <mat-icon *ngIf="poolsOptions" >keyboard_arrow_down</mat-icon>
+          </h4>
+        </mat-list-item>
+        <mat-list-item class="sidenav__item--expanded" *ngIf="poolsOptions" routerLink="pools/add-pool">
+          <mat-icon mat-list-icon>add_box</mat-icon>
+          <h4 mat-line>Agregar Quiniela</h4>
+        </mat-list-item>
+        <mat-list-item class="sidenav__item--expanded" *ngIf="poolsOptions" routerLink="pools/list-of-pools">
+          <mat-icon mat-list-icon>list</mat-icon>
+          <h4 mat-line>Lista de Quinielas</h4>
+        </mat-list-item>
+        <mat-list-item class="sidenav__item--expanded" *ngIf="poolsOptions" routerLink="results">
+          <mat-icon mat-list-icon>done_outline</mat-icon>
+          <h4 mat-line>Resultados</h4>
+        </mat-list-item>
+<!--        pools-->
+
+        <mat-list-item [ngClass]="{'nav__list--item--padding': isExpanded}"  routerLink="calendar" class="sidenav__item">
+          <mat-icon mat-list-icon>calendar_today</mat-icon>
+          <h4 mat-line *ngIf="isExpanded">Calendario</h4>
         </mat-list-item>
       </mat-nav-list>
     </mat-drawer>
@@ -43,7 +143,7 @@
 
   <main>
     <app-header
-      (toggleValue)="toggleValue($event)"
+      (toggleValue)="toggleSidenav($event)"
     ></app-header>
     <router-outlet></router-outlet>
     <app-footer></app-footer>
