@@ -11,6 +11,7 @@ import { HandleAlertsProvider } from '../../../utilities/providers/handle-alerts
 })
 export class RegisterComponent implements OnInit {
   hide = true;
+  isLoaded = false;
   registerForm = this.fb.group({
     name: ['', Validators.required],
     lastname: ['', Validators.required],
@@ -46,7 +47,10 @@ export class RegisterComponent implements OnInit {
     const city = this.registerForm.value.city;
     const state = this.registerForm.value.state;
     const code = this.registerForm.value.code;
+
+    this.isLoaded = true;
     this.authService.register(name, lastname, username, password, email, phone, address, state, city, code ).subscribe(data => {
+      this.isLoaded = false;
       if (data.hasError) {
         this.handleAlertsProvider.presentGenericAlert(data.message, '¡Ha Ocurrido un Error!');
       }

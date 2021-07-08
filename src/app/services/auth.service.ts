@@ -41,5 +41,29 @@ export class AuthService {
     };
     return this.http.post<any>(`${environment.basePath}/api/auth/register`, params);
   }
+
+
+
+  activateAccount(code: string) {
+    const params = {
+      code,
+    };
+    return this.http.post<any>(`${environment.basePath}/api/auth/activateAccount`, params );
+  }
+
+  recoverPasswordInit(email: string) {
+    const params = {
+      email,
+    };
+    return this.http.post<any>(`${environment.basePath}/api/auth/recoverPasswordInit`, params );
+  }
+
+  recoverPasswordEnd(code: string, password: any) {
+    const params = {
+      code,
+      password
+    };
+    return this.http.post<any>(`${environment.basePath}/api/auth/recoverPasswordEnd`, params );
+  }
 }
 

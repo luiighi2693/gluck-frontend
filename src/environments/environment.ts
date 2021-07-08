@@ -6,6 +6,8 @@ export const environment = {
   production: false,
   // siteKey: "",
   basePath: 'http://206.189.65.211:3001',
+  basePath_qa: 'http://206.189.65.211:3001',
+  basePath_dev: 'http://localhost:3001',
 };
 
 /*

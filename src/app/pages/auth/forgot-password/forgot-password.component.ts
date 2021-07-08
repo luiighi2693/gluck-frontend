@@ -1,5 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import { HandleAlertsProvider } from '../../../utilities/providers/handle-alerts-provider';
+import {AuthService} from '../../../services/auth.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-forgot-password',
@@ -8,9 +10,11 @@ import { HandleAlertsProvider } from '../../../utilities/providers/handle-alerts
 })
 export class ForgotPasswordComponent implements OnInit {
   hide = true;
+  email = '';
+  isLoaded = false;
 
   constructor(
-    private handleAlertsProvider: HandleAlertsProvider
+    private authService: AuthService, private handleAlertsProvider: HandleAlertsProvider, private router: Router
   ) {
   }
 
@@ -18,6 +22,20 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   sendPassword() {
-    this.handleAlertsProvider.presentSnackbarSuccess('Se ha enviado el el link de cambio de contrasena a su correo!');
+    if (this.email !== '') {
+      this.isLoaded = true;
+      this.authService.recoverPasswordInit(this.email).subscribe(data => {
+        this.isLoaded = false;
+        if (data.hasError) {
+          this.handleAlertsProvider.presentGenericAlert('No se ha encontrado el correo  solicitado... intente de nuevo', 'No se Pudo completar la accion...');
+        }
+        else {
+          this.handleAlertsProvider.presentSnackbarSuccess('Se ha enviado el link de cambio de contrasena a su correo!');
+          this.router.navigate(['/auth']);
+        }
+      });
+    } else {
+      alert('debe ingresar un correo valido');
+    }
   }
 }
