@@ -21,7 +21,7 @@ export class UserService {
     return this.http.get(`${environment.basePath}/api/getOne?id=${id}&model=q_user`, {headers});
   }
 
-  editUser(name, lastname, username, email, phone, password, address, state, city, code, id ): Observable<any> {
+  editUser(name, lastname, username, email, phone, password, address, state, city, code, rowid, status ): Observable<any> {
     const params = {
       name,
       lastname,
@@ -33,8 +33,26 @@ export class UserService {
       state,
       city,
       code,
-      id
+      rowid,
+      status
     };
-    return this.http.post(`${environment.basePath}/api/update?model=q_user`, params, {headers});
+    return this.http.put(`${environment.basePath}/api/update?model=q_user`, params, {headers});
+  }
+
+  createUser(name, lastname, username, email, phone, password, address, state, city, code, status ): Observable<any> {
+    const params = {
+      name,
+      lastname,
+      username,
+      email,
+      phone,
+      password,
+      address,
+      state,
+      city,
+      code,
+      status
+    };
+    return this.http.post(`${environment.basePath}/api/create?model=q_user`, params, {headers});
   }
 }

@@ -6,6 +6,7 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./add-sport.component.css']
 })
 export class AddSportComponent implements OnInit {
+  hide = false;
 
   constructor() { }
 

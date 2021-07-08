@@ -3,7 +3,7 @@ import {UserService} from '../../../services/user.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {Subscription} from 'rxjs';
-import {error} from '@angular/compiler/src/util';
+import { HandleAlertsProvider } from '../../../utilities/providers/handle-alerts-provider';
 
 @Component({
   selector: 'app-edit-client',
@@ -21,10 +21,12 @@ export class EditClientComponent implements OnInit {
     private user: UserService,
     private router: Router,
     private route: ActivatedRoute,
+    private handleAlertsProvider: HandleAlertsProvider,
   ) {}
 
   ngOnInit(): void {
-    this.getCurrentUser = this.route.params.subscribe(params => {
+    this.getCurrentUser =
+      this.route.params.subscribe(params => {
       this.currentUser = params.id;
     });
 
@@ -35,12 +37,12 @@ export class EditClientComponent implements OnInit {
       } else {
         alert('ha ocurrido un error!');
       }
-    }, error => {
-      console.error(error);
+    }, err => {
+      console.error(err);
     });
   }
 
-  createForm() {
+  private createForm() {
     this.updateUserForm = new FormGroup({
       username: new FormControl(this.userData.username, Validators.required),
       name: new FormControl(this.userData.name, Validators.required),
@@ -53,13 +55,13 @@ export class EditClientComponent implements OnInit {
       city: new FormControl(this.userData.city, Validators.required),
       code: new FormControl(this.userData.code, Validators.required),
       id: new FormControl(this.currentUser, Validators.required),
+      status: new FormControl('', Validators.required )
     });
 
   }
 
   updateUser() {
     const updatedUser = this.updateUserForm.value;
-    alert(JSON.stringify(this.updateUserForm.value));
     console.warn(this.updateUserForm.value);
     this.user.editUser(
       updatedUser.name,
@@ -72,9 +74,15 @@ export class EditClientComponent implements OnInit {
       updatedUser.state,
       updatedUser.city,
       updatedUser.code,
-      updatedUser.id
+      updatedUser.id,
+      Number(updatedUser.status)
     ).subscribe(response => {
-      console.log(response);
+      if (response.code === 'D200') {
+        this.handleAlertsProvider.presentSnackbarSuccess('Se actualizo la informacion con exito!');
+        this.router.navigate(['/admin/clients/list-of-clients']);
+      } else {
+        this.handleAlertsProvider.presentGenericAlert('Por Favor intentalo en unos minutos...' , 'Ha ocurrido un error!');
+      }
     });
   }
 }
