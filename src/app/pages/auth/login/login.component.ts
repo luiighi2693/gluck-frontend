@@ -44,8 +44,12 @@ export class LoginComponent implements OnInit {
         sessionStorage.setItem('username', data.username);
         sessionStorage.setItem('email', data.email);
         sessionStorage.setItem('id', data.id);
-        this.router.navigate(['/home']);
-        // this.handleAlertsProvider.presentSnackbarSuccess('Bienvenido!');
+        sessionStorage.setItem('isAdmin', data.isAdmin);
+        if (data.isAdmin) {
+          this.router.navigate(['/admin']);
+        } else {
+          this.router.navigate(['/home']);
+        }
       }
     });
   }

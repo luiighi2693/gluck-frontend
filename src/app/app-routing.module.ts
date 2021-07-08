@@ -18,8 +18,8 @@ const routes: Routes = [
         loadChildren: () => import('./pages/profile/profile.module').then(m => m.ProfileModule)
       },
       {
-        path: 'football-pools',
-        loadChildren: () => import('./pages/football-pools/football-pools.module').then(m => m.FootballPoolsModule)
+        path: 'pools',
+        loadChildren: () => import('./pages/pools/pools.module').then(m => m.PoolsModule)
       },
       {
         path: 'calendar',
@@ -33,8 +33,42 @@ const routes: Routes = [
   },
   {
     path: 'admin',
-    // canActivate: [AdminGuard],
-    loadChildren: () => import('./pages/admin/admin.module').then(m => m.AdminModule)
+    canActivate: [AuthClientGuard],
+    component: LayoutComponent,
+    children: [
+      {
+        path: '',
+        loadChildren: () => import('./pages/admin/admin.module').then(m => m.AdminModule)
+      },
+      {
+        path: 'clients',
+        loadChildren: () => import('./pages/clients/clients.module').then(m => m.ClientsModule)
+      },
+      {
+        path: 'emails',
+        loadChildren: () => import('./pages/emails/emails.module').then(m => m.EmailsModule)
+      },
+      {
+        path: 'teams',
+        loadChildren: () => import('./pages/teams/teams.module').then(m => m.TeamsModule)
+      },
+      {
+        path: 'sports',
+        loadChildren: () => import('./pages/sports/sports.module').then(m => m.SportsModule)
+      },
+      {
+        path: 'calendar',
+        loadChildren: () => import('./pages/calendar/calendar.module').then(m => m.CalendarModule)
+      },
+      {
+        path: 'pools',
+        loadChildren: () => import('./pages/pools/pools.module').then(m => m.PoolsModule)
+      },
+      {
+        path: 'results',
+        loadChildren: () => import('./pages/results/results.module').then(m => m.ResultsModule)
+      },
+    ]
   },
   {
     path: 'auth',

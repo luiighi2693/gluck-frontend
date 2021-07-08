@@ -12,6 +12,9 @@ import {MatChipsModule} from '@angular/material/chips';
 import {MatAutocompleteModule} from '@angular/material/autocomplete';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import {MatDialogModule} from '@angular/material/dialog';
+import {MatTableModule} from '@angular/material/table';
+import { MatPaginatorModule } from '@angular/material/paginator';
+
 
 @NgModule({
   declarations: [],
@@ -29,6 +32,8 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatAutocompleteModule,
     MatSnackBarModule,
     MatDialogModule,
+    MatTableModule,
+    MatPaginatorModule,
   ],
   exports: [
     MatSidenavModule,
@@ -43,6 +48,8 @@ import {MatDialogModule} from '@angular/material/dialog';
     MatAutocompleteModule,
     MatSnackBarModule,
     MatDialogModule,
+    MatTableModule,
+    MatPaginatorModule,
   ]
 })
 export class MaterialModule { }

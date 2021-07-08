@@ -8,21 +8,44 @@ import {Component, OnInit} from '@angular/core';
 
 export class LayoutComponent implements OnInit {
   isExpanded: boolean;
-  footballPoolsOptions: boolean;
+  poolsOptions = false;
+  clientOptions = false;
+  sportOptions = false;
+  teamOptions = false;
+  isAdmin: boolean;
+  option = false;
 
   constructor() {
   }
 
   ngOnInit(): void {
     this.isExpanded = true;
-    this.footballPoolsOptions = false;
+    const isAdmin = sessionStorage.getItem('isAdmin');
+    this.isAdmin = !!isAdmin;
   }
 
-  toggleValue($event) {
+  toggleSidenav($event) {
     this.isExpanded = $event;
+    this.poolsOptions = false;
   }
 
-  showFootballPoolsOptions() {
-    this.footballPoolsOptions = !this.footballPoolsOptions;
+  togglePoolsOptions() {
+    this.poolsOptions = !this.poolsOptions;
+  }
+
+  toggleClientsOptions() {
+    this.clientOptions = !this.clientOptions;
+  }
+
+  toggleSportsOptions() {
+    this.sportOptions = !this.sportOptions;
+  }
+
+  toggleTeamsOptions() {
+    this.teamOptions = !this.teamOptions;
+  }
+
+  toggleOptions(option) {
+    this.option = !this.option;
   }
 }
