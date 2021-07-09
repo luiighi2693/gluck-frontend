@@ -1,4 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {Router} from '@angular/router';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
+import {AdminService} from '../../../services/admin.service';
 
 @Component({
   selector: 'app-add-sport',
@@ -7,10 +11,41 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AddSportComponent implements OnInit {
   hide = false;
+  newSportForm: FormGroup;
+  showLoader = false;
 
-  constructor() { }
+  constructor(private router: Router, private admin: AdminService, private handleAlertsProvider: HandleAlertsProvider) {
+  }
 
   ngOnInit(): void {
+    this.createForm();
+  }
+
+  private createForm() {
+    this.newSportForm = new FormGroup({
+      name: new FormControl('', Validators.required),
+      status: new FormControl('', Validators.required),
+      description: new FormControl('', Validators.required),
+      date_Create: new FormControl('', Validators.required)
+    });
+  }
+
+  createNewSport() {
+    this.showLoader = true;
+    const newSport = this.newSportForm.value;
+    console.warn(this.newSportForm.value);
+    this.admin.createSport(
+      newSport.name,
+      newSport.description,
+      newSport.date_Create,
+      Number(newSport.status)
+    ).subscribe(response => {
+      this.showLoader = false;
+      if (response.code === 'D200') {
+        this.handleAlertsProvider.presentSnackbarSuccess('Se ha creado el usuario con exito!');
+        this.router.navigate(['/admin/sports/list-of-sports']);
+      }
+    });
   }
 
 }

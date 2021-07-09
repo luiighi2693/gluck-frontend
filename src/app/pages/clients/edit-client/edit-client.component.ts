@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {UserService} from '../../../services/user.service';
+import {AdminService} from '../../../services/admin.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {Subscription} from 'rxjs';
@@ -16,9 +16,10 @@ export class EditClientComponent implements OnInit {
   currentUser: string;
   userData: any;
   updateUserForm: FormGroup;
+  showLoader = false;
 
   constructor(
-    private user: UserService,
+    private user: AdminService,
     private router: Router,
     private route: ActivatedRoute,
     private handleAlertsProvider: HandleAlertsProvider,
@@ -61,6 +62,7 @@ export class EditClientComponent implements OnInit {
   }
 
   updateUser() {
+    this.showLoader = true;
     const updatedUser = this.updateUserForm.value;
     console.warn(this.updateUserForm.value);
     this.user.editUser(
@@ -77,6 +79,7 @@ export class EditClientComponent implements OnInit {
       updatedUser.id,
       Number(updatedUser.status)
     ).subscribe(response => {
+      this.showLoader = false;
       if (response.code === 'D200') {
         this.handleAlertsProvider.presentSnackbarSuccess('Se actualizo la informacion con exito!');
         this.router.navigate(['/admin/clients/list-of-clients']);

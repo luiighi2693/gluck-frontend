@@ -4,7 +4,7 @@ import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import { HandleAlertsProvider } from '../../../utilities/providers/handle-alerts-provider';
 import { Router } from '@angular/router';
-import { UserService } from '../../../services/user.service';
+import { AdminService } from '../../../services/admin.service';
 
 export interface UserData {
   rowid: string;
@@ -62,7 +62,7 @@ export class ListOfClientsComponent implements OnInit, AfterViewInit {
   constructor(
     private handleAlertsProvider: HandleAlertsProvider,
     private router: Router,
-    private user: UserService,
+    private user: AdminService,
   ) {
     // Create 100 users
     // const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
