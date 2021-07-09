@@ -4,7 +4,7 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 // import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {Observable} from 'rxjs';
-import {UserService} from "../../../services/user.service";
+import {AdminService} from '../../../services/admin.service';
 // import {map, startWith} from 'rxjs/operators';
 
 @Component({
@@ -32,7 +32,7 @@ export class ProfileFormComponent implements OnInit {
 
   @ViewChild('inputFiles', { static: true }) inputFiles: ElementRef;
 
-  constructor(private userService: UserService) {
+  constructor(private admin: AdminService) {
     this.createForm();
     // this.filteredSports = this.sportsCtrl.valueChanges.pipe(
     //   startWith(null),
@@ -67,7 +67,7 @@ export class ProfileFormComponent implements OnInit {
   ngOnInit(): void {
     const id = sessionStorage.getItem('id');
     this.isLoaded = true;
-    this.userService.getUser(id).subscribe(response => {
+    this.admin.getUser(id).subscribe(response => {
       this.isLoaded = false;
       if (response.code === 'D200') {
         this.userData = response.data;
@@ -75,7 +75,7 @@ export class ProfileFormComponent implements OnInit {
 
         if (this.userData.img !== null) {
           this.isLoaded = true;
-          this.userService.getFile(this.userData.img).subscribe(responseImg => {
+          this.admin.getFile(this.userData.img).subscribe(responseImg => {
             this.isLoaded = false;
             this.imageData = responseImg;
           }, err => {

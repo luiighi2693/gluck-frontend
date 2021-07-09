@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
-import {UserService} from '../../../services/user.service';
+import {AdminService} from '../../../services/admin.service';
 
 @Component({
   selector: 'app-add-client',
@@ -12,8 +12,9 @@ import {UserService} from '../../../services/user.service';
 export class AddClientComponent implements OnInit {
   hide = false;
   newUserForm: FormGroup;
+  showLoader = false;
 
-  constructor(private router: Router, private user: UserService, private handleAlertsProvider: HandleAlertsProvider) {
+  constructor(private router: Router, private user: AdminService, private handleAlertsProvider: HandleAlertsProvider) {
   }
 
   ngOnInit(): void {
@@ -37,21 +38,23 @@ export class AddClientComponent implements OnInit {
   }
 
   createNewUser() {
-    const updatedUser = this.newUserForm.value;
+    this.showLoader = true;
+    const newUser = this.newUserForm.value;
     console.warn(this.newUserForm.value);
     this.user.createUser(
-      updatedUser.name,
-      updatedUser.lastname,
-      updatedUser.username,
-      updatedUser.email,
-      updatedUser.phone,
-      updatedUser.password,
-      updatedUser.address,
-      updatedUser.state,
-      updatedUser.city,
-      updatedUser.code,
-      Number(updatedUser.status)
+      newUser.name,
+      newUser.lastname,
+      newUser.username,
+      newUser.email,
+      newUser.phone,
+      newUser.password,
+      newUser.address,
+      newUser.state,
+      newUser.city,
+      newUser.code,
+      Number(newUser.status)
     ).subscribe(response => {
+      this.showLoader = false;
       if (response.code === 'D200') {
         this.handleAlertsProvider.presentSnackbarSuccess('Se ha creado el usuario con exito!');
         this.router.navigate(['/admin/clients/list-of-clients']);
