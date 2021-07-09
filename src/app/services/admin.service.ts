@@ -109,4 +109,16 @@ export class AdminService {
     };
     return this.http.post(`${environment.basePath}/api/create?model=q_team`, params, {headers});
   }
+
+  uploadFile(imageData: any) {
+    const params = {
+      imageData,
+    };
+    return this.http.post<any>(`${environment.basePath}/api/file/upload`, params );
+  }
+
+
+  getFile(id): Observable<any> {
+    return this.http.get(`${environment.basePath}/api/file/get?id=${id}`, {headers});
+  }
 }

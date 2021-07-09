@@ -3,7 +3,7 @@ import { FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
 import { HandleAlertsProvider } from '../../../utilities/providers/handle-alerts-provider';
-import {UserService} from '../../../services/user.service';
+import {AdminService} from '../../../services/admin.service';
 
 @Component({
   selector: 'app-register',
@@ -32,7 +32,7 @@ export class RegisterComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private userService: UserService,
+    private admin: AdminService,
     private handleAlertsProvider: HandleAlertsProvider,
     private router: Router,
   ) {
@@ -47,7 +47,7 @@ export class RegisterComponent implements OnInit {
       let img = null;
 
       if (this.imageData !== null) {
-       img = await this.userService.uploadFile(this.imageData).toPromise();
+       img = await this.admin.uploadFile(this.imageData).toPromise();
       }
 
       const username = this.registerForm.value.username;
