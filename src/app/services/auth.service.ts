@@ -26,7 +26,7 @@ export class AuthService {
     return this.http.post<any>(`${environment.basePath}/api/auth/login`, params );
   }
 
-  register(name: string, lastname: string, username: string, password: any, email: string, phone: number, address: string, state: string, city: string, code: number) {
+  register(name: string, lastname: string, username: string, password: any, email: string, phone: number, address: string, state: string, city: string, code: number, img: string) {
     const params = {
       username,
       name,
@@ -38,8 +38,31 @@ export class AuthService {
       state,
       city,
       code,
+      img,
     };
     return this.http.post<any>(`${environment.basePath}/api/auth/register`, params);
+  }
+
+  activateAccount(code: string) {
+    const params = {
+      code,
+    };
+    return this.http.post<any>(`${environment.basePath}/api/auth/activateAccount`, params );
+  }
+
+  recoverPasswordInit(email: string) {
+    const params = {
+      email,
+    };
+    return this.http.post<any>(`${environment.basePath}/api/auth/recoverPasswordInit`, params );
+  }
+
+  recoverPasswordEnd(code: string, password: any) {
+    const params = {
+      code,
+      password
+    };
+    return this.http.post<any>(`${environment.basePath}/api/auth/recoverPasswordEnd`, params );
   }
 }
 

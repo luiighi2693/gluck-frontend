@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { HandleAlertsProvider } from '../../../utilities/providers/handle-alerts-provider';
-import { Router } from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 
 
 @Component({
@@ -25,9 +25,32 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private handleAlertsProvider: HandleAlertsProvider,
     private router: Router,
+    private route: ActivatedRoute
   ) { }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.route.queryParams.subscribe(params => {
+        console.log(params);
+        if (params.type) {
+          if (params.type === 'activateAccount') {
+            this.isLoaded = true;
+            this.authService.activateAccount(params.code).subscribe(data => {
+              this.isLoaded = false;
+              if (data.hasError) {
+                this.handleAlertsProvider.presentGenericAlert('No se ha podido activar su cuenta... intente de nuevo', 'No se Pudo completar la accion...')
+              }
+              else {
+                this.handleAlertsProvider.presentSnackbarSuccess('Se ha activado su cuenta con exito!');
+              }
+            });
+          }
+          if (params.type === 'recoveryPassword') {
+            sessionStorage.setItem('code', params.code);
+            this.router.navigate(['/auth/change-password']);
+          }
+        }
+      }
+    );
   }
 
   login() {
