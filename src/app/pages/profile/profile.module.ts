@@ -6,6 +6,7 @@ import { ProfileFormComponent } from './profile-form/profile-form.component';
 import { MaterialModule } from '../../material/material.module';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import {SharedModule} from "../../shared/shared.module";
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
-    RouterModule.forChild([{path: '', component: ProfileComponent}])
+    RouterModule.forChild([{path: '', component: ProfileComponent}]),
+    SharedModule
   ]
 })
 export class ProfileModule { }

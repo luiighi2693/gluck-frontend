@@ -1,13 +1,21 @@
+<app-loader [loading]="isLoaded"></app-loader>
 <div class="container profile__wrapper mb-3">
   <div class="row">
+    <form  [formGroup]="updateProfileForm">
     <div class="col-12 col-md-8 offset-md-2">
       <div class="row">
         <div class="col-12 text-center">
           <figure class="avatar__wrapper">
-            <img src="../../../../assets/example-user.png" class="avatar" alt="">
-            <button class="avatar__button" mat-fab aria-label="change picture">
+            <img [src]="imageData ? imageData : '../../../../assets/example-user.png'" class="avatar" alt="">
+            <button class="avatar__button" mat-fab aria-label="change picture" (click)="openUploadFiles()">
               <mat-icon>camera_alt</mat-icon>
             </button>
+            <input
+              #inputFiles
+              style="display: none"
+              type="file"
+              (change)="handleUpload($event)"
+            />
           </figure>
         </div>
         <mat-divider class="my-5"></mat-divider>
@@ -18,13 +26,13 @@
           <div class="col col-md-6 text-center">
             <mat-form-field appearance="outline" class="dual__input--item">
               <mat-label>Nombre</mat-label>
-              <input matInput type="text" placeholder="Nombre" autocomplete="off">
+              <input matInput type="text" formControlName="name" placeholder="Nombre" autocomplete="off">
             </mat-form-field>
           </div>
           <div class="col col-md-6 text-center">
             <mat-form-field appearance="outline" class="dual__input--item">
               <mat-label>Apellido</mat-label>
-              <input matInput type="text" placeholder="Apellido" autocomplete="off">
+              <input matInput type="text" formControlName="lastname" placeholder="Apellido" autocomplete="off">
             </mat-form-field>
           </div>
         </div>
@@ -32,19 +40,19 @@
           <div class="col-12 col-md-6 text-center">
             <mat-form-field appearance="outline" class="dual__input--item">
               <mat-label>Nombre de Usuario</mat-label>
-              <input matInput type="text" placeholder="Ej. pepito12345" autocomplete="off">
+              <input matInput type="text" formControlName="username" placeholder="Ej. pepito12345" autocomplete="off">
             </mat-form-field>
           </div>
           <div class="col-12 col-md-6 text-center">
             <mat-form-field appearance="outline" class="dual__input--item">
               <mat-label>Correo Electronico</mat-label>
-              <input matInput type="text" placeholder="Ej. correo@correo.com" autocomplete="off">
+              <input matInput type="text" formControlName="email" placeholder="Ej. correo@correo.com" autocomplete="off">
             </mat-form-field>
           </div>
           <div class="col-12 col-md-6">
             <mat-form-field appearance="outline" class="dual__input--item">
               <mat-label>Numero de Telefono</mat-label>
-              <input matInput type="number" placeholder="Ej. 04244557895" autocomplete="off">
+              <input matInput type="number" formControlName="phone" placeholder="Ej. 04244557895" autocomplete="off">
             </mat-form-field>
           </div>
         </div>
@@ -52,7 +60,7 @@
           <div class="col-12 text-center">
             <mat-form-field appearance="outline" class="unique__input--item">
               <mat-label>Contrasena</mat-label>
-              <input matInput [type]="hide ? 'password' : 'text'" placeholder="Contrasena" autocomplete="off">
+              <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" placeholder="Contrasena" autocomplete="off">
               <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
                       [attr.aria-pressed]="hide">
                 <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
@@ -78,25 +86,25 @@
           <div class="col-12 text-center">
             <mat-form-field appearance="outline" class="unique__input--item">
               <mat-label>Direccion</mat-label>
-              <input matInput type="text" placeholder="Ej. Calle 185 A 125-371 Av..." autocomplete="off">
+              <input matInput type="text" formControlName="address" placeholder="Ej. Calle 185 A 125-371 Av..." autocomplete="off">
             </mat-form-field>
           </div>
           <div class="col-12 col-sm-4 text-center">
             <mat-form-field appearance="outline" class="dual__input--item">
               <mat-label>Estado</mat-label>
-              <input matInput type="text" placeholder="Ej. Carabobo" autocomplete="off">
+              <input matInput type="text" formControlName="state" placeholder="Ej. Carabobo" autocomplete="off">
             </mat-form-field>
           </div>
           <div class="col-12 col-sm-4 text-center">
             <mat-form-field appearance="outline" class="dual__input--item">
               <mat-label>Ciudad</mat-label>
-              <input matInput type="text" placeholder="Ej. Valencia" autocomplete="off">
+              <input matInput type="text" formControlName="city" placeholder="Ej. Valencia" autocomplete="off">
             </mat-form-field>
           </div>
           <div class="col-12 col-sm-4 text-center">
             <mat-form-field appearance="outline" class="dual__input--item">
               <mat-label>Codigo Postal</mat-label>
-              <input matInput type="number" placeholder="Ej. 2005" autocomplete="off">
+              <input matInput type="number" formControlName="code" placeholder="Ej. 2005" autocomplete="off">
             </mat-form-field>
           </div>
         </div>
@@ -141,5 +149,6 @@
 <!--        </div>-->
       </div>
     </div>
+    </form>
   </div>
 </div>

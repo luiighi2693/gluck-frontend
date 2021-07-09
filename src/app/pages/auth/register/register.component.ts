@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
 import { HandleAlertsProvider } from '../../../utilities/providers/handle-alerts-provider';
+import {UserService} from '../../../services/user.service';
 
 @Component({
   selector: 'app-register',
@@ -24,10 +25,14 @@ export class RegisterComponent implements OnInit {
     state: ['', Validators.required],
     code: ['', Validators.required],
   });
+  imageData = null;
+
+  @ViewChild('inputFiles', { static: true }) inputFiles: ElementRef;
 
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
+    private userService: UserService,
     private handleAlertsProvider: HandleAlertsProvider,
     private router: Router,
   ) {
@@ -36,29 +41,53 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  register() {
-    const username = this.registerForm.value.username;
-    const password = this.registerForm.value.password;
-    const email = this.registerForm.value.email;
-    const name = this.registerForm.value.name;
-    const lastname = this.registerForm.value.lastname;
-    const phone = this.registerForm.value.phone;
-    const address = this.registerForm.value.address;
-    const city = this.registerForm.value.city;
-    const state = this.registerForm.value.state;
-    const code = this.registerForm.value.code;
+  async register() {
+    if (this.registerForm.valid) {
 
-    this.isLoaded = true;
-    this.authService.register(name, lastname, username, password, email, phone, address, state, city, code ).subscribe(data => {
-      this.isLoaded = false;
-      if (data.hasError) {
-        this.handleAlertsProvider.presentGenericAlert(data.message, '¡Ha Ocurrido un Error!');
+      let img = null;
+
+      if (this.imageData !== null) {
+       img = await this.userService.uploadFile(this.imageData).toPromise();
       }
-      else {
-        this.handleAlertsProvider.presentSnackbarSuccess('Se ha enviado un link de verificacion a su email, por favor revise su bandeja de entrada!');
-        this.router.navigate(['']);
-      }
-    });
+
+      const username = this.registerForm.value.username;
+      const password = this.registerForm.value.password;
+      const email = this.registerForm.value.email;
+      const name = this.registerForm.value.name;
+      const lastname = this.registerForm.value.lastname;
+      const phone = this.registerForm.value.phone;
+      const address = this.registerForm.value.address;
+      const city = this.registerForm.value.city;
+      const state = this.registerForm.value.state;
+      const code = this.registerForm.value.code;
+
+      this.isLoaded = true;
+      this.authService.register(name, lastname, username, password, email, phone, address, state, city, code, img ).subscribe(data => {
+        this.isLoaded = false;
+        if (data.hasError) {
+          this.handleAlertsProvider.presentGenericAlert(data.message, '¡Ha Ocurrido un Error!');
+        }
+        else {
+          this.handleAlertsProvider.presentSnackbarSuccess('Se ha enviado un link de verificacion a su email, por favor revise su bandeja de entrada!');
+          this.router.navigate(['']);
+        }
+      });
+    }
   }
 
+  handleUpload(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = async () => {
+      // const imageCompressed = await this.compressImage(reader.result, 1200, 600);
+      this.imageData = reader.result;
+      // this.imageType = event.target.files[0].type;
+    };
+  }
+
+  openUploadFiles() {
+    const el: HTMLElement = this.inputFiles.nativeElement as HTMLElement;
+    el.click();
+  }
 }

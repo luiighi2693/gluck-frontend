@@ -8,14 +8,20 @@
           <h1 class="fw-bold">Registarse</h1>
         </div>
       </div>
-      <form [formGroup]="registerForm" (submit)="register()">
+      <form [formGroup]="registerForm">
         <div class="row">
           <div class="col-12 col-md-4">
             <figure class="avatar__wrapper">
-              <img src="../../../../assets/default-user-example.jpg" class="avatar" alt="">
-              <button class="avatar__button" type="button" mat-fab aria-label="change picture">
+              <img [src]="this.imageData ? this.imageData : '../../../../assets/default-user-example.jpg'" class="avatar" alt="">
+              <button class="avatar__button" type="button" mat-fab aria-label="change picture" (click)="openUploadFiles()">
                 <mat-icon>camera_alt</mat-icon>
               </button>
+              <input
+                #inputFiles
+                style="display: none"
+                type="file"
+                (change)="handleUpload($event)"
+              />
             </figure>
           </div>
           <div class="col-12 col-md-8">
@@ -126,7 +132,7 @@
         </div>
       <div class="row">
         <div class="col-12 text-center">
-          <button mat-flat-button [disabled]="!registerForm.valid" type="submit" class="login__button">
+          <button mat-flat-button [disabled]="!registerForm.valid" (click)="register()" class="login__button">
             Registrar
           </button>
         </div>

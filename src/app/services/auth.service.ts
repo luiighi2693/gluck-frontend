@@ -26,7 +26,7 @@ export class AuthService {
     return this.http.post<any>(`${environment.basePath}/api/auth/login`, params );
   }
 
-  register(name: string, lastname: string, username: string, password: any, email: string, phone: number, address: string, state: string, city: string, code: number) {
+  register(name: string, lastname: string, username: string, password: any, email: string, phone: number, address: string, state: string, city: string, code: number, img: string) {
     const params = {
       username,
       name,
@@ -38,11 +38,10 @@ export class AuthService {
       state,
       city,
       code,
+      img,
     };
     return this.http.post<any>(`${environment.basePath}/api/auth/register`, params);
   }
-
-
 
   activateAccount(code: string) {
     const params = {
