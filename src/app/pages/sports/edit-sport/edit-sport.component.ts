@@ -28,6 +28,7 @@ export class EditSportComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.createForm();
     this.getCurrentSport =
       this.route.params.subscribe(params => {
         this.currentSport = params.id;
@@ -36,7 +37,7 @@ export class EditSportComponent implements OnInit {
     this.admin.getSport(this.currentSport).subscribe(response => {
       if (response.code === 'D200') {
         this.sportData = response.data;
-        this.createForm();
+        this.updateForm();
       } else if (response.code === 'A401' || response.code === 'A302' || response.code === 'A403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
         this.router.navigate(['/auth']);
@@ -48,13 +49,19 @@ export class EditSportComponent implements OnInit {
 
   private createForm() {
     this.updateSportForm = new FormGroup({
-      name: new FormControl(this.sportData.name, Validators.required),
-      date_Create: new FormControl(this.sportData.date_Create, Validators.required),
-      description: new FormControl(this.sportData.descriptios, Validators.required),
-      id: new FormControl(this.currentSport, Validators.required),
+      name: new FormControl('', Validators.required),
+      date_Create: new FormControl('', Validators.required),
+      description: new FormControl('', Validators.required),
+      id: new FormControl('', Validators.required),
       status: new FormControl('', Validators.required )
     });
+  }
 
+  private updateForm() {
+    this.updateSportForm.get('name').setValue(this.sportData.name);
+    this.updateSportForm.get('description').setValue(this.sportData.descriptios);
+    this.updateSportForm.get('date_Create').setValue(this.sportData.date_Create);
+    this.updateSportForm.get('id').setValue(this.currentSport);
   }
 
   updateSport() {

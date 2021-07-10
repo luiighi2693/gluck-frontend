@@ -28,6 +28,7 @@ export class EditClientComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.createForm();
     this.getCurrentUser =
       this.route.params.subscribe(params => {
       this.currentUser = params.id;
@@ -36,7 +37,7 @@ export class EditClientComponent implements OnInit {
     this.user.getUser(this.currentUser).subscribe(response => {
       if (response.code === 'D200') {
         this.userData = response.data;
-        this.createForm();
+        this.updateForm();
       } else if (response.code === 'A401' || response.code === 'A302' || response.code === 'A403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
         this.router.navigate(['/auth']);
@@ -48,20 +49,33 @@ export class EditClientComponent implements OnInit {
 
   private createForm() {
     this.updateUserForm = new FormGroup({
-      username: new FormControl(this.userData.username, Validators.required),
-      name: new FormControl(this.userData.name, Validators.required),
-      lastname: new FormControl(this.userData.lastname, Validators.required),
-      email: new FormControl(this.userData.email, Validators.required),
-      password: new FormControl(this.userData.password, Validators.required),
-      phone: new FormControl(this.userData.phone, Validators.required),
-      address: new FormControl(this.userData.address, Validators.required),
-      state: new FormControl(this.userData.state, Validators.required),
-      city: new FormControl(this.userData.city, Validators.required),
-      code: new FormControl(this.userData.code, Validators.required),
-      id: new FormControl(this.currentUser, Validators.required),
+      username: new FormControl('', Validators.required),
+      name: new FormControl('', Validators.required),
+      lastname: new FormControl('', Validators.required),
+      email: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required),
+      phone: new FormControl('', Validators.required),
+      address: new FormControl('', Validators.required),
+      state: new FormControl('', Validators.required),
+      city: new FormControl('', Validators.required),
+      code: new FormControl('', Validators.required),
+      id: new FormControl('', Validators.required),
       status: new FormControl('', Validators.required )
     });
+  }
 
+  private updateForm() {
+    this.updateUserForm.get('username').setValue(this.userData.username);
+    this.updateUserForm.get('name').setValue(this.userData.name);
+    this.updateUserForm.get('lastname').setValue(this.userData.lastname);
+    this.updateUserForm.get('email').setValue(this.userData.email);
+    this.updateUserForm.get('phone').setValue(this.userData.phone);
+    this.updateUserForm.get('address').setValue(this.userData.address);
+    this.updateUserForm.get('state').setValue(this.userData.state);
+    this.updateUserForm.get('state').setValue(this.userData.state);
+    this.updateUserForm.get('city').setValue(this.userData.city);
+    this.updateUserForm.get('code').setValue(this.userData.code);
+    this.updateUserForm.get('id').setValue(this.currentUser);
   }
 
   updateUser() {

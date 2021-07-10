@@ -29,6 +29,8 @@ export class EditTeamComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.createForm();
+
     this.getCurrentTeam =
       this.route.params.subscribe(params => {
         this.currentTeam = params.id;
@@ -43,7 +45,8 @@ export class EditTeamComponent implements OnInit {
     this.admin.getTeam(this.currentTeam).subscribe(response => {
       if (response.code === 'D200') {
         this.teamData = response.data;
-        this.createForm();
+        console.log(this.teamData);
+        this.updateForm();
       } else if (response.code === 'A401' || response.code === 'A302' || response.code === 'A403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
         this.router.navigate(['/auth']);
@@ -54,15 +57,23 @@ export class EditTeamComponent implements OnInit {
   }
 
   private createForm() {
+
     this.updatedTeamForm = new FormGroup({
-      name: new FormControl(this.teamData.name, Validators.required),
-      description: new FormControl(this.teamData.descriptios, Validators.required),
-      date_Create: new FormControl(this.teamData.date_Create, Validators.required),
+      name: new FormControl('', Validators.required),
+      description: new FormControl('', Validators.required),
+      date_Create: new FormControl('', Validators.required),
       asociatedSport: new FormControl('', Validators.required),
       status: new FormControl('', Validators.required),
-      id: new FormControl(this.currentTeam, Validators.required),
+      id: new FormControl('', Validators.required),
     });
 
+  }
+
+  private updateForm() {
+    this.updatedTeamForm.get('name').setValue(this.teamData.name);
+    this.updatedTeamForm.get('description').setValue(this.teamData.descriptios);
+    this.updatedTeamForm.get('date_Create').setValue(this.teamData.date_Create);
+    this.updatedTeamForm.get('id').setValue(this.currentTeam);
   }
 
   updateTeam() {
