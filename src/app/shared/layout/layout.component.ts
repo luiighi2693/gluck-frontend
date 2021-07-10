@@ -21,8 +21,7 @@ export class LayoutComponent implements OnInit {
 
   ngOnInit(): void {
     this.isExpanded = true;
-    const isAdmin = sessionStorage.getItem('isAdmin');
-    this.isAdmin = !!isAdmin;
+    this.isAdmin = JSON.parse(sessionStorage.getItem('isAdmin'));
   }
 
   toggleSidenav($event) {
