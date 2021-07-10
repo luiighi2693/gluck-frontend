@@ -25,3 +25,38 @@
   color: #F6DD06;
   cursor: pointer;
 }
+
+.user__options {
+  background-color: white;
+  color: black;
+  position: absolute;
+  top: 11%;
+  right: 1%;
+  max-width: 300px;
+  max-height: 300px;
+  width: 100%;
+  z-index: 100;
+}
+
+.user__options--image {
+  width: 170px;
+  border-radius: 50%;
+}
+
+.title {
+  font-size: 22px;
+}
+
+
+
+.black-background {
+  background-color: #333232;
+  color: white;
+  border: 1px solid white;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.white-background {
+  background-color: white;
+}

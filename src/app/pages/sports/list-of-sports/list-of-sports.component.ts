@@ -33,24 +33,33 @@ export class ListOfSportsComponent implements OnInit, AfterViewInit {
     private handleAlertsProvider: HandleAlertsProvider,
     private router: Router,
     private admin: AdminService,
-  ) {}
+  ) {
+    this.admin.initToken();
+  }
 
   ngOnInit(): void {
   }
 
   ngAfterViewInit() {
+    this.setData();
+  }
+
+  setData() {
     this.showLoader = true;
     this.admin.getSports().subscribe(data => {
-      console.log(data);
+      if (data.code === 'D200') {
       this.showLoader = false;
       this.dataSource = new MatTableDataSource<SportData>(data.data);
       this.dataSource.paginator = this.paginator;
       this.dataSource.sort = this.sort;
+      } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
+        this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
+        this.router.navigate(['/auth']);
+      }
     }, error => {
       this.showLoader = false;
-      console.error(error);
+      this.handleAlertsProvider.presentGenericAlert(error);
     });
-
   }
 
   applyFilter(event: Event) {
@@ -70,10 +79,22 @@ export class ListOfSportsComponent implements OnInit, AfterViewInit {
     const dialogRef = this.handleAlertsProvider.presentErrorDialogOk(`Esta seguro de eliminar el usuario <b>${sport.name}</b>?`, 'Aviso!');
     dialogRef.afterClosed().subscribe(response => {
       if (response) {
-        this.handleAlertsProvider.presentSnackbarSuccess(`Se ha eliminado el user ${sport.name} con exito!`);
+        this.showLoader = true;
+        this.admin.deleteSport(sport.rowid).subscribe(res => {
+          this.showLoader = false;
+          if (res.code === 'D200') {
+            this.handleAlertsProvider.presentSnackbarSuccess(`Se ha eliminado el user ${sport.name} con exito!`);
+            this.setData();
+          } else if (res.code === 'A401' || res.code === 'A302' || res.code === 'A403') {
+            this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
+            this.router.navigate(['/auth']);
+          }
+        }, err => {
+          this.handleAlertsProvider.presentGenericAlert(err);
+        });
       }
     }, error => {
-      console.error(error);
+      this.handleAlertsProvider.presentGenericAlert(error);
     });
   }
 

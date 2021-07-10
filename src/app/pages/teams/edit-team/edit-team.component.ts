@@ -25,6 +25,7 @@ export class EditTeamComponent implements OnInit {
     private route: ActivatedRoute,
     private handleAlertsProvider: HandleAlertsProvider,
   ) {
+    this.admin.initToken();
   }
 
   ngOnInit(): void {
@@ -42,24 +43,24 @@ export class EditTeamComponent implements OnInit {
     this.admin.getTeam(this.currentTeam).subscribe(response => {
       if (response.code === 'D200') {
         this.teamData = response.data;
-        console.log(this.teamData);
         this.createForm();
-      } else {
-        alert('ha ocurrido un error!');
+      } else if (response.code === 'A401' || response.code === 'A302' || response.code === 'A403') {
+        this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
+        this.router.navigate(['/auth']);
       }
     }, err => {
-      console.error(err);
+      this.handleAlertsProvider.presentGenericAlert(err);
     });
   }
 
   private createForm() {
     this.updatedTeamForm = new FormGroup({
       name: new FormControl(this.teamData.name, Validators.required),
-      date_Create: new FormControl(this.teamData.date_Create, Validators.required),
       description: new FormControl(this.teamData.descriptios, Validators.required),
-      id: new FormControl(this.currentTeam, Validators.required),
+      date_Create: new FormControl(this.teamData.date_Create, Validators.required),
+      asociatedSport: new FormControl('', Validators.required),
       status: new FormControl('', Validators.required),
-      asociatedSport: new FormControl('', Validators.required)
+      id: new FormControl(this.currentTeam, Validators.required),
     });
 
   }
@@ -79,10 +80,13 @@ export class EditTeamComponent implements OnInit {
       this.showLoader = false;
       if (response.code === 'D200') {
         this.handleAlertsProvider.presentSnackbarSuccess('Se actualizo la informacion con exito!');
-        this.router.navigate(['/admin/sports/list-of-sports']);
-      } else {
-        this.handleAlertsProvider.presentGenericAlert('Por Favor intentalo en unos minutos...', 'Ha ocurrido un error!');
+        this.router.navigate(['/admin/teams/list-of-teams']);
+      } else if (response.code === 'A401' || response.code === 'A302' || response.code === 'A403') {
+        this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
+        this.router.navigate(['/auth']);
       }
+    }, err => {
+      this.handleAlertsProvider.presentGenericAlert(err);
     });
   }
 }

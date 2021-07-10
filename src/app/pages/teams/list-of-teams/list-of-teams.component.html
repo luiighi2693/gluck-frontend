@@ -53,7 +53,7 @@
         <!-- Progress Column -->
         <ng-container matColumnDef="sport">
           <th class="sport" mat-header-cell *matHeaderCellDef mat-sort-header> Deporte </th>
-          <td class="sport" mat-cell *matCellDef="let row"> {{row.sport}} </td>
+          <td class="sport" mat-cell *matCellDef="let row"> {{row.sport ? row.sport.name : ''}} </td>
         </ng-container>
 
         <!-- Fruit Column -->

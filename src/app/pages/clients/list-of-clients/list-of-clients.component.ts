@@ -1,10 +1,10 @@
-import {AfterViewInit, Component, ViewChild, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
-import { HandleAlertsProvider } from '../../../utilities/providers/handle-alerts-provider';
-import { Router } from '@angular/router';
-import { AdminService } from '../../../services/admin.service';
+import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
+import {Router} from '@angular/router';
+import {AdminService} from '../../../services/admin.service';
 
 export interface UserData {
   rowid: string;
@@ -16,35 +16,7 @@ export interface UserData {
   date_Access: string;
 }
 
-/** Constants used to fill up our data base. */
-const FRUITS: string[] = [
-  'blueberry', 'lychee', 'kiwi', 'mango', 'peach', 'lime', 'pomegranate', 'pineapple'
-];
-const NAMES: string[] = [
-  'Maia', 'Asher', 'Olivia', 'Atticus', 'Amelia', 'Jack', 'Charlotte', 'Theodore', 'Isla', 'Oliver',
-  'Isabella', 'Jasper', 'Cora', 'Levi', 'Violet', 'Arthur', 'Mia', 'Thomas', 'Elizabeth'
-];
-
-const users: UserData[] = [
-  // {
-  //   id: '1',
-  //   username: 'admin',
-  //   name: 'admin',
-  //   email: 'admin@admin.com',
-  //   phone: '123456789123456',
-  //   status: 1,
-  //   lastLogin: '08-10-2020',
-  // },
-  // {
-  //   id: '2',
-  //   username: 'client',
-  //   name: 'client',
-  //   email: 'client@client.com',
-  //   phone: '12345678912',
-  //   status: 0,
-  //   lastLogin: '08-10-2020',
-  // }
-];
+const users: UserData[] = [];
 
 @Component({
   selector: 'app-list-of-clients',
@@ -62,29 +34,34 @@ export class ListOfClientsComponent implements OnInit, AfterViewInit {
   constructor(
     private handleAlertsProvider: HandleAlertsProvider,
     private router: Router,
-    private user: AdminService,
+    private admin: AdminService,
   ) {
-    // Create 100 users
-    // const users = Array.from({length: 100}, (_, k) => createNewUser(k + 1));
-
-    // Assign the data to the data source for the table to render
+    this.admin.initToken();
   }
 
   ngOnInit(): void {
   }
 
   ngAfterViewInit() {
+    this.setData();
+  }
+
+  setData() {
     this.showLoader = true;
-    this.user.getUsers().subscribe(data => {
-      this.showLoader = false;
-      this.dataSource = new MatTableDataSource<UserData>(data.data);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+    this.admin.getUsers().subscribe(data => {
+      if (data.code === 'D200') {
+        this.showLoader = false;
+        this.dataSource = new MatTableDataSource<UserData>(data.data);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
+        this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
+        this.router.navigate(['/auth']);
+      }
     }, error => {
       this.showLoader = false;
-      console.error(error);
+      this.handleAlertsProvider.presentGenericAlert(error);
     });
-
   }
 
   applyFilter(event: Event) {
@@ -104,10 +81,22 @@ export class ListOfClientsComponent implements OnInit, AfterViewInit {
     const dialogRef = this.handleAlertsProvider.presentErrorDialogOk(`Esta seguro de eliminar el usuario <b>${user.name}</b>?`, 'Aviso!');
     dialogRef.afterClosed().subscribe(response => {
       if (response) {
-        this.handleAlertsProvider.presentSnackbarSuccess(`Se ha eliminado el user ${user.name} con exito!`);
+        this.showLoader = true;
+        this.admin.deleteUser(user.rowid).subscribe(res => {
+          this.showLoader = false;
+          if (res.code === 'D200') {
+            this.handleAlertsProvider.presentSnackbarSuccess(`Se ha eliminado el user ${user.name} con exito!`);
+            this.setData();
+          } else if (res.code === 'A401' || res.code === 'A302' || res.code === 'A403') {
+            this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
+            this.router.navigate(['/auth']);
+          }
+        }, err => {
+          this.handleAlertsProvider.presentGenericAlert(err);
+        });
       }
     }, error => {
-      console.error(error);
+      this.handleAlertsProvider.presentGenericAlert(error);
     });
   }
 }

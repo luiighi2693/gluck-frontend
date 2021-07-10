@@ -15,6 +15,7 @@ export class AddSportComponent implements OnInit {
   showLoader = false;
 
   constructor(private router: Router, private admin: AdminService, private handleAlertsProvider: HandleAlertsProvider) {
+    this.admin.initToken();
   }
 
   ngOnInit(): void {
@@ -44,7 +45,12 @@ export class AddSportComponent implements OnInit {
       if (response.code === 'D200') {
         this.handleAlertsProvider.presentSnackbarSuccess('Se ha creado el usuario con exito!');
         this.router.navigate(['/admin/sports/list-of-sports']);
+      } else if (response.code === 'A401' || response.code === 'A302' || response.code === 'A403') {
+        this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
+        this.router.navigate(['/auth']);
       }
+    }, err => {
+      this.handleAlertsProvider.presentGenericAlert(err);
     });
   }
 

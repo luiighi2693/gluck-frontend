@@ -7,11 +7,11 @@
         <div class="col-12 text-center">
           <h1 class="fw-bold">Ingresar</h1>
         </div>
-        <form [formGroup]="loginForm" (submit)="login()">
+        <form [formGroup]="loginForm" (submit)="login()" (keyup.enter)="login()">
           <div class="col-12">
             <mat-form-field appearance="outline" class="login__form--input">
               <mat-label for="userName">Usuario</mat-label>
-              <input matInput placeholder="Ej. pepito12345" autocomplete="off" formControlName="userName" required>
+              <input matInput placeholder="Ej. pepito12345" autocomplete="off" formControlName="username" required>
               <mat-icon matPrefix>person</mat-icon>
               <mat-error>Este Campo es <b>Requerido</b>.</mat-error>
             </mat-form-field>
@@ -20,7 +20,7 @@
             <mat-form-field appearance="outline" class="login__form--input">
               <mat-label>Contrasena</mat-label>
               <input matInput [type]="hide ? 'password' : 'text'" placeholder="Ej. 123456" autocomplete="off" formControlName="password" required>
-              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
+              <button mat-icon-button matSuffix type="button" (click)="hide = !hide" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="hide">
                 <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
               </button>
               <mat-icon matPrefix>lock</mat-icon>

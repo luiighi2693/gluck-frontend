@@ -3,12 +3,31 @@
     <mat-icon aria-label="Menu">menu</mat-icon>
   </button>
   <div class="d-flex align-items-center">
-    <button mat-icon-button  class="notification__button">
+    <button mat-icon-button class="notification__button">
       <mat-icon matBadge="15" matBadgeColor="warn" aria-label="Notifications">notifications</mat-icon>
     </button>
-    <div class="profile__options">
+    <div class="profile__options" (click)="userOptions = !userOptions">
       <mat-icon aria-label="Person">person</mat-icon>
       <p class="m-0">jose</p>
+    </div>
+    <div class="user__options" *ngIf="userOptions">
+      <div class="row black-background">
+        <div class="col-12 text-center">
+          <figure class="user__options--image-wrapper">
+            <img src="../../../../assets/example-user.png" class="user__options--image" alt="example user">
+          </figure>
+        </div>
+        <div class="col-12 text-center">
+          <p class="title">Administrador</p>
+          <p class="text">mienbro desde 2020-08-15</p>
+        </div>
+      </div>
+      <div class="row white-background p-0">
+        <div class="col-12 d-flex justify-content-between px-3 py-2 user__options--buttons">
+          <button mat-flat-button color="primary" (click)="editUser()">Perfil</button>
+          <button mat-flat-button color="warn" (click)="logout()">Salir</button>
+        </div>
+      </div>
     </div>
   </div>
 </nav>

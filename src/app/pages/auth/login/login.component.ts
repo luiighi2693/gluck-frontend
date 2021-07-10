@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, Validators } from '@angular/forms';
-import { AuthService } from '../../../services/auth.service';
-import { HandleAlertsProvider } from '../../../utilities/providers/handle-alerts-provider';
+import {Component, OnInit} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {AuthService} from '../../../services/auth.service';
+import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
 import {ActivatedRoute, Router} from '@angular/router';
 
 
@@ -13,56 +13,59 @@ import {ActivatedRoute, Router} from '@angular/router';
 export class LoginComponent implements OnInit {
   hide = true;
   isLoaded = false;
-  loginForm = this.fb.group({
-    userName: ['', Validators.required],
-    password: ['', Validators.required],
-    // recaptcha: ['', Validators.required],
-  });
+  loginForm: FormGroup;
   siteKey: string;
 
   constructor(
-    private fb: FormBuilder,
     private authService: AuthService,
     private handleAlertsProvider: HandleAlertsProvider,
     private router: Router,
     private route: ActivatedRoute
-  ) { }
+  ) {
+  }
 
   ngOnInit() {
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('isAdmin');
     this.route.queryParams.subscribe(params => {
-        console.log(params);
-        if (params.type) {
-          if (params.type === 'activateAccount') {
-            this.isLoaded = true;
-            this.authService.activateAccount(params.code).subscribe(data => {
-              this.isLoaded = false;
-              if (data.hasError) {
-                this.handleAlertsProvider.presentGenericAlert('No se ha podido activar su cuenta... intente de nuevo', 'No se Pudo completar la accion...')
-              }
-              else {
-                this.handleAlertsProvider.presentSnackbarSuccess('Se ha activado su cuenta con exito!');
-              }
-            });
-          }
-          if (params.type === 'recoveryPassword') {
-            sessionStorage.setItem('code', params.code);
-            this.router.navigate(['/auth/change-password']);
-          }
+      console.log(params);
+      if (params.type) {
+        if (params.type === 'activateAccount') {
+          this.isLoaded = true;
+          this.authService.activateAccount(params.code).subscribe(data => {
+            this.isLoaded = false;
+            if (data.hasError) {
+              this.handleAlertsProvider.presentGenericAlert('No se ha podido activar su cuenta... intente de nuevo', 'No se Pudo completar la accion...');
+            } else {
+              this.handleAlertsProvider.presentSnackbarSuccess('Se ha activado su cuenta con exito!');
+            }
+          });
+        }
+        if (params.type === 'recoveryPassword') {
+          sessionStorage.setItem('code', params.code);
+          this.router.navigate(['/auth/change-password']);
         }
       }
+      }
     );
+    this.createForm();
+  }
+
+  private createForm() {
+    this.loginForm = new FormGroup({
+      username: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required)
+    });
   }
 
   login() {
-    const username = this.loginForm.value.userName;
-    const password = this.loginForm.value.password;
+    const user = this.loginForm.value;
     this.isLoaded = true;
-    this.authService.login(username, password).subscribe(data => {
+    this.authService.login(user.username, user.password).subscribe(data => {
       this.isLoaded = false;
       if (data.hasError) {
-        this.handleAlertsProvider.presentGenericAlert('No se ha encontrado el usuario solicitado... intente de nuevo', 'No se Pudo completar la accion...')
-      }
-      else {
+        this.handleAlertsProvider.presentGenericAlert('No se ha encontrado el usuario solicitado... intente de nuevo', 'No se Pudo completar la accion...');
+      } else {
         sessionStorage.setItem('token', data.accessToken);
         sessionStorage.setItem('username', data.username);
         sessionStorage.setItem('email', data.email);

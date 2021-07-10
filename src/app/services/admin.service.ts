@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import {Observable} from 'rxjs';
 
-const headers = new HttpHeaders().set('token', sessionStorage.getItem('token'));
+let headers;
 
 @Injectable({
   providedIn: 'root'
@@ -13,12 +13,19 @@ export class AdminService {
     private http: HttpClient,
   ) { }
 
+  initToken() {
+     headers = new HttpHeaders().set('token', sessionStorage.getItem('token'));
+  }
+
   getUsers(): Observable<any> {
     return this.http.get(`${environment.basePath}/api/get/?model=q_user`, {headers});
   }
 
   getUser(id): Observable<any> {
     return this.http.get(`${environment.basePath}/api/getOne?id=${id}&model=q_user`, {headers});
+  }
+  deleteUser(id): Observable<any> {
+    return this.http.delete(`${environment.basePath}/api/delete?id=${id}&model=q_user`, {headers});
   }
 
   editUser(name, lastname, username, email, phone, password, address, state, city, code, rowid, status ): Observable<any> {
@@ -62,6 +69,9 @@ export class AdminService {
   getSport(id): Observable<any> {
     return this.http.get(`${environment.basePath}/api/getOne?id=${id}&model=q_sport`, {headers});
   }
+  deleteSport(id): Observable<any> {
+    return this.http.delete(`${environment.basePath}/api/delete?id=${id}&model=q_sport`, {headers});
+  }
   editSport(id, name, dateCreate, status, description): Observable<any> {
     const params = {
       rowid: id,
@@ -83,10 +93,15 @@ export class AdminService {
   }
 
   getTeams(): Observable<any> {
-    return this.http.get(`${environment.basePath}/api/get?model=q_team`, {headers});
+    const includes = ['sport'];
+    return this.http.get(`${environment.basePath}/api/get?model=q_team&include=${encodeURI(JSON.stringify(includes))}`, {headers});
   }
   getTeam(id): Observable<any> {
-    return this.http.get(`${environment.basePath}/api/getOne?id=${id}&model=q_team`, {headers});
+    const includes = ['sport'];
+    return this.http.get(`${environment.basePath}/api/getOne?id=${id}&model=q_team&include=${encodeURI(JSON.stringify(includes))}`, {headers});
+  }
+  deleteTeam(id): Observable<any> {
+    return this.http.delete(`${environment.basePath}/api/delete?id=${id}&model=q_team`, {headers});
   }
   editTeam(id, name, description, dateCreate, status, asociatedSport): Observable<any> {
     const params = {

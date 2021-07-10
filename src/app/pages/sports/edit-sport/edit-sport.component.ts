@@ -23,7 +23,9 @@ export class EditSportComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private handleAlertsProvider: HandleAlertsProvider,
-  ) { }
+  ) {
+    this.admin.initToken();
+  }
 
   ngOnInit(): void {
     this.getCurrentSport =
@@ -35,11 +37,12 @@ export class EditSportComponent implements OnInit {
       if (response.code === 'D200') {
         this.sportData = response.data;
         this.createForm();
-      } else {
-        alert('ha ocurrido un error!');
+      } else if (response.code === 'A401' || response.code === 'A302' || response.code === 'A403') {
+        this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
+        this.router.navigate(['/auth']);
       }
     }, err => {
-      console.error(err);
+      this.handleAlertsProvider.presentGenericAlert(err);
     });
   }
 
@@ -69,8 +72,9 @@ export class EditSportComponent implements OnInit {
       if (response.code === 'D200') {
         this.handleAlertsProvider.presentSnackbarSuccess('Se actualizo la informacion con exito!');
         this.router.navigate(['/admin/sports/list-of-sports']);
-      } else {
-        this.handleAlertsProvider.presentGenericAlert('Por Favor intentalo en unos minutos...' , 'Ha ocurrido un error!');
+      } else if (response.code === 'A401' || response.code === 'A302' || response.code === 'A403') {
+        this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
+        this.router.navigate(['/auth']);
       }
     });
   }

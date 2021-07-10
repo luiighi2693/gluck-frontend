@@ -1,4 +1,5 @@
-<div class="home__wrapper" *ngIf="!isAdmin">
+<app-loader [loading]="loaderValue" ></app-loader>
+<div class="home__wrapper" *ngIf="isAdmin === false">
   <mat-drawer-container class="example-container mat-typography" autosize>
     <mat-drawer #drawer mode="side" disableClose="true" opened="true">
       <mat-nav-list class="nav__list">
@@ -40,6 +41,7 @@
   <main>
     <app-header
       (toggleValue)="toggleSidenav($event)"
+      (showLoader)="showLoader($event)"
     ></app-header>
     <router-outlet></router-outlet>
     <app-footer></app-footer>
@@ -47,7 +49,7 @@
 
 </div>
 
-<div class="home__wrapper" *ngIf="isAdmin">
+<div class="home__wrapper" *ngIf="isAdmin === true">
   <mat-drawer-container class="example-container mat-typography" autosize>
     <mat-drawer #drawer mode="side" disableClose="true" opened="true">
       <mat-nav-list class="nav__list">

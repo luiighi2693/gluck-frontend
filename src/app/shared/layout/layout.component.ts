@@ -14,6 +14,7 @@ export class LayoutComponent implements OnInit {
   teamOptions = false;
   isAdmin: boolean;
   option = false;
+  loaderValue = false;
 
   constructor() {
   }
@@ -47,5 +48,9 @@ export class LayoutComponent implements OnInit {
 
   toggleOptions(option) {
     this.option = !this.option;
+  }
+
+  showLoader($event: boolean) {
+    this.loaderValue = $event;
   }
 }
