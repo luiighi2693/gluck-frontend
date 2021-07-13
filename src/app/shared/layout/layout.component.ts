@@ -12,6 +12,7 @@ export class LayoutComponent implements OnInit {
   clientOptions = false;
   sportOptions = false;
   teamOptions = false;
+  emailOptions = false;
   isAdmin: boolean;
   option = false;
   loaderValue = false;
@@ -31,6 +32,9 @@ export class LayoutComponent implements OnInit {
 
   togglePoolsOptions() {
     this.poolsOptions = !this.poolsOptions;
+  }
+  toggleEmailOptions() {
+    this.emailOptions = !this.emailOptions;
   }
 
   toggleClientsOptions() {

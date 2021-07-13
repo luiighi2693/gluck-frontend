@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AdminComponent } from './admin.component';
 import { RouterModule } from '@angular/router';
+import { MaterialModule } from '../../material/material.module';
 
 
 @NgModule({
@@ -10,6 +11,7 @@ import { RouterModule } from '@angular/router';
   ],
   imports: [
     CommonModule,
+    MaterialModule,
     RouterModule.forChild([{path: '', component: AdminComponent}])
   ]
 })

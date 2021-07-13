@@ -135,6 +135,22 @@
         </mat-list-item>
 <!--        pools-->
 
+<!--        email-->
+        <mat-list-item [ngClass]="{'nav__list--item--padding': isExpanded}" (click)="toggleEmailOptions()"  class="sidenav__item">
+          <mat-icon mat-list-icon>business_center</mat-icon>
+          <h4 mat-line class="d-flex align-items-center" *ngIf="isExpanded">
+            Emails
+            <mat-icon *ngIf="!emailOptions" >keyboard_arrow_right</mat-icon>
+            <mat-icon *ngIf="emailOptions" >keyboard_arrow_down</mat-icon>
+          </h4>
+        </mat-list-item>
+        <mat-list-item class="sidenav__item--expanded" *ngIf="emailOptions" routerLink="emails">
+          <mat-icon mat-list-icon>add_box</mat-icon>
+          <h4 mat-line>Nuevo Email</h4>
+        </mat-list-item>
+
+<!--        email-->
+
         <mat-list-item [ngClass]="{'nav__list--item--padding': isExpanded}"  routerLink="calendar" class="sidenav__item">
           <mat-icon mat-list-icon>calendar_today</mat-icon>
           <h4 mat-line *ngIf="isExpanded">Calendario</h4>
