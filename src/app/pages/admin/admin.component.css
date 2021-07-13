@@ -52,6 +52,15 @@
   font-weight: bold;
 }
 
+.action-button {
+  color: black;
+  background-color: #F6DD06;
+}
+
+.action-button:hover {
+  color: #F6DD06;
+  background-color: black;
+}
 .current-pools {
   background-color: white;
   color: black;
@@ -59,6 +68,10 @@
   padding: 1rem;
 }
 
+.current__pools--header {
+  display: flex;
+  justify-content: space-between;
+}
 .other-pools {
   background-color: white;
   color: black;
