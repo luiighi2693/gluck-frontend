@@ -13,7 +13,6 @@ import {Router} from '@angular/router';
 export class EmailsComponent implements OnInit {
   showLoader = false;
   emailForm: FormGroup;
-  sportsData: any [];
 
   constructor(
     private admin: AdminService,
@@ -40,7 +39,7 @@ export class EmailsComponent implements OnInit {
   }
 
   sendEmail() {
-    alert(this.emailForm.value);
+    console.log(this.emailForm.value);
     // this.showLoader = true;
     // const emailForm = this.emailForm.value;
     // console.warn(emailForm);
@@ -56,5 +55,6 @@ export class EmailsComponent implements OnInit {
     //   this.handleAlertsProvider.presentGenericAlert(err);
     // });
   }
+
 
 }

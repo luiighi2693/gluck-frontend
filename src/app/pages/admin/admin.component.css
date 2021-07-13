@@ -52,6 +52,35 @@
   font-weight: bold;
 }
 
+.current-pools {
+  background-color: white;
+  color: black;
+  min-height: 300px;
+  padding: 1rem;
+}
+
+.other-pools {
+  background-color: white;
+  color: black;
+  min-height: 300px;
+  padding: 1rem;
+}
+
+.map-widget {
+  background-color: white;
+  color: black;
+  min-height: 700px;
+  padding: 1rem;
+  position: relative;
+}
+
+.email-widget {
+  min-height: 500px;
+  background-color: white;
+  color: black;
+  padding: 1rem;
+}
+
 
 @media (max-width: 768px ) {
   .home__banner--item {

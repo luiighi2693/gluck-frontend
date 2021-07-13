@@ -28,15 +28,106 @@
   </div>
 
   <div class="mt-5 pt-5">
-    <figure class="m-0">
-      <img src="../../../../assets/gluck-home-ad-1.png" class="main__banner--image" alt="">
-    </figure>
-    <div class="main__banner--text">
-      <h1>Quinielas Calientes</h1>
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <div class="current-pools">
+          <h2 class="text-center">Qunielas en Proceso</h2>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="other-pools">
+          <h2 class="text-center">Otras Quinielas</h2>
+        </div>
+      </div>
     </div>
-    <figure class="m-0">
-      <img src="../../../../assets/gluck-home-ad-1.png" class="main__banner--image" alt="">
-    </figure>
+    <div class="row">
+      <div class="col-12">
+        <div class="map-widget my-4">
+          <app-map></app-map>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-12">
+        <div class="email-widget">
+          <form [formGroup]="emailForm" (submit)="sendEmail()">
+            <div class="col-12 col-md-8 offset-md-2">
+              <div class="row">
+                <div class="col-12 ">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Seleccione una categoria</mat-label>
+                    <mat-select formControlName="category" required>
+                      <mat-option value="active-pools">Quinielas Activas</mat-option>
+                      <mat-option value="all-pools">Todas Las Quinielas</mat-option>
+                      <mat-option value="active-users">Usuarios Activos</mat-option>
+                      <mat-option value="all-users">Todos Los Usuarios</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-12 ">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Seleccione los grupos a enviar</mat-label>
+                    <mat-select multiple formControlName="groupToSend" autocomplete="off" required
+                                [disabled]="emailForm.value.category === ''">
+                      <mat-option value="1">example selectable</mat-option>
+                      <mat-option value="2">example selectable</mat-option>
+                      <mat-option value="3">example selectable</mat-option>
+                      <mat-option value="4">example selectable</mat-option>
+                      <mat-option value="5">example selectable</mat-option>
+                      <mat-option value="6">example selectable</mat-option>
+                      <mat-option value="7">example selectable</mat-option>
+                      <mat-option value="8">example selectable</mat-option>
+                      <mat-option value="9">example selectable</mat-option>
+                      <mat-option value="10">example selectable</mat-option>
+                      <mat-option value="11">example selectable</mat-option>
+                      <mat-option value="12">example selectable</mat-option>
+                      <mat-option value="13">example selectable</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-12 ">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Asunto</mat-label>
+                    <input matInput type="text" formControlName="subject" autocomplete="off" required>
+                  </mat-form-field>
+                </div>
+
+                <editor
+                  formControlName="message"
+                  initialValue="<p>Initial content of the editor</p>"
+                  apiKey= "gao32appbrwcqujnv5my901uoth7yqbuia0t7j9pbq40nlf8"
+                  [init]="{
+                  base_url: '/tinymce',
+                  suffix: '.min',
+                  height: 500,
+                  menubar: true,
+                  plugins: [
+                'advlist autolink lists link image charmap print',
+                'preview anchor searchreplace visualblocks code',
+                'fullscreen insertdatetime media table paste',
+                'help wordcount'
+              ],
+              toolbar: 'undo redo | formatselect | ' +
+              'bold italic backcolor | alignleft aligncenter ' +
+              'alignright alignjustify | bullist numlist outdent indent | ' +
+              'removeformat | help',
+              content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+              }"
+                >
+                </editor>
+              </div>
+
+              <mat-divider class="my-5"></mat-divider>
+              <div class="col-12 text-center">
+                <div class="col-12 text-center my-4">
+                  <button mat-flat-button type="submit" [disabled]="!emailForm.valid" class="submit">Enviar Correo</button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
   </div>
 
 </div>

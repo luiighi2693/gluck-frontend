@@ -22,7 +22,7 @@
             <div class="col-12 ">
               <mat-form-field appearance="outline" class="dual__input--item">
                 <mat-label>Seleccione una categoria</mat-label>
-                <mat-select formControlName="category"  required>
+                <mat-select formControlName="category" required>
                   <mat-option value="active-pools">Quinielas Activas</mat-option>
                   <mat-option value="all-pools">Todas Las Quinielas</mat-option>
                   <mat-option value="active-users">Usuarios Activos</mat-option>
@@ -33,7 +33,8 @@
             <div class="col-12 ">
               <mat-form-field appearance="outline" class="dual__input--item">
                 <mat-label>Seleccione los grupos a enviar</mat-label>
-                <mat-select multiple formControlName="groupToSend"  autocomplete="off" required [disabled]="emailForm.value.category === ''">
+                <mat-select multiple formControlName="groupToSend" autocomplete="off" required
+                [disabled]="emailForm.value.category === ''">
                   <mat-option value="1">example selectable</mat-option>
                   <mat-option value="2">example selectable</mat-option>
                   <mat-option value="3">example selectable</mat-option>
@@ -46,7 +47,7 @@
                   <mat-option value="10">example selectable</mat-option>
                   <mat-option value="11">example selectable</mat-option>
                   <mat-option value="12">example selectable</mat-option>
-                  <mat-option value="13">example selectable </mat-option>
+                  <mat-option value="13">example selectable</mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
@@ -57,8 +58,29 @@
               </mat-form-field>
             </div>
 
-            <app-text-editor></app-text-editor>
-
+            <editor
+              formControlName="message"
+              initialValue="<p>Initial content of the editor</p>"
+              apiKey= "gao32appbrwcqujnv5my901uoth7yqbuia0t7j9pbq40nlf8"
+              [init]="{
+              base_url: '/tinymce',
+              suffix: '.min',
+              height: 500,
+              menubar: true,
+              plugins: [
+                'advlist autolink lists link image charmap print',
+                'preview anchor searchreplace visualblocks code',
+                'fullscreen insertdatetime media table paste',
+                'help wordcount'
+              ],
+              toolbar: 'undo redo | formatselect | ' +
+              'bold italic backcolor | alignleft aligncenter ' +
+              'alignright alignjustify | bullist numlist outdent indent | ' +
+              'removeformat | help',
+              content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+              }"
+            >
+            </editor>
           </div>
 
           <mat-divider class="my-5"></mat-divider>
