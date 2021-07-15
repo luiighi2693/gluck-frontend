@@ -1,7 +1,7 @@
 <app-loader [loading]="showLoader"></app-loader>
 <div class="d-flex justify-content-between text-white m-4">
   <div class="d-flex align-items-center">
-    <h1 class="m-0">Edicion de Deportes</h1> <span class="mt-2 mx-4 badge">Admin</span>
+    <mat-icon class="mx-3">edit</mat-icon> <h1 class="m-0">Edicion de Deportes</h1> <span class="mt-2 mx-4 badge">Admin</span>
   </div>
   <div class="d-flex align-items-center">
     <div class="d-flex align-items-center home__link" routerLink="/admin">
@@ -22,7 +22,7 @@
             <div class="col-12 text-center">
               <figure class="avatar__wrapper">
                 <img src="../../../../assets/default-sport.jpg" class="avatar" alt="">
-                <button class="avatar__button" mat-fab aria-label="change picture">
+                <button class="avatar__button" type="button" mat-fab aria-label="change picture">
                   <mat-icon>camera_alt</mat-icon>
                 </button>
               </figure>

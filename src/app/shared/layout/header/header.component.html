@@ -8,17 +8,18 @@
     </button>
     <div class="profile__options" (click)="userOptions = !userOptions">
       <mat-icon aria-label="Person">person</mat-icon>
-      <p class="m-0">jose</p>
+      <p class="m-0">{{isAdmin ? 'Admin' : name}}</p>
     </div>
     <div class="user__options" *ngIf="userOptions">
       <div class="row black-background">
-        <div class="col-12 text-center">
+        <button class="close-button" (click)="userOptions = false">x</button>
+        <div class="col-12 text-center p-0">
           <figure class="user__options--image-wrapper">
             <img src="../../../../assets/example-user.png" class="user__options--image" alt="example user">
           </figure>
         </div>
         <div class="col-12 text-center">
-          <p class="title">Administrador</p>
+          <p class="title">{{name}}</p>
           <p class="text">mienbro desde 2020-08-15</p>
         </div>
       </div>

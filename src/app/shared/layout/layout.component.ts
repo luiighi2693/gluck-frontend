@@ -14,6 +14,7 @@ export class LayoutComponent implements OnInit {
   teamOptions = false;
   emailOptions = false;
   isAdmin: boolean;
+  name: string;
   option = false;
   loaderValue = false;
 
@@ -23,11 +24,16 @@ export class LayoutComponent implements OnInit {
   ngOnInit(): void {
     this.isExpanded = true;
     this.isAdmin = JSON.parse(sessionStorage.getItem('isAdmin'));
+    this.name = sessionStorage.getItem('username');
   }
 
   toggleSidenav($event) {
     this.isExpanded = $event;
     this.poolsOptions = false;
+    this.clientOptions = false;
+    this.emailOptions = false;
+    this.sportOptions = false;
+    this.teamOptions  = false;
   }
 
   togglePoolsOptions() {
@@ -47,10 +53,6 @@ export class LayoutComponent implements OnInit {
 
   toggleTeamsOptions() {
     this.teamOptions = !this.teamOptions;
-  }
-
-  toggleOptions(option) {
-    this.option = !this.option;
   }
 
   showLoader($event: boolean) {

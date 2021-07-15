@@ -15,6 +15,8 @@ import {MatDialogModule} from '@angular/material/dialog';
 import {MatTableModule} from '@angular/material/table';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSelectModule } from '@angular/material/select';
+import {MatStepperModule} from '@angular/material/stepper';
+
 
 
 
@@ -37,6 +39,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatTableModule,
     MatPaginatorModule,
     MatSelectModule,
+    MatStepperModule
   ],
   exports: [
     MatSidenavModule,
@@ -54,6 +57,7 @@ import { MatSelectModule } from '@angular/material/select';
     MatTableModule,
     MatPaginatorModule,
     MatSelectModule,
+    MatStepperModule
   ]
 })
 export class MaterialModule { }

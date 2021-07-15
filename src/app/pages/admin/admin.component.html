@@ -1,5 +1,5 @@
 <div class="d-flex justify-content-between align-items-center text-white m-4">
-  <h1>Inicio</h1>
+  <div class="d-flex align-items-center"><mat-icon class="mx-3">home</mat-icon><h1 class="m-0">Inicio</h1></div>
   <div class="d-flex align-items-center">
     <h3 class="home__link">Coins</h3>
     <mat-icon>keyboard_arrow_right</mat-icon>
@@ -31,12 +31,13 @@
     <div class="row">
       <div class="col-12 col-md-6">
         <div class="current-pools">
-         <div class="current__pools--header">
-           <h2>Qunielas en Proceso</h2>
-           <button mat-flat-button class="action-button">
-             <mat-icon>add</mat-icon>
-             Agregar Quiniela</button>
-         </div>
+          <div class="current__pools--header">
+            <h2>Qunielas en Proceso</h2>
+            <button mat-flat-button class="action-button">
+              <mat-icon>add</mat-icon>
+              Agregar Quiniela
+            </button>
+          </div>
         </div>
       </div>
       <div class="col-12 col-md-6">
@@ -100,7 +101,7 @@
                 <editor
                   formControlName="message"
                   initialValue="<p>Initial content of the editor</p>"
-                  apiKey= "gao32appbrwcqujnv5my901uoth7yqbuia0t7j9pbq40nlf8"
+                  apiKey="gao32appbrwcqujnv5my901uoth7yqbuia0t7j9pbq40nlf8"
                   [init]="{
                   base_url: '/tinymce',
                   suffix: '.min',
@@ -125,7 +126,8 @@
               <mat-divider class="my-5"></mat-divider>
               <div class="col-12 text-center">
                 <div class="col-12 text-center my-4">
-                  <button mat-flat-button type="submit" [disabled]="!emailForm.valid" class="submit">Enviar Correo</button>
+                  <button mat-flat-button type="submit" [disabled]="!emailForm.valid" class="submit">Enviar Correo
+                  </button>
                 </div>
               </div>
             </div>

@@ -5,6 +5,8 @@ import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {MatChipInputEvent} from '@angular/material/chips';
 import {Observable} from 'rxjs';
 import {AdminService} from '../../../services/admin.service';
+import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
+import {Router} from '@angular/router';
 // import {map, startWith} from 'rxjs/operators';
 
 @Component({
@@ -29,11 +31,12 @@ export class ProfileFormComponent implements OnInit {
   userData = null;
   imageData = null;
   isLoaded = false;
+  id: string;
 
   @ViewChild('inputFiles', { static: true }) inputFiles: ElementRef;
 
-  constructor(private admin: AdminService) {
-    this.createForm();
+  constructor(private admin: AdminService, private handleAlertsProvider: HandleAlertsProvider, private router: Router) {
+    this.admin.initToken();
     // this.filteredSports = this.sportsCtrl.valueChanges.pipe(
     //   startWith(null),
     //   map((fruit: string | null) => fruit ? this._filter(fruit) : this.allSports.slice()));
@@ -49,7 +52,6 @@ export class ProfileFormComponent implements OnInit {
       date_Access: new FormControl(null, Validators.required),
       date_Create: new FormControl(null, Validators.required),
       contador: new FormControl(null, Validators.required),
-
       username: new FormControl('', Validators.required),
       name: new FormControl('', Validators.required),
       lastname: new FormControl('', Validators.required),
@@ -65,9 +67,10 @@ export class ProfileFormComponent implements OnInit {
 
   }
   ngOnInit(): void {
-    const id = sessionStorage.getItem('id');
+    this.id =  sessionStorage.getItem('id');
+    this.createForm();
     this.isLoaded = true;
-    this.admin.getUser(id).subscribe(response => {
+    this.admin.getUser(this.id).subscribe(response => {
       this.isLoaded = false;
       if (response.code === 'D200') {
         this.userData = response.data;
@@ -79,14 +82,15 @@ export class ProfileFormComponent implements OnInit {
             this.isLoaded = false;
             this.imageData = responseImg;
           }, err => {
-            console.error(err);
+            this.handleAlertsProvider.presentGenericAlert(err);
           });
         }
-      } else {
-        alert('ha ocurrido un error!');
+      }  else if (response.code === 'A401' || response.code === 'A302' || response.code === 'A403') {
+        this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
+        this.router.navigate(['/auth']);
       }
     }, err => {
-      console.error(err);
+      this.handleAlertsProvider.presentGenericAlert(err);
     });
   }
 

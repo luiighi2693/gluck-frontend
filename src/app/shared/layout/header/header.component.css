@@ -1,5 +1,5 @@
 .header {
-  background-color: #000 ;
+  background-color: #000;
   color: white;
   display: flex;
   justify-content: space-between;
@@ -48,7 +48,6 @@
 }
 
 
-
 .black-background {
   background-color: #333232;
   color: white;
@@ -60,3 +59,26 @@
 .white-background {
   background-color: white;
 }
+
+.user__options--buttons {
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+
+.close-button {
+  width: 1.5rem;
+  text-align: center;
+  padding: 0;
+  border: none;
+  border-radius: 45px;
+  right: -7px;
+  top: 4px;
+  position: absolute;
+  background-color: #f44336;
+  color: white;
+  font-weight: bold;
+}
+

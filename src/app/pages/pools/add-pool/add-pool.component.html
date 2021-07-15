@@ -1,1 +1,127 @@
-<p>add-pool works!</p>
+<app-loader [loading]="showLoader"></app-loader>
+<div class="d-flex justify-content-between text-white m-4">
+  <div class="d-flex align-items-center">
+    <h1 class="m-0">Mantenimientos de Quiniela</h1> <span class="mt-2 mx-4 badge">Admin</span>
+  </div>
+  <div class="d-flex align-items-center">
+    <div class="d-flex align-items-center home__link" routerLink="/admin">
+      <mat-icon>home</mat-icon>
+      <h3 class="m-0">Home</h3>
+    </div>
+    <mat-icon>keyboard_arrow_right</mat-icon>
+    <h3 class="m-0">Mantenimientos de Quiniela</h3>
+  </div>
+</div>
+
+<div class="container">
+  <div class="profile__wrapper mb-3">
+    <div class="row">
+      <div class="col-12 col-md-8 offset-md-2">
+        <mat-stepper orientation="vertical" linear #stepper>
+          <mat-step [stepControl]="config">
+            <form [formGroup]="config">
+              <ng-template matStepLabel>Configuracion</ng-template>
+              <mat-form-field appearance="outline">
+                <mat-label>Nombre de Quiniela</mat-label>
+                <input matInput placeholder=" name" formControlName="name" required>
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Deporte</mat-label>
+                <input matInput placeholder=" seleccione un Deporte" formControlName="sport" required>
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Color</mat-label>
+                <input matInput placeholder=" Seleccione un Color" formControlName="color" required>
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Cantidad de Partidos</mat-label>
+                <input matInput type="number" placeholder="1" formControlName="matches" required>
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Limite de Usuarios</mat-label>
+                <input matInput type="number" placeholder="1" formControlName="usersLimit" required>
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Estatus de Quiniela</mat-label>
+                <input matInput placeholder=" Activo" formControlName="status" required>
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Penalty</mat-label>
+                <input matInput placeholder=" Si" formControlName="penalty" required>
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Grupos</mat-label>
+                <input matInput type="number" placeholder="1" formControlName="groups" required>
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Equipos por Grupos</mat-label>
+                <input matInput type="number" placeholder="1" formControlName="teamsPerMatch" required>
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Tipo de Quiniela</mat-label>
+                <input matInput placeholder=" 1 Vs 1" formControlName="teamsPerMatch" required>
+              </mat-form-field>
+              <mat-form-field appearance="outline">
+                <mat-label>Liga - Torneo</mat-label>
+                <input matInput placeholder="UEFA Champions League" formControlName="league" required>
+              </mat-form-field>
+              <div>
+                <button mat-button matStepperNext>Next</button>
+              </div>
+            </form>
+          </mat-step>
+          <!--  <mat-step [stepControl]="matches">-->
+          <!--    <form [formGroup]="secondFormGroup">-->
+          <!--      <ng-template matStepLabel>Fill out your address</ng-template>-->
+          <!--      <mat-form-field appearance="outline">-->
+          <!--        <mat-label>Address</mat-label>-->
+          <!--        <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"-->
+          <!--               required>-->
+          <!--      </mat-form-field>-->
+          <!--      <div>-->
+          <!--        <button mat-button matStepperPrevious>Back</button>-->
+          <!--        <button mat-button matStepperNext>Next</button>-->
+          <!--      </div>-->
+          <!--    </form>-->
+          <!--  </mat-step>-->
+          <!--  <mat-step [stepControl]="users">-->
+          <!--    <form [formGroup]="secondFormGroup">-->
+          <!--      <ng-template matStepLabel>Fill out your address</ng-template>-->
+          <!--      <mat-form-field appearance="outline">-->
+          <!--        <mat-label>Address</mat-label>-->
+          <!--        <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"-->
+          <!--               required>-->
+          <!--      </mat-form-field>-->
+          <!--      <div>-->
+          <!--        <button mat-button matStepperPrevious>Back</button>-->
+          <!--        <button mat-button matStepperNext>Next</button>-->
+          <!--      </div>-->
+          <!--    </form>-->
+          <!--  </mat-step>-->
+          <!--  <mat-step [stepControl]="results">-->
+          <!--    <form [formGroup]="secondFormGroup">-->
+          <!--      <ng-template matStepLabel>Fill out your address</ng-template>-->
+          <!--      <mat-form-field appearance="outline">-->
+          <!--        <mat-label>Address</mat-label>-->
+          <!--        <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"-->
+          <!--               required>-->
+          <!--      </mat-form-field>-->
+          <!--      <div>-->
+          <!--        <button mat-button matStepperPrevious>Back</button>-->
+          <!--        <button mat-button matStepperNext>Next</button>-->
+          <!--      </div>-->
+          <!--    </form>-->
+          <!--  </mat-step>-->
+          <mat-step>
+            <ng-template matStepLabel>Done</ng-template>
+            <p>You are now done.</p>
+            <div>
+              <button mat-button matStepperPrevious>Back</button>
+              <button mat-button (click)="stepper.reset()">Reset</button>
+            </div>
+          </mat-step>
+        </mat-stepper>
+      </div>
+    </div>
+  </div>
+</div>
