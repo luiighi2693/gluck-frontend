@@ -19,7 +19,6 @@ export class AdminComponent implements OnInit {
   createForm() {
     this.emailForm = new FormGroup({
       category: new FormControl('', Validators.required),
-      groupToSend: new FormControl('', Validators.required),
       subject: new FormControl('', Validators.required),
       message: new FormControl('', Validators.required)
     });

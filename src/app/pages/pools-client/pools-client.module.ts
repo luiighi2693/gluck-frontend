@@ -1,15 +1,12 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ResultsComponent } from './results/results.component';
 
 
 
 @NgModule({
-  declarations: [
-    ResultsComponent
-  ],
+  declarations: [],
   imports: [
     CommonModule
   ]
 })
-export class ResultsModule { }
+export class PoolsClientModule { }

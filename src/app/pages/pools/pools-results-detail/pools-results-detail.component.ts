@@ -1,30 +1,34 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
 import {Router} from '@angular/router';
 import {AdminService} from '../../../services/admin.service';
-import {AuthService} from '../../../services/auth.service';
 
-export interface TeamData {
+export interface UserData {
   rowid: string;
+  username: string;
   name: string;
+  email: string;
+  phone: string;
   status: number;
-  date_Create: string;
+  date_Access: string;
 }
+
+const users: UserData[] = [];
 
 
 @Component({
-  selector: 'app-list-of-teams',
-  templateUrl: './list-of-teams.component.html',
-  styleUrls: ['./list-of-teams.component.css']
+  selector: 'app-pools-results-detail',
+  templateUrl: './pools-results-detail.component.html',
+  styleUrls: ['./pools-results-detail.component.css']
 })
-export class ListOfTeamsComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['rowid', 'shield', 'name', 'sport', 'status', 'date_Create', 'opts'];
-  dataSource: MatTableDataSource<TeamData>;
+export class PoolsResultsDetailComponent implements OnInit, AfterViewInit {
+
+  displayedColumns: string[] = ['rowid', 'username', 'name', 'email', 'phone', 'status', 'date_Access', 'opts'];
+  dataSource: MatTableDataSource<UserData>;
   showLoader = false;
-  token: string;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -33,7 +37,6 @@ export class ListOfTeamsComponent implements OnInit, AfterViewInit {
     private handleAlertsProvider: HandleAlertsProvider,
     private router: Router,
     private admin: AdminService,
-    private auth: AuthService,
   ) {
     this.admin.initToken();
   }
@@ -47,10 +50,10 @@ export class ListOfTeamsComponent implements OnInit, AfterViewInit {
 
   setData() {
     this.showLoader = true;
-    this.admin.getTeams().subscribe(data => {
+    this.admin.getUsers().subscribe(data => {
       if (data.code === 'D200') {
         this.showLoader = false;
-        this.dataSource = new MatTableDataSource<TeamData>(data.data);
+        this.dataSource = new MatTableDataSource<UserData>(data.data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
@@ -72,19 +75,19 @@ export class ListOfTeamsComponent implements OnInit, AfterViewInit {
     }
   }
 
-  editTeam(id) {
-    this.router.navigate([`/admin/teams/edit-team/${id}`]);
+  editUser(id) {
+    this.router.navigate([`/admin/clients/edit-client/${id}`]);
   }
 
-  deleteTeam(team) {
-    const dialogRef = this.handleAlertsProvider.presentErrorDialogOk(`Esta seguro de eliminar el usuario <b>${team.name}</b>?`, 'Aviso!');
+  deleteUser(user) {
+    const dialogRef = this.handleAlertsProvider.presentErrorDialogOk(`Esta seguro de eliminar el usuario <b>${user.name}</b>?`, 'Aviso!');
     dialogRef.afterClosed().subscribe(response => {
       if (response) {
         this.showLoader = true;
-        this.admin.deleteTeam(team.rowid).subscribe(res => {
+        this.admin.deleteUser(user.rowid).subscribe(res => {
           this.showLoader = false;
           if (res.code === 'D200') {
-            this.handleAlertsProvider.presentSnackbarSuccess(`Se ha eliminado el Team ${team.name} con exito!`);
+            this.handleAlertsProvider.presentSnackbarSuccess(`Se ha eliminado el user ${user.name} con exito!`);
             this.setData();
           } else if (res.code === 'A401' || res.code === 'A302' || res.code === 'A403') {
             this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');

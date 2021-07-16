@@ -8,9 +8,11 @@ import { MaterialModule } from '../../material/material.module';
 import { SharedModule } from '../../shared/shared.module';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
+import { EditPoolComponent } from './edit-pool/edit-pool.component';
+import { PoolsResultsDetailComponent } from './pools-results-detail/pools-results-detail.component';
 
 @NgModule({
-  declarations: [PoolsComponent, AddPoolComponent, ListOfPoolsComponent],
+  declarations: [PoolsComponent, AddPoolComponent, ListOfPoolsComponent, EditPoolComponent, PoolsResultsDetailComponent],
   imports: [
     CommonModule,
     MaterialModule,
@@ -25,6 +27,14 @@ import { ReactiveFormsModule } from '@angular/forms';
       {
         path: 'add-pool',
         component: AddPoolComponent
+      },
+      {
+        path: 'edit-pool/:id',
+        component: EditPoolComponent
+      },
+      {
+        path: 'pools-results/:id',
+        component: PoolsResultsDetailComponent
       },
       {
         path: 'list-of-pools',

@@ -6,7 +6,7 @@ import { ProfileFormComponent } from './profile-form/profile-form.component';
 import { MaterialModule } from '../../material/material.module';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import {SharedModule} from "../../shared/shared.module";
+import {SharedModule} from '../../shared/shared.module';
 
 @NgModule({
   declarations: [

@@ -19,16 +19,12 @@ const routes: Routes = [
       },
       {
         path: 'pools',
-        loadChildren: () => import('./pages/pools/pools.module').then(m => m.PoolsModule)
+        loadChildren: () => import('./pages/pools-client/pools-client.module').then(m => m.PoolsClientModule)
       },
       {
         path: 'calendar',
         loadChildren: () => import('./pages/calendar/calendar.module').then(m => m.CalendarModule)
       },
-      {
-        path: 'results',
-        loadChildren: () => import('./pages/results/results.module').then(m => m.ResultsModule)
-      }
     ]
   },
   {
@@ -63,10 +59,6 @@ const routes: Routes = [
       {
         path: 'pools',
         loadChildren: () => import('./pages/pools/pools.module').then(m => m.PoolsModule)
-      },
-      {
-        path: 'results',
-        loadChildren: () => import('./pages/results/results.module').then(m => m.ResultsModule)
       },
     ]
   },

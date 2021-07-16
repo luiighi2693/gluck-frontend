@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from '../../environments/environment';
+import {Injectable} from '@angular/core';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {environment} from '../../environments/environment';
 import {Observable} from 'rxjs';
 
 let headers;
@@ -11,10 +11,11 @@ let headers;
 export class AdminService {
   constructor(
     private http: HttpClient,
-  ) { }
+  ) {
+  }
 
   initToken() {
-     headers = new HttpHeaders().set('token', sessionStorage.getItem('token'));
+    headers = new HttpHeaders().set('token', sessionStorage.getItem('token'));
   }
 
   getUsers(): Observable<any> {
@@ -24,11 +25,12 @@ export class AdminService {
   getUser(id): Observable<any> {
     return this.http.get(`${environment.basePath}/api/getOne?id=${id}&model=q_user`, {headers});
   }
+
   deleteUser(id): Observable<any> {
     return this.http.delete(`${environment.basePath}/api/delete?id=${id}&model=q_user`, {headers});
   }
 
-  editUser(name, lastname, username, email, phone, password, address, state, city, code, rowid, status ): Observable<any> {
+  editUser(name, lastname, username, email, phone, password, address, state, city, code, rowid, status): Observable<any> {
     const params = {
       name,
       lastname,
@@ -46,7 +48,7 @@ export class AdminService {
     return this.http.put(`${environment.basePath}/api/update?model=q_user`, params, {headers});
   }
 
-  createUser(name, lastname, username, email, phone, password, address, state, city, code, status ): Observable<any> {
+  createUser(name, lastname, username, email, phone, password, address, state, city, code, status): Observable<any> {
     const params = {
       name,
       lastname,
@@ -66,12 +68,15 @@ export class AdminService {
   getSports(): Observable<any> {
     return this.http.get(`${environment.basePath}/api/get?model=q_sport`, {headers});
   }
+
   getSport(id): Observable<any> {
     return this.http.get(`${environment.basePath}/api/getOne?id=${id}&model=q_sport`, {headers});
   }
+
   deleteSport(id): Observable<any> {
     return this.http.delete(`${environment.basePath}/api/delete?id=${id}&model=q_sport`, {headers});
   }
+
   editSport(id, name, dateCreate, status, description): Observable<any> {
     const params = {
       rowid: id,
@@ -80,8 +85,9 @@ export class AdminService {
       date_Create: dateCreate,
       descriptios: description
     };
-    return this.http.put(`${environment.basePath}/api/update?model=q_sport`, params , {headers});
+    return this.http.put(`${environment.basePath}/api/update?model=q_sport`, params, {headers});
   }
+
   createSport(name, description, dateCreate, status): Observable<any> {
     const params = {
       name,
@@ -96,13 +102,16 @@ export class AdminService {
     const includes = ['sport'];
     return this.http.get(`${environment.basePath}/api/get?model=q_team&include=${encodeURI(JSON.stringify(includes))}`, {headers});
   }
+
   getTeam(id): Observable<any> {
     const includes = ['sport'];
     return this.http.get(`${environment.basePath}/api/getOne?id=${id}&model=q_team&include=${encodeURI(JSON.stringify(includes))}`, {headers});
   }
+
   deleteTeam(id): Observable<any> {
     return this.http.delete(`${environment.basePath}/api/delete?id=${id}&model=q_team`, {headers});
   }
+
   editTeam(id, name, description, dateCreate, status, asociatedSport): Observable<any> {
     const params = {
       rowid: id,
@@ -114,6 +123,7 @@ export class AdminService {
     };
     return this.http.put(`${environment.basePath}/api/update?model=q_team`, params, {headers});
   }
+
   createTeam(name, description, dateCreate, status, asociatedSport): Observable<any> {
     const params = {
       name,
@@ -125,11 +135,50 @@ export class AdminService {
     return this.http.post(`${environment.basePath}/api/create?model=q_team`, params, {headers});
   }
 
+  getPools(): Observable<any> {
+    // const includes = ['sport'];
+    return this.http.get(`${environment.basePath}/api/get?model=q_pools`, {headers});
+  }
+
+  getPool(id): Observable<any> {
+    const includes = ['sport'];
+    return this.http.get(`${environment.basePath}/api/getOne?id=${id}&model=q_pools&include=${encodeURI(JSON.stringify(includes))}`, {headers});
+  }
+
+  deletePool(id): Observable<any> {
+    return this.http.delete(`${environment.basePath}/api/delete?id=${id}&model=q_pools`, {headers});
+  }
+
+  editPool(id, name, dateCreate, status, sport, quantity, color, penalty, drawScore, winScore, loseScore, resultScore, limitUser, rules, password, league, poolType, groups, groupsTeam ): Observable<any> {
+    const params = {
+      rowid: id,
+      name,
+      date_Create: dateCreate,
+      status,
+      fk_sport: sport,
+      quantity,
+      color,
+      penalty,
+      puntaje_empate: drawScore,
+      puntaje_ganar: winScore,
+      puntaje_perder: loseScore,
+      puntaje_resultado: resultScore,
+      limit_user: limitUser,
+      rules,
+      password,
+      league,
+      pool_type: poolType,
+      groups,
+      groupsTeam
+    };
+    return this.http.put(`${environment.basePath}/api/update?model=q_pools`, params, {headers});
+  }
+
   uploadFile(imageData: any) {
     const params = {
       imageData,
     };
-    return this.http.post<any>(`${environment.basePath}/api/file/upload`, params );
+    return this.http.post<any>(`${environment.basePath}/api/file/upload`, params);
   }
 
 

@@ -7,33 +7,28 @@ table {
   width: 100%;
 }
 
+td, th {
+  width: 15%;
+}
 
 .id {
   width: 5%;
 }
 
 .status {
-  width: 7%;
-}
-
-.sport {
   width: 10%;
 }
 
+.username {
+  width: 12%;
+}
+
 .name {
+  width: 10%;
+}
+
+.email {
   width: 20%;
-}
-
-.color {
-  width: 5%;
-  text-align: center;
-  font-width: bold;
-}
-
-.color > span {
-  padding: 0 8px;
-  margin-right: 3px;
-  border-radius: 50%;
 }
 
 .lastLogin {
@@ -41,7 +36,7 @@ table {
 }
 
 .opts {
-  width: 8%;
+  width: 10%;
 }
 
 .listOf__users--wrapper {

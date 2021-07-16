@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 @Component({
-  selector: 'app-football-pools',
+  selector: 'app-pools',
   templateUrl: './pools.component.html',
   styleUrls: ['./pools.component.css']
 })
