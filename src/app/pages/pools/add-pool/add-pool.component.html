@@ -15,113 +15,291 @@
 
 <div class="container">
   <div class="profile__wrapper mb-3">
-    <div class="row">
-      <div class="col-12 col-md-8 offset-md-2">
-        <mat-stepper orientation="vertical" linear #stepper>
-          <mat-step [stepControl]="config">
-            <form [formGroup]="config">
-              <ng-template matStepLabel>Configuracion</ng-template>
+    <!--    <div class="row">-->
+    <!--      <div class="col-12 col-md-8 offset-md-2">-->
+    <mat-stepper orientation="vertical" linear #stepper>
+      <mat-step [stepControl]="config">
+        <form [formGroup]="config">
+          <ng-template matStepLabel>Configuracion</ng-template>
+          <mat-form-field appearance="outline">
+            <mat-label>Nombre de Quiniela</mat-label>
+            <input matInput placeholder=" name" formControlName="name" required>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Deporte</mat-label>
+            <!--            <input matInput placeholder=" seleccione un Deporte" formControlName="sport" required>-->
+            <mat-select formControlName="sport" required>
+              <mat-option>- Deporte -</mat-option>
+              <mat-option value="futbol">futbol</mat-option>
+              <mat-option value="baseball">baseball</mat-option>
+              <mat-option value="basquet">basqiet</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <input matInput [ngxMatColorPicker]="picker" placeholder="Selecciona un Color" formControlName="color"
+                   required>
+            <ngx-mat-color-toggle matSuffix [for]="picker"></ngx-mat-color-toggle>
+            <ngx-mat-color-picker #picker></ngx-mat-color-picker>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Cantidad de Partidos</mat-label>
+            <input matInput type="number" placeholder="5" [(ngModel)]="amountOfMatches" formControlName="matches"
+                   required>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Limite de Usuarios</mat-label>
+            <input matInput placeholder="15" formControlName="usersLimit" required>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Estatus de Quiniela</mat-label>
+            <!--            <input matInput placeholder=" Activo" formControlName="status" required>-->
+            <mat-select formControlName="status" required>
+              <mat-option>- Estatus -</mat-option>
+              <mat-option value="1">Activo</mat-option>
+              <mat-option value="0">Cerrado</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Penalty</mat-label>
+            <mat-select formControlName="penalty" required>
+              <mat-option>- Penalty -</mat-option>
+              <mat-option value="0">Si</mat-option>
+              <mat-option value="1">No</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Grupos</mat-label>
+            <input matInput placeholder="6" formControlName="groups" required>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Equipos por Grupos</mat-label>
+            <input matInput placeholder="2" formControlName="teamsPerMatch" required>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Tipo de Quiniela</mat-label>
+            <mat-select formControlName="type" required>
+              <mat-option>- Tipo de Quiniela -</mat-option>
+              <mat-option value="1 vs 1">1 Vs 1</mat-option>
+              <mat-option value="mensuales">Quinielas Mensuales</mat-option>
+              <mat-option value="semanales">Quinielas Semanales</mat-option>
+              <mat-option value="privadas">Quinielas Privadas</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Liga - Torneo</mat-label>
+            <mat-select formControlName="league" required>
+              <mat-option>- Liga - Torneo -</mat-option>
+              <mat-option value="La Liga">La Liga</mat-option>
+              <mat-option value="Premier League">Premier League</mat-option>
+              <mat-option value="Boundes Liga">Boundes Liga</mat-option>
+              <mat-option value="Serie A">Serie A</mat-option>
+              <mat-option value="Ligue 1">Ligue 1</mat-option>
+              <mat-option value="Champions League">Champions League</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Contrasena</mat-label>
+            <input matInput type="password" placeholder="123456789" formControlName="password" required>
+          </mat-form-field>
+          <div>
+            <button mat-flat-button [disabled]="!config.valid" (click)="makeMatches()" matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step >
+        <!--        <form [formGroup]="matches">-->
+        <ng-template matStepLabel>Partidos</ng-template>
+        <div *ngFor="let match of arrayOfMatches">
+          <mat-form-field appearance="outline">
+            <mat-label>Equipo 1</mat-label>
+            <input matInput [(ngModel)]="match.team1" placeholder="FC Real Madrid"
+                   required>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Penalty</mat-label>
+            <input matInput [(ngModel)]="match.penalty1" placeholder="1"
+                   required>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Equipo 2</mat-label>
+            <input matInput [(ngModel)]="match.team2" placeholder="FC Barcelona"
+                   required>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Penalty</mat-label>
+            <input matInput [(ngModel)]="match.penalty2" placeholder="Penalty"
+                   required>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Fecha</mat-label>
+            <input matInput [(ngModel)]="match.date" placeholder="15/02/2020"
+                   required>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Hora</mat-label>
+            <input matInput [(ngModel)]="match.time" placeholder="8:52:35"
+                   required>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Estatus</mat-label>
+            <input matInput [(ngModel)]="match.status" placeholder="Activo"
+                   required>
+          </mat-form-field>
+          <mat-form-field appearance="outline">
+            <mat-label>Resultado</mat-label>
+            <input matInput [(ngModel)]="match.result" placeholder="Sin Comenzar"
+                   required>
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button matStepperNext>Next</button>
+        </div>
+        <!--        </form>-->
+      </mat-step>
+      <mat-step [completed]="selection.hasValue()">
+        <ng-template matStepLabel>Usuarios</ng-template>
+        <div class="col-12">
+          <mat-form-field appearance="standard" class="w-100">
+            <mat-label>Buscar</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ej. Pepito perez" #input>
+          </mat-form-field>
+        </div>
+
+        <div class="mat-elevation-z8">
+          <table mat-table [dataSource]="dataSource" matSort class="w-100">
+
+            <!-- ID Column -->
+            <ng-container matColumnDef="rowid">
+              <th class="id" mat-header-cell *matHeaderCellDef mat-sort-header> ID</th>
+              <td class="id" mat-cell *matCellDef="let row"> {{row.rowid}} </td>
+            </ng-container>
+
+            <!-- Progress Column -->
+            <ng-container matColumnDef="username">
+              <th class="username" mat-header-cell *matHeaderCellDef mat-sort-header> Usuario</th>
+              <td class="username" mat-cell *matCellDef="let row"> {{row.username}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <th class="name" mat-header-cell *matHeaderCellDef mat-sort-header> Nombre</th>
+              <td class="name" mat-cell *matCellDef="let row"> {{row.name}} </td>
+            </ng-container>
+
+            <!-- Fruit Column -->
+            <ng-container matColumnDef="email">
+              <th class="email" mat-header-cell *matHeaderCellDef mat-sort-header> Email</th>
+              <td class="email" mat-cell *matCellDef="let row"> {{row.email}} </td>
+            </ng-container>
+
+            <!-- Fruit Column -->
+            <ng-container matColumnDef="phone">
+              <th class="phone" mat-header-cell *matHeaderCellDef mat-sort-header> Telefono</th>
+              <td class="phone" mat-cell *matCellDef="let row"> {{row.phone}} </td>
+            </ng-container>
+
+            <!-- Fruit Column -->
+            <ng-container matColumnDef="status">
+              <th class="status" mat-header-cell *matHeaderCellDef mat-sort-header> Estatus</th>
+              <td class="status" mat-cell *matCellDef="let row">
+                <div [ngClass]="{'active': row.status === 1, 'inactive': row.status === 0}"><p
+                  class="m-0">{{row.status === 1 ? 'Activo' : 'Inactivo' }}</p></div>
+              </td>
+            </ng-container>
+
+            <!-- Fruit Column -->
+            <ng-container matColumnDef="date_Access">
+              <th class="lastLogin" mat-header-cell *matHeaderCellDef mat-sort-header> Ultimo Acceso</th>
+              <td class="lastLogin" mat-cell *matCellDef="let row"> {{row.date_Access}} </td>
+            </ng-container>
+
+            <!-- Fruit Column -->
+            <ng-container matColumnDef="opts">
+              <!--                <th mat-header-cell *matHeaderCellDef mat-sort-header>  </th>-->
+              <!--                <td mat-cell *matCellDef="let row">-->
+              <!--                  <button class="example-margin" (click)="selection.toggle(row)"> click me</button>-->
+              <!--                </td>-->
+              <th class="opts" mat-header-cell *matHeaderCellDef mat-sort-header>
+                <mat-checkbox (change)="$event ? masterToggle() : null"
+                              [checked]="selection.hasValue() && isAllSelected()"
+                              [indeterminate]="selection.hasValue() && !isAllSelected()">
+                </mat-checkbox>
+              </th>
+              <td class="opts" mat-cell *matCellDef="let row">
+                <mat-checkbox (click)="$event.stopPropagation()"
+                              (change)="$event ? selection.toggle(row) : null"
+                              [checked]="selection.isSelected(row)">
+                </mat-checkbox>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            <!-- Row shown when there is no matching data. -->
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+            </tr>
+          </table>
+
+          <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+        </div>
+
+        <div class="mt-5">
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button (click)="showSelection()" [disabled]="!selection.hasValue()" matStepperNext>Next</button>
+        </div>
+      </mat-step>
+      <mat-step [stepControl]="results">
+        <form [formGroup]="results">
+          <ng-template matStepLabel>Puntaje</ng-template>
+          <div class="row">
+            <div class="col-12 col-md-3">
               <mat-form-field appearance="outline">
-                <mat-label>Nombre de Quiniela</mat-label>
-                <input matInput placeholder=" name" formControlName="name" required>
+                <mat-label>Resultado</mat-label>
+                <input matInput formControlName="result" placeholder="3"
+                       required>
               </mat-form-field>
-              <mat-form-field appearance="outline">
-                <mat-label>Deporte</mat-label>
-                <input matInput placeholder=" seleccione un Deporte" formControlName="sport" required>
-              </mat-form-field>
-              <mat-form-field appearance="outline">
-                <mat-label>Color</mat-label>
-                <input matInput placeholder=" Seleccione un Color" formControlName="color" required>
-              </mat-form-field>
-              <mat-form-field appearance="outline">
-                <mat-label>Cantidad de Partidos</mat-label>
-                <input matInput type="number" placeholder="1" formControlName="matches" required>
-              </mat-form-field>
-              <mat-form-field appearance="outline">
-                <mat-label>Limite de Usuarios</mat-label>
-                <input matInput type="number" placeholder="1" formControlName="usersLimit" required>
-              </mat-form-field>
-              <mat-form-field appearance="outline">
-                <mat-label>Estatus de Quiniela</mat-label>
-                <input matInput placeholder=" Activo" formControlName="status" required>
-              </mat-form-field>
-              <mat-form-field appearance="outline">
-                <mat-label>Penalty</mat-label>
-                <input matInput placeholder=" Si" formControlName="penalty" required>
-              </mat-form-field>
-              <mat-form-field appearance="outline">
-                <mat-label>Grupos</mat-label>
-                <input matInput type="number" placeholder="1" formControlName="groups" required>
-              </mat-form-field>
-              <mat-form-field appearance="outline">
-                <mat-label>Equipos por Grupos</mat-label>
-                <input matInput type="number" placeholder="1" formControlName="teamsPerMatch" required>
-              </mat-form-field>
-              <mat-form-field appearance="outline">
-                <mat-label>Tipo de Quiniela</mat-label>
-                <input matInput placeholder=" 1 Vs 1" formControlName="teamsPerMatch" required>
-              </mat-form-field>
-              <mat-form-field appearance="outline">
-                <mat-label>Liga - Torneo</mat-label>
-                <input matInput placeholder="UEFA Champions League" formControlName="league" required>
-              </mat-form-field>
-              <div>
-                <button mat-button matStepperNext>Next</button>
-              </div>
-            </form>
-          </mat-step>
-          <!--  <mat-step [stepControl]="matches">-->
-          <!--    <form [formGroup]="secondFormGroup">-->
-          <!--      <ng-template matStepLabel>Fill out your address</ng-template>-->
-          <!--      <mat-form-field appearance="outline">-->
-          <!--        <mat-label>Address</mat-label>-->
-          <!--        <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"-->
-          <!--               required>-->
-          <!--      </mat-form-field>-->
-          <!--      <div>-->
-          <!--        <button mat-button matStepperPrevious>Back</button>-->
-          <!--        <button mat-button matStepperNext>Next</button>-->
-          <!--      </div>-->
-          <!--    </form>-->
-          <!--  </mat-step>-->
-          <!--  <mat-step [stepControl]="users">-->
-          <!--    <form [formGroup]="secondFormGroup">-->
-          <!--      <ng-template matStepLabel>Fill out your address</ng-template>-->
-          <!--      <mat-form-field appearance="outline">-->
-          <!--        <mat-label>Address</mat-label>-->
-          <!--        <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"-->
-          <!--               required>-->
-          <!--      </mat-form-field>-->
-          <!--      <div>-->
-          <!--        <button mat-button matStepperPrevious>Back</button>-->
-          <!--        <button mat-button matStepperNext>Next</button>-->
-          <!--      </div>-->
-          <!--    </form>-->
-          <!--  </mat-step>-->
-          <!--  <mat-step [stepControl]="results">-->
-          <!--    <form [formGroup]="secondFormGroup">-->
-          <!--      <ng-template matStepLabel>Fill out your address</ng-template>-->
-          <!--      <mat-form-field appearance="outline">-->
-          <!--        <mat-label>Address</mat-label>-->
-          <!--        <input matInput formControlName="secondCtrl" placeholder="Ex. 1 Main St, New York, NY"-->
-          <!--               required>-->
-          <!--      </mat-form-field>-->
-          <!--      <div>-->
-          <!--        <button mat-button matStepperPrevious>Back</button>-->
-          <!--        <button mat-button matStepperNext>Next</button>-->
-          <!--      </div>-->
-          <!--    </form>-->
-          <!--  </mat-step>-->
-          <mat-step>
-            <ng-template matStepLabel>Done</ng-template>
-            <p>You are now done.</p>
-            <div>
-              <button mat-button matStepperPrevious>Back</button>
-              <button mat-button (click)="stepper.reset()">Reset</button>
             </div>
-          </mat-step>
-        </mat-stepper>
-      </div>
-    </div>
+            <div class="col-12 col-md-3">
+              <mat-form-field appearance="outline">
+                <mat-label>Ganador</mat-label>
+                <input matInput formControlName="winner" placeholder="5"
+                       required>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-3">
+              <mat-form-field appearance="outline">
+                <mat-label>Empate</mat-label>
+                <input matInput formControlName="draw" placeholder="2"
+                       required>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-3">
+              <mat-form-field appearance="outline">
+                <mat-label>Perdedor</mat-label>
+                <input matInput formControlName="loser" placeholder="0"
+                       required>
+              </mat-form-field>
+            </div>
+          </div>
+          <div>
+            <button mat-button matStepperPrevious>Back</button>
+            <button mat-button [disabled]="!results.valid" matStepperNext>Next</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Done</ng-template>
+        <p>You are now done.</p>
+        <div>
+          <button mat-button matStepperPrevious>Back</button>
+          <button mat-button (click)="stepper.reset()">Reset</button>
+        </div>
+      </mat-step>
+    </mat-stepper>
   </div>
+  <!--    </div>-->
+  <!--  </div>-->
 </div>

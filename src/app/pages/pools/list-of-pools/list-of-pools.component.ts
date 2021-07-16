@@ -12,6 +12,7 @@ export interface PoolData {
   status: number;
   date_Create: string;
   color: string;
+  sport: object;
 }
 
 @Component({

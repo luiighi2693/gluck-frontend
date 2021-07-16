@@ -16,8 +16,6 @@ export interface UserData {
   date_Access: string;
 }
 
-const users: UserData[] = [];
-
 @Component({
   selector: 'app-list-of-clients',
   templateUrl: './list-of-clients.component.html',

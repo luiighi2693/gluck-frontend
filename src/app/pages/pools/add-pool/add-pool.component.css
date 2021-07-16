@@ -16,3 +16,35 @@
   color: #F6DD06;
   cursor: pointer;
 }
+
+td, th {
+  width: 15%;
+}
+
+.id {
+  width: 5%;
+}
+
+.status {
+  width: 10%;
+}
+
+.username {
+  width: 12%;
+}
+
+.name {
+  width: 10%;
+}
+
+.email {
+  width: 20%;
+}
+
+.lastLogin {
+  width: 10%;
+}
+
+.opts {
+  width: 10%;
+}

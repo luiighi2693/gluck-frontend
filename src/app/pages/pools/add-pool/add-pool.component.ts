@@ -1,5 +1,22 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {MatTableDataSource} from '@angular/material/table';
+import { SelectionModel } from '@angular/cdk/collections';
+import {MatPaginator} from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
+import {Router} from '@angular/router';
+import {AdminService} from '../../../services/admin.service';
+
+export interface UserData {
+  rowid: string;
+  username: string;
+  name: string;
+  email: string;
+  phone: string;
+  status: number;
+  date_Access: string;
+}
 
 
 @Component({
@@ -7,33 +24,144 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
   templateUrl: './add-pool.component.html',
   styleUrls: ['./add-pool.component.css']
 })
-export class AddPoolComponent implements OnInit {
+export class AddPoolComponent implements OnInit, AfterViewInit {
   config: FormGroup;
-  // users: FormGroup;
-  // matches: FormGroup;
-  // results: FormGroup;
+  users: FormGroup;
+  matches: FormGroup;
+  results: FormGroup;
   showLoader = false;
+  amountOfMatches: number;
+  arrayOfMatches = [];
+  completedFilledMatches = false;
 
-  constructor() { }
+  displayedColumns: string[] = ['rowid', 'username', 'name', 'email', 'phone', 'status', 'date_Access', 'opts'];
+  dataSource: MatTableDataSource<UserData>;
+  selection = new SelectionModel<UserData>(true, []);
 
+
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
+
+  constructor(
+    private handleAlertsProvider: HandleAlertsProvider,
+    private router: Router,
+    private admin: AdminService,
+    private fb: FormBuilder,
+  ) {
+    this.admin.initToken();
+  }
   ngOnInit(): void {
     this.createForms();
   }
 
-  private createForms() {
-    this.config = new FormGroup({
-      name: new FormControl('', Validators.required),
-      sport: new FormControl('', Validators.required),
-      color: new FormControl('', Validators.required),
-      matches: new FormControl('', Validators.required),
-      usersLimit: new FormControl('', Validators.required),
-      status: new FormControl('', Validators.required),
-      penalty: new FormControl('', Validators.required),
-      groups: new FormControl('', Validators.required),
-      teamsPerMatch: new FormControl('', Validators.required),
-      type: new FormControl('', Validators.required),
-      league: new FormControl('', Validators.required)
+  ngAfterViewInit() {
+    this.setData();
+  }
+
+  setData() {
+    this.showLoader = true;
+    this.admin.getUsers().subscribe(data => {
+      if (data.code === 'D200') {
+        this.showLoader = false;
+        this.dataSource = new MatTableDataSource<UserData>(data.data);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
+        this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
+        this.router.navigate(['/auth']);
+      }
+    }, error => {
+      this.showLoader = false;
+      this.handleAlertsProvider.presentGenericAlert(error);
     });
   }
 
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
+  }
+
+  /** Whether the number of selected elements matches the total number of rows. */
+  isAllSelected() {
+    const numSelected = this.selection.selected.length;
+    const numRows = this.dataSource.data.length;
+    return numSelected === numRows;
+  }
+
+  /** Selects all rows if they are not all selected; otherwise clear selection. */
+  masterToggle() {
+    this.isAllSelected() ?
+      this.selection.clear() :
+      this.dataSource.data.forEach(row => this.selection.select(row));
+  }
+
+  private createForms() {
+    this.config = this.fb.group({
+      name: ['', Validators.required],
+      sport: ['', Validators.required],
+      color: ['', Validators.required],
+      matches: ['', Validators.required],
+      usersLimit: ['', Validators.required],
+      status: ['', Validators.required],
+      penalty: ['', Validators.required],
+      groups: ['', Validators.required],
+      teamsPerMatch: ['', Validators.required],
+      type: ['', Validators.required],
+      league: ['', Validators.required],
+      password: ['', Validators.required],
+    });
+    this.results = this.fb.group({
+      result: ['', Validators.required],
+      winner: ['', Validators.required],
+      draw: ['', Validators.required],
+      loser: ['', Validators.required]
+    });
+  }
+
+  show() {
+    console.log(this.config.value.color.hex);
+  }
+
+  makeMatches() {
+    this.arrayOfMatches = [];
+    for (let i = 0; i < this.amountOfMatches; i++) {
+      this.arrayOfMatches.push({
+        team1: '',
+        penalty1: '',
+        team2: '',
+        penalty2: '',
+        date: '',
+        time: '',
+        status: '',
+        result: '',
+      });
+    }
+    console.log(this.arrayOfMatches);
+  }
+
+  // evaluateMatches() {
+  //   this.arrayOfMatches.find(match => {
+  //     if ( match.status !== '' ||
+  //       match.result === '' ||
+  //       match.name === '' ||
+  //       match.team1 === '' ||
+  //       match.penalty1 === '' ||
+  //       match.team2 === '' ||
+  //       match.penalty2 === '' ||
+  //       match.date === '' ||
+  //       match.time === '') {
+  //       this.completedFilledMatches = true;
+  //     } else {
+  //       this.handleAlertsProvider.presentSnackbarError('Complete todos los campos por favor...');
+  //     }
+  //   });
+  // }
+
+  showSelection() {
+    console.log(this.selection.selected);
+  }
 }
