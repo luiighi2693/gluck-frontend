@@ -1,0 +1,102 @@
+<app-loader [loading]="showLoader"></app-loader>
+<div class="d-flex justify-content-between text-white m-4">
+  <div class="d-flex align-items-center">
+    <mat-icon class="mx-3">group</mat-icon>
+    <h1 class="m-0">Lista de Usuarios</h1> <span class="mt-2 mx-4 badge">Admin</span>
+  </div>
+  <div class="d-flex align-items-center">
+    <div class="d-flex align-items-center home__link" routerLink="/admin">
+      <mat-icon>home</mat-icon>
+      <h3 class="m-0">Home</h3>
+    </div>
+    <mat-icon>keyboard_arrow_right</mat-icon>
+    <h3 class="m-0">Lista de Usuarios</h3>
+  </div>
+</div>
+
+<div class=" listOf__users--wrapper">
+  <!--    pool name and user name here-->
+
+  <div class="mat-elevation-z8">
+    <div class="pt-4">
+      <div class="row">
+        <div class="col-12 pl-4">
+          <h1 class="m-0 pl-4">{{tableData.poolName}}</h1>
+          <mat-divider class="mb-3 mt-1"></mat-divider>
+        </div>
+        <div class="col-12 pl-4">
+          <h1 class="pl-4"> <b>Usuario: </b> {{tableData.username}} </h1>
+        </div>
+      </div>
+    </div>
+    <table mat-table [dataSource]="dataSource" matSort>
+
+      <!-- ID Column -->
+      <ng-container matColumnDef="game">
+        <th class="game" mat-header-cell *matHeaderCellDef mat-sort-header> Juego</th>
+        <td class="game" mat-cell *matCellDef="let row"> {{row.sportLabel}} </td>
+      </ng-container>
+
+      <!-- Name Column -->
+      <ng-container matColumnDef="userResults">
+        <th class="userResults" mat-header-cell *matHeaderCellDef mat-sort-header> Resultado de Usuario</th>
+        <td class="userResults" mat-cell *matCellDef="let row">
+          <div class="d-flex">
+            <div class="d-flex align-items-center">
+              <!--              <figure>{{row.image1}}</figure>-->
+              <p class="m-0 team-1">{{row.teamName1}}</p>
+              <span class="score-goals">{{row.teamResult1}}</span>
+            </div>
+            <p class="m-0 px-4">
+              -
+            </p>
+            <div class="d-flex align-items-center">
+              <span class="score-goals">{{row.teamResult2}}</span>
+              <p class="m-0 team-2">{{row.teamName2}}</p>
+              <!--              <figure>{{row.image2}}</figure>-->
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Fruit Column -->
+      <ng-container matColumnDef="finalResults">
+        <th class="finalResults" mat-header-cell *matHeaderCellDef mat-sort-header> Resultado Finales</th>
+        <td class="finalResults" mat-cell *matCellDef="let row">
+          <div class="d-flex">
+            <div class="d-flex align-items-center">
+              <!--              <figure>{{row.image1}}</figure>-->
+              <p class="m-0 team-1">{{row.teamName1}}</p>
+              <span class="score-goals">{{row.teamResult1Admin}}</span>
+            </div>
+            <p class="m-0 px-4">
+              -
+            </p>
+            <div class="d-flex align-items-center">
+              <span class="score-goals">{{row.teamResult2Admin}}</span>
+              <p class="m-0 team-2">{{row.teamName2}}</p>
+              <!--              <figure>{{row.image2}}</figure>-->
+            </div>
+          </div>
+        </td>
+      </ng-container>
+
+      <!-- Fruit Column -->
+      <ng-container matColumnDef="score">
+        <th class="score" mat-header-cell *matHeaderCellDef mat-sort-header> Puntaje (Total <b>{{tableData.resultado}})</b></th>
+        <td class="score text-center" mat-cell *matCellDef="let row"> {{ row.resultado }}</td>
+      </ng-container>
+
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+      <!-- Row shown when there is no matching data. -->
+      <tr class="mat-row" *matNoDataRow>
+        <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+      </tr>
+    </table>
+
+    <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+  </div>
+</div>

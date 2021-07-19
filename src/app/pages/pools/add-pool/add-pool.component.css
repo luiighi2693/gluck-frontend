@@ -10,6 +10,7 @@
   color: black;
   padding: 2rem;
   border-radius: 15px;
+  min-height: 700px;
 }
 
 .home__link:hover {

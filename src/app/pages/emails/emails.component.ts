@@ -39,20 +39,21 @@ export class EmailsComponent implements OnInit {
 
   sendEmail() {
     console.log(this.emailForm.value);
-    // this.showLoader = true;
-    // const emailForm = this.emailForm.value;
-    // console.warn(emailForm);
-    // this.admin.sendEmail(emailForm.category, emailForm.groupToSend, emailForm.subject, emailForm.message).subscribe(res => {
-    //   this.showLoader = false;
-    //   if (res.code === 'D200') {
-    //     this.handleAlertsProvider.presentSnackbarSuccess('Se ha enviado el mensaje con exito!');
-    //   } else if (res.code === 'D401' || res.code === 'D302' || res.code === 'D403') {
-    //     this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
-    //     this.router.navigate(['/auth']);
-    //   }
-    // }, err => {
-    //   this.handleAlertsProvider.presentGenericAlert(err);
-    // });
+    this.showLoader = true;
+    const emailForm = this.emailForm.value;
+    console.warn(emailForm);
+    this.admin.sendEmail(emailForm.category, emailForm.subject, emailForm.message).subscribe(res => {
+      this.showLoader = false;
+      if (res.code === 'D200') {
+        this.handleAlertsProvider.presentSnackbarSuccess('Se ha enviado el mensaje con exito!');
+        this.emailForm.reset();
+      } else if (res.code === 'D401' || res.code === 'D302' || res.code === 'D403') {
+        this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
+        this.router.navigate(['/auth']);
+      }
+    }, err => {
+      this.handleAlertsProvider.presentGenericAlert(err);
+    });
   }
 
 

@@ -149,7 +149,7 @@ export class AdminService {
     return this.http.delete(`${environment.basePath}/api/delete?id=${id}&model=q_pools`, {headers});
   }
 
-  editPool(id, name, dateCreate, status, sport, quantity, color, penalty, drawScore, winScore, loseScore, resultScore, limitUser, rules, password, league, poolType, groups, groupsTeam ): Observable<any> {
+  editPool(id, name, dateCreate, status, sport, quantity, color, penalty, drawScore, winScore, loseScore, resultScore, limitUser, rules, password, league, poolType, groups, groupsTeam): Observable<any> {
     const params = {
       rowid: id,
       name,
@@ -172,6 +172,23 @@ export class AdminService {
       groupsTeam
     };
     return this.http.put(`${environment.basePath}/api/update?model=q_pools`, params, {headers});
+  }
+
+  getResultsByPool(id): Observable<any> {
+    return this.http.get(`${environment.basePath}/api/result/getResultsByPool?poolId=${id}`, {headers});
+  }
+
+  getResultsByPoolAndUser(user, pool): Observable<any> {
+    return this.http.get(`${environment.basePath}/api/result/getResultsByPoolAndUser?poolId=${pool}&userId=${user}`);
+  }
+
+  sendEmail(category, subject, message): Observable<any> {
+    const params = {
+      category,
+      subject,
+      message
+    };
+    return this.http.post(`${environment.basePath}/api/utilities/semdEmailByCategory`, {headers});
   }
 
   uploadFile(imageData: any) {

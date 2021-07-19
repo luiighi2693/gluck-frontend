@@ -4,8 +4,11 @@
   <div class="login__form">
     <div class="container">
       <div class="row">
-        <div class="col-12 text-center">
-          <h1 class="fw-bold">Registarse</h1>
+        <div class="col-12 d-flex align-items-center">
+          <button mat-mini-fab class="back-button" (click)="goBack()">
+            <mat-icon>arrow_back</mat-icon>
+          </button>
+          <h1 class="fw-bold m-0">Registarse</h1>
         </div>
       </div>
       <form [formGroup]="registerForm">

@@ -31,8 +31,9 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
   results: FormGroup;
   showLoader = false;
   amountOfMatches: number;
+  doPenaltiesExist = '';
   arrayOfMatches = [];
-  completedFilledMatches = false;
+  limitOfUsers: any;
 
   displayedColumns: string[] = ['rowid', 'username', 'name', 'email', 'phone', 'status', 'date_Access', 'opts'];
   dataSource: MatTableDataSource<UserData>;
@@ -85,19 +86,20 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
     }
   }
 
-  /** Whether the number of selected elements matches the total number of rows. */
-  isAllSelected() {
-    const numSelected = this.selection.selected.length;
-    const numRows = this.dataSource.data.length;
-    return numSelected === numRows;
-  }
+  // /** Whether the number of selected elements matches the total number of rows. */
+  // isAllSelected() {
+  //   const numSelected = this.selection.selected.length;
+  //   const numRows = this.dataSource.data.length;
+  //   return numSelected === numRows;
+  // }
+  //
+  // /** Selects all rows if they are not all selected; otherwise clear selection. */
+  // masterToggle() {
+  //   this.isAllSelected() ?
+  //     this.selection.clear() :
+  //     this.dataSource.data.forEach(row => this.selection.select(row));
+  // }
 
-  /** Selects all rows if they are not all selected; otherwise clear selection. */
-  masterToggle() {
-    this.isAllSelected() ?
-      this.selection.clear() :
-      this.dataSource.data.forEach(row => this.selection.select(row));
-  }
 
   private createForms() {
     this.config = this.fb.group({
@@ -109,7 +111,7 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
       status: ['', Validators.required],
       penalty: ['', Validators.required],
       groups: ['', Validators.required],
-      teamsPerMatch: ['', Validators.required],
+      teamsPerGroup: ['', Validators.required],
       type: ['', Validators.required],
       league: ['', Validators.required],
       password: ['', Validators.required],
@@ -128,6 +130,8 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
 
   makeMatches() {
     this.arrayOfMatches = [];
+    this.limitOfUsers = Number(this.config.value.usersLimit);
+    this.doPenaltiesExist = this.config.value.penalty;
     for (let i = 0; i < this.amountOfMatches; i++) {
       this.arrayOfMatches.push({
         team1: '',
@@ -141,27 +145,55 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
       });
     }
     console.log(this.arrayOfMatches);
+    console.log(this.limitOfUsers);
   }
 
-  // evaluateMatches() {
-  //   this.arrayOfMatches.find(match => {
-  //     if ( match.status !== '' ||
-  //       match.result === '' ||
-  //       match.name === '' ||
-  //       match.team1 === '' ||
-  //       match.penalty1 === '' ||
-  //       match.team2 === '' ||
-  //       match.penalty2 === '' ||
-  //       match.date === '' ||
-  //       match.time === '') {
-  //       this.completedFilledMatches = true;
-  //     } else {
-  //       this.handleAlertsProvider.presentSnackbarError('Complete todos los campos por favor...');
-  //     }
-  //   });
-  // }
+  showSelection(stepper) {
+    if (!this.selection.hasValue()) {
+      this.handleAlertsProvider.presentSnackbarError('Selecciona los usuarios participantes!');
+    }else if (this.selection.selected.length > this.limitOfUsers) {
+      this.handleAlertsProvider.presentGenericAlert(`Has superado el limite de participantes en esta quiniela, el limite es <b>${this.limitOfUsers}</b>`, 'Aviso!');
+    } else {
+      stepper.next();
+    }
+    console.log(this.selection.selected.length);
+  }
 
-  showSelection() {
-    console.log(this.selection.selected);
+  resetForm(stepper) {
+    const dialogRef = this.handleAlertsProvider.presentErrorDialogOk(
+      'se eliminaran todos los cambios que ha realizado hasta el momento.',
+      'Esta seguro de cancelar el registro?');
+    dialogRef.afterClosed().subscribe(res => {
+      if (res) {
+        stepper.reset();
+      }
+    })
+  }
+
+  registerPool() {
+    const { name, sport, color, matches, usersLimit, status, penalty, groups, teamsPerGroup, type, league, password } = this.config.value;
+    const matchesInfo = this.arrayOfMatches;
+    const usersForPool = this.selection.selected;
+    const { result, winner, draw, loser } = this.results.value;
+    console.log({
+      name,
+      sport,
+      color: color.hex.includes('#') ? color.hex : `#${color.hex}`,
+      matches,
+      usersLimit,
+      status,
+      penalty,
+      groups,
+      teamsPerGroup,
+      type,
+      league,
+      password,
+      matchesInfo,
+      usersForPool,
+      result,
+      winner,
+      draw,
+      loser
+    });
   }
 }

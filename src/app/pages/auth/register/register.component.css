@@ -43,6 +43,12 @@
   color: #F6DD06;
 }
 
+.back-button {
+  background-color: #F6DD06;
+  color: black;
+  margin-right: 1rem;
+}
+
 .login__button {
   background-color: #F6DD06;
   color: black;

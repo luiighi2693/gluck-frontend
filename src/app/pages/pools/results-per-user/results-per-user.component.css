@@ -12,7 +12,7 @@ td, th {
 }
 
 .id {
-  width: 5%;
+  width: 15%;
 }
 
 .status {
@@ -20,23 +20,23 @@ td, th {
 }
 
 .username {
-  width: 12%;
-}
-
-.name {
   width: 10%;
 }
 
-.email {
-  width: 20%;
+.game {
+  width: 25%;
 }
 
-.lastLogin {
-  width: 10%;
+.score {
+  width:10;
 }
 
-.opts {
-  width: 5%;
+.userResults {
+  width: 32.5%;
+}
+
+.finalResults {
+  width: 32.5%;
 }
 
 .listOf__users--wrapper {
@@ -91,4 +91,21 @@ td, th {
   background-color: #333232;
   border-radius: 15px;
   cursor: pointer;
+}
+
+.score-goals {
+  background-color: white;
+  border: 1px solid black;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.team-1 {
+  padding-right: 1rem;
+}
+.team-2 {
+  padding-left: 1rem;
 }

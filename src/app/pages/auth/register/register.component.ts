@@ -90,4 +90,8 @@ export class RegisterComponent implements OnInit {
     const el: HTMLElement = this.inputFiles.nativeElement as HTMLElement;
     el.click();
   }
+
+  goBack() {
+    this.router.navigate(['/auth']);
+  }
 }

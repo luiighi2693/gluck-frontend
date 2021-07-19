@@ -11,15 +11,18 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { EditPoolComponent } from './edit-pool/edit-pool.component';
 import { PoolsResultsDetailComponent } from './pools-results-detail/pools-results-detail.component';
 import { MAT_COLOR_FORMATS, NgxMatColorPickerModule, NGX_MAT_COLOR_FORMATS } from '@angular-material-components/color-picker';
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+import { ResultsPerUserComponent } from './results-per-user/results-per-user.component';
 
 @NgModule({
-  declarations: [PoolsComponent, AddPoolComponent, ListOfPoolsComponent, EditPoolComponent, PoolsResultsDetailComponent],
+  declarations: [PoolsComponent, AddPoolComponent, ListOfPoolsComponent, EditPoolComponent, PoolsResultsDetailComponent, ResultsPerUserComponent],
   imports: [
     CommonModule,
     MaterialModule,
     SharedModule,
     FormsModule,
     ReactiveFormsModule,
+    NgxMaterialTimepickerModule,
     NgxMatColorPickerModule,
     RouterModule.forChild([
       {
@@ -37,6 +40,10 @@ import { MAT_COLOR_FORMATS, NgxMatColorPickerModule, NGX_MAT_COLOR_FORMATS } fro
       {
         path: 'pools-results/:id',
         component: PoolsResultsDetailComponent
+      },
+      {
+        path: 'results-per-user/:id/:pool',
+        component: ResultsPerUserComponent
       },
       {
         path: 'list-of-pools',

@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
-import { HandleAlertsProvider } from '../../../utilities/providers/handle-alerts-provider';
+import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../../services/auth.service';
 import {Router} from '@angular/router';
 
@@ -10,32 +11,37 @@ import {Router} from '@angular/router';
 })
 export class ForgotPasswordComponent implements OnInit {
   hide = true;
-  email = '';
   isLoaded = false;
+  forgotPasswordForm: FormGroup;
 
   constructor(
-    private authService: AuthService, private handleAlertsProvider: HandleAlertsProvider, private router: Router
+    private authService: AuthService,
+    private handleAlertsProvider: HandleAlertsProvider,
+    private router: Router,
+    private fb: FormBuilder
   ) {
   }
 
   ngOnInit(): void {
+    this.createForm();
+  }
+
+  private createForm() {
+    this.forgotPasswordForm = this.fb.group({
+      email: ['', Validators.required],
+    });
   }
 
   sendPassword() {
-    if (this.email !== '') {
-      this.isLoaded = true;
-      this.authService.recoverPasswordInit(this.email).subscribe(data => {
-        this.isLoaded = false;
-        if (data.hasError) {
-          this.handleAlertsProvider.presentGenericAlert('No se ha encontrado el correo  solicitado... intente de nuevo', 'No se Pudo completar la accion...');
-        }
-        else {
-          this.handleAlertsProvider.presentSnackbarSuccess('Se ha enviado el link de cambio de contrasena a su correo!');
-          this.router.navigate(['/auth']);
-        }
-      });
-    } else {
-      alert('debe ingresar un correo valido');
-    }
+    this.isLoaded = true;
+    this.authService.recoverPasswordInit(this.forgotPasswordForm.value.email).subscribe(data => {
+      this.isLoaded = false;
+      if (data.hasError) {
+        this.handleAlertsProvider.presentGenericAlert('No se ha encontrado el correo  solicitado... intente de nuevo', 'No se Pudo completar la accion...');
+      } else {
+        this.handleAlertsProvider.presentSnackbarSuccess('Se ha enviado el link de cambio de contrasena a su correo!');
+        this.router.navigate(['/auth']);
+      }
+    });
   }
 }

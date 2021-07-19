@@ -3,7 +3,7 @@ import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {MatTableDataSource} from '@angular/material/table';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {AdminService} from '../../../services/admin.service';
 
 export interface UserData {
@@ -26,9 +26,11 @@ const users: UserData[] = [];
 })
 export class PoolsResultsDetailComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['rowid', 'username', 'name', 'email', 'phone', 'status', 'date_Access', 'opts'];
+  displayedColumns: string[] = ['rowid', 'name', 'email', 'phone', 'score', 'goalsScored', 'date_Access', 'opts'];
   dataSource: MatTableDataSource<UserData>;
   showLoader = false;
+  currentPool: any;
+  getCurrentPool: any;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -37,11 +39,17 @@ export class PoolsResultsDetailComponent implements OnInit, AfterViewInit {
     private handleAlertsProvider: HandleAlertsProvider,
     private router: Router,
     private admin: AdminService,
+    private route: ActivatedRoute
   ) {
     this.admin.initToken();
   }
 
   ngOnInit(): void {
+    // this.currentPool = this.route.params._value.id
+
+    this.getCurrentPool = this.route.params.subscribe(params => {
+      this.currentPool = params.id;
+    });
   }
 
   ngAfterViewInit() {
@@ -50,19 +58,19 @@ export class PoolsResultsDetailComponent implements OnInit, AfterViewInit {
 
   setData() {
     this.showLoader = true;
-    this.admin.getUsers().subscribe(data => {
-      if (data.code === 'D200') {
-        this.showLoader = false;
-        this.dataSource = new MatTableDataSource<UserData>(data.data);
+    this.admin.getResultsByPool(this.currentPool).subscribe(res => {
+      this.showLoader = false;
+      if (res.code === 'D200') {
+        console.log('res', res);
+        this.dataSource = new MatTableDataSource<UserData>(res.data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
-      } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
+      } else if (res.code === 'A401' || res.code === 'A302' || res.code === 'A403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
         this.router.navigate(['/auth']);
       }
-    }, error => {
-      this.showLoader = false;
-      this.handleAlertsProvider.presentGenericAlert(error);
+    }, err => {
+      this.handleAlertsProvider.presentGenericAlert(err);
     });
   }
 
@@ -75,31 +83,7 @@ export class PoolsResultsDetailComponent implements OnInit, AfterViewInit {
     }
   }
 
-  editUser(id) {
-    this.router.navigate([`/admin/clients/edit-client/${id}`]);
+  goToDetail(userID: any) {
+    this.router.navigate([`/admin/pools/results-per-user/${userID}/${this.currentPool}`]);
   }
-
-  deleteUser(user) {
-    const dialogRef = this.handleAlertsProvider.presentErrorDialogOk(`Esta seguro de eliminar el usuario <b>${user.name}</b>?`, 'Aviso!');
-    dialogRef.afterClosed().subscribe(response => {
-      if (response) {
-        this.showLoader = true;
-        this.admin.deleteUser(user.rowid).subscribe(res => {
-          this.showLoader = false;
-          if (res.code === 'D200') {
-            this.handleAlertsProvider.presentSnackbarSuccess(`Se ha eliminado el user ${user.name} con exito!`);
-            this.setData();
-          } else if (res.code === 'A401' || res.code === 'A302' || res.code === 'A403') {
-            this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
-            this.router.navigate(['/auth']);
-          }
-        }, err => {
-          this.handleAlertsProvider.presentGenericAlert(err);
-        });
-      }
-    }, error => {
-      this.handleAlertsProvider.presentGenericAlert(error);
-    });
-  }
-
 }

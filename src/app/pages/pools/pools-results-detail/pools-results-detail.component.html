@@ -1,7 +1,7 @@
 <app-loader [loading]="showLoader"></app-loader>
 <div class="d-flex justify-content-between text-white m-4">
   <div class="d-flex align-items-center">
-    <mat-icon class="mx-3">group</mat-icon><h1 class="m-0">Lista de Usuarios</h1> <span class="mt-2 mx-4 badge">Admin</span>
+    <mat-icon class="mx-3">group</mat-icon><h1 class="m-0">Resultados de Quiniela</h1> <span class="mt-2 mx-4 badge">Admin</span>
   </div>
   <div class="d-flex align-items-center">
     <div class="d-flex align-items-center home__link" routerLink="/admin">
@@ -9,24 +9,18 @@
       <h3 class="m-0">Home</h3>
     </div>
     <mat-icon>keyboard_arrow_right</mat-icon>
-    <h3 class="m-0">Lista de Usuarios</h3>
+    <h3 class="m-0">Resultados de Quiniela</h3>
   </div>
 </div>
 
 <div class="container">
   <div class="container listOf__users--wrapper">
     <div class="row">
-      <div class="col-12 col-md-10">
+      <div class="col-12">
         <mat-form-field appearance="standard">
           <mat-label>Buscar</mat-label>
           <input matInput (keyup)="applyFilter($event)" placeholder="Ej. Pepito perez" #input>
         </mat-form-field>
-      </div>
-      <div class="col-12 col-md-2 d-flex align-items-center justify-content-center">
-        <div class="add-user" routerLink="/admin/clients/add-client">
-          <mat-icon>add</mat-icon>
-          <p class="m-0">Crear Usuario</p>
-        </div>
       </div>
     </div>
 
@@ -36,22 +30,16 @@
         <!-- ID Column -->
         <ng-container matColumnDef="rowid">
           <th class="id" mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-          <td class="id" mat-cell *matCellDef="let row"> {{row.rowid}} </td>
+          <td class="id" mat-cell *matCellDef="let row"> {{row.userID}} </td>
         </ng-container>
 
         <!-- Progress Column -->
-        <ng-container matColumnDef="username">
+        <ng-container matColumnDef="name">
           <th class="username" mat-header-cell *matHeaderCellDef mat-sort-header> Usuario </th>
-          <td class="username" mat-cell *matCellDef="let row"> {{row.username}} </td>
+          <td class="username" mat-cell *matCellDef="let row"> {{row.name}} </td>
         </ng-container>
 
         <!-- Name Column -->
-        <ng-container matColumnDef="name">
-          <th class="name" mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
-          <td class="name" mat-cell *matCellDef="let row"> {{row.name}} </td>
-        </ng-container>
-
-        <!-- Fruit Column -->
         <ng-container matColumnDef="email">
           <th class="email" mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
           <td class="email" mat-cell *matCellDef="let row"> {{row.email}} </td>
@@ -64,9 +52,15 @@
         </ng-container>
 
         <!-- Fruit Column -->
-        <ng-container matColumnDef="status">
-          <th class="status" mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </th>
-          <td class="status" mat-cell *matCellDef="let row"> <div [ngClass]="{'active': row.status === 1, 'inactive': row.status === 0}"><p class="m-0">{{row.status === 1 ? 'Activo' : 'Inactivo' }}</p></div> </td>
+        <ng-container matColumnDef="score">
+          <th class="status" mat-header-cell *matHeaderCellDef mat-sort-header> Puntuacion </th>
+          <td class="status" mat-cell *matCellDef="let row"> {{row.resultado}} </td>
+        </ng-container>
+
+        <!-- Fruit Column -->
+        <ng-container matColumnDef="goalsScored">
+          <th class="status" mat-header-cell *matHeaderCellDef mat-sort-header> Goles Acertados </th>
+          <td class="status" mat-cell *matCellDef="let row"> {{row.goles}}</td>
         </ng-container>
 
         <!-- Fruit Column -->
@@ -77,13 +71,10 @@
 
         <!-- Fruit Column -->
         <ng-container matColumnDef="opts">
-          <th class="opts" mat-header-cell *matHeaderCellDef mat-sort-header>  </th>
+          <th class="opts" mat-header-cell *matHeaderCellDef mat-sort-header>  -</th>
           <td class="opts" mat-cell *matCellDef="let row">
-            <button mat-icon-button aria-label="edit" (click)="editUser(row.rowid)">
-              <mat-icon>edit</mat-icon>
-            </button>
-            <button mat-icon-button aria-label="delete"(click)="deleteUser(row)" >
-              <mat-icon>delete</mat-icon>
+            <button mat-icon-button aria-label="goToDetail"(click)="goToDetail(row.userID)" >
+              <mat-icon>exit_to_app</mat-icon>
             </button>
           </td>
         </ng-container>
