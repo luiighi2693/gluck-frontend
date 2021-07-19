@@ -28,7 +28,7 @@ td, th {
 }
 
 .score {
-  width:10;
+  width:10%;
 }
 
 .userResults {
@@ -94,13 +94,16 @@ td, th {
 }
 
 .score-goals {
-  background-color: white;
   border: 1px solid black;
   width: 1.5rem;
   height: 1.5rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-weight: bolder;
+  font-size: 16px;
+  /*background-color: #333232;*/
+  /*color: white;*/
 }
 
 .team-1 {
@@ -108,4 +111,12 @@ td, th {
 }
 .team-2 {
   padding-left: 1rem;
+}
+
+.total {
+  font-size: 18px;
+}
+
+.team-image {
+  max-width: 4rem;
 }

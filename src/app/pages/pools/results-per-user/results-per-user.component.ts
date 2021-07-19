@@ -43,7 +43,8 @@ export class ResultsPerUserComponent implements OnInit, AfterViewInit {
     this.admin.initToken();
   }
 
-  ngOnInit(): void {
+  ngOnInit() {
+    this.getParams();
     this.getData();
   }
 
@@ -51,18 +52,23 @@ export class ResultsPerUserComponent implements OnInit, AfterViewInit {
     this.setData();
   }
 
-  getData() {
-    this.showLoader = true;
+  getParams() {
     this.getCurrentPool = this.route.params.subscribe(params => {
       this.currentPool = params.pool;
     });
     this.getCurrentUser = this.route.params.subscribe(params => {
       this.currentUser = params.id;
     });
+  }
+
+  getData() {
+    this.showLoader = true;
+    console.log(this.showLoader);
     this.admin.getResultsByPoolAndUser(this.currentUser, this.currentPool).subscribe(data => {
+      this.showLoader = false;
+      console.log(this.showLoader);
       console.log(data);
       if (data.code === 'D200') {
-        this.showLoader = false;
         this.tableData = data;
       } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
@@ -87,33 +93,6 @@ export class ResultsPerUserComponent implements OnInit, AfterViewInit {
     this.dataSource = new MatTableDataSource<UserData>(this.tableData.data);
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-  }
-
-  editUser(id) {
-    this.router.navigate([`/admin/clients/edit-client/${id}`]);
-  }
-
-  deleteUser(user) {
-    const dialogRef = this.handleAlertsProvider.presentErrorDialogOk(`Esta seguro de eliminar el usuario <b>${user.name}</b>?`, 'Aviso!');
-    dialogRef.afterClosed().subscribe(response => {
-      if (response) {
-        this.showLoader = true;
-        this.admin.deleteUser(user.rowid).subscribe(res => {
-          this.showLoader = false;
-          if (res.code === 'D200') {
-            this.handleAlertsProvider.presentSnackbarSuccess(`Se ha eliminado el user ${user.name} con exito!`);
-            this.setData();
-          } else if (res.code === 'A401' || res.code === 'A302' || res.code === 'A403') {
-            this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
-            this.router.navigate(['/auth']);
-          }
-        }, err => {
-          this.handleAlertsProvider.presentGenericAlert(err);
-        });
-      }
-    }, error => {
-      this.handleAlertsProvider.presentGenericAlert(error);
-    });
   }
 }
 

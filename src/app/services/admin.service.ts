@@ -179,7 +179,7 @@ export class AdminService {
   }
 
   getResultsByPoolAndUser(user, pool): Observable<any> {
-    return this.http.get(`${environment.basePath}/api/result/getResultsByPoolAndUser?poolId=${pool}&userId=${user}`);
+    return this.http.get(`${environment.basePath}/api/result/getResultsByPoolAndUser?poolId=${pool}&userId=${user}`, {headers});
   }
 
   sendEmail(category, subject, message): Observable<any> {

@@ -20,12 +20,12 @@
   <div class="mat-elevation-z8">
     <div class="pt-4">
       <div class="row">
-        <div class="col-12 pl-4">
+        <div class="col-12 px-5">
           <h1 class="m-0 pl-4">{{tableData.poolName}}</h1>
           <mat-divider class="mb-3 mt-1"></mat-divider>
         </div>
-        <div class="col-12 pl-4">
-          <h1 class="pl-4"> <b>Usuario: </b> {{tableData.username}} </h1>
+        <div class="col-12 px-5">
+          <h1 class="pl-4"><b>Usuario: </b> {{tableData.username}} </h1>
         </div>
       </div>
     </div>
@@ -39,21 +39,21 @@
 
       <!-- Name Column -->
       <ng-container matColumnDef="userResults">
-        <th class="userResults" mat-header-cell *matHeaderCellDef mat-sort-header> Resultado de Usuario</th>
+        <th class="userResults text-center" mat-header-cell *matHeaderCellDef mat-sort-header> Resultado de Usuario</th>
         <td class="userResults" mat-cell *matCellDef="let row">
-          <div class="d-flex">
+          <div class="d-flex ">
             <div class="d-flex align-items-center">
-              <!--              <figure>{{row.image1}}</figure>-->
+              <img src="../../../../assets/default-team-logo.png" class="team-image">
               <p class="m-0 team-1">{{row.teamName1}}</p>
               <span class="score-goals">{{row.teamResult1}}</span>
             </div>
-            <p class="m-0 px-4">
+            <p class="m-0 px-4 d-flex align-items-center">
               -
             </p>
             <div class="d-flex align-items-center">
               <span class="score-goals">{{row.teamResult2}}</span>
-              <p class="m-0 team-2">{{row.teamName2}}</p>
-              <!--              <figure>{{row.image2}}</figure>-->
+              <img src="../../../../assets/default-team-logo.png" class="team-image team-2">
+              <p class="m-0 ">{{row.teamName2}}</p>
             </div>
           </div>
         </td>
@@ -61,21 +61,21 @@
 
       <!-- Fruit Column -->
       <ng-container matColumnDef="finalResults">
-        <th class="finalResults" mat-header-cell *matHeaderCellDef mat-sort-header> Resultado Finales</th>
+        <th class="finalResults text-center" mat-header-cell *matHeaderCellDef mat-sort-header> Resultado Finales</th>
         <td class="finalResults" mat-cell *matCellDef="let row">
-          <div class="d-flex">
+          <div class="d-flex ">
             <div class="d-flex align-items-center">
-              <!--              <figure>{{row.image1}}</figure>-->
+              <img src="../../../../assets/default-team-logo.png" class="team-image">
               <p class="m-0 team-1">{{row.teamName1}}</p>
               <span class="score-goals">{{row.teamResult1Admin}}</span>
             </div>
-            <p class="m-0 px-4">
+            <p class="m-0 px-4 d-flex align-items-center">
               -
             </p>
             <div class="d-flex align-items-center">
               <span class="score-goals">{{row.teamResult2Admin}}</span>
-              <p class="m-0 team-2">{{row.teamName2}}</p>
-              <!--              <figure>{{row.image2}}</figure>-->
+              <<img src="../../../../assets/default-team-logo.png" class="team-image team-2">
+              <p class="m-0 ">{{row.teamName2}}</p>
             </div>
           </div>
         </td>
@@ -83,8 +83,9 @@
 
       <!-- Fruit Column -->
       <ng-container matColumnDef="score">
-        <th class="score" mat-header-cell *matHeaderCellDef mat-sort-header> Puntaje (Total <b>{{tableData.resultado}})</b></th>
-        <td class="score text-center" mat-cell *matCellDef="let row"> {{ row.resultado }}</td>
+        <th class="score text-center" mat-header-cell *matHeaderCellDef mat-sort-header> Puntaje<br><b class="total">
+          (Total {{tableData.resultado}})</b></th>
+        <td class="score text-center" mat-cell *matCellDef="let row"> <p class="total">{{ row.resultado }}</p></td>
       </ng-container>
 
 
