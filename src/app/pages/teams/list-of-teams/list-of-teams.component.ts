@@ -6,6 +6,7 @@ import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-p
 import {Router} from '@angular/router';
 import {AdminService} from '../../../services/admin.service';
 import {AuthService} from '../../../services/auth.service';
+import {environment} from '../../../../environments/environment';
 
 export interface TeamData {
   rowid: string;
@@ -21,10 +22,11 @@ export interface TeamData {
   styleUrls: ['./list-of-teams.component.css']
 })
 export class ListOfTeamsComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['rowid', 'shield', 'name', 'sport', 'status', 'date_Create', 'opts'];
+  displayedColumns: string[] = ['rowid', 'image', 'name', 'sport', 'status', 'date_Create', 'opts'];
   dataSource: MatTableDataSource<TeamData>;
   showLoader = false;
   token: string;
+  imagePath;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -36,6 +38,7 @@ export class ListOfTeamsComponent implements OnInit, AfterViewInit {
     private auth: AuthService,
   ) {
     this.admin.initToken();
+    this.imagePath = environment.basePath;
   }
 
   ngOnInit(): void {

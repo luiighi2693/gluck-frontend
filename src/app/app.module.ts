@@ -7,6 +7,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AlertsModule } from './shared/alerts/alerts.module';
 import { SharedModule } from './shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
+import {NgxCaptchaModule} from 'ngx-captcha';
 
 @NgModule({
   declarations: [
@@ -14,6 +15,7 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   imports: [
     AppRoutingModule,
+    NgxCaptchaModule,
     BrowserModule,
     BrowserAnimationsModule,
     NgbModule,

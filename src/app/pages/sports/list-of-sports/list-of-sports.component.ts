@@ -5,6 +5,7 @@ import {MatSort} from '@angular/material/sort';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
 import {Router} from '@angular/router';
 import {AdminService} from '../../../services/admin.service';
+import {environment} from "../../../../environments/environment";
 
 export interface SportData {
   rowid: string;
@@ -22,9 +23,10 @@ const sports: SportData[] = [];
   styleUrls: ['./list-of-sports.component.css']
 })
 export class ListOfSportsComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['rowid', 'name', 'status', 'date_Create', 'opts'];
+  displayedColumns: string[] = ['rowid', 'image', 'name', 'status', 'date_Create', 'opts'];
   dataSource: MatTableDataSource<SportData>;
   showLoader = false;
+  imagePath;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -35,6 +37,7 @@ export class ListOfSportsComponent implements OnInit, AfterViewInit {
     private admin: AdminService,
   ) {
     this.admin.initToken();
+    this.imagePath = environment.basePath;
   }
 
   ngOnInit(): void {

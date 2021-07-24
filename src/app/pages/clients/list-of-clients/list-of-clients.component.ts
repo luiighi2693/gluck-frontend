@@ -5,6 +5,8 @@ import {MatTableDataSource} from '@angular/material/table';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
 import {Router} from '@angular/router';
 import {AdminService} from '../../../services/admin.service';
+import {environment} from '../../../../environments/environment';
+
 
 export interface UserData {
   rowid: string;
@@ -22,9 +24,10 @@ export interface UserData {
   styleUrls: ['./list-of-clients.component.css']
 })
 export class ListOfClientsComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['rowid', 'username', 'name', 'email', 'phone', 'status', 'date_Access', 'opts'];
+  displayedColumns: string[] = ['rowid', 'image', 'username', 'email', 'phone', 'status', 'date_Access', 'opts'];
   dataSource: MatTableDataSource<UserData>;
   showLoader = false;
+  imagePath;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -35,6 +38,7 @@ export class ListOfClientsComponent implements OnInit, AfterViewInit {
     private admin: AdminService,
   ) {
     this.admin.initToken();
+    this.imagePath = environment.basePath;
   }
 
   ngOnInit(): void {

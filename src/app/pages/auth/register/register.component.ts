@@ -4,6 +4,7 @@ import { AuthService } from '../../../services/auth.service';
 import { Router } from '@angular/router';
 import { HandleAlertsProvider } from '../../../utilities/providers/handle-alerts-provider';
 import {AdminService} from '../../../services/admin.service';
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-register',
@@ -24,8 +25,9 @@ export class RegisterComponent implements OnInit {
     city: ['', Validators.required],
     state: ['', Validators.required],
     code: ['', Validators.required],
+    img: [''],
   });
-  imageData = null;
+  imagePath;
 
   @ViewChild('inputFiles', { static: true }) inputFiles: ElementRef;
 
@@ -36,6 +38,7 @@ export class RegisterComponent implements OnInit {
     private handleAlertsProvider: HandleAlertsProvider,
     private router: Router,
   ) {
+    this.imagePath = environment.basePath;
   }
 
   ngOnInit(): void {
@@ -43,12 +46,6 @@ export class RegisterComponent implements OnInit {
 
   async register() {
     if (this.registerForm.valid) {
-
-      let img = null;
-
-      if (this.imageData !== null) {
-       img = await this.admin.uploadFile(this.imageData).toPromise();
-      }
 
       const username = this.registerForm.value.username;
       const password = this.registerForm.value.password;
@@ -60,6 +57,7 @@ export class RegisterComponent implements OnInit {
       const city = this.registerForm.value.city;
       const state = this.registerForm.value.state;
       const code = this.registerForm.value.code;
+      const img = this.registerForm.value.img;
 
       this.isLoaded = true;
       this.authService.register(name, lastname, username, password, email, phone, address, state, city, code, img ).subscribe(data => {
@@ -80,9 +78,9 @@ export class RegisterComponent implements OnInit {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = async () => {
-      // const imageCompressed = await this.compressImage(reader.result, 1200, 600);
-      this.imageData = reader.result;
-      // this.imageType = event.target.files[0].type;
+      const imageData = reader.result;
+      const imageName = await this.admin.uploadFile(imageData).toPromise();
+      this.registerForm.get('img').setValue(imageName);
     };
   }
 

@@ -39,6 +39,12 @@
           <td class="id" mat-cell *matCellDef="let row"> {{row.rowid}} </td>
         </ng-container>
 
+        <!-- Name Column -->
+        <ng-container matColumnDef="image">
+          <th class="image" mat-header-cell *matHeaderCellDef mat-sort-header> Imagen </th>
+          <td class="image" mat-cell *matCellDef="let row"> <img width="30px" [src]="imagePath + '/images/' + (row.img === '' ? 'logo.png' : row.img)" [alt]="row.img"> </td>
+        </ng-container>
+
         <!-- Progress Column -->
         <ng-container matColumnDef="name">
           <th class="username" mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>

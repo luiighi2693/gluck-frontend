@@ -15,7 +15,7 @@
         <div class="row">
           <div class="col-12 col-md-4">
             <figure class="avatar__wrapper">
-              <img [src]="this.imageData ? this.imageData : '../../../../assets/default-user-example.jpg'" class="avatar" alt="">
+              <img [src]="this.registerForm.value.img !== '' ? (this.imagePath + '/images/' + this.registerForm.value.img) : '../../../../assets/default-user-example.jpg'" class="avatar" alt="">
               <button class="avatar__button" type="button" mat-fab aria-label="change picture" (click)="openUploadFiles()">
                 <mat-icon>camera_alt</mat-icon>
               </button>

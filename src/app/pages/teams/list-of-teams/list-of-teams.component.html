@@ -39,11 +39,11 @@
           <td class="id" mat-cell *matCellDef="let row"> {{row.rowid}} </td>
         </ng-container>
 
-        <!-- Progress Column -->
-        <ng-container matColumnDef="shield">
-          <th class="shield" mat-header-cell *matHeaderCellDef mat-sort-header> Escudo </th>
-          <td class="shield" mat-cell *matCellDef="let row"> {{row.img}} </td>
+        <ng-container matColumnDef="image">
+          <th class="image" mat-header-cell *matHeaderCellDef mat-sort-header> Escudo </th>
+          <td class="image" mat-cell *matCellDef="let row"> <img width="30px" [src]="imagePath + '/images/' + (row.img === '' ? 'logo.png' : row.img)" [alt]="row.img"> </td>
         </ng-container>
+
         <!-- Progress Column -->
         <ng-container matColumnDef="name">
           <th class="name" mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>

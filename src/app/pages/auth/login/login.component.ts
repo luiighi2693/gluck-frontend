@@ -3,7 +3,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../../services/auth.service';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
 import {ActivatedRoute, Router} from '@angular/router';
-
+import { environment } from '../../../../environments/environment';
 
 @Component({
   selector: 'app-login',
@@ -22,6 +22,7 @@ export class LoginComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute
   ) {
+    this.siteKey = environment.siteKey;
   }
 
   ngOnInit() {
@@ -54,7 +55,8 @@ export class LoginComponent implements OnInit {
   private createForm() {
     this.loginForm = new FormGroup({
       username: new FormControl('', Validators.required),
-      password: new FormControl('', Validators.required)
+      password: new FormControl('', Validators.required),
+      recaptcha: new FormControl(''),
     });
   }
 
