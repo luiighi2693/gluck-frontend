@@ -5,6 +5,7 @@ import {MaterialModule} from '../../material/material.module';
 import { ErrorSnackbarComponent } from './error-snackbar/error-snackbar.component';
 import { OkConfirmationAlertComponent } from './ok-confirmation-alert/ok-confirmation-alert.component';
 import { GenericAlertComponent } from './generic-alert/generic-alert.component';
+import { RegisterPoolDialogComponent } from './register-pool-dialog/register-pool-dialog.component';
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import { GenericAlertComponent } from './generic-alert/generic-alert.component';
     SuccessSnackbarComponent,
     ErrorSnackbarComponent,
     OkConfirmationAlertComponent,
-    GenericAlertComponent
+    GenericAlertComponent,
+    RegisterPoolDialogComponent
   ],
   imports: [
     CommonModule,

@@ -1,0 +1,25 @@
+<div class="d-flex justify-content-between align-items-center text-white m-4">
+  <h1>Resultado de Mis Quinielas </h1>
+  <div class="d-flex align-items-center">
+    <h3 class="home__link m-0" routerLink="/home">Home</h3>
+    <mat-icon>keyboard_arrow_right</mat-icon>
+    <h3 class="home__link m-0">Resultados de Mis Quinelas</h3>
+  </div>
+</div>
+
+<div class="container min-height">
+  <div class="row yellow-panel mb-3">
+    <div class="col-6 p-3 text-center border-right"><h1 class="m-0">Usuario</h1></div>
+    <div class="col-3 p-3 text-center border-right"><h1 class="m-0">Puntuacion</h1></div>
+    <div class="col-3 p-3 text-center"><h1 class="m-0">Goles Acertados</h1></div>
+  </div>
+  <div class="row panel mb-3" *ngFor="let data of exampleData" (click)="goToRoute(data.id)">
+    <div class="col-1 d-flex justify-content-center align-items-center"><h1 class="m-0">{{data.id}}</h1></div>
+    <div class="col-5  d-flex justify-content-around align-items-center border-right">
+      <img [src]="data.img" class="pool-image" alt="pool image">
+      <h1 class="m-0">{{data.user}}</h1></div>
+    <div class="col-3 d-flex justify-content-center align-items-center border-right"><h1 class="m-0">{{data.score}}</h1>
+    </div>
+    <div class="col-3 d-flex justify-content-center align-items-center"><h1 class="m-0">{{data.goals}} Goles</h1></div>
+  </div>
+</div>

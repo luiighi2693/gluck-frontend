@@ -1,0 +1,39 @@
+.yellow-panel {
+  background-color: #F6DD06;
+  color: black;
+  padding: 1rem;
+  border-radius: 25px;
+}
+
+.team-image {
+  width: 75px;
+  height: 75px;
+}
+
+.panel  {
+  background-color: lightgray;
+  border-radius: 25px;
+}
+
+.min-height {
+  min-height: 700px;
+}
+
+
+
+.user-panel {
+  background-color: lightgray;
+  color: black;
+  border-radius: 25px;
+  padding: 1rem;
+}
+
+.pool-image {
+  width: 75px;
+  height: 75px;
+  border-radius: 50px;
+}
+
+.border-right {
+  border-right: 1px solid gray;
+}

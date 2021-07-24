@@ -1,0 +1,21 @@
+.home__link:hover {
+  color: #F6DD06;
+  cursor: pointer;
+}
+
+.pool-image {
+  max-width: 500px;
+  max-height: 500px;
+  transition: transform .2s;
+}
+
+.pool-image:hover {
+  transform: scale(1.1);
+  cursor: pointer;
+}
+
+@keyframes scale {
+  to {
+    transform: scale(1.5);
+  }
+}

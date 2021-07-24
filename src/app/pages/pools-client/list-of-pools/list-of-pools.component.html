@@ -1,0 +1,35 @@
+<div class="d-flex justify-content-between align-items-center text-white m-4">
+  <h1>Lista de Quinielas</h1>
+  <div class="d-flex align-items-center">
+    <h3 class="home__link m-0" routerLink="/home">Home</h3>
+    <mat-icon>keyboard_arrow_right</mat-icon>
+    <h3 class="home__link m-0">Lista de Quinielas</h3>
+  </div>
+</div>
+
+<div class="row text-white mx-3">
+  <div class="col-12 col-md-6 mb-4 p-4"  *ngFor="let pool of pools">
+    <div class="p-4" [style.backgroundColor]="pool.color">
+      <div class="row">
+        <div class="col-9">
+          <div class="d-flex mb-3">
+            <button mat-flat-button color="primary" class="mx-3">Reglas</button>
+            <button mat-flat-button color="primary">Participantes</button>
+          </div>
+          <h1>{{pool.name}}</h1>
+          <h3>{{pool.category}}</h3>
+          <p>{{pool.matches}} (Partidos)</p>
+        </div>
+        <div class="col-3 text-center">
+          <mat-icon class="calendar-icon">calendar_today</mat-icon>
+        </div>
+      </div>
+      <div class="col-12 text-center password">
+        <input class="input" type="password" formControlName="password" placeholder="Clave de Quiniela">
+        <button class="send-button" mat-mini-fab>
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

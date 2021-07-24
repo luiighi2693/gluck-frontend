@@ -1,0 +1,88 @@
+.home__link:hover {
+  color: #F6DD06;
+  cursor: pointer;
+}
+
+main {
+  min-height: 700px;
+}
+
+.panel {
+  background-color: black !important;
+}
+
+.title {
+  color: white !important;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title-button {
+  background-color: #F6DD06;
+  color: black;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+
+.id {
+  width: 5%;
+}
+
+.status {
+  width: 7.5%
+}
+
+participants {
+  width: 7.5%;
+}
+
+.opts {
+  width: 7.5%;
+}
+
+remaining-time {
+  width: 7.5%;
+}
+
+.pool {
+  width: 50%;
+}
+
+.sport {
+  width: 7.5%;
+}
+
+
+.active {
+  padding: 0.5rem;
+  color: white;
+  background-color: #4caf50;
+  border-radius: 15px;
+  text-align: center;
+  width: 75%;
+  letter-spacing: 1px;
+}
+
+.inactive {
+  padding: 0.5rem;
+  color: white;
+  background-color: red;
+  border-radius: 15px;
+  text-align: center;
+  width: 75%;
+  letter-spacing: 1px;
+}
+
+.dialog-button {
+  background-color: #F6DD06;
+  border-radius: 25px;
+}
+
+.dialog-button:hover {
+  background-color: black;
+  color: #F6DD06;
+}
