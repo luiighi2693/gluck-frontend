@@ -1,8 +1,9 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Router} from '@angular/router';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
 import {AdminService} from '../../../services/admin.service';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-add-team',
@@ -14,9 +15,13 @@ export class AddTeamComponent implements OnInit {
   newTeamForm: FormGroup;
   showLoader = false;
   sports: any;
+  imagePath;
+
+  @ViewChild('inputFiles', { static: true }) inputFiles: ElementRef;
 
   constructor(private router: Router, private admin: AdminService, private handleAlertsProvider: HandleAlertsProvider) {
     this.admin.initToken();
+    this.imagePath = environment.basePath;
   }
 
   ngOnInit(): void {
@@ -29,7 +34,8 @@ export class AddTeamComponent implements OnInit {
       status: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required),
       date_Create: new FormControl('', Validators.required),
-      asociatedSport: new FormControl('', Validators.required)
+      asociatedSport: new FormControl('', Validators.required),
+      img: new FormControl('')
     });
   }
 
@@ -42,7 +48,8 @@ export class AddTeamComponent implements OnInit {
       newTeam.description,
       newTeam.date_Create,
       Number(newTeam.status),
-      newTeam.asociatedSport
+      newTeam.asociatedSport,
+      newTeam.img
     ).subscribe(response => {
       this.showLoader = false;
       if (response.code === 'D200') {
@@ -71,4 +78,19 @@ export class AddTeamComponent implements OnInit {
     this.createForm();
   }
 
+  handleUpload(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = async () => {
+      const imageData = reader.result;
+      const imageName = await this.admin.uploadFile(imageData).toPromise();
+      this.newTeamForm.get('img').setValue(imageName);
+    };
+  }
+
+  openUploadFiles() {
+    const el: HTMLElement = this.inputFiles.nativeElement as HTMLElement;
+    el.click();
+  }
 }

@@ -30,7 +30,7 @@ export class AdminService {
     return this.http.delete(`${environment.basePath}/api/delete?id=${id}&model=q_user`, {headers});
   }
 
-  editUser(name, lastname, username, email, phone, password, address, state, city, code, rowid, status): Observable<any> {
+  editUser(name, lastname, username, email, phone, password, address, state, city, code, rowid, status, img): Observable<any> {
     const params = {
       name,
       lastname,
@@ -43,12 +43,13 @@ export class AdminService {
       city,
       code,
       rowid,
-      status
+      status,
+      img
     };
     return this.http.put(`${environment.basePath}/api/update?model=q_user`, params, {headers});
   }
 
-  createUser(name, lastname, username, email, phone, password, address, state, city, code, status): Observable<any> {
+  createUser(name, lastname, username, email, phone, password, address, state, city, code, status, img): Observable<any> {
     const params = {
       name,
       lastname,
@@ -60,7 +61,8 @@ export class AdminService {
       state,
       city,
       code,
-      status
+      status,
+      img
     };
     return this.http.post(`${environment.basePath}/api/create?model=q_user`, params, {headers});
   }
@@ -77,23 +79,25 @@ export class AdminService {
     return this.http.delete(`${environment.basePath}/api/delete?id=${id}&model=q_sport`, {headers});
   }
 
-  editSport(id, name, dateCreate, status, description): Observable<any> {
+  editSport(id, name, dateCreate, status, description, img): Observable<any> {
     const params = {
       rowid: id,
       name,
       status,
       date_Create: dateCreate,
-      descriptios: description
+      descriptios: description,
+      img
     };
     return this.http.put(`${environment.basePath}/api/update?model=q_sport`, params, {headers});
   }
 
-  createSport(name, description, dateCreate, status): Observable<any> {
+  createSport(name, description, dateCreate, status, img): Observable<any> {
     const params = {
       name,
       descriptios: description,
       date_Create: dateCreate,
-      status
+      status,
+      img
     };
     return this.http.post(`${environment.basePath}/api/create?model=q_sport`, params, {headers});
   }
@@ -112,25 +116,27 @@ export class AdminService {
     return this.http.delete(`${environment.basePath}/api/delete?id=${id}&model=q_team`, {headers});
   }
 
-  editTeam(id, name, description, dateCreate, status, asociatedSport): Observable<any> {
+  editTeam(id, name, description, dateCreate, status, asociatedSport, img): Observable<any> {
     const params = {
       rowid: id,
       name,
       desctiptios: description,
       date_Create: dateCreate,
       status,
-      fk_sport: asociatedSport
+      fk_sport: asociatedSport,
+      img
     };
     return this.http.put(`${environment.basePath}/api/update?model=q_team`, params, {headers});
   }
 
-  createTeam(name, description, dateCreate, status, asociatedSport): Observable<any> {
+  createTeam(name, description, dateCreate, status, asociatedSport, img): Observable<any> {
     const params = {
       name,
       desctiptios: description,
       date_Create: dateCreate,
       status,
-      fk_sport: asociatedSport
+      fk_sport: asociatedSport,
+      img
     };
     return this.http.post(`${environment.basePath}/api/create?model=q_team`, params, {headers});
   }

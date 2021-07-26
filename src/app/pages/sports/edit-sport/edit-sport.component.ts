@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {FormGroup, FormControl, Validators} from '@angular/forms';
 import {AdminService} from '../../../services/admin.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-edit-sport',
@@ -17,6 +18,9 @@ export class EditSportComponent implements OnInit {
   updateSportForm: FormGroup;
   hide = false;
   showLoader = false;
+  imagePath;
+
+  @ViewChild('inputFiles', { static: true }) inputFiles: ElementRef;
 
   constructor(
     private admin: AdminService,
@@ -25,6 +29,7 @@ export class EditSportComponent implements OnInit {
     private handleAlertsProvider: HandleAlertsProvider,
   ) {
     this.admin.initToken();
+    this.imagePath = environment.basePath;
   }
 
   ngOnInit(): void {
@@ -53,6 +58,7 @@ export class EditSportComponent implements OnInit {
       date_Create: new FormControl('', Validators.required),
       description: new FormControl('', Validators.required),
       id: new FormControl('', Validators.required),
+      img: new FormControl(''),
       status: new FormControl('', Validators.required )
     });
   }
@@ -61,6 +67,7 @@ export class EditSportComponent implements OnInit {
     this.updateSportForm.get('name').setValue(this.sportData.name);
     this.updateSportForm.get('description').setValue(this.sportData.descriptios);
     this.updateSportForm.get('date_Create').setValue(this.sportData.date_Create);
+    this.updateSportForm.get('img').setValue(this.sportData.img);
     this.updateSportForm.get('id').setValue(this.currentSport);
   }
 
@@ -73,7 +80,8 @@ export class EditSportComponent implements OnInit {
       updatedSport.name,
       updatedSport.date_Create,
       Number(updatedSport.status),
-      updatedSport.description
+      updatedSport.description,
+      updatedSport.img
     ).subscribe(response => {
       this.showLoader = false;
       if (response.code === 'D200') {
@@ -84,5 +92,21 @@ export class EditSportComponent implements OnInit {
         this.router.navigate(['/auth']);
       }
     });
+  }
+
+  handleUpload(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = async () => {
+      const imageData = reader.result;
+      const imageName = await this.admin.uploadFile(imageData).toPromise();
+      this.updateSportForm.get('img').setValue(imageName);
+    };
+  }
+
+  openUploadFiles() {
+    const el: HTMLElement = this.inputFiles.nativeElement as HTMLElement;
+    el.click();
   }
 }

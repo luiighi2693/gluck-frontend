@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AdminService} from '../../../services/admin.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-edit-team',
@@ -18,6 +19,9 @@ export class EditTeamComponent implements OnInit {
   sports: any;
   hide = false;
   showLoader = false;
+  imagePath;
+
+  @ViewChild('inputFiles', { static: true }) inputFiles: ElementRef;
 
   constructor(
     private admin: AdminService,
@@ -26,6 +30,7 @@ export class EditTeamComponent implements OnInit {
     private handleAlertsProvider: HandleAlertsProvider,
   ) {
     this.admin.initToken();
+    this.imagePath = environment.basePath;
   }
 
   ngOnInit(): void {
@@ -65,6 +70,7 @@ export class EditTeamComponent implements OnInit {
       asociatedSport: new FormControl('', Validators.required),
       status: new FormControl('', Validators.required),
       id: new FormControl('', Validators.required),
+      img: new FormControl('')
     });
 
   }
@@ -73,6 +79,7 @@ export class EditTeamComponent implements OnInit {
     this.updatedTeamForm.get('name').setValue(this.teamData.name);
     this.updatedTeamForm.get('description').setValue(this.teamData.descriptios);
     this.updatedTeamForm.get('date_Create').setValue(this.teamData.date_Create);
+    this.updatedTeamForm.get('img').setValue(this.teamData.img);
     this.updatedTeamForm.get('id').setValue(this.currentTeam);
   }
 
@@ -86,7 +93,8 @@ export class EditTeamComponent implements OnInit {
       updatedTeam.description,
       updatedTeam.date_Create,
       Number(updatedTeam.status),
-      updatedTeam.asociatedSport
+      updatedTeam.asociatedSport,
+      updatedTeam.img
     ).subscribe(response => {
       this.showLoader = false;
       if (response.code === 'D200') {
@@ -99,5 +107,21 @@ export class EditTeamComponent implements OnInit {
     }, err => {
       this.handleAlertsProvider.presentGenericAlert(err);
     });
+  }
+
+  handleUpload(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = async () => {
+      const imageData = reader.result;
+      const imageName = await this.admin.uploadFile(imageData).toPromise();
+      this.updatedTeamForm.get('img').setValue(imageName);
+    };
+  }
+
+  openUploadFiles() {
+    const el: HTMLElement = this.inputFiles.nativeElement as HTMLElement;
+    el.click();
   }
 }

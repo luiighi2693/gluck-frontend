@@ -21,10 +21,16 @@
           <div class="row">
             <div class="col-12 text-center">
               <figure class="avatar__wrapper">
-                <img src="../../../../assets/default-user-example.jpg" class="avatar" alt="">
-                <button class="avatar__button" mat-fab aria-label="change picture">
+                <img [src]="this.newUserForm.value.img !== '' ? (this.imagePath + '/images/' + this.newUserForm.value.img) : '../../../../assets/default-user-example.jpg'" class="avatar" alt="">
+                <button class="avatar__button" type="button" mat-fab aria-label="change picture" (click)="openUploadFiles()">
                   <mat-icon>camera_alt</mat-icon>
                 </button>
+                <input
+                  #inputFiles
+                  style="display: none"
+                  type="file"
+                  (change)="handleUpload($event)"
+                />
               </figure>
             </div>
             <mat-divider class="my-5"></mat-divider>

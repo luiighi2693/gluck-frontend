@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {AdminService} from '../../../services/admin.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import {Subscription} from 'rxjs';
 import { HandleAlertsProvider } from '../../../utilities/providers/handle-alerts-provider';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-edit-client',
@@ -17,14 +18,19 @@ export class EditClientComponent implements OnInit {
   userData: any;
   updateUserForm: FormGroup;
   showLoader = false;
+  imagePath;
+
+  @ViewChild('inputFiles', { static: true }) inputFiles: ElementRef;
 
   constructor(
     private user: AdminService,
     private router: Router,
     private route: ActivatedRoute,
     private handleAlertsProvider: HandleAlertsProvider,
+    private admin: AdminService,
   ) {
     this.user.initToken();
+    this.imagePath = environment.basePath;
   }
 
   ngOnInit(): void {
@@ -60,7 +66,8 @@ export class EditClientComponent implements OnInit {
       city: new FormControl('', Validators.required),
       code: new FormControl('', Validators.required),
       id: new FormControl('', Validators.required),
-      status: new FormControl('', Validators.required )
+      status: new FormControl('', Validators.required ),
+      img: new FormControl('')
     });
   }
 
@@ -75,6 +82,7 @@ export class EditClientComponent implements OnInit {
     this.updateUserForm.get('state').setValue(this.userData.state);
     this.updateUserForm.get('city').setValue(this.userData.city);
     this.updateUserForm.get('code').setValue(this.userData.code);
+    this.updateUserForm.get('img').setValue(this.userData.img);
     this.updateUserForm.get('id').setValue(this.currentUser);
   }
 
@@ -94,7 +102,8 @@ export class EditClientComponent implements OnInit {
       updatedUser.city,
       updatedUser.code,
       updatedUser.id,
-      Number(updatedUser.status)
+      Number(updatedUser.status),
+    updatedUser.img
     ).subscribe(response => {
       this.showLoader = false;
       if (response.code === 'D200') {
@@ -107,5 +116,21 @@ export class EditClientComponent implements OnInit {
     }, err => {
       this.handleAlertsProvider.presentGenericAlert(err);
     });
+  }
+
+  handleUpload(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = async () => {
+      const imageData = reader.result;
+      const imageName = await this.admin.uploadFile(imageData).toPromise();
+      this.updateUserForm.get('img').setValue(imageName);
+    };
+  }
+
+  openUploadFiles() {
+    const el: HTMLElement = this.inputFiles.nativeElement as HTMLElement;
+    el.click();
   }
 }
