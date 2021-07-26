@@ -45,4 +45,8 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance:textfield; /* Firefox */
 }
+.dialog-container-custom .mat-dialog-container {
+  background: black;
+}
+
 

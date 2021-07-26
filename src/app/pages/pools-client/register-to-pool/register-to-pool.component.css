@@ -1,0 +1,30 @@
+.pool-box {
+  background-color: lightgray;
+  padding: 1rem !important;
+}
+
+.team-image {
+  width: 75px;
+  height: 75px;
+}
+
+.min-height {
+  min-height: 700px;
+}
+
+.input {
+  width: 30px;
+  height: 30px;
+}
+
+.border-right {
+  border-right: 1px solid gray;
+}
+
+.separator {
+  color: white;
+  background-color: white;
+  margin: 1rem 0;
+}
+
+

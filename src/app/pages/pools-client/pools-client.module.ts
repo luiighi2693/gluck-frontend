@@ -9,6 +9,7 @@ import { PoolsComponent } from './pools/pools.component';
 import { SharedModule } from '../../shared/shared.module';
 import { MaterialModule } from '../../material/material.module';
 import { PoolResultComponent } from './pool-result/pool-result.component';
+import { RegisterToPoolComponent } from './register-to-pool/register-to-pool.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { PoolResultComponent } from './pool-result/pool-result.component';
     PoolCategoryComponent,
     PoolComponent,
     PoolsComponent,
-    PoolResultComponent
+    PoolResultComponent,
+    RegisterToPoolComponent
   ],
   imports: [
     CommonModule,
@@ -47,7 +49,11 @@ import { PoolResultComponent } from './pool-result/pool-result.component';
       {
         path: 'pool-result/:id',
         component: PoolResultComponent
-      }
+      },
+      {
+        path: 'register-to-pool/:id',
+        component: RegisterToPoolComponent
+      },
       ]
     )
   ]

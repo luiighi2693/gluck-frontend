@@ -41,6 +41,7 @@ export class PoolComponent implements OnInit, AfterViewInit {
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
 
   showLoader = false;
+  user: string;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -54,6 +55,7 @@ export class PoolComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.user = sessionStorage.getItem('username');
   }
 
   ngAfterViewInit() {
@@ -127,5 +129,21 @@ export class PoolComponent implements OnInit, AfterViewInit {
 
   enterPool(id) {
     alert(id);
+  }
+
+  goToRegister(data) {
+    alert(data);
+  }
+
+  registerToPool(data) {
+    this.handleAlertsProvider.registerPoolDialog(
+      data.id,
+      data.poolName,
+      this.user,
+      '50$',
+      'chocolate',
+      50,
+      '../../../../../assets/example-user.png',
+    );
   }
 }
