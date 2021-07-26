@@ -30,54 +30,54 @@
         <!-- ID Column -->
         <ng-container matColumnDef="rowid">
           <th class="id" mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
-          <td class="id" mat-cell *matCellDef="let row"> {{row.userID}} </td>
+          <td class="id" (click)="goToDetail(row.userID)" mat-cell *matCellDef="let row"> {{row.userID}} </td>
         </ng-container>
 
         <!-- Progress Column -->
         <ng-container matColumnDef="name">
           <th class="username" mat-header-cell *matHeaderCellDef mat-sort-header> Usuario </th>
-          <td class="username" mat-cell *matCellDef="let row"> {{row.name}} </td>
+          <td class="username" (click)="goToDetail(row.userID)" mat-cell *matCellDef="let row"> {{row.name}} </td>
         </ng-container>
 
         <!-- Name Column -->
         <ng-container matColumnDef="email">
           <th class="email" mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
-          <td class="email" mat-cell *matCellDef="let row"> {{row.email}} </td>
+          <td class="email" (click)="goToDetail(row.userID)" mat-cell *matCellDef="let row"> {{row.email}} </td>
         </ng-container>
 
         <!-- Fruit Column -->
         <ng-container matColumnDef="phone">
           <th class="phone" mat-header-cell *matHeaderCellDef mat-sort-header> Telefono </th>
-          <td class="phone" mat-cell *matCellDef="let row"> {{row.phone}} </td>
+          <td class="phone" (click)="goToDetail(row.userID)" mat-cell *matCellDef="let row"> {{row.phone}} </td>
         </ng-container>
 
         <!-- Fruit Column -->
         <ng-container matColumnDef="score">
           <th class="status" mat-header-cell *matHeaderCellDef mat-sort-header> Puntuacion </th>
-          <td class="status" mat-cell *matCellDef="let row"> {{row.resultado}} </td>
+          <td class="status" (click)="goToDetail(row.userID)" mat-cell *matCellDef="let row"> {{row.resultado}} </td>
         </ng-container>
 
         <!-- Fruit Column -->
         <ng-container matColumnDef="goalsScored">
           <th class="status" mat-header-cell *matHeaderCellDef mat-sort-header> Goles Acertados </th>
-          <td class="status" mat-cell *matCellDef="let row"> {{row.goles}}</td>
+          <td class="status" (click)="goToDetail(row.userID)" mat-cell *matCellDef="let row"> {{row.goles}}</td>
         </ng-container>
 
         <!-- Fruit Column -->
         <ng-container matColumnDef="date_Access">
           <th class="lastLogin" mat-header-cell *matHeaderCellDef mat-sort-header> Ultimo Acceso </th>
-          <td class="lastLogin" mat-cell *matCellDef="let row"> {{row.date_Access}} </td>
+          <td class="lastLogin" (click)="goToDetail(row.userID)" mat-cell *matCellDef="let row"> {{row.date_Access}} </td>
         </ng-container>
 
         <!-- Fruit Column -->
-        <ng-container matColumnDef="opts">
-          <th class="opts" mat-header-cell *matHeaderCellDef mat-sort-header>  -</th>
-          <td class="opts" mat-cell *matCellDef="let row">
-            <button mat-icon-button aria-label="goToDetail"(click)="goToDetail(row.userID)" >
-              <mat-icon>exit_to_app</mat-icon>
-            </button>
-          </td>
-        </ng-container>
+<!--        <ng-container matColumnDef="opts">-->
+<!--          <th class="opts" mat-header-cell *matHeaderCellDef mat-sort-header>  -</th>-->
+<!--          <td class="opts" mat-cell *matCellDef="let row">-->
+<!--            <button mat-icon-button aria-label="goToDetail"(click)="goToDetail(row.userID)" >-->
+<!--              <mat-icon>exit_to_app</mat-icon>-->
+<!--            </button>-->
+<!--          </td>-->
+<!--        </ng-container>-->
 
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>

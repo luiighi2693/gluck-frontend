@@ -1,0 +1,18 @@
+<div class="register-dialog">
+  <h1 mat-dialog-title class="text-center">{{data.title}}</h1>
+  <div mat-dialog-content class="register-dialog-content">
+    <div class="text-center">
+      <img [src]="data.image" class="image" alt="image">
+    </div>
+    <h1 class="text-center my-4">
+      Bienvenido/a {{data.user}}
+    </h1>
+    <h2 class="text-center">Costo: <span>{{data.cost}}</span></h2>
+    <h2 class="text-center">Premio: <span>{{data.prize}}</span></h2>
+    <h2 class="text-center">participantes: <span>{{data.participants}}</span></h2>
+  </div>
+  <mat-dialog-actions align="center">
+    <button mat-flat-button color="warn"  mat-dialog-close>Cancelar</button>
+    <button mat-flat-button class="register-button" [mat-dialog-close]="true" (click)="register(data.poolId)" cdkFocusInitial>Registrar</button>
+  </mat-dialog-actions>
+</div>

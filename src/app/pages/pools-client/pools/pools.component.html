@@ -1,0 +1,17 @@
+<div class="d-flex justify-content-between align-items-center text-white m-4">
+  <h1>Quinielas</h1>
+  <div class="d-flex align-items-center">
+    <h3 class="home__link m-0" routerLink="/home">Home</h3>
+    <mat-icon>keyboard_arrow_right</mat-icon>
+    <h3 class="home__link m-0">Quinielas</h3>
+  </div>
+</div>
+
+<div class="container text-white">
+  <div class="row">
+    <div class="col-12 col-md-6 mb-5" *ngFor="let pool of pools">
+      <h1>{{pool.name}}</h1>
+      <img class="pool-image" (click)="goToCategory(pool.value)" [src]="pool.img" alt="">
+    </div>
+  </div>
+</div>

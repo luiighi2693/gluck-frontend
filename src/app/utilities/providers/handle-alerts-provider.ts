@@ -8,6 +8,7 @@ import { OkConfirmationAlertComponent } from '../../shared/alerts/ok-confirmatio
 import { ErrorSnackbarComponent } from '../../shared/alerts/error-snackbar/error-snackbar.component';
 import { SuccessSnackbarComponent } from '../../shared/alerts/success-snackbar/success-snackbar.component';
 import {GenericAlertComponent} from '../../shared/alerts/generic-alert/generic-alert.component';
+import { RegisterPoolDialogComponent } from '../../shared/alerts/register-pool-dialog/register-pool-dialog.component';
 
 @Injectable({
   providedIn: 'root'
@@ -41,6 +42,13 @@ export class  HandleAlertsProvider {
   presentGenericAlert(message: string, title = '¡Ha ocurrido un error!') {
     return this.dialog.open(GenericAlertComponent, {
       data: {title, message}
+    });
+  }
+
+  registerPoolDialog( poolId: string | number, title: string, user: string, cost: string, prize: string, participants: number, image: string) {
+    return this.dialog.open(RegisterPoolDialogComponent , {
+      panelClass: 'dialog-container-custom',
+      data: { poolId, title, cost, prize, participants, image, user }
     });
   }
 

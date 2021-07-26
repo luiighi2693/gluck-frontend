@@ -35,9 +35,10 @@ td, th {
   width: 10%;
 }
 
-.opts {
-  width: 5%;
+.lastLogin:hover, .email:hover, .phone:hover, .name:hover, .username:hover, .status:hover, .id:hover {
+  cursor: pointer;
 }
+
 
 .listOf__users--wrapper {
   background-color: white;

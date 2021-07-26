@@ -26,7 +26,7 @@ const users: UserData[] = [];
 })
 export class PoolsResultsDetailComponent implements OnInit, AfterViewInit {
 
-  displayedColumns: string[] = ['rowid', 'name', 'email', 'phone', 'score', 'goalsScored', 'date_Access', 'opts'];
+  displayedColumns: string[] = ['rowid', 'name', 'email', 'phone', 'score', 'goalsScored', 'date_Access'];
   dataSource: MatTableDataSource<UserData>;
   showLoader = false;
   currentPool: any;

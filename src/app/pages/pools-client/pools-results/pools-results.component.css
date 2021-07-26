@@ -1,0 +1,37 @@
+.home__link:hover {
+  color: #F6DD06;
+  cursor: pointer;
+}
+
+.yellow-panel {
+  background-color: #F6DD06;
+  color: black;
+  padding: 1rem;
+  border-radius: 25px;
+}
+
+.panel {
+  background-color: lightgray;
+  color: black;
+  border-radius: 25px;
+  padding: 1rem;
+}
+
+.panel:hover {
+  cursor: pointer;
+  background-color: gray;
+}
+
+.pool-image {
+  width: 75px;
+  height: 75px;
+  border-radius: 50px;
+}
+
+.border-right {
+  border-right: 1px solid gray;
+}
+
+.min-height {
+  min-height: 700px;
+}
