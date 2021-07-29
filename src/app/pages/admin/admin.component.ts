@@ -12,6 +12,80 @@ import {AdminService} from '../../services/admin.service';
 export class AdminComponent implements OnInit {
   emailForm: FormGroup;
   showLoader = false;
+  exampleData = [
+    {
+      name: 'exampleName',
+      sport: 'exampleSpport',
+      matches: '6 (partidos)',
+      timeRemaining: '13 Dias'
+    },
+    {
+      name: 'exampleName',
+      sport: 'exampleSpport',
+      matches: '6 (partidos)',
+      timeRemaining: '13 Dias'
+    },
+    {
+      name: 'exampleName',
+      sport: 'exampleSpport',
+      matches: '6 (partidos)',
+      timeRemaining: '13 Dias'
+    },
+    {
+      name: 'exampleName',
+      sport: 'exampleSpport',
+      matches: '6 (partidos)',
+      timeRemaining: '13 Dias'
+    },
+    {
+      name: 'exampleName',
+      sport: 'exampleSpport',
+      matches: '6 (partidos)',
+      timeRemaining: '13 Dias'
+    },
+    {
+      name: 'exampleName',
+      sport: 'exampleSpport',
+      matches: '6 (partidos)',
+      timeRemaining: '13 Dias'
+    },
+    {
+      name: 'exampleName',
+      sport: 'exampleSpport',
+      matches: '6 (partidos)',
+      timeRemaining: '13 Dias'
+    },
+    {
+      name: 'exampleName',
+      sport: 'exampleSpport',
+      matches: '6 (partidos)',
+      timeRemaining: '13 Dias'
+    },
+    {
+      name: 'exampleName',
+      sport: 'exampleSpport',
+      matches: '6 (partidos)',
+      timeRemaining: '13 Dias'
+    },
+    {
+      name: 'exampleName',
+      sport: 'exampleSpport',
+      matches: '6 (partidos)',
+      timeRemaining: '13 Dias'
+    },
+    {
+      name: 'exampleName',
+      sport: 'exampleSpport',
+      matches: '6 (partidos)',
+      timeRemaining: '13 Dias'
+    },
+    {
+      name: 'exampleName',
+      sport: 'exampleSpport',
+      matches: '6 (partidos)',
+      timeRemaining: '13 Dias'
+    },
+  ];
 
   constructor(
     private handleAlertsProvider: HandleAlertsProvider,
@@ -33,10 +107,10 @@ export class AdminComponent implements OnInit {
   }
 
   sendEmail() {
-    console.log(this.emailForm.value);
+    // console.log(this.emailForm.value);
     this.showLoader = true;
     const emailForm = this.emailForm.value;
-    console.warn(emailForm);
+    // console.warn(emailForm);
     this.admin.sendEmail(emailForm.category, emailForm.subject, emailForm.message).subscribe(res => {
       this.showLoader = false;
       if (res.code === 'D200') {

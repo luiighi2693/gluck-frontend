@@ -15,6 +15,10 @@ td, th {
   width: 5%;
 }
 
+.image-cell {
+  width: 5%;
+}
+
 .status {
   width: 10%;
 }
@@ -71,6 +75,12 @@ td, th {
 .home__link:hover {
   color: #F6DD06;
   cursor: pointer;
+}
+
+.image {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
 }
 
 .badge {

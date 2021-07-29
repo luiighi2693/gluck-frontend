@@ -24,6 +24,10 @@ table {
   width: 20%;
 }
 
+.image-cell {
+  width: 5%;
+}
+
 .shield {
   width: 7%;
 }
@@ -36,6 +40,11 @@ table {
   width: 7%;
 }
 
+.image {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
 .listOf__users--wrapper {
   background-color: white;
   color: black;

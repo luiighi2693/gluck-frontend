@@ -3,23 +3,24 @@
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
-/*::-webkit-scrollbar {*/
-/*  width: 20px;*/
-/*}*/
+::-webkit-scrollbar {
+  width: 20px;
+}
 
-/*::-webkit-scrollbar-track {*/
-/*  box-shadow: inset 0 0 5px grey;*/
-/*  border-radius: 10px;*/
-/*}*/
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  background-color: #333232;
+  border-radius: 10px;
+}
 
-/*::-webkit-scrollbar-thumb {*/
-/*  background: red;*/
-/*  border-radius: 10px;*/
-/*}*/
+::-webkit-scrollbar-thumb {
+  background: #F6DD06;
+  border-radius: 10px;
+}
 
-/*::-webkit-scrollbar-thumb:hover {*/
-/*  background: #b30000;*/
-/*}*/
+::-webkit-scrollbar-thumb:hover {
+  background: #c4b103;
+}
 
 .success-snackBar {
   background-color: #4caf50;

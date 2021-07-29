@@ -98,7 +98,11 @@ export class ListOfPoolsComponent implements OnInit, AfterViewInit {
     });
   }
 
-  goToDetail(id) {
-    this.router.navigate([`admin/pools/pools-results/${id}`]);
+  goToDetail(status, id) {
+    if (status !== 1) {
+      this.router.navigate([`admin/pools/pools-results/${id}`]);
+    } else {
+      this.handleAlertsProvider.presentSnackbarError('Esta Quiniela esta en Proceso...');
+    }
   }
 }

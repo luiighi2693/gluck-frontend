@@ -36,9 +36,7 @@
                 <mat-label>Deporte</mat-label>
                 <mat-select formControlName="sport" required>
                   <mat-option>- Deporte -</mat-option>
-                  <mat-option value="futbol">futbol</mat-option>
-                  <mat-option value="baseball">baseball</mat-option>
-                  <mat-option value="basquet">basqiet</mat-option>
+                  <mat-option *ngFor="let sport of sports" [value]="sport.rowid">{{sport.name}}</mat-option>
                 </mat-select>
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
@@ -85,7 +83,7 @@
                 <mat-select formControlName="status" required>
                   <mat-option>- Estatus -</mat-option>
                   <mat-option value="1">Activo</mat-option>
-                  <mat-option value="0">Cerrado</mat-option>
+                  <mat-option value="2">Cerrado</mat-option>
                 </mat-select>
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
@@ -168,7 +166,7 @@
             </div>
           </div>
           <div>
-            <button mat-flat-button [disabled]="!config.valid" (click)="makeMatches()" matStepperNext>Siguiente</button>
+            <button mat-flat-button [disabled]="!config.valid" (click)="makeMatches()" matStepperNext class="action-button">Siguiente</button>
           </div>
         </form>
       </mat-step>
@@ -183,16 +181,30 @@
             <mat-divider class="my-3"></mat-divider>
           </div>
           <div class="row">
+            <div class="col-12">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Titulo del Partido</mat-label>
+                <input matInput [(ngModel)]="match.title" placeholder='FC Barcelona VS Real Madrid' autocomplete="off">
+              </mat-form-field>
+            </div>
             <div class="col-12 col-md-5 ">
               <div class="row">
-                <div class="col-12 col-md-9">
+                <div class="col-12 col-md-8">
                   <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Equipo 1</mat-label>
-                    <input matInput [(ngModel)]="match.team1" placeholder="FC Real Madrid"
+                    <mat-select [(ngModel)]="match.team1">
+                      <mat-option *ngFor="let team of teams, index as i" [value]="team.rowid">{{team.name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-12 col-md-2">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Resultado</mat-label>
+                    <input type="number" matInput  [(ngModel)]="match.result1" placeholder="1"
                            autocomplete="off" >
                   </mat-form-field>
                 </div>
-                <div class="col-12 col-md-3">
+                <div class="col-12 col-md-2">
                   <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Penalty</mat-label>
                     <input type="number" matInput [disabled]="doPenaltiesExist === '1'" [(ngModel)]="match.penalty1" placeholder="1"
@@ -203,14 +215,23 @@
             </div>
             <div class="col-12 col-md-5 offset-md-2">
               <div class="row">
-                <div class="col-12 col-md-9">
+                <div class="col-12 col-md-8">
                   <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Equipo 2</mat-label>
-                    <input matInput [(ngModel)]="match.team2" placeholder="FC Barcelona"
+                    <mat-select [(ngModel)]="match.team2">
+                      <mat-option *ngFor="let team of teams, index as i" [value]="team.rowid">{{team.name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-12 col-md-2">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Resultado</mat-label>
+                    <input type="number" matInput  [(ngModel)]="match.result2" placeholder="1"
                            autocomplete="off" >
                   </mat-form-field>
                 </div>
-                <div class="col-12 col-md-3">
+                <div class="col-12 col-md-2">
                   <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Penalty</mat-label>
                     <input matInput type="number" [disabled]="doPenaltiesExist === '1'" [(ngModel)]="match.penalty2" placeholder="Penalty"
@@ -253,10 +274,10 @@
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Resultado</mat-label>
                 <mat-select [(ngModel)]="match.result">
-                  <mat-oprion>- Resultado -</mat-oprion>
-                  <mat-option value="sin comenzar">Sin Comenzar</mat-option>
-                  <mat-option value="en proceso">En Proceso</mat-option>
-                  <mat-option value="finalizado">Finalizado</mat-option>
+                  <mat-option>- Resultado -</mat-option>
+                  <mat-option value="C">Sin Comenzar</mat-option>
+                  <mat-option value="F">Resultado Final</mat-option>
+                  <mat-option value="S">Suspendido</mat-option>
                 </mat-select>
               </mat-form-field>
             </div>
@@ -265,7 +286,7 @@
         </div>
         <div>
           <button mat-button matStepperPrevious>Atras</button>
-          <button mat-button  matStepperNext>Siguiente</button>
+          <button mat-button  matStepperNext class="action-button">Siguiente</button>
         </div>
         <!--        </form>-->
       </mat-step>
@@ -357,12 +378,12 @@
         </div>
 
         <div class="mt-5">
-          <button mat-button matStepperPrevious>Atras</button>
-          <button mat-button (click)="showSelection(stepper)">Siguiente</button>
+          <button mat-flat-button matStepperPrevious>Atras</button>
+          <button mat-flat-button (click)="showSelection(stepper)" class="action-button">Siguiente</button>
         </div>
       </mat-step>
-      <mat-step [stepControl]="results">
-        <form [formGroup]="results">
+      <mat-step [stepControl]="poolResults">
+        <form [formGroup]="poolResults">
           <ng-template matStepLabel>Puntaje</ng-template>
           <div class="row">
             <div class="col-12 col-md-3">
@@ -407,8 +428,8 @@
             </div>
           </div>
           <div>
-            <button mat-button matStepperPrevious>Atras</button>
-            <button mat-button [disabled]="!results.valid" matStepperNext>Siguiente</button>
+            <button mat-flat-button matStepperPrevious>Atras</button>
+            <button mat-flat-button [disabled]="!poolResults.valid" matStepperNext class="action-button">Siguiente</button>
           </div>
         </form>
       </mat-step>
@@ -416,9 +437,9 @@
         <ng-template matStepLabel>Finalizar</ng-template>
 
         <div>
-          <button mat-button matStepperPrevious>Atras</button>
-          <button mat-button (click)="resetForm(stepper)">Cancelar</button>
-          <button mat-button (click)="registerPool()">Registrar Quiniela</button>
+          <button mat-flat-button matStepperPrevious>Atras</button>
+          <button mat-flat-button color="warn" (click)="resetForm(stepper)">Cancelar</button>
+          <button mat-flat-button (click)="registerPool()" class="action-button">Registrar Quiniela</button>
         </div>
       </mat-step>
     </mat-stepper>

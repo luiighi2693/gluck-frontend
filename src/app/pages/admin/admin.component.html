@@ -33,16 +33,37 @@
         <div class="current-pools">
           <div class="current__pools--header">
             <h2>Qunielas en Proceso</h2>
-            <button mat-flat-button class="action-button">
+            <button mat-flat-button class="action-button" routerLink="/admin/pools/add-pool">
               <mat-icon>add</mat-icon>
               Agregar Quiniela
             </button>
+          </div>
+          <div class="current__pools--content">
+            <div class="current-pool" *ngFor="let pool of exampleData, index as i">
+              <p>{{pool.name}}</p>
+              <p>{{pool.sport}}</p>
+              <p>{{pool.matches}}</p>
+              <p class="time-remaining"><mat-icon class="me-2">access_time</mat-icon>{{pool.timeRemaining}}</p>
+            </div>
           </div>
         </div>
       </div>
       <div class="col-12 col-md-6">
         <div class="other-pools">
-          <h2 class="text-center">Otras Quinielas</h2>
+          <div class="current__pools--header">
+            <h2>Otras Quinielas</h2>
+            <button mat-flat-button class="action-button" routerLink="/admin/pools/list-of-pools">
+              <mat-icon>remove_red_eye</mat-icon>
+              Ver Lista de Quinielas
+            </button>
+          </div>
+          <div class="current__pools--content">
+            <div class="current-pool" *ngFor="let pool of exampleData, index as i">
+              <p>{{pool.name}}</p>
+              <p>{{pool.sport}}</p>
+              <p>{{pool.matches}}</p>
+              <p class="time-remaining"><mat-icon class="me-2">access_time</mat-icon>{{pool.timeRemaining}}</p>
+            </div>
         </div>
       </div>
     </div>
@@ -105,7 +126,7 @@
               <mat-divider class="my-5"></mat-divider>
               <div class="col-12 text-center">
                 <div class="col-12 text-center my-4">
-                  <button mat-flat-button type="submit" [disabled]="!emailForm.valid" class="submit">Enviar Correo
+                  <button mat-flat-button type="submit" [disabled]="!emailForm.valid" class="action-button">Enviar Correo
                   </button>
                 </div>
               </div>

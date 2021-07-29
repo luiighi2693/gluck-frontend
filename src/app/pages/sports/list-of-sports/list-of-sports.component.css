@@ -15,6 +15,10 @@ td, th {
   width: 5%;
 }
 
+.image-cell {
+  width: 5%;
+}
+
 .status {
   width: 7%;
 }
@@ -37,6 +41,12 @@ td, th {
 
 .opts {
   width: 7%;
+}
+
+.image {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
 }
 
 .listOf__users--wrapper {

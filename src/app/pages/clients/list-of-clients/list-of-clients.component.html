@@ -41,8 +41,8 @@
 
         <!-- Name Column -->
         <ng-container matColumnDef="image">
-          <th class="image" mat-header-cell *matHeaderCellDef mat-sort-header> Imagen </th>
-          <td class="image" mat-cell *matCellDef="let row"> <img width="30px" [src]="imagePath + '/images/' + (row.img === '' ? 'logo.png' : row.img)" [alt]="row.img"> </td>
+          <th class="image-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Imagen </th>
+          <td class="image-cell" mat-cell *matCellDef="let row"> <img class="image" [src]="imagePath + '/images/' + (row.img === '' ? 'logo.png' : row.img)" [alt]="row.img"> </td>
         </ng-container>
 
         <!-- Progress Column -->
