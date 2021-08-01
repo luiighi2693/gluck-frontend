@@ -5,6 +5,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AdminService} from '../../../services/admin.service';
+import {finalize} from 'rxjs/operators';
 import {environment} from "../../../../environments/environment";
 
 export interface UserData {

@@ -1,11 +1,11 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatTableDataSource} from '@angular/material/table';
-import { SelectionModel } from '@angular/cdk/collections';
+import {SelectionModel} from '@angular/cdk/collections';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {AdminService} from '../../../services/admin.service';
 
 export interface UserData {
@@ -31,9 +31,14 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
   results: FormGroup;
   showLoader = false;
   amountOfMatches: number;
-  doPenaltiesExist = '';
+  doPenaltiesExist: number;
   arrayOfMatches = [];
   limitOfUsers: any;
+  currentPool: string;
+  poolData: any;
+  sports: any;
+  teams: any;
+  hide = true;
 
   displayedColumns: string[] = ['rowid', 'username', 'name', 'email', 'phone', 'status', 'date_Access', 'opts'];
   dataSource: MatTableDataSource<UserData>;
@@ -43,31 +48,99 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+
   constructor(
     private handleAlertsProvider: HandleAlertsProvider,
     private router: Router,
     private admin: AdminService,
     private fb: FormBuilder,
+    private route: ActivatedRoute,
   ) {
     this.admin.initToken();
   }
+
   ngOnInit(): void {
+    this.getCurrentPool();
     this.createForms();
   }
 
   ngAfterViewInit() {
     this.setData();
-    this.updateForms();
+  }
+
+  getCurrentPool() {
+    this.route.params.subscribe(params => {
+      this.currentPool = params.id;
+    });
   }
 
   setData() {
+    this.getPool();
+    this.getUsers();
+    this.setSportsData();
+    this.setTeamsData();
+  }
+
+  getUsers() {
     this.showLoader = true;
     this.admin.getUsers().subscribe(data => {
+      this.showLoader = false;
       if (data.code === 'D200') {
-        this.showLoader = false;
         this.dataSource = new MatTableDataSource<UserData>(data.data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+      } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
+        this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
+        this.router.navigate(['/auth']);
+      }
+    }, error => {
+      this.showLoader = false;
+      this.handleAlertsProvider.presentGenericAlert(error);
+    });
+  }
+
+  setTeamsData() {
+    this.showLoader = true;
+    this.admin.getTeams().subscribe(data => {
+      if (data.code === 'D200') {
+        this.showLoader = false;
+        this.teams = data.data;
+      } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
+        this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
+        this.router.navigate(['/auth']);
+      }
+    }, error => {
+      this.showLoader = false;
+      this.handleAlertsProvider.presentGenericAlert(error);
+    });
+  }
+
+  setSportsData() {
+    this.showLoader = true;
+    this.admin.getSports().subscribe(data => {
+      if (data.code === 'D200') {
+        this.showLoader = false;
+        this.sports = data.data;
+      } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
+        this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
+        this.router.navigate(['/auth']);
+      }
+    }, error => {
+      this.showLoader = false;
+      this.handleAlertsProvider.presentGenericAlert(error);
+    });
+  }
+
+
+  getPool() {
+    this.showLoader = true;
+    this.admin.getPoolForEdit(this.currentPool).subscribe(data => {
+      this.showLoader = false;
+      if (data.code === 'D200') {
+        console.log(data);
+        this.poolData = data.data;
+        this.updateForms();
+        this.makeMatches();
       } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
         this.router.navigate(['/auth']);
@@ -108,14 +181,14 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
       sport: ['', Validators.required],
       color: ['', Validators.required],
       matches: ['', Validators.required],
-      usersLimit: ['', Validators.required],
+      usersLimit: [''],
       status: ['', Validators.required],
       penalty: ['', Validators.required],
-      groups: ['', Validators.required],
-      teamsPerGroup: ['', Validators.required],
-      type: ['', Validators.required],
-      league: ['', Validators.required],
-      password: ['', Validators.required],
+      groups: [''],
+      teamsPerGroup: [''],
+      type: [''],
+      league: [''],
+      password: [''],
     });
     this.results = this.fb.group({
       result: ['', Validators.required],
@@ -126,7 +199,23 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
   }
 
   updateForms() {
-    this.config.get('name').setValue(null);
+    this.config.get('name').setValue(this.poolData.name);
+    this.config.get('sport').setValue(this.poolData.sport);
+    this.config.get('color').setValue(this.poolData.color);
+    this.config.get('matches').setValue(this.poolData.matches);
+    this.config.get('usersLimit').setValue(this.poolData.usersLimit);
+    this.config.get('status').setValue(this.poolData.status);
+    this.config.get('penalty').setValue(this.poolData.penalty);
+    this.config.get('groups').setValue(this.poolData.groups);
+    this.config.get('teamsPerGroup').setValue(this.poolData.teamsPerGroup);
+    this.config.get('type').setValue(this.poolData.type);
+    this.config.get('league').setValue(this.poolData.league);
+    this.config.get('password').setValue(this.poolData.password);
+
+    this.results.get('winner').setValue(this.poolData.winner);
+    this.results.get('loser').setValue(this.poolData.loser);
+    this.results.get('draw').setValue(this.poolData.draw);
+    this.results.get('result').setValue(this.poolData.result);
   }
 
   show() {
@@ -134,35 +223,19 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
   }
 
   makeMatches() {
-    this.arrayOfMatches = [];
-    this.limitOfUsers = Number(this.config.value.usersLimit);
-    this.doPenaltiesExist = this.config.value.penalty;
-    for (let i = 0; i < this.amountOfMatches; i++) {
-      this.arrayOfMatches.push({
-        team1: '',
-        penalty1: '',
-        team2: '',
-        penalty2: '',
-        date: '',
-        time: '',
-        status: '',
-        result: '',
-      });
-    }
-    console.log(this.arrayOfMatches);
-    console.log(this.limitOfUsers);
+    this.arrayOfMatches = this.poolData.matchesInfo;
   }
 
-  showSelection(stepper) {
-    if (!this.selection.hasValue()) {
-      this.handleAlertsProvider.presentSnackbarError('Selecciona los usuarios participantes!');
-    }else if (this.selection.selected.length > this.limitOfUsers) {
-      this.handleAlertsProvider.presentGenericAlert(`Has superado el limite de participantes en esta quiniela, el limite es <b>${this.limitOfUsers}</b>`, 'Aviso!');
-    } else {
-      stepper.next();
-    }
-    console.log(this.selection.selected.length);
-  }
+  // showSelection(stepper) {
+  //   if (!this.selection.hasValue()) {
+  //     this.handleAlertsProvider.presentSnackbarError('Selecciona los usuarios participantes!');
+  //   } else if (this.selection.selected.length > this.limitOfUsers) {
+  //     this.handleAlertsProvider.presentGenericAlert(`Has superado el limite de participantes en esta quiniela, el limite es <b>${this.limitOfUsers}</b>`, 'Aviso!');
+  //   } else {
+  //     stepper.next();
+  //   }
+  //   console.log(this.selection.selected.length);
+  // }
 
   resetForm(stepper) {
     const dialogRef = this.handleAlertsProvider.presentErrorDialogOk(
@@ -172,18 +245,20 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
       if (res) {
         stepper.reset();
       }
-    })
+    });
   }
 
   registerPool() {
-    const { name, sport, color, matches, usersLimit, status, penalty, groups, teamsPerGroup, type, league, password } = this.config.value;
+    this.showLoader = true;
+    const {name, sport, color, matches, usersLimit, status, penalty, groups, teamsPerGroup, type, league, password} = this.config.value;
     const matchesInfo = this.arrayOfMatches;
     const usersForPool = this.selection.selected;
-    const { result, winner, draw, loser } = this.results.value;
+    const {result, winner, draw, loser} = this.results.value;
+    // const colorValue = color.hex.includes('#') ? color.hex : `#${color.hex}`;
     console.log({
       name,
       sport,
-      color: color.hex.includes('#') ? color.hex : `#${color.hex}`,
+      color,
       matches,
       usersLimit,
       status,
@@ -199,6 +274,40 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
       winner,
       draw,
       loser
+    });
+    this.admin.createAndUpdatePool(
+      name,
+      sport,
+      color,
+      matches,
+      usersLimit,
+      status,
+      penalty,
+      groups,
+      teamsPerGroup,
+      type,
+      league,
+      password,
+      matchesInfo,
+      usersForPool,
+      result,
+      winner,
+      draw,
+      loser,
+      'update',
+      '',
+      this.currentPool).subscribe(data => {
+      this.showLoader = false;
+      if (data.code === 'D200') {
+        this.handleAlertsProvider.presentSnackbarSuccess('Se Actualizo la quiniela con exito!');
+        this.router.navigate(['admin/pools/list-of-pools']);
+      } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
+        this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
+        this.router.navigate(['/auth']);
+      }
+    }, error => {
+      this.showLoader = false;
+      this.handleAlertsProvider.presentGenericAlert(error);
     });
   }
 }
