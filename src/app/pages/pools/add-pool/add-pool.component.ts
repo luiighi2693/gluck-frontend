@@ -217,7 +217,7 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
     const usersForPool = this.selection.selected;
     const {result, winner, draw, loser} = this.poolResults.value;
     const colorValue = color.hex.includes('#') ? color.hex : `#${color.hex}`;
-    this.admin.createPool(
+    this.admin.createAndUpdatePool(
       name,
       sport,
       colorValue,
@@ -235,7 +235,8 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
       result,
       winner,
       draw,
-      loser).subscribe(data => {
+      loser,
+      'create').subscribe(data => {
       if (data.code === 'D200') {
         this.showLoader = false;
         this.handleAlertsProvider.presentSnackbarSuccess('Se creo la quiniela con exito!');

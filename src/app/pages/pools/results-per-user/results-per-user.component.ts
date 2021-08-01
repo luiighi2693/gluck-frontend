@@ -5,6 +5,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AdminService} from '../../../services/admin.service';
+import {finalize} from 'rxjs/operators';
 
 export interface UserData {
   rowid: string;
@@ -24,7 +25,7 @@ export interface UserData {
 export class ResultsPerUserComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['game', 'userResults', 'finalResults', 'score'];
   dataSource: MatTableDataSource<UserData>;
-  showLoader = false;
+  showLoader = true;
   currentPool: any;
   currentUser: any;
   getCurrentPool: any;
@@ -62,10 +63,10 @@ export class ResultsPerUserComponent implements OnInit, AfterViewInit {
   }
 
   getData() {
-    this.showLoader = true;
+    // this.showLoader = true;
     console.log(this.showLoader);
-    this.admin.getResultsByPoolAndUser(this.currentUser, this.currentPool).subscribe(data => {
-      this.showLoader = false;
+    this.admin.getResultsByPoolAndUser(this.currentUser, this.currentPool).pipe(finalize(() => this.showLoader = false)).subscribe(data => {
+      // this.showLoader = false;
       console.log(this.showLoader);
       console.log(data);
       if (data.code === 'D200') {
