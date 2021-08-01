@@ -10,6 +10,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { MaterialModule } from '../../material/material.module';
 import { PoolResultComponent } from './pool-result/pool-result.component';
 import { RegisterToPoolComponent } from './register-to-pool/register-to-pool.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -21,41 +22,42 @@ import { RegisterToPoolComponent } from './register-to-pool/register-to-pool.com
     PoolResultComponent,
     RegisterToPoolComponent
   ],
-  imports: [
-    CommonModule,
-    SharedModule,
-    MaterialModule,
-    RouterModule.forChild([
-      {
-        path: '',
-        component: PoolsComponent
-      },
-      {
-        path: 'list-of-pools',
-        component: ListOfPoolsComponent
-      },
-      {
-        path: 'pools-results',
-        component: PoolsResultsComponent
-      },
-      {
-        path: 'pool-category/:id',
-        component: PoolCategoryComponent
-      },
-      {
-        path: 'pool/:id',
-        component: PoolComponent
-      },
-      {
-        path: 'pool-result/:id',
-        component: PoolResultComponent
-      },
-      {
-        path: 'register-to-pool/:id',
-        component: RegisterToPoolComponent
-      },
-      ]
-    )
-  ]
+    imports: [
+        CommonModule,
+        SharedModule,
+        MaterialModule,
+        RouterModule.forChild([
+                {
+                    path: '',
+                    component: PoolsComponent
+                },
+                {
+                    path: 'list-of-pools',
+                    component: ListOfPoolsComponent
+                },
+                {
+                    path: 'pools-results',
+                    component: PoolsResultsComponent
+                },
+                {
+                    path: 'pool-category/:id',
+                    component: PoolCategoryComponent
+                },
+                {
+                    path: 'pool/:id',
+                    component: PoolComponent
+                },
+                {
+                    path: 'pool-result/:id',
+                    component: PoolResultComponent
+                },
+                {
+                    path: 'register-to-pool/:id',
+                    component: RegisterToPoolComponent
+                },
+            ]
+        ),
+        FormsModule
+    ]
 })
 export class PoolsClientModule { }

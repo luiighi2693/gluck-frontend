@@ -1,3 +1,4 @@
+<app-loader [loading]="showLoader"></app-loader>
 <div class="d-flex justify-content-between align-items-center text-white m-4">
   <h1>Lista de Quinielas</h1>
   <div class="d-flex align-items-center">
@@ -17,16 +18,22 @@
             <button mat-flat-button color="primary">Participantes</button>
           </div>
           <h1>{{pool.name}}</h1>
-          <h3>{{pool.category}}</h3>
-          <p>{{pool.matches}} (Partidos)</p>
+          <h3>{{pool.sport ? pool.sport.name : 'Sin Deporte'}}</h3>
+          <p>{{pool.matches.length}} (Partidos)</p>
         </div>
         <div class="col-3 text-center">
           <mat-icon class="calendar-icon">calendar_today</mat-icon>
         </div>
       </div>
-      <div class="col-12 text-center password">
-        <input class="input" type="password" formControlName="password" placeholder="Clave de Quiniela">
-        <button class="send-button" mat-mini-fab>
+      <div class="col-12 text-center password" *ngIf="!pool.subcribed">
+        <input class="input" type="password" [(ngModel)]="pool.passwordMatch" [ngModelOptions]="{standalone: true}" placeholder="Clave de Quiniela">
+        <button class="send-button" mat-mini-fab (click)="registerPool(pool)">
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </div>
+      <div class="col-12 text-center password" *ngIf="pool.subcribed">
+        <span>Editar Resultados</span>
+        <button class="send-button" mat-mini-fab (click)="goToEditResults()">
           <mat-icon>arrow_forward</mat-icon>
         </button>
       </div>

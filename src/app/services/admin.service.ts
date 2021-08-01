@@ -141,9 +141,21 @@ export class AdminService {
     return this.http.post(`${environment.basePath}/api/create?model=q_team`, params, {headers});
   }
 
+  registerUserPool(poolId, userId): Observable<any> {
+    const params = {
+      poolId,
+      userId
+    };
+    return this.http.post(`${environment.basePath}/api/pool/registerUserPool`, params, {headers});
+  }
+
   getPools(): Observable<any> {
-    const includes = ['sport'];
+    const includes = ['sport', 'matches'];
     return this.http.get(`${environment.basePath}/api/get?model=q_pools&include=${encodeURI(JSON.stringify(includes))}`, {headers});
+  }
+
+  getPoolsByUser(userId): Observable<any> {
+    return this.http.get(`${environment.basePath}/api/pool/getPoolsByUser?userId=${userId}`, {headers});
   }
 
   getPool(id): Observable<any> {

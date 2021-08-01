@@ -5,6 +5,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AdminService} from '../../../services/admin.service';
+import {environment} from "../../../../environments/environment";
 
 export interface UserData {
   rowid: string;
@@ -33,6 +34,7 @@ export class ResultsPerUserComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  imagePath;
 
   constructor(
     private handleAlertsProvider: HandleAlertsProvider,
@@ -41,6 +43,7 @@ export class ResultsPerUserComponent implements OnInit, AfterViewInit {
     private route: ActivatedRoute,
   ) {
     this.admin.initToken();
+    this.imagePath = environment.basePath;
   }
 
   ngOnInit() {

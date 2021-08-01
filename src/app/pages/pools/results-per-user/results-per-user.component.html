@@ -43,7 +43,7 @@
         <td class="userResults" mat-cell *matCellDef="let row">
           <div class="d-flex ">
             <div class="d-flex align-items-center">
-              <img src="../../../../assets/default-team-logo.png" class="team-image">
+              <img width="35px" [src]="row.image1 !== '' ? (imagePath + '/images/' + row.image1) : '../../../../assets/default-team-logo.png'" class="team-image" alt="">
               <p class="m-0 team-1">{{row.teamName1}}</p>
               <span class="score-goals">{{row.teamResult1}}</span>
             </div>
@@ -52,7 +52,7 @@
             </p>
             <div class="d-flex align-items-center">
               <span class="score-goals">{{row.teamResult2}}</span>
-              <img src="../../../../assets/default-team-logo.png" class="team-image team-2">
+              <img width="35px" [src]="row.image2 !== '' ? (imagePath + '/images/' + row.image2) : '../../../../assets/default-team-logo.png'" class="team-image team-2" alt="">
               <p class="m-0 ">{{row.teamName2}}</p>
             </div>
           </div>
@@ -65,7 +65,7 @@
         <td class="finalResults" mat-cell *matCellDef="let row">
           <div class="d-flex ">
             <div class="d-flex align-items-center">
-              <img src="../../../../assets/default-team-logo.png" class="team-image">
+              <img width="35px" [src]="row.image1 !== '' ? (imagePath + '/images/' + row.image1) : '../../../../assets/default-team-logo.png'" class="team-image" alt="">
               <p class="m-0 team-1">{{row.teamName1}}</p>
               <span class="score-goals">{{row.teamResult1Admin}}</span>
             </div>
@@ -74,7 +74,7 @@
             </p>
             <div class="d-flex align-items-center">
               <span class="score-goals">{{row.teamResult2Admin}}</span>
-              <<img src="../../../../assets/default-team-logo.png" class="team-image team-2">
+              <img width="35px" [src]="row.image2 !== '' ? (imagePath + '/images/' + row.image2) : '../../../../assets/default-team-logo.png'" class="team-image team-2" alt="">
               <p class="m-0 ">{{row.teamName2}}</p>
             </div>
           </div>
