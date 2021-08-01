@@ -45,8 +45,6 @@ export class PoolsResultsDetailComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    // this.currentPool = this.route.params._value.id
-
     this.getCurrentPool = this.route.params.subscribe(params => {
       this.currentPool = params.id;
     });
@@ -61,7 +59,6 @@ export class PoolsResultsDetailComponent implements OnInit, AfterViewInit {
     this.admin.getResultsByPool(this.currentPool).subscribe(res => {
       this.showLoader = false;
       if (res.code === 'D200') {
-        console.log('res', res);
         this.dataSource = new MatTableDataSource<UserData>(res.data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;

@@ -189,8 +189,8 @@ export class AdminService {
     return this.http.get(`${environment.basePath}/api/result/getResultsByPoolAndUser?poolId=${pool}&userId=${user}`, {headers});
   }
 
-  createPool(name, sport, color, matches, usersLimit, status, penalty, groups, teamsPerGroup, type, league, password, matchesInfo,
-             usersForPool, result, winner, draw, loser): Observable<any> {
+  createAndUpdatePool(name, sport, color, matches, usersLimit, status, penalty, groups, teamsPerGroup, type, league, password, matchesInfo,
+                      usersForPool, result, winner, draw, loser, variable, rules = null, id = null): Observable<any> {
     const params = {
       name,
       sport,
@@ -209,10 +209,21 @@ export class AdminService {
       result,
       winner,
       draw,
-      loser
+      loser,
+      rules,
+      id,
     };
 
-    return this.http.post(`${environment.basePath}/api/pool/create`, params, {headers});
+    if (variable === 'create') {
+      return this.http.post(`${environment.basePath}/api/pool/create`, params, {headers});
+    } else if (variable === 'update') {
+      return this.http.post(`${environment.basePath}/api/pool/update`, params, {headers});
+    }
+
+  }
+
+  getPoolForEdit(id): Observable<any> {
+    return this.http.get(`${environment.basePath}/api/pool/getOne?poolId=${id}`, {headers});
   }
 
   sendEmail(category, subject, message): Observable<any> {
