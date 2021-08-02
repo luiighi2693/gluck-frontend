@@ -75,8 +75,8 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
   }
 
   setData() {
-    this.getPool();
     this.getUsers();
+    this.getPool();
     this.setSportsData();
     this.setTeamsData();
   }
@@ -138,6 +138,7 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
       this.showLoader = false;
       if (data.code === 'D200') {
         console.log(data);
+        this.selection = new SelectionModel<UserData>(true, data.data.usersForPool);
         this.poolData = data.data;
         this.updateForms();
         this.makeMatches();
