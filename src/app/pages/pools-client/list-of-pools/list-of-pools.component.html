@@ -26,14 +26,15 @@
         </div>
       </div>
       <div class="col-12 text-center password" *ngIf="!pool.subcribed">
-        <input class="input" type="password" [(ngModel)]="pool.passwordMatch" [ngModelOptions]="{standalone: true}" placeholder="Clave de Quiniela">
+        <input class="input" type="password" [(ngModel)]="pool.passwordMatch" [ngModelOptions]="{standalone: true}"
+               (keyup.enter)="registerPool(pool)" placeholder="Clave de Quiniela">
         <button class="send-button" mat-mini-fab (click)="registerPool(pool)">
           <mat-icon>arrow_forward</mat-icon>
         </button>
       </div>
       <div class="col-12 text-center password" *ngIf="pool.subcribed">
         <span>Editar Resultados</span>
-        <button class="send-button" mat-mini-fab (click)="goToEditResults()">
+        <button class="send-button" mat-mini-fab (click)="goToEditResults(pool.rowid)">
           <mat-icon>arrow_forward</mat-icon>
         </button>
       </div>

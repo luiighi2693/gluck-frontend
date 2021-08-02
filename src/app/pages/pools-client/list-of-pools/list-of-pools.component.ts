@@ -1,5 +1,4 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
-import {PoolData} from '../../pools/list-of-pools/list-of-pools.component';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
 import {Router} from '@angular/router';
 import {AdminService} from '../../../services/admin.service';
@@ -14,9 +13,9 @@ export class ListOfPoolsComponent implements OnInit, AfterViewInit {
   showLoader = false;
   pools = [];
 
-  constructor( private handleAlertsProvider: HandleAlertsProvider,
-               private router: Router,
-               private admin: AdminService) {
+  constructor(private handleAlertsProvider: HandleAlertsProvider,
+              private router: Router,
+              private admin: AdminService) {
     this.admin.initToken();
   }
 
@@ -30,6 +29,7 @@ export class ListOfPoolsComponent implements OnInit, AfterViewInit {
   setData() {
     this.showLoader = true;
     this.admin.getPools().subscribe(data => {
+      this.showLoader = false;
       console.log(data);
       if (data.code === 'D200') {
         this.pools = data.data.filter(x => x.status === 1);
@@ -37,7 +37,6 @@ export class ListOfPoolsComponent implements OnInit, AfterViewInit {
         this.admin.getPoolsByUser(sessionStorage.getItem('id')).subscribe(data2 => {
           console.log(data2);
           if (data2.code === 'D200') {
-            this.showLoader = false;
             this.setMyPools(data2.data);
             console.log(this.pools);
             // this.pools = data.data.filter(x => x.status === 1);
@@ -77,7 +76,7 @@ export class ListOfPoolsComponent implements OnInit, AfterViewInit {
           }
         });
       } else {
-        alert('Claves no coinciden!');
+        this.handleAlertsProvider.presentSnackbarError('Claves no coinciden!');
       }
     } else {
       if (pool.password === pool.passwordMatch) {
@@ -110,7 +109,6 @@ export class ListOfPoolsComponent implements OnInit, AfterViewInit {
   }
 
   goToEditResults(poolId) {
-    // todo: navegar a nueva vista de registros de resultados (pasar poolId)
-    // this.router.navigate(['/auth']);
+    this.router.navigate([`/home/pools/pool-register/${poolId}`]);
   }
 }
