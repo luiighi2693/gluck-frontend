@@ -144,13 +144,13 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
       sport: ['', Validators.required],
       color: ['', Validators.required],
       matches: ['', Validators.required],
-      usersLimit: ['', Validators.required],
+      usersLimit: [''],
       status: ['', Validators.required],
       penalty: ['', Validators.required],
-      groups: ['', Validators.required],
-      teamsPerGroup: ['', Validators.required],
-      type: ['', Validators.required],
-      league: ['', Validators.required],
+      groups: [''],
+      teamsPerGroup: [''],
+      type: [''],
+      league: [''],
       password: ['', Validators.required],
     });
     this.poolResults = this.fb.group({

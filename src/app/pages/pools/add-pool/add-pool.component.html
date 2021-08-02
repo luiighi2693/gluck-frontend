@@ -69,7 +69,8 @@
             <div class="col-12 col-md-6">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Limite de Usuarios</mat-label>
-                <input matInput type="number" placeholder="15" [(ngModel)]="limitOfUsers" formControlName="usersLimit" autocomplete="off" required>
+                <input matInput type="number" placeholder="15" [(ngModel)]="limitOfUsers" formControlName="usersLimit"
+                       autocomplete="off" >
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
                 </mat-error>
@@ -106,7 +107,7 @@
             <div class="col-12 col-md-4">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Grupos</mat-label>
-                <input matInput type="number" placeholder="6" formControlName="groups" autocomplete="off" required>
+                <input matInput type="number" placeholder="6" formControlName="groups" autocomplete="off" >
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
                 </mat-error>
@@ -117,7 +118,7 @@
             <div class="col-12 col-md-3">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Equipos por Grupos</mat-label>
-                <input matInput type="number" placeholder="2" formControlName="teamsPerGroup" autocomplete="off" required>
+                <input matInput type="number" placeholder="2" formControlName="teamsPerGroup" autocomplete="off" >
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
                 </mat-error>
@@ -126,7 +127,7 @@
             <div class="col-12 col-md-3">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Tipo de Quiniela</mat-label>
-                <mat-select formControlName="type" required>
+                <mat-select formControlName="type" >
                   <mat-option>- Tipo de Quiniela -</mat-option>
                   <mat-option value="1 vs 1">1 Vs 1</mat-option>
                   <mat-option value="mensuales">Quinielas Mensuales</mat-option>
@@ -141,7 +142,7 @@
             <div class="col-12 col-md-3">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Liga - Torneo</mat-label>
-                <mat-select formControlName="league" required>
+                <mat-select formControlName="league" >
                   <mat-option>- Liga - Torneo -</mat-option>
                   <mat-option value="La Liga">La Liga</mat-option>
                   <mat-option value="Premier League">Premier League</mat-option>
@@ -290,7 +291,7 @@
         </div>
         <!--        </form>-->
       </mat-step>
-      <mat-step [completed]="selection.hasValue()">
+      <mat-step>
         <ng-template matStepLabel>Usuarios</ng-template>
         <div class="col-12">
           <mat-form-field appearance="standard" class="w-100">
@@ -379,7 +380,7 @@
 
         <div class="mt-5">
           <button mat-flat-button matStepperPrevious>Atras</button>
-          <button mat-flat-button (click)="showSelection(stepper)" class="action-button">Siguiente</button>
+          <button mat-flat-button matStepperNext class="action-button">Siguiente</button>
         </div>
       </mat-step>
       <mat-step [stepControl]="poolResults">
