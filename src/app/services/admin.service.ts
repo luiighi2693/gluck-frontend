@@ -242,6 +242,12 @@ export class AdminService {
     return this.http.get(`${environment.basePath}/api/pool/getOne?poolId=${id}`, {headers});
   }
 
+  clientRegisterToPool(userId, data): Observable<any> {
+
+    return this.http.post(`${environment.basePath}/api/result/updateResultByUserAndPool?userId=${userId}`, data, {headers});
+  }
+
+
   sendEmail(category, subject, message): Observable<any> {
     const params = {
       category,

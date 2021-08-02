@@ -12,6 +12,7 @@ import {finalize} from 'rxjs/operators';
 export class PoolRegisterComponent implements OnInit, AfterViewInit {
   pool: any;
   matches: any;
+  userId: any;
 
   currentPool: string | number;
   showLoader = false;
@@ -26,6 +27,8 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.getParam();
+    this.userId = sessionStorage.getItem('id');
+    console.log(this.userId);
   }
 
   ngAfterViewInit(): void {
@@ -49,7 +52,7 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
           this.matches.forEach(match => {
             match.resultTeam1 = 0;
             match.resultTeam2 = 0;
-          })
+          });
           this.pool = res.data;
           console.log(this.pool.name);
         } else if (res.code === 'A401' || res.code === 'A302' || res.code === 'A403') {
@@ -61,5 +64,16 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
 
   registerValues() {
     console.log(this.matches);
+    this.pool.matchesInfo = this.matches;
+    this.showLoader = true;
+    this.admin.clientRegisterToPool(this.userId, this.pool).pipe(finalize(() => this.showLoader = false)).subscribe(res => {
+      if (res.code === 'D200' ) {
+        this.handleAlertsProvider.presentSnackbarSuccess('Has registrado los datos correctamente!');
+        this.router.navigate(['home/pools/list-of-pools']);
+      } else if (res.code === 'A401' || res.code === 'A302' || res.code === 'A403') {
+        this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
+        this.router.navigate(['/auth']);
+      }
+    })
   }
 }
