@@ -41,3 +41,9 @@ deploy
 
 docker pull pruebacontainerluighi2693/gluck-frontend:latest
 docker run -d -p 82:80 pruebacontainerluighi2693/gluck-frontend:latest
+
+
+docker stop $(docker ps | grep 'gluck-frontend:latest' | awk '{print $1}')
+docker rm $(docker ps -a | grep 'gluck-frontend:latest' | awk '{print $1}')
+docker image rm $(docker image ls | grep 'pruebacontainerluighi2693/gluck-frontend' | grep -v 'site' | awk '{print $3}')
+docker run -d -p 82:80 pruebacontainerluighi2693/gluck-frontend:latest
