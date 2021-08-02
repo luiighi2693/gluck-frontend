@@ -73,7 +73,7 @@
         <ng-container matColumnDef="opts">
           <th class="opts" mat-header-cell *matHeaderCellDef mat-sort-header>  </th>
           <td class="opts" mat-cell *matCellDef="let row">
-            <div *ngIf="row.status !== 1">
+            <div *ngIf="row.status !== 2">
               <button mat-icon-button aria-label="edit" (click)="editPool(row.rowid)">
                 <mat-icon>edit</mat-icon>
               </button>
