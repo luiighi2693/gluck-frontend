@@ -6,7 +6,7 @@ import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-p
 import {ActivatedRoute, Router} from '@angular/router';
 import {AdminService} from '../../../services/admin.service';
 import {finalize} from 'rxjs/operators';
-import {environment} from "../../../../environments/environment";
+import {environment} from '../../../../environments/environment';
 
 export interface UserData {
   rowid: string;
