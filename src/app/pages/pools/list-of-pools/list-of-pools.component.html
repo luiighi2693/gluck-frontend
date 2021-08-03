@@ -73,14 +73,14 @@
         <ng-container matColumnDef="opts">
           <th class="opts" mat-header-cell *matHeaderCellDef mat-sort-header>  </th>
           <td class="opts" mat-cell *matCellDef="let row">
-            <div *ngIf="row.status !== 2">
+<!--            <div *ngIf="row.status !== 2">-->
               <button mat-icon-button aria-label="edit" (click)="editPool(row.rowid)">
                 <mat-icon>edit</mat-icon>
               </button>
               <button mat-icon-button aria-label="delete"(click)="deletePool(row)" >
                 <mat-icon>delete</mat-icon>
               </button>
-            </div>
+<!--            </div>-->
 <!--            <button mat-icon-button aria-label="goToDetail"(click)="goToDetail(row.rowid)" >-->
 <!--              <mat-icon>exit_to_app</mat-icon>-->
 <!--            </button>-->

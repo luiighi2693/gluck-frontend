@@ -197,6 +197,10 @@ export class AdminService {
     return this.http.get(`${environment.basePath}/api/result/getResultsByPool?poolId=${id}`, {headers});
   }
 
+  getEventsForUser(id): Observable<any> {
+    return this.http.get(`${environment.basePath}/api/result/getEventsForUser?userId=${id}`, {headers});
+  }
+
   getResultsByPoolAndUser(user, pool): Observable<any> {
     return this.http.get(`${environment.basePath}/api/result/getResultsByPoolAndUser?poolId=${pool}&userId=${user}`, {headers});
   }

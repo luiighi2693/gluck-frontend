@@ -60,8 +60,11 @@
         </div>
       </div>
     </div>
-    <div class="col-3 panel d-flex justify-content-center align-items-center">
-      <h1>{{item.resultado}}</h1>
+    <div class="col-3 panel d-flex justify-content-center align-items-center" style="flex-direction: column;">
+      <h1 class="m-0">{{item.resultado}}</h1>
+      <span class="badge bg-success" *ngIf="item.status === 'F'">Finalizado</span>
+      <span class="badge bg-warning" *ngIf="item.status === 'C'">Sin Comenzar</span>
+      <span class="badge bg-danger" *ngIf="item.status === 'S'">Suspendido</span>
     </div>
   </div>
 
