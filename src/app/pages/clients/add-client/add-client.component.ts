@@ -11,7 +11,7 @@ import {environment} from '../../../../environments/environment';
   styleUrls: ['./add-client.component.css']
 })
 export class AddClientComponent implements OnInit {
-  hide = false;
+  hide = true;
   newUserForm: FormGroup;
   showLoader = false;
   imagePath;

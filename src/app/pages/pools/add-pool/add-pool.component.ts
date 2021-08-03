@@ -36,6 +36,7 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
   sports = [];
   teams = [];
   limitOfUsers: any;
+  hide = true;
 
   displayedColumns: string[] = ['rowid', 'username', 'name', 'email', 'phone', 'status', 'date_Access', 'opts'];
   dataSource: MatTableDataSource<UserData>;
@@ -151,7 +152,7 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
       teamsPerGroup: [''],
       type: [''],
       league: [''],
-      password: ['', Validators.required],
+      password: [''],
     });
     this.poolResults = this.fb.group({
       result: ['', Validators.required],

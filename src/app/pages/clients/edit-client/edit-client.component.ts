@@ -12,7 +12,7 @@ import {environment} from '../../../../environments/environment';
   styleUrls: ['./edit-client.component.css']
 })
 export class EditClientComponent implements OnInit {
-  hide = false;
+  hide = true;
   getCurrentUser: Subscription;
   currentUser: string;
   userData: any;

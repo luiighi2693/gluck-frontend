@@ -67,16 +67,6 @@
               </button>
             </mat-form-field>
           </div>
-          <div class="col-12 text-center">
-            <mat-form-field appearance="outline" class="unique__input--item">
-              <mat-label>Confirmar Contrasena</mat-label>
-              <input matInput [type]="hide ? 'password' : 'text'" placeholder="Confirmar Contrasena" autocomplete="off">
-              <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
-                      [attr.aria-pressed]="hide">
-                <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
-              </button>
-            </mat-form-field>
-          </div>
         </div>
         <mat-divider class="my-5"></mat-divider>
         <div class="row">

@@ -15,6 +15,10 @@ main {
   overflow: auto;
 }
 
+.mat-drawer {
+  background-color: #000 !important;
+}
+
 .sidenav__item {
   color: white;
 }

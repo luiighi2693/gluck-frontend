@@ -12,7 +12,7 @@ import {environment} from '../../../../environments/environment';
   styleUrls: ['./edit-profile.component.css']
 })
 export class EditProfileComponent implements OnInit {
-  hide = false;
+  hide = true;
   getCurrentUser: Subscription;
   userData: any;
   updateUserForm: FormGroup;
