@@ -13,28 +13,6 @@ import {AdminService} from '../../services/admin.service';
 })
 export class CalendarComponent implements OnInit {
 
-  events = [
-    {
-      title: 'exmaple title 0',
-      date: new Date(),
-    },
-    {
-      title: 'exmaple title 1',
-      date: '2021-08-14',
-    },
-    {
-      title: 'exmaple title 2',
-      date: '2021-08-13',
-    },
-    {
-      title: 'exmaple title 3',
-      date: '2021-08-12',
-    },
-    {
-      title: 'exmaple title 4',
-      date: '2021-08-11',
-    },
-  ] ;
   calendarOptions: CalendarOptions;
   showLoader = false;
 
@@ -53,16 +31,26 @@ export class CalendarComponent implements OnInit {
         res.data.forEach(e => {
           const date = e.date_Sport + 'T' + e.hour + '.000Z';
           events.push({
-            title: e.label,
+            title: e.name + ' ' + e.label,
             date,
-            id: e.rowid
+            id: e.rowid,
+            allDay: false,
+            editable: false,
+            backgroundColor: e.color,
+            description: e.name + ' ' + e.label
           });
         });
 
         this.calendarOptions = {
           initialView: 'datGridMonth',
-          // eventClick: this.onDateClick.bind(this),
+          contentHeight: 'auto',
           events,
+          eventTimeFormat: {
+            hour: '2-digit',
+            minute: '2-digit',
+            hour12: true
+          },
+
           // tslint:disable-next-line:only-arrow-functions
           eventClick: ((info) => {
             info.jsEvent.preventDefault(); // don't let the browser navigate
@@ -73,6 +61,16 @@ export class CalendarComponent implements OnInit {
               this.router.navigate([`/home/pools/list-of-pools`]);
 
             }
+          }),
+
+          // tslint:disable-next-line:only-arrow-functions
+          eventDidMount: ((info) => {
+            // var tooltip = new Tooltip(info.el, {
+            //   title: info.event.extendedProps.description,
+            //   placement: 'top',
+            //   trigger: 'hover',
+            //   container: 'body'
+            // });
           })
         };
       } else if (res.code === 'A401' || res.code === 'A302' || res.code === 'A403') {

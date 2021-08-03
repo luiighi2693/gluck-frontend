@@ -224,6 +224,9 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
   }
 
   makeMatches() {
+    this.poolData.matchesInfo.forEach(match => {
+      match.time = match.time.split(':')[0] + ':' + match.time.split(':')[1] + ' ' + (Number(match.time.split(':')[0]) > 11 ? 'pm' : 'am');
+    });
     this.arrayOfMatches = this.poolData.matchesInfo;
   }
 

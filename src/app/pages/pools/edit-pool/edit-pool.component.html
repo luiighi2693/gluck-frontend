@@ -266,7 +266,7 @@
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Hora</mat-label>
                 <input matInput [(ngModel)]="match.time" [ngxTimepicker]="timePicker" placeholder="8:52:35"
-                       autocomplete="off" >
+                       autocomplete="off" format="24" >
                 <mat-icon matSuffix>access_time</mat-icon>
                 <ngx-material-timepicker #timePicker></ngx-material-timepicker>
               </mat-form-field>
