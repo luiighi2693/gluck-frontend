@@ -3,6 +3,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {AdminService} from '../../../services/admin.service';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
 import {finalize} from 'rxjs/operators';
+import {environment} from "../../../../environments/environment";
 
 @Component({
   selector: 'app-pool-register',
@@ -16,6 +17,7 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
 
   currentPool: string | number;
   showLoader = false;
+  imagePath;
 
   constructor(
     private router: Router,
@@ -23,6 +25,7 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
     private admin: AdminService,
     private handleAlertsProvider: HandleAlertsProvider
   ) {
+    this.imagePath = environment.basePath;
   }
 
   ngOnInit(): void {

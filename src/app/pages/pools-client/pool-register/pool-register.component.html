@@ -21,7 +21,7 @@
         <div class="row">
           <div class="col-5 d-flex justify-content-around align-items-center">
             <div class="text-center">
-              <img src="../../../../assets/default-team-logo.png" class="team-image" alt="">
+              <img [src]="match.image1 !== '' ? (this.imagePath + '/images/' + match.image1) : '../../../../assets/default-team-logo.png'" class="team-image" alt="">
               <p style="font-size: 18px; font-weight: 400">{{match.teamName1}}</p>
             </div>
             <input type="number" [(ngModel)]="match.resultTeam1" [ngModelOptions]="{standalone: true}" class="input">
@@ -32,7 +32,8 @@
           <div class="col-5 d-flex justify-content-around align-items-center">
             <input type="number" [(ngModel)]="match.resultTeam2" [ngModelOptions]="{standalone: true}" class="input">
             <div class="text-center">
-              <img src="../../../../assets/default-team-logo.png" class="team-image" alt="">
+              <img [src]="match.image2 !== '' ? (this.imagePath + '/images/' + match.image2) : '../../../../assets/default-team-logo.png'" class="team-image" alt="">
+
               <p style="font-size: 18px; font-weight: 400">{{match.teamName2}}</p>
             </div>
           </div>

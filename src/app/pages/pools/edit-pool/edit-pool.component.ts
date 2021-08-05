@@ -255,6 +255,15 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
   registerPool() {
     this.showLoader = true;
     const {name, sport, color, matches, usersLimit, status, penalty, groups, teamsPerGroup, type, league, password} = this.config.value;
+
+    // convert all times in good format
+    this.arrayOfMatches.forEach(match => {
+      if (match.time.toUpperCase().includes('PM')) {
+        const newTime = match.time.toUpperCase().replace(' PM', '');
+        match.time = (Number(newTime.split(':')[0]) + 12) + ':' + newTime.split(':')[1];
+      }
+    })
+
     const matchesInfo = this.arrayOfMatches;
     const usersForPool = this.selection.selected;
     const {result, winner, draw, loser} = this.results.value;
