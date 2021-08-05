@@ -8,10 +8,11 @@ import {PoolComponent} from './pool/pool.component';
 import {PoolsComponent} from './pools/pools.component';
 import {SharedModule} from '../../shared/shared.module';
 import {MaterialModule} from '../../material/material.module';
-import {PoolResultComponent} from './pool-result/pool-result.component';
+import {MyResultsComponent} from './my-results/my-results.component';
 import {RegisterToPoolComponent} from './register-to-pool/register-to-pool.component';
 import {FormsModule} from '@angular/forms';
 import {PoolRegisterComponent} from './pool-register/pool-register.component';
+import {MyPoolsComponent} from './my-pools/my-pools.component';
 
 @NgModule({
   declarations: [
@@ -20,9 +21,10 @@ import {PoolRegisterComponent} from './pool-register/pool-register.component';
     PoolCategoryComponent,
     PoolComponent,
     PoolsComponent,
-    PoolResultComponent,
+    MyResultsComponent,
     RegisterToPoolComponent,
-    PoolRegisterComponent
+    PoolRegisterComponent,
+    MyPoolsComponent
   ],
   imports: [
     CommonModule,
@@ -38,7 +40,7 @@ import {PoolRegisterComponent} from './pool-register/pool-register.component';
           component: ListOfPoolsComponent
         },
         {
-          path: 'pools-results',
+          path: 'pools-results/:id',
           component: PoolsResultsComponent
         },
         {
@@ -50,8 +52,8 @@ import {PoolRegisterComponent} from './pool-register/pool-register.component';
           component: PoolComponent
         },
         {
-          path: 'pool-result/:id',
-          component: PoolResultComponent
+          path: 'my-results/:id',
+          component: MyResultsComponent
         },
         {
           path: 'register-to-pool/:id',
@@ -60,6 +62,10 @@ import {PoolRegisterComponent} from './pool-register/pool-register.component';
         {
           path: 'pool-register/:id',
           component: PoolRegisterComponent
+        },
+        {
+          path: 'my-pools',
+          component: MyPoolsComponent
         },
       ]
     ),

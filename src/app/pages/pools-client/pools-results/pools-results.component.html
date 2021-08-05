@@ -1,26 +1,24 @@
 <app-loader [loading]="showLoader"></app-loader>
 <div class="d-flex justify-content-between align-items-center text-white m-4">
-  <h1>Resultado de Mis Quinielas </h1>
+  <h1 class="m-0">Resultado de Quiniela </h1>
   <div class="d-flex align-items-center">
-    <h3 class="home__link m-0" routerLink="/home">Home</h3>
-    <mat-icon>keyboard_arrow_right</mat-icon>
-    <h3 class="home__link m-0">Resultados de Mis Quinelas</h3>
+    <button mat-flat-button class="action-button" (click)="goToMyResults('59')">Ver Mis Resultados</button>
   </div>
 </div>
 
-<div class="container min-height">
+<div class="container px-5 min-height">
   <div class="row yellow-panel mb-3">
-    <div class="col-6 p-3 text-center border-right"><h1 class="m-0">Quiniela</h1></div>
-    <div class="col-3 p-3 text-center border-right"><h1 class="m-0">Puntuacion</h1></div>
-    <div class="col-3 p-3 text-center"><h1 class="m-0">Goles Acertados</h1></div>
+    <div class="col-6 p-3 text-center border-right"><h1 class="m-0">USUARIO</h1></div>
+    <div class="col-3 p-3 text-center border-right"><h1 class="m-0">PUNTUACION</h1></div>
+    <div class="col-3 p-3 text-center"><h1 class="m-0">GOLES ACERTADOS</h1></div>
   </div>
-  <div class="row panel mb-3" *ngFor="let item of data" (click)="goToRoute(item.id)">
+  <div class="row panel mb-3" *ngFor="let item of data">
     <div class="col-1 d-flex justify-content-center align-items-center"><h1 class="m-0">{{item.id}}</h1></div>
-    <div class="col-5  d-flex justify-content-around align-items-center border-right">
-<!--      <img [src]="item.img" class="pool-image" alt="pool image">-->
-      <h1 class="m-0">{{item.name}}</h1></div>
-    <div class="col-3 d-flex justify-content-center align-items-center border-right"><h1 class="m-0">{{item.resultado}}</h1>
+    <div class="col-5  d-flex justify-content-start align-items-center border-right">
+      <img src="../../../../assets/example-user.png" class="user-image" alt="user image">
+      <h1 class="mx-5 mb-0">{{item.user}}</h1></div>
+    <div class="col-3 d-flex justify-content-center align-items-center border-right"><h1 class="m-0">{{item.result}}</h1>
     </div>
-    <div class="col-3 d-flex justify-content-center align-items-center"><h1 class="m-0">{{item.goles}} Goles</h1></div>
+    <div class="col-3 d-flex justify-content-center align-items-center"><h1 class="m-0">{{item.goals}} Goles</h1></div>
   </div>
 </div>

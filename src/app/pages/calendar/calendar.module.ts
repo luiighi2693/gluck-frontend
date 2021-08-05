@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {RouterModule} from '@angular/router';
-import { FullCalendarModule } from '@fullcalendar/angular'; // must go before plugins
-import { CalendarComponent } from './calendar.component';
+import {FullCalendarModule} from '@fullcalendar/angular'; // must go before plugins
+import {CalendarComponent} from './calendar.component';
 import dayGridPlugin from '@fullcalendar/daygrid'; // a plugin!
 import interactionPlugin from '@fullcalendar/interaction'; // a plugin!
-import { MaterialModule } from '../../material/material.module';
-import {SharedModule} from "../../shared/shared.module";
+import {MaterialModule} from '../../material/material.module';
+import {SharedModule} from '../../shared/shared.module';
 
 FullCalendarModule.registerPlugins([
   dayGridPlugin,
@@ -15,12 +15,13 @@ FullCalendarModule.registerPlugins([
 
 @NgModule({
   declarations: [CalendarComponent],
-    imports: [
-        CommonModule,
-        FullCalendarModule,
-        MaterialModule,
-        RouterModule.forChild([{path: '', component: CalendarComponent}]),
-        SharedModule,
-    ]
+  imports: [
+    CommonModule,
+    FullCalendarModule,
+    MaterialModule,
+    RouterModule.forChild([{path: '', component: CalendarComponent}]),
+    SharedModule,
+  ]
 })
-export class CalendarModule { }
+export class CalendarModule {
+}

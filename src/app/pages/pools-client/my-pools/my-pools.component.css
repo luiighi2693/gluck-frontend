@@ -1,0 +1,100 @@
+.home__link:hover {
+  color: #F6DD06;
+  cursor: pointer;
+}
+
+main {
+  min-height: 700px;
+}
+
+.panel {
+  background-color: black !important;
+}
+
+.title {
+  color: white !important;
+  font-weight: bold;
+  letter-spacing: 1px;
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.title-button {
+  background-color: #F6DD06;
+  color: black;
+  font-weight: bold;
+  margin-right: 1rem;
+}
+
+.id {
+  width: 5%;
+}
+
+.participants {
+  width: 10%;
+}
+
+.prize {
+  width: 10%;
+}
+
+.opts {
+  width: 7.5%;
+}
+
+.dollar-price {
+  width: 10%;
+}
+
+.gCoin-price {
+  width: 10%;
+}
+
+.remaining-time {
+  width: 10%;
+}
+
+.name {
+  width: 25%;
+}
+
+.active {
+  padding: 0.5rem;
+  color: white;
+  background-color: #4caf50;
+  border-radius: 15px;
+  text-align: center;
+  width: 75%;
+  letter-spacing: 1px;
+}
+
+.inactive {
+  padding: 0.5rem;
+  color: white;
+  background-color: red;
+  border-radius: 15px;
+  text-align: center;
+  width: 75%;
+  letter-spacing: 1px;
+}
+
+.action-button {
+  background-color: #F6DD06;
+  border-radius: 25px;
+}
+
+.dialog-button:hover {
+  background-color: black;
+  color: #F6DD06;
+}
+
+.money {
+  color: green;
+}
+
+.gCoin {
+  color: #F6DD06;
+}
+

@@ -6,10 +6,10 @@ import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-pool-result',
-  templateUrl: './pool-result.component.html',
-  styleUrls: ['./pool-result.component.css']
+  templateUrl: './my-results.component.html',
+  styleUrls: ['./my-results.component.css']
 })
-export class PoolResultComponent implements OnInit, AfterViewInit {
+export class MyResultsComponent implements OnInit, AfterViewInit {
   showLoader = false;
   data = null;
   getCurrentPool;

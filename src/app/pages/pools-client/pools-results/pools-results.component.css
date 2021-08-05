@@ -17,12 +17,7 @@
   padding: 1rem;
 }
 
-.panel:hover {
-  cursor: pointer;
-  background-color: gray;
-}
-
-.pool-image {
+.user-image {
   width: 75px;
   height: 75px;
   border-radius: 50px;
@@ -33,5 +28,10 @@
 }
 
 .min-height {
-  min-height: 700px;
+  min-height: 100vh;
+}
+
+.action-button {
+  background-color: #F6DD06;
+  color: black;
 }

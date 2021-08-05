@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
 import {AdminService} from '../../../services/admin.service';
 
@@ -10,34 +10,97 @@ import {AdminService} from '../../../services/admin.service';
 })
 export class PoolsResultsComponent implements OnInit {
 
-  data = [];
+  data = [
+    {
+      id: 15,
+      user: 'Alex Rodriguez',
+      image: '../../../../assets/example-user.png',
+      goals: '5',
+      result: '10',
+    },
+    {
+      id: 15,
+      user: 'Alex Rodriguez',
+      image: '../../../../assets/example-user.png',
+      goals: '5',
+      result: '10',
+    },
+    {
+      id: 15,
+      user: 'Alex Rodriguez',
+      image: '../../../../assets/example-user.png',
+      goals: '5',
+      result: '10',
+    },
+    {
+      id: 15,
+      user: 'Alex Rodriguez',
+      image: '../../../../assets/example-user.png',
+      goals: '5',
+      result: '10',
+    },
+    {
+      id: 15,
+      user: 'Alex Rodriguez',
+      image: '../../../../assets/example-user.png',
+      goals: '5',
+      result: '10',
+    },
+    {
+      id: 15,
+      user: 'Alex Rodriguez',
+      image: '../../../../assets/example-user.png',
+      goals: '5',
+      result: '10',
+    },
+    {
+      id: 15,
+      user: 'Alex Rodriguez',
+      image: '../../../../assets/example-user.png',
+      goals: '5',
+      result: '10',
+    },
+    {
+      id: 15,
+      user: 'Alex Rodriguez',
+      image: '../../../../assets/example-user.png',
+      goals: '5',
+      result: '10',
+    },
+    {
+      id: 15,
+      user: 'Alex Rodriguez',
+      image: '../../../../assets/example-user.png',
+      goals: '5',
+      result: '10',
+    },
+  ];
   showLoader = false;
+  // currentPool: any;
 
   constructor(
     private handleAlertsProvider: HandleAlertsProvider,
     private router: Router,
     private admin: AdminService,
+    private route: ActivatedRoute
   ) {
   }
 
   ngOnInit(): void {
-    this.showLoader = true;
-    this.admin.getResultsUserForClient(sessionStorage.getItem('id')).subscribe(data => {
-      this.showLoader = false;
-      console.log(data);
-      if (data.code === 'D200') {
-        this.data = data.data;
-      } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
-        this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
-        this.router.navigate(['/auth']);
-      }
-    }, error => {
-      this.showLoader = false;
-      this.handleAlertsProvider.presentGenericAlert(error);
-    });
+    // this.getCurrentPool();
   }
 
+  // getCurrentPool() {
+  //   this.route.params.subscribe(res => {
+  //     this.currentPool = res.id;
+  //   });
+  // }
+
   goToRoute(id) {
-    this.router.navigate([`/home/pools/pool-result/${id}`]);
+    this.router.navigate([`/home/pools/my-results/${id}`]);
+  }
+
+  goToMyResults(id) {
+    this.router.navigate([`/home/pools/my-results/${id}`]);
   }
 }

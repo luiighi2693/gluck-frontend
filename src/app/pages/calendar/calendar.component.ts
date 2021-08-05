@@ -37,13 +37,21 @@ export class CalendarComponent implements OnInit {
             allDay: false,
             editable: false,
             backgroundColor: e.color,
+            // eventBorderColor: '#e4a101ff',
+            // eventTextColor: '#fff',
             description: e.name + ' ' + e.label
           });
         });
 
         this.calendarOptions = {
-          initialView: 'datGridMonth',
-          contentHeight: 'auto',
+          initialView: 'dayGridMonth',
+          headerToolbar: {
+            left: 'prev next today',
+            center: 'title',
+            right: 'dayGridMonth dayGridWeek dayGridDay'
+          },
+          dayMaxEvents: true,
+          contentHeight: '950px',
           events,
           eventTimeFormat: {
             hour: '2-digit',
