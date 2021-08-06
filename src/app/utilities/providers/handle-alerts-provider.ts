@@ -9,6 +9,7 @@ import { ErrorSnackbarComponent } from '../../shared/alerts/error-snackbar/error
 import { SuccessSnackbarComponent } from '../../shared/alerts/success-snackbar/success-snackbar.component';
 import {GenericAlertComponent} from '../../shared/alerts/generic-alert/generic-alert.component';
 import { RegisterPoolDialogComponent } from '../../shared/alerts/register-pool-dialog/register-pool-dialog.component';
+import { InputDialogComponent } from '../../shared/alerts/input-dialog/input-dialog.component';
 
 @Injectable({
   providedIn: 'root'
@@ -17,6 +18,12 @@ export class  HandleAlertsProvider {
 
   constructor(private dialog: MatDialog,
               private snackbar: MatSnackBar) {
+  }
+
+  presentInputDialog(title: string, value: string | number ) {
+    return this.dialog.open(InputDialogComponent, {
+      data: {value, title}
+    });
   }
 
   presentSnackbarSuccess(data?: string, duration = 5000) {

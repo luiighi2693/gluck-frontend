@@ -20,11 +20,23 @@ td, th {
 }
 
 .status {
-  width: 10%;
+  width: 7%;
+}
+
+.phone {
+  width: 7%;
 }
 
 .username {
-  width: 12%;
+  width: 10%;
+}
+
+.coins {
+  width: 5%;
+}
+
+.amount {
+  width: 5%;
 }
 
 .name {
@@ -32,15 +44,15 @@ td, th {
 }
 
 .email {
-  width: 20%;
+  width: 10%;
 }
 
 .lastLogin {
-  width: 10%;
+  width: 8%;
 }
 
 .opts {
-  width: 10%;
+  width: 7%;
 }
 
 .listOf__users--wrapper {

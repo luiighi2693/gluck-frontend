@@ -6,6 +6,9 @@ import { ErrorSnackbarComponent } from './error-snackbar/error-snackbar.componen
 import { OkConfirmationAlertComponent } from './ok-confirmation-alert/ok-confirmation-alert.component';
 import { GenericAlertComponent } from './generic-alert/generic-alert.component';
 import { RegisterPoolDialogComponent } from './register-pool-dialog/register-pool-dialog.component';
+import { InputDialogComponent } from './input-dialog/input-dialog.component';
+import { FormsModule } from '@angular/forms';
+import { MatDialogModule } from '@angular/material/dialog';
 
 
 @NgModule({
@@ -14,10 +17,13 @@ import { RegisterPoolDialogComponent } from './register-pool-dialog/register-poo
     ErrorSnackbarComponent,
     OkConfirmationAlertComponent,
     GenericAlertComponent,
-    RegisterPoolDialogComponent
+    RegisterPoolDialogComponent,
+    InputDialogComponent
   ],
   imports: [
     CommonModule,
+    FormsModule,
+    MatDialogModule,
     MaterialModule,
   ]
 })

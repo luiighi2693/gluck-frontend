@@ -6,6 +6,7 @@ import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-p
 import {Router} from '@angular/router';
 import {AdminService} from '../../../services/admin.service';
 import {environment} from '../../../../environments/environment';
+import {MatDialog} from '@angular/material/dialog';
 
 
 export interface UserData {
@@ -24,10 +25,11 @@ export interface UserData {
   styleUrls: ['./list-of-clients.component.css']
 })
 export class ListOfClientsComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['rowid', 'image', 'username', 'email', 'phone', 'status', 'date_Access', 'opts'];
+  displayedColumns: string[] = ['rowid', 'image', 'username', 'amount', 'coins', 'email', 'phone', 'status', 'date_Access', 'opts'];
   dataSource: MatTableDataSource<UserData>;
   showLoader = false;
   imagePath;
+  amountToRecharge = '';
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -36,6 +38,7 @@ export class ListOfClientsComponent implements OnInit, AfterViewInit {
     private handleAlertsProvider: HandleAlertsProvider,
     private router: Router,
     private admin: AdminService,
+    private dialog: MatDialog,
   ) {
     this.admin.initToken();
     this.imagePath = environment.basePath;
@@ -52,6 +55,7 @@ export class ListOfClientsComponent implements OnInit, AfterViewInit {
     this.showLoader = true;
     this.admin.getUsers().subscribe(data => {
       if (data.code === 'D200') {
+        console.log(data)
         this.showLoader = false;
         this.dataSource = new MatTableDataSource<UserData>(data.data);
         this.dataSource.paginator = this.paginator;
@@ -99,6 +103,34 @@ export class ListOfClientsComponent implements OnInit, AfterViewInit {
       }
     }, error => {
       this.handleAlertsProvider.presentGenericAlert(error);
+    });
+  }
+
+  recharge(type: string, id) {
+    const dialogRef = this.handleAlertsProvider.presentInputDialog(
+      `${type === 'glucks' ? 'Recargar Glucks' : 'Recargar Dinero'}`,
+      this.amountToRecharge);
+    dialogRef.afterClosed().subscribe(result => {
+      // console.log(result);
+      if (result !== '') {
+        // console.log(this.amountToRecharge);
+        this.showLoader = true;
+        this.admin.recharge(id, type, result).subscribe(res => {
+          this.showLoader = false;
+          if (res.code === 'D200') {
+            this.handleAlertsProvider.presentSnackbarSuccess(
+              `Se ha recargado con exito la cantidad de ${result} ${type === 'amount' ? 'Dolares' : 'Coins'}`);
+            this.setData();
+          } else if (res.code === 'A401' || res.code === 'A302' || res.code === 'A403') {
+            this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
+            this.router.navigate(['/auth']);
+          }
+        }, err => {
+          this.handleAlertsProvider.presentGenericAlert(err);
+        });
+      } else {
+        this.handleAlertsProvider.presentGenericAlert('Por favor ingresa un monto', 'Aviso!');
+      }
     });
   }
 }

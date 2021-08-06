@@ -272,4 +272,13 @@ export class AdminService {
   getFile(id): Observable<any> {
     return this.http.get(`${environment.basePath}/api/file/get?id=${id}`, {headers});
   }
+
+  recharge(userId, type, amount): Observable<any> {
+    const params = {
+      userId,
+      type,
+      amount
+    };
+    return this.http.post(`${environment.basePath}/api/user/rechargue`, params, {headers});
+  }
 }

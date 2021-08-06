@@ -35,6 +35,10 @@ td, th {
   width: 10%;
 }
 
+.phone {
+  width: 10%;
+}
+
 .lastLogin:hover, .email:hover, .phone:hover, .name:hover, .username:hover, .status:hover, .id:hover {
   cursor: pointer;
 }

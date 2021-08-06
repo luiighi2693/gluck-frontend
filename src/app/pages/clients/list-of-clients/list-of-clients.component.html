@@ -51,6 +51,38 @@
           <td class="username" mat-cell *matCellDef="let row"> {{row.username}} </td>
         </ng-container>
 
+
+        <ng-container matColumnDef="amount">
+          <th class="amount" mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div class="d-flex align-items-center">
+              <p class="m-0">Cantidad</p>
+              <mat-icon style="color: green; font-weight: 600">attach_money</mat-icon>
+            </div>
+          </th>
+          <td class="amount" mat-cell *matCellDef="let row">
+            {{row.amount}}
+            <button mat-icon-button aria-label="recarga de dinero" (click)="recharge('amount', row.rowid)">
+              <mat-icon style="color: green; font-weight: 600">attach_money</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="coins">
+          <th class="coins" mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div class="d-flex align-items-center">
+              <p class="m-0">Cantidad</p>
+              <mat-icon style="color: #F6DD06; font-weight: 600">local_atm</mat-icon>
+            </div>
+          </th>
+          <td class="coins" mat-cell *matCellDef="let row">
+            {{row.coins}}
+            <button mat-icon-button aria-label="recarga de Gluck Coins" (click)="recharge('glucks', row.rowid)">
+              <mat-icon style="color: #F6DD06; font-weight: 600">local_atm</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
         <!-- Fruit Column -->
         <ng-container matColumnDef="email">
           <th class="email" mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
