@@ -416,7 +416,7 @@
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Valor de entrada (Dolares)</mat-label>
                 <input matInput type="number" formControlName="amountInput" placeholder="5"
-                       autocomplete="off" required>
+                       autocomplete="off" required (blur)="getAward()">
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
                 </mat-error>
@@ -468,20 +468,23 @@
                 </mat-error>
               </mat-form-field>
             </div>
-            <div class="col-12 col-md-3" *ngIf="endPools.value.awardType === 'total'">
+            <div class="col-12 col-md-3">
               <mat-form-field appearance="outline" class="w-100">
-                <mat-label>Valor de Premio Total</mat-label>
-                <input matInput type="text" readonly="true" formControlName="awardValue" placeholder="$500"
-                       autocomplete="off" required>
+                <mat-label>Tipo de Premio</mat-label>
+                <mat-select formControlName="awardType" required [(ngModel)]="awardType" ngModelOptions="{standalone: true}" (ngModelChange)="getAward()">
+                  <mat-option>- Tipo de Premio -</mat-option>
+                  <mat-option value="fijo">Fijo</mat-option>
+                  <mat-option value="total">Total</mat-option>
+                </mat-select>
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
                 </mat-error>
               </mat-form-field>
             </div>
-            <div class="col-12 col-md-3" *ngIf="endPools.value.awardType === 'fijo'">
+            <div class="col-12 col-md-3">
               <mat-form-field appearance="outline" class="w-100">
-                <mat-label>Valor de Premio Fijo</mat-label>
-                <input matInput type="text" formControlName="awardValue" placeholder="$500"
+                <mat-label>Valor de Premio Total</mat-label>
+                <input matInput type="text" [readOnly]="endPools.value.awardType !== 'total' ? 'false' : 'true'" formControlName="awardValue" placeholder="$500"
                        autocomplete="off" required>
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>

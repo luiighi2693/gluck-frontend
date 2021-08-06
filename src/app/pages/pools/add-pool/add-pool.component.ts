@@ -52,6 +52,8 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
 
   @ViewChild('inputFiles', { static: true }) inputFiles: ElementRef;
 
+  awardType;
+
   constructor(
     private handleAlertsProvider: HandleAlertsProvider,
     private router: Router,
@@ -318,5 +320,16 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
   openUploadFiles() {
     const el: HTMLElement = this.inputFiles.nativeElement as HTMLElement;
     el.click();
+  }
+
+  getAward() {
+    console.log(this.awardType);
+    if (this.awardType === 'total') {
+      const value = this.selection.selected.length * Number(this.endPools.get('amountInput').value === '' ? 0 : this.endPools.get('amountInput').value);
+      this.endPools.get('awardValue').setValue(value);
+
+    } else {
+      this.endPools.get('awardValue').setValue(0);
+    }
   }
 }
