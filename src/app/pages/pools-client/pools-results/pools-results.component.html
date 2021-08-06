@@ -1,8 +1,8 @@
 <app-loader [loading]="showLoader"></app-loader>
 <div class="d-flex justify-content-between align-items-center text-white m-4">
-  <h1 class="m-0">Resultado de Quiniela </h1>
+  <h1 class="m-0">Resultado de Quiniela {{poolName}}</h1>
   <div class="d-flex align-items-center">
-    <button mat-flat-button class="action-button" (click)="goToMyResults('59')">Ver Mis Resultados</button>
+    <button mat-flat-button class="action-button" (click)="goToMyResults()">Ver Mis Resultados</button>
   </div>
 </div>
 
@@ -13,12 +13,13 @@
     <div class="col-3 p-3 text-center"><h1 class="m-0">GOLES ACERTADOS</h1></div>
   </div>
   <div class="row panel mb-3" *ngFor="let item of data">
-    <div class="col-1 d-flex justify-content-center align-items-center"><h1 class="m-0">{{item.id}}</h1></div>
+    <div class="col-1 d-flex justify-content-center align-items-center"><h1 class="m-0">{{item.userID}}</h1></div>
     <div class="col-5  d-flex justify-content-start align-items-center border-right">
-      <img src="../../../../assets/example-user.png" class="user-image" alt="user image">
-      <h1 class="mx-5 mb-0">{{item.user}}</h1></div>
-    <div class="col-3 d-flex justify-content-center align-items-center border-right"><h1 class="m-0">{{item.result}}</h1>
+<!--      <img src="../../../../assets/example-user.png" class="user-image" alt="user image">-->
+      <img [src]="(item.img === '' ? '../../../../assets/example-user.png' : imagePath + '/images/' + item.img)" class="user-image" alt="user image">
+      <h1 class="mx-5 mb-0">{{item.name}}</h1></div>
+    <div class="col-3 d-flex justify-content-center align-items-center border-right"><h1 class="m-0">{{item.resultado}}</h1>
     </div>
-    <div class="col-3 d-flex justify-content-center align-items-center"><h1 class="m-0">{{item.goals}} Goles</h1></div>
+    <div class="col-3 d-flex justify-content-center align-items-center"><h1 class="m-0">{{item.goles}} Goles</h1></div>
   </div>
 </div>

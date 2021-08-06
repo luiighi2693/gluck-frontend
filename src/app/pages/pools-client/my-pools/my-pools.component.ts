@@ -6,7 +6,7 @@ import {MatSort} from '@angular/material/sort';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
 import {Router} from '@angular/router';
 import {AdminService} from '../../../services/admin.service';
-
+import * as moment from 'moment';
 
 export interface PeriodicElement {
   name: string;
@@ -122,11 +122,19 @@ export class MyPoolsComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['id', 'name', 'dollarPrice', 'gCoinPrice', 'prize', 'participants', 'remainingTime', 'opts'];
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
 
+  dataSourceRegistered = new MatTableDataSource<PeriodicElement>();
+  dataSourceProgress = new MatTableDataSource<PeriodicElement>();
+  dataSourceHistorical = new MatTableDataSource<PeriodicElement>();
+
   showLoader = false;
   user: string;
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
+  // @ViewChild(MatPaginator) paginator: MatPaginator;
+  // @ViewChild(MatSort) sort: MatSort;
+
+  registered: PeriodicElement[] = [];
+  progress: PeriodicElement[] = [];
+  historical: PeriodicElement[] = [];
 
   constructor(
     private handleAlertsProvider: HandleAlertsProvider,
@@ -138,11 +146,124 @@ export class MyPoolsComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.user = sessionStorage.getItem('username');
+    this.showLoader = true;
+    this.admin.getMyPools(sessionStorage.getItem('id')).subscribe(data => {
+      console.log(data);
+      this.showLoader = false;
+      if (data.code === 'D200') {
+
+        data.registered.forEach(row => {
+          this.registered.push({
+            id: row.id,
+            name: row.name,
+            dollarPrice: row.amountInput,
+            gCoinPrice: row.coinsInput,
+            prize: row.awardValue,
+            participants: row.participants,
+            remainingTime: row.timeRemaining
+          });
+        });
+
+        data.progress.forEach(row => {
+          this.progress.push({
+            id: row.id,
+            name: row.name,
+            dollarPrice: row.amountInput,
+            gCoinPrice: row.coinsInput,
+            prize: row.awardValue,
+            participants: row.participants,
+            remainingTime: row.timeRemaining
+          });
+        });
+
+        data.historical.forEach(row => {
+          this.historical.push({
+            id: row.id,
+            name: row.name,
+            dollarPrice: row.amountInput,
+            gCoinPrice: row.coinsInput,
+            prize: row.awardValue,
+            participants: row.participants,
+            remainingTime: row.timeRemaining
+          });
+        });
+
+        console.log(this.registered);
+        console.log(this.progress);
+        console.log(this.historical);
+
+        this.dataSourceRegistered = new MatTableDataSource<PeriodicElement>(this.registered);
+        this.dataSourceProgress = new MatTableDataSource<PeriodicElement>(this.progress);
+        this.dataSourceHistorical = new MatTableDataSource<PeriodicElement>(this.historical);
+
+        this.startCounter(this.registered, this.dataSourceRegistered);
+        this.startCounter(this.progress, this.dataSourceProgress);
+        this.startCounter(this.historical, this.dataSourceHistorical);
+
+      } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
+        this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
+        this.router.navigate(['/auth']);
+      }
+    }, error => {
+      this.showLoader = false;
+      this.handleAlertsProvider.presentGenericAlert(error);
+    });
+
+
+  }
+
+  startCounter(list, dataSource) {
+    list.forEach(item => {
+      let eventTime = item.remainingTime === null ? moment() : moment(item.remainingTime);
+      let currentTime = moment();
+      const leftTime = eventTime.valueOf() - currentTime.valueOf();
+      let duration = moment.duration(leftTime, 'milliseconds');
+
+      setInterval(() => {
+
+        // Time Out check
+        if (duration.asSeconds() > 0) {
+          duration = moment.duration(duration.asSeconds() - 1, 'seconds');
+          item.remainingTime = (duration.days() > 0 ? (duration.days() + ' dia(s) ') : '') + this.formatDate(duration.hours()) + ':' + this.formatDate(duration.minutes()) + ':' + this.formatDate(duration.seconds());
+        } else {
+          item.remainingTime = '00:00:00';
+        }
+
+        dataSource = new MatTableDataSource<PeriodicElement>(list);
+
+
+      }, 1000);
+    });
+    // let eventTime = moment('2021-08-05 23:44:00');
+    // let currentTime = moment();
+    // console.log(eventTime, currentTime);
+    // const leftTime = eventTime.valueOf() - currentTime.valueOf();
+    // let duration = moment.duration(leftTime, 'milliseconds');
+    // console.log(duration.hours() + ':' + duration.minutes() + ':' + duration.seconds());
+    //
+    // setInterval(() => {
+    //
+    //   // Time Out check
+    //   if (duration.asSeconds() > 0) {
+    //     duration = moment.duration(duration.asSeconds() - 1, 'seconds');
+    //     ELEMENT_DATA[0].remainingTime = (duration.days() > 0 ? (duration.days() + ' dia(s) ') : '') + this.formatDate(duration.hours()) + ':' + this.formatDate(duration.minutes()) + ':' + this.formatDate(duration.seconds());
+    //     this.dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+    //   } else {
+    //     ELEMENT_DATA[0].remainingTime = '00:00:00';
+    //   }
+    //
+    // }, 1000);
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    // this.dataSource.paginator = this.paginator;
+    // this.dataSource.sort = this.sort;
+    // this.dataSourceRegistered.paginator = this.paginator;
+    // this.dataSourceRegistered.sort = this.sort;
+    // this.dataSourceProgress.paginator = this.paginator;
+    // this.dataSourceProgress.sort = this.sort;
+    // this.dataSourceHistorical.paginator = this.paginator;
+    // this.dataSourceHistorical.sort = this.sort;
     // this.setData();
   }
 
@@ -217,7 +338,13 @@ export class MyPoolsComponent implements OnInit, AfterViewInit {
     alert(data);
   }
 
-  registerToPool(id) {
+  registerToPool(id, name) {
+    console.log(id, name);
+    sessionStorage.setItem('poolName', name);
     this.router.navigate([`/home/pools/pools-results/${id}`]);
+  }
+
+  private formatDate(n: number) {
+    return n < 10 ? ('0' + n) : n;
   }
 }

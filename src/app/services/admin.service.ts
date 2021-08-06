@@ -158,6 +158,10 @@ export class AdminService {
     return this.http.get(`${environment.basePath}/api/pool/getPoolsByUser?userId=${userId}`, {headers});
   }
 
+  getMyPools(userId): Observable<any> {
+    return this.http.get(`${environment.basePath}/api/pool/getMyPools?userId=${userId}`, {headers});
+  }
+
   getPool(id): Observable<any> {
     const includes = ['sport'];
     return this.http.get(`${environment.basePath}/api/getOne?id=${id}&model=q_pools&include=${encodeURI(JSON.stringify(includes))}`, {headers});

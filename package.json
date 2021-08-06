@@ -32,6 +32,7 @@
     "@tinymce/tinymce-angular": "^4.2.4",
     "bootstrap": "^5.0.2",
     "leaflet": "^1.7.1",
+    "moment": "^2.29.1",
     "ngx-captcha": "^9.0.1",
     "ngx-material-timepicker": "^5.5.3",
     "rxjs": "~6.6.0",
