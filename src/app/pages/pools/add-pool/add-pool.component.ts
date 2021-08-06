@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatTableDataSource} from '@angular/material/table';
 import {SelectionModel} from '@angular/cdk/collections';
@@ -7,6 +7,7 @@ import {MatSort} from '@angular/material/sort';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
 import {Router} from '@angular/router';
 import {AdminService} from '../../../services/admin.service';
+import {environment} from '../../../../environments/environment';
 
 export interface UserData {
   rowid: string;
@@ -46,6 +47,10 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
+  imagePath;
+
+  @ViewChild('inputFiles', { static: true }) inputFiles: ElementRef;
+
   constructor(
     private handleAlertsProvider: HandleAlertsProvider,
     private router: Router,
@@ -53,6 +58,7 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
     private fb: FormBuilder,
   ) {
     this.admin.initToken();
+    this.imagePath = environment.basePath;
   }
 
   ngOnInit(): void {
@@ -153,6 +159,7 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
       type: [''],
       league: [''],
       password: [''],
+      rules: ['']
     });
     this.poolResults = this.fb.group({
       result: ['', Validators.required],
@@ -213,7 +220,15 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
 
   registerPool() {
     this.showLoader = true;
-    const {name, sport, color, matches, usersLimit, status, penalty, groups, teamsPerGroup, type, league, password} = this.config.value;
+    const {name, sport, color, matches, usersLimit, status, penalty, groups, teamsPerGroup, type, league, password, rules} = this.config.value;
+
+    this.arrayOfMatches.forEach(match => {
+      if (match.time.toUpperCase().includes('PM')) {
+        const newTime = match.time.toUpperCase().replace(' PM', '');
+        match.time = (Number(newTime.split(':')[0]) + 12) + ':' + newTime.split(':')[1];
+      }
+    });
+
     const matchesInfo = this.arrayOfMatches;
     const usersForPool = this.selection.selected;
     const {result, winner, draw, loser} = this.poolResults.value;
@@ -231,6 +246,7 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
       type,
       league,
       password,
+      rules,
       matchesInfo,
       usersForPool,
       result,
@@ -270,5 +286,21 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
       draw,
       loser
     });
+  }
+
+  handleUpload(event) {
+    const file = event.target.files[0];
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = async () => {
+      const imageData = reader.result;
+      const imageName = await this.admin.uploadFile(imageData).toPromise();
+      this.config.get('rules').setValue(imageName);
+    };
+  }
+
+  openUploadFiles() {
+    const el: HTMLElement = this.inputFiles.nativeElement as HTMLElement;
+    el.click();
   }
 }

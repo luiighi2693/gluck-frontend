@@ -167,6 +167,21 @@
                 </button>
               </mat-form-field>
             </div>
+            <div class="col-12 col-md-3 text-center">
+                <mat-label>Reglas</mat-label>
+                <figure class="avatar__wrapper">
+                  <img [src]="this.config.value.rules !== '' ? (this.imagePath + '/images/' + this.config.value.rules) : '../../../../assets/default-rules.png'" class="avatar" alt="">
+                  <button class="avatar__button" type="button" mat-fab aria-label="change picture" (click)="openUploadFiles()">
+                    <mat-icon>camera_alt</mat-icon>
+                  </button>
+                  <input
+                    #inputFiles
+                    style="display: none"
+                    type="file"
+                    (change)="handleUpload($event)"
+                  />
+                </figure>
+            </div>
           </div>
           <div>
             <button mat-flat-button [disabled]="!config.valid" (click)="makeMatches()" matStepperNext class="action-button">Siguiente</button>
