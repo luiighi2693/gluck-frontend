@@ -239,7 +239,7 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
     this.endPools.get('amountInput').setValue(this.poolData.amountInput);
     this.endPools.get('coinsInput').setValue(this.poolData.coinsInput);
     this.endPools.get('dateFinish').setValue(this.poolData.dateFinish);
-    this.endPools.get('timeFinish').setValue(this.poolData.timeFinish);
+    this.endPools.get('timeFinish').setValue(this.poolData.timeFinish === null ? null : this.poolData.timeFinish.split(':')[0] + ':' + this.poolData.timeFinish.split(':')[1] + ' ' + (Number(this.poolData.timeFinish.split(':')[0]) > 11 ? 'pm' : 'am'));
     this.endPools.get('awardType').setValue(this.poolData.awardType);
     this.endPools.get('awardValue').setValue(this.poolData.awardValue);
   }

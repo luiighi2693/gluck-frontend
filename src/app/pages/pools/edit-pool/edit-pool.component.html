@@ -458,19 +458,6 @@
             <div class="col-12 col-md-3">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Tipo de Premio</mat-label>
-                <mat-select formControlName="awardType" required>
-                  <mat-option>- Tipo de Premio -</mat-option>
-                  <mat-option value="fijo">Fijo</mat-option>
-                  <mat-option value="total">Total</mat-option>
-                </mat-select>
-                <mat-error>
-                  Este Campo es <strong>Requerido.</strong>
-                </mat-error>
-              </mat-form-field>
-            </div>
-            <div class="col-12 col-md-3">
-              <mat-form-field appearance="outline" class="w-100">
-                <mat-label>Tipo de Premio</mat-label>
                 <mat-select formControlName="awardType" required [(ngModel)]="awardType" ngModelOptions="{standalone: true}" (ngModelChange)="getAward()">
                   <mat-option>- Tipo de Premio -</mat-option>
                   <mat-option value="fijo">Fijo</mat-option>
