@@ -17,7 +17,7 @@
   <div class="profile__wrapper mb-3">
     <!--    <div class="row">-->
     <!--      <div class="col-12 col-md-8 offset-md-2">-->
-    <mat-stepper orientation="vertical" linear #stepper>
+    <mat-stepper orientation="vertical"  #stepper>
       <mat-step [stepControl]="config">
         <form [formGroup]="config">
           <ng-template matStepLabel>Configuracion</ng-template>
@@ -45,10 +45,10 @@
             </div>
             <div class="col-12 col-md-4">
               <mat-form-field appearance="outline" class="w-100">
-                <input matInput [ngxMatColorPicker]="picker" placeholder="Selecciona un Color" formControlName="color"
+                <input matInput [ngxMatColorPicker]="colorPicker" placeholder="Selecciona un Color" formControlName="color"
                        autocomplete="off" required>
-                <ngx-mat-color-toggle matSuffix [for]="picker"></ngx-mat-color-toggle>
-                <ngx-mat-color-picker #picker></ngx-mat-color-picker>
+                <ngx-mat-color-toggle matSuffix [for]="colorPicker"></ngx-mat-color-toggle>
+                <ngx-mat-color-picker #colorPicker></ngx-mat-color-picker>
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
                 </mat-error>
@@ -264,18 +264,18 @@
             <div class="col-12 col-md-3">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Fecha</mat-label>
-                <input matInput [(ngModel)]="match.date"  [matDatepicker]="picker" placeholder="15/02/2020">
-                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker></mat-datepicker>
+                <input matInput [(ngModel)]="match.date"  [matDatepicker]="datePicker1" placeholder="15/02/2020">
+                <mat-datepicker-toggle matSuffix [for]="datePicker1"></mat-datepicker-toggle>
+                <mat-datepicker #datePicker1></mat-datepicker>
               </mat-form-field>
             </div>
             <div class="col-12 col-md-3">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Hora</mat-label>
-                <input matInput [(ngModel)]="match.time" [ngxTimepicker]="timePicker" placeholder="8:52:35"
+                <input matInput [(ngModel)]="match.time" [ngxTimepicker]="timePicker1" placeholder="8:52:35"
                        autocomplete="off" >
                 <mat-icon matSuffix>access_time</mat-icon>
-                <ngx-material-timepicker #timePicker></ngx-material-timepicker>
+                <ngx-material-timepicker #timePicker1></ngx-material-timepicker>
               </mat-form-field>
             </div>
             <div class="col-12 col-md-3">
@@ -399,6 +399,93 @@
           <button mat-flat-button matStepperPrevious>Atras</button>
           <button mat-flat-button matStepperNext class="action-button">Siguiente</button>
         </div>
+      </mat-step>
+      <mat-step [stepControl]="endPools">
+        <form [formGroup]="endPools">
+          <ng-template matStepLabel>Valores de Quiniela</ng-template>
+          <div class="row">
+            <div class="col-12 col-md-5">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Valor de entrada (Dolares)</mat-label>
+                <input matInput type="number" formControlName="amountInput" placeholder="5"
+                       autocomplete="off" required>
+                <mat-error>
+                  Este Campo es <strong>Requerido.</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-5">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Valor de entrada (Coins)</mat-label>
+                <input matInput type="number" formControlName="coinsInput" placeholder="5"
+                       autocomplete="off" required>
+                <mat-error>
+                  Este Campo es <strong>Requerido.</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Fecha de Finalizacion</mat-label>
+                <input matInput formControlName="dateFinish"  [matDatepicker]="datePicker2" placeholder="15/02/2020">
+                <mat-datepicker-toggle matSuffix [for]="datePicker2"></mat-datepicker-toggle>
+                <mat-datepicker #datePicker2></mat-datepicker>
+                <mat-error>
+                  Este Campo es <strong>Requerido.</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Hora de Finalizacion</mat-label>
+                <input matInput formControlName="timeFinish" [ngxTimepicker]="timePicker2" placeholder="8:52:35"
+                       autocomplete="off" >
+                <mat-icon matSuffix>access_time</mat-icon>
+                <ngx-material-timepicker #timePicker2></ngx-material-timepicker>
+                <mat-error>
+                  Este Campo es <strong>Requerido.</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Tipo de Premio</mat-label>
+                <mat-select formControlName="awardType" required>
+                  <mat-option>- Tipo de Premio -</mat-option>
+                  <mat-option value="fijo">Fijo</mat-option>
+                  <mat-option value="total">Total</mat-option>
+                </mat-select>
+                <mat-error>
+                  Este Campo es <strong>Requerido.</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-3" *ngIf="endPools.value.awardType === 'total'">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Valor de Premio Total</mat-label>
+                <input matInput type="text" readonly="true" formControlName="awardValue" placeholder="$500"
+                       autocomplete="off" required>
+                <mat-error>
+                  Este Campo es <strong>Requerido.</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-3" *ngIf="endPools.value.awardType === 'fijo'">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Valor de Premio Fijo</mat-label>
+                <input matInput type="text" formControlName="awardValue" placeholder="$500"
+                       autocomplete="off" required>
+                <mat-error>
+                  Este Campo es <strong>Requerido.</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div>
+            <button mat-flat-button matStepperPrevious>Atras</button>
+            <button mat-flat-button [disabled]="!endPools.valid" matStepperNext class="action-button">Siguiente</button>
+          </div>
+        </form>
       </mat-step>
       <mat-step [stepControl]="poolResults">
         <form [formGroup]="poolResults">

@@ -30,6 +30,7 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
   users: FormGroup;
   matches: FormGroup;
   results: FormGroup;
+  endPools: FormGroup;
   showLoader = false;
   amountOfMatches: number;
   doPenaltiesExist: number;
@@ -203,6 +204,14 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
       draw: ['', Validators.required],
       loser: ['', Validators.required]
     });
+    this.endPools = this.fb.group({
+      amountInput: ['', Validators.required],
+      coinsInput: ['', Validators.required],
+      dateFinish: ['', Validators.required],
+      timeFinish: ['', Validators.required],
+      awardType: ['', Validators.required],
+      awardValue: ['', Validators.required]
+    });
   }
 
   updateForms() {
@@ -224,6 +233,13 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
     this.results.get('loser').setValue(this.poolData.loser);
     this.results.get('draw').setValue(this.poolData.draw);
     this.results.get('result').setValue(this.poolData.result);
+
+    this.endPools.get('amountInput').setValue(this.poolData.amountInput);
+    this.endPools.get('coinsInput').setValue(this.poolData.coinsInput);
+    this.endPools.get('dateFinish').setValue(this.poolData.dateFinish);
+    this.endPools.get('timeFinish').setValue(this.poolData.timeFinish);
+    this.endPools.get('awardType').setValue(this.poolData.awardType);
+    this.endPools.get('awardValue').setValue(this.poolData.awardValue);
   }
 
   show() {
@@ -251,7 +267,7 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
   registerPool() {
     this.showLoader = true;
     const {name, sport, color, matches, usersLimit, status, penalty, groups, teamsPerGroup, type, league, password, rules} = this.config.value;
-
+    const {amountInput, coinsInput, dateFinish, timeFinish, awardType, awardValue} = this.endPools.value;
     // convert all times in good format
     this.arrayOfMatches.forEach(match => {
       if (match.time.toUpperCase().includes('PM')) {
@@ -283,7 +299,13 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
       result,
       winner,
       draw,
-      loser
+      loser,
+      amountInput,
+      coinsInput,
+      dateFinish,
+      timeFinish,
+      awardType,
+      awardValue
     });
     this.admin.createAndUpdatePool(
       name,
@@ -305,8 +327,13 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
       winner,
       draw,
       loser,
-      'update',
-      this.currentPool).subscribe(data => {
+      amountInput,
+      coinsInput,
+      dateFinish,
+      timeFinish,
+      awardType,
+      awardValue,
+      'update', this.currentPool).subscribe(data => {
       this.showLoader = false;
       if (data.code === 'D200') {
         this.handleAlertsProvider.presentSnackbarSuccess('Se Actualizo la quiniela con exito!');

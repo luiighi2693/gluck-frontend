@@ -30,6 +30,7 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
   users: FormGroup;
   matches: FormGroup;
   poolResults: FormGroup;
+  endPools: FormGroup;
   showLoader = false;
   amountOfMatches: number;
   doPenaltiesExist = '';
@@ -145,6 +146,7 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
   // }
 
 
+
   private createForms() {
     this.config = this.fb.group({
       name: ['', Validators.required],
@@ -166,6 +168,14 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
       winner: ['', Validators.required],
       draw: ['', Validators.required],
       loser: ['', Validators.required]
+    });
+    this.endPools = this.fb.group({
+      amountInput: ['', Validators.required],
+      coinsInput: ['', Validators.required],
+      dateFinish: ['', Validators.required],
+      timeFinish: ['', Validators.required],
+      awardType: ['', Validators.required],
+      awardValue: ['', Validators.required]
     });
   }
 
@@ -221,7 +231,7 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
   registerPool() {
     this.showLoader = true;
     const {name, sport, color, matches, usersLimit, status, penalty, groups, teamsPerGroup, type, league, password, rules} = this.config.value;
-
+    const {amountInput, coinsInput, dateFinish, timeFinish, awardType, awardValue} = this.endPools.value;
     this.arrayOfMatches.forEach(match => {
       if (match.time.toUpperCase().includes('PM')) {
         const newTime = match.time.toUpperCase().replace(' PM', '');
@@ -253,6 +263,12 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
       winner,
       draw,
       loser,
+      amountInput,
+      coinsInput,
+      dateFinish,
+      timeFinish,
+      awardType,
+      awardValue,
       'create').subscribe(data => {
       if (data.code === 'D200') {
         this.showLoader = false;

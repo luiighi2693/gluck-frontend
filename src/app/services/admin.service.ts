@@ -210,7 +210,8 @@ export class AdminService {
   }
 
   createAndUpdatePool(name, sport, color, matches, usersLimit, status, penalty, groups, teamsPerGroup, type, league, password, rules, matchesInfo,
-                      usersForPool, result, winner, draw, loser, variable, id = null): Observable<any> {
+                      usersForPool, result, winner, draw, loser, amountInput, coinsInput, dateFinish, timeFinish, awardType,
+                      awardValue, variable, id = null): Observable<any> {
     const params = {
       name,
       sport,
@@ -231,6 +232,12 @@ export class AdminService {
       winner,
       draw,
       loser,
+      amountInput,
+      coinsInput,
+      dateFinish,
+      timeFinish,
+      awardType,
+      awardValue,
       id,
     };
 
