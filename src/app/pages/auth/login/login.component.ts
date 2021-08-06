@@ -26,8 +26,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
-    sessionStorage.removeItem('token');
-    sessionStorage.removeItem('isAdmin');
+    this.clearStorage();
     this.route.queryParams.subscribe(params => {
       console.log(params);
       if (params.type) {
@@ -64,6 +63,7 @@ export class LoginComponent implements OnInit {
     const { username, password } = this.loginForm.value;
     this.isLoaded = true;
     this.authService.login(username, password).subscribe(data => {
+      console.log(data);
       this.isLoaded = false;
       if (data.hasError) {
         this.handleAlertsProvider.presentGenericAlert('No se ha encontrado el usuario solicitado... intente de nuevo', 'No se Pudo completar la accion...');
@@ -73,6 +73,9 @@ export class LoginComponent implements OnInit {
         sessionStorage.setItem('email', data.email);
         sessionStorage.setItem('id', data.id);
         sessionStorage.setItem('isAdmin', data.isAdmin);
+        sessionStorage.setItem('money', data.amount);
+        sessionStorage.setItem('coins', data.coins);
+        sessionStorage.setItem('dateCreate', data.createDate);
         if (data.isAdmin) {
           this.router.navigate(['/admin']);
         } else {
@@ -80,5 +83,16 @@ export class LoginComponent implements OnInit {
         }
       }
     });
+  }
+
+  clearStorage() {
+    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('username');
+    sessionStorage.removeItem('email');
+    sessionStorage.removeItem('id');
+    sessionStorage.removeItem('isAdmin');
+    sessionStorage.removeItem('money');
+    sessionStorage.removeItem('coins');
+    sessionStorage.removeItem('dateCreate');
   }
 }

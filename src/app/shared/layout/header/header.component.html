@@ -3,12 +3,20 @@
     <mat-icon aria-label="Menu">menu</mat-icon>
   </button>
   <div class="d-flex align-items-center">
-    <button mat-icon-button class="notification__button">
-      <mat-icon matBadge="15" matBadgeColor="warn" aria-label="Notifications">notifications</mat-icon>
-    </button>
+    <div class="coins">
+      <h5>Coins</h5>
+      <p><mat-icon>local_atm</mat-icon> {{coins}}</p>
+    </div>
+    <div class="money">
+      <h5>Money</h5>
+      <p><mat-icon>attach_money</mat-icon> {{money}}</p>
+    </div>
+    <div class="recharge">
+      <button mat-flat-button class="recharge-button">Recargar</button>
+    </div>
     <div class="profile__options" (click)="userOptions = !userOptions">
       <mat-icon aria-label="Person">person</mat-icon>
-      <p class="m-0">{{isAdmin ? 'Admin' : name}}</p>
+      <p class="m-0">{{isAdmin ? 'Admin' : 'Mi Perfil'}}</p>
     </div>
     <div class="user__options" *ngIf="userOptions">
       <div class="row black-background">
@@ -20,7 +28,7 @@
         </div>
         <div class="col-12 text-center">
           <p class="title">{{name}}</p>
-          <p class="text">mienbro desde 2020-08-15</p>
+          <p class="text">mienbro desde {{dateCreate}}</p>
         </div>
       </div>
       <div class="row white-background p-0">

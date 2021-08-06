@@ -82,3 +82,45 @@
   font-weight: bold;
 }
 
+.coins {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.coins > p {
+  display: flex;
+  align-items: center;
+  color: #F6DD06;
+  margin: 0;
+}
+
+.coins > h5 {
+  margin: 0;
+}
+
+.money {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: 0 1rem;
+}
+
+.money > p {
+  display: flex;
+  align-items: center;
+  color: green;
+  margin: 0;
+}
+
+.money > h5 {
+  margin: 0;
+}
+
+.recharge-button {
+  border-radius: 25px;
+  color: black;
+  background-color: #F6DD06;
+  padding: 0 1rem;
+}
+

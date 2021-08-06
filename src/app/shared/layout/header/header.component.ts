@@ -16,6 +16,9 @@ export class HeaderComponent implements OnInit {
   token: string;
   isAdmin: boolean;
   name: string;
+  coins = '10';
+  money = '10$';
+  dateCreate: any;
 
   constructor(
     private router: Router,
@@ -27,6 +30,9 @@ export class HeaderComponent implements OnInit {
     this.token = sessionStorage.getItem('token');
     this.isAdmin = JSON.parse(sessionStorage.getItem('isAdmin'));
     this.name = sessionStorage.getItem('username');
+    this.coins = sessionStorage.getItem('coins');
+    this.money = sessionStorage.getItem('money');
+    this.dateCreate = sessionStorage.getItem('dateCreate').slice(0, 10);
   }
 
   toggle() {
