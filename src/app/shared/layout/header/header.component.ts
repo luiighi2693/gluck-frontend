@@ -1,7 +1,7 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
-import { Router } from '@angular/router';
-import { AuthService } from '../../../services/auth.service';
-import { HandleAlertsProvider } from '../../../utilities/providers/handle-alerts-provider';
+import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Router} from '@angular/router';
+import {AuthService} from '../../../services/auth.service';
+import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
 
 @Component({
   selector: 'app-header',
@@ -24,7 +24,8 @@ export class HeaderComponent implements OnInit {
     private router: Router,
     private auth: AuthService,
     private handleAlertsProvider: HandleAlertsProvider,
-  ) { }
+  ) {
+  }
 
   ngOnInit(): void {
     this.token = sessionStorage.getItem('token');

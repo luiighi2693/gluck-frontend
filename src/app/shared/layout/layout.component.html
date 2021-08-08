@@ -34,6 +34,10 @@
           <mat-icon mat-list-icon>calendar_today</mat-icon>
           <h4 mat-line *ngIf="isExpanded">Calendario</h4>
         </mat-list-item>
+        <mat-list-item [ngClass]="{'nav__list--item--padding': isExpanded}"  routerLink="transactions" class="sidenav__item">
+          <mat-icon mat-list-icon>account_balance_wallet</mat-icon>
+          <h4 mat-line *ngIf="isExpanded">Historico de Transacciones</h4>
+        </mat-list-item>
       </mat-nav-list>
     </mat-drawer>
   </mat-drawer-container>
@@ -150,6 +154,13 @@
         <mat-list-item [ngClass]="{'nav__list--item--padding': isExpanded}"  routerLink="calendar" class="sidenav__item">
           <mat-icon mat-list-icon>calendar_today</mat-icon>
           <h4 mat-line *ngIf="isExpanded">Calendario</h4>
+        </mat-list-item>
+
+<!--        transactions-->
+
+        <mat-list-item [ngClass]="{'nav__list--item--padding': isExpanded}"  routerLink="transactions" class="sidenav__item">
+          <mat-icon mat-list-icon>account_balance_wallet</mat-icon>
+          <h4 mat-line *ngIf="isExpanded">Historico de Transacciones</h4>
         </mat-list-item>
       </mat-nav-list>
     </mat-drawer>

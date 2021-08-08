@@ -25,6 +25,10 @@ const routes: Routes = [
         path: 'calendar',
         loadChildren: () => import('./pages/calendar/calendar.module').then(m => m.CalendarModule)
       },
+      {
+        path: 'transactions',
+        loadChildren: () => import('./pages/transactions/transactions.module').then(m => m.TransactionsModule)
+      }
     ]
   },
   {
@@ -60,6 +64,10 @@ const routes: Routes = [
         path: 'pools',
         loadChildren: () => import('./pages/pools/pools.module').then(m => m.PoolsModule)
       },
+      {
+        path: 'transactions',
+        loadChildren: () => import('./pages/admin-transactions/admin-transactions.module').then(m => m.AdminTransactionsModule)
+      }
     ]
   },
   {
