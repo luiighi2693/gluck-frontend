@@ -23,6 +23,7 @@ export class RegisterPoolDialogComponent implements OnInit {
       image: string,
       participants: string,
       rulesImage: string,
+      password: any;
     }) {
   }
 

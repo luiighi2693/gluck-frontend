@@ -18,8 +18,8 @@
       </button>
     </div>
     <div>
-      <input class="input" type="password" placeholder="Clave de Quiniela">
-      <button class="send-button" mat-mini-fab>
+      <input class="input" [(ngModel)]="data.password" type="password" placeholder="Clave de Quiniela">
+      <button class="send-button" mat-mini-fab [mat-dialog-close]="data.password">
         <mat-icon>arrow_forward</mat-icon>
       </button>
     </div>

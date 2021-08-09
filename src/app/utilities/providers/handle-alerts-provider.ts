@@ -10,6 +10,8 @@ import {GenericAlertComponent} from '../../shared/alerts/generic-alert/generic-a
 import {RegisterPoolDialogComponent} from '../../shared/alerts/register-pool-dialog/register-pool-dialog.component';
 import {InputDialogComponent} from '../../shared/alerts/input-dialog/input-dialog.component';
 import {RulesDialogComponent} from '../../shared/alerts/rules-dialog/rules-dialog.component';
+import {TimeRemainingComponent} from '../../shared/alerts/time-remaining/time-remaining.component';
+import {ParticipantsComponent} from '../../shared/alerts/participants/participants.component';
 
 @Injectable({
   providedIn: 'root'
@@ -53,10 +55,10 @@ export class HandleAlertsProvider {
   }
 
   registerPoolDialog(poolId: string | number, title: string, user: string, cost: string, prize: string, participants: number,
-                     image: string, rulesImage: string) {
+                     image: string, rulesImage: string, password: any) {
     return this.dialog.open(RegisterPoolDialogComponent, {
       panelClass: 'dialog-container-custom',
-      data: {poolId, title, cost, prize, participants, image, user, rulesImage}
+      data: {poolId, title, cost, prize, participants, image, user, rulesImage, password}
     });
   }
 
@@ -74,4 +76,17 @@ export class HandleAlertsProvider {
     });
   }
 
+  presentTimeRemainingDialog(time = '1 Dia 12:51:04') {
+    return this.dialog.open(TimeRemainingComponent, {
+      panelClass: 'dialog-container-custom',
+      data: {time}
+    });
+  }
+
+  presentParticipantsDialog(participants: any) {
+    return this.dialog.open(ParticipantsComponent, {
+      panelClass: 'dialog-container-custom',
+      data: {participants}
+    });
+  }
 }

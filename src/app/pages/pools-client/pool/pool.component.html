@@ -64,7 +64,7 @@
             <th class="participants" mat-header-cell *matHeaderCellDef mat-sort-header> Participantes</th>
             <td class="participants" mat-cell *matCellDef="let row">
 
-              <button mat-flat-button class="dialog-button" (click)="showParticipants(row.id)">	Ver <mat-icon>people</mat-icon></button>
+              <button mat-flat-button class="dialog-button" (click)="showParticipants()">	Ver <mat-icon>people</mat-icon></button>
             </td>
           </ng-container>
 
@@ -72,7 +72,7 @@
           <ng-container matColumnDef="remainingTime">
             <th class="remaining-time" mat-header-cell *matHeaderCellDef mat-sort-header> Tiempo Restante</th>
             <td class="remaining-time" mat-cell *matCellDef="let row">
-            <button mat-flat-button class="dialog-button" (click)="showRemainingTime(row.id)">	Ver <mat-icon>access_time</mat-icon></button>
+            <button mat-flat-button class="dialog-button" (click)="showRemainingTime()">	Ver <mat-icon>access_time</mat-icon></button>
             </td>
           </ng-container>
 

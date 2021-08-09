@@ -42,6 +42,7 @@ export class PoolComponent implements OnInit, AfterViewInit {
 
   showLoader = false;
   user: string;
+  password: any;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -95,38 +96,6 @@ export class PoolComponent implements OnInit, AfterViewInit {
     this.router.navigate([`/admin/clients/edit-client/${id}`]);
   }
 
-  // deleteUser(user) {
-  //   const dialogRef = this.handleAlertsProvider.presentErrorDialogOk(`Esta seguro de eliminar el usuario <b>${user.name}</b>?`, 'Aviso!');
-  //   dialogRef.afterClosed().subscribe(response => {
-  //     if (response) {
-  //       this.showLoader = true;
-  //       this.admin.deleteUser(user.rowid).subscribe(res => {
-  //         this.showLoader = false;
-  //         if (res.code === 'D200') {
-  //           this.handleAlertsProvider.presentSnackbarSuccess(`Se ha eliminado el user ${user.name} con exito!`);
-  //           this.setData();
-  //         } else if (res.code === 'A401' || res.code === 'A302' || res.code === 'A403') {
-  //           this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
-  //           this.router.navigate(['/auth']);
-  //         }
-  //       }, err => {
-  //         this.handleAlertsProvider.presentGenericAlert(err);
-  //       });
-  //     }
-  //   }, error => {
-  //     this.handleAlertsProvider.presentGenericAlert(error);
-  //   });
-  // }
-
-  showRemainingTime(id) {
-    alert(id);
-
-  }
-
-  showParticipants(id) {
-    alert(id);
-  }
-
   enterPool(id) {
     alert(id);
   }
@@ -136,7 +105,7 @@ export class PoolComponent implements OnInit, AfterViewInit {
   }
 
   registerToPool(data) {
-    this.handleAlertsProvider.registerPoolDialog(
+    const dialogRef = this.handleAlertsProvider.registerPoolDialog(
       data.id,
       data.poolName,
       this.user,
@@ -144,7 +113,82 @@ export class PoolComponent implements OnInit, AfterViewInit {
       'chocolate',
       50,
       '../../../../../assets/example-user.png',
-      '../../../../../assets/default-rules.png'
+      '../../../../../assets/default-rules.png',
+      this.password,
     );
+    dialogRef.afterClosed().subscribe(res => {
+      console.log(res);
+    });
+  }
+
+  showRemainingTime() {
+    this.handleAlertsProvider.presentTimeRemainingDialog();
+  }
+
+
+  showParticipants() {
+    const participants = [
+      {
+        username: 'alexperroloco2121',
+        rowid: 32,
+        image: '../../../../../assets/example-user.png',
+      },
+      {
+        username: 'alexperroloco2121',
+        rowid: 32,
+        image: '../../../../../assets/example-user.png',
+      },
+      {
+        username: 'alexperroloco2121',
+        rowid: 32,
+        image: '../../../../../assets/example-user.png',
+      },
+      {
+        username: 'alexperroloco2121',
+        rowid: 32,
+        image: '../../../../../assets/example-user.png',
+      },
+      {
+        username: 'alexperroloco2121',
+        rowid: 32,
+        image: '../../../../../assets/example-user.png',
+      },
+      {
+        username: 'alexperroloco2121',
+        rowid: 32,
+        image: '../../../../../assets/example-user.png',
+      },
+      {
+        username: 'alexperroloco2121',
+        rowid: 32,
+        image: '../../../../../assets/example-user.png',
+      },
+      {
+        username: 'alexperroloco2121',
+        rowid: 32,
+        image: '../../../../../assets/example-user.png',
+      },
+      {
+        username: 'alexperroloco2121',
+        rowid: 32,
+        image: '../../../../../assets/example-user.png',
+      },
+      {
+        username: 'alexperroloco2121',
+        rowid: 32,
+        image: '../../../../../assets/example-user.png',
+      },
+      {
+        username: 'alexperroloco2121',
+        rowid: 32,
+        image: '../../../../../assets/example-user.png',
+      },
+      {
+        username: 'alexperroloco2121',
+        rowid: 32,
+        image: '../../../../../assets/example-user.png',
+      },
+    ];
+    this.handleAlertsProvider.presentParticipantsDialog(participants);
   }
 }

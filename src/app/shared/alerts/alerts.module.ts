@@ -10,6 +10,8 @@ import { InputDialogComponent } from './input-dialog/input-dialog.component';
 import { FormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
 import { RulesDialogComponent } from './rules-dialog/rules-dialog.component';
+import { TimeRemainingComponent } from './time-remaining/time-remaining.component';
+import { ParticipantsComponent } from './participants/participants.component';
 
 
 @NgModule({
@@ -20,7 +22,9 @@ import { RulesDialogComponent } from './rules-dialog/rules-dialog.component';
     GenericAlertComponent,
     RegisterPoolDialogComponent,
     InputDialogComponent,
-    RulesDialogComponent
+    RulesDialogComponent,
+    TimeRemainingComponent,
+    ParticipantsComponent
   ],
   imports: [
     CommonModule,
