@@ -22,7 +22,7 @@ export interface UserData {
   styleUrls: ['./transactions.component.css']
 })
 export class TransactionsComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['rowid', 'username', 'amount', 'coins', 'date'];
+  displayedColumns: string[] = ['rowid', 'username', 'amount', 'coins', 'date_Create', 'description'];
   dataSource: MatTableDataSource<UserData>;
   showLoader = false;
 
@@ -46,7 +46,7 @@ export class TransactionsComponent implements OnInit, AfterViewInit {
 
   setData() {
     this.showLoader = true;
-    this.admin.getUsers().subscribe(data => {
+    this.admin.getTransactionsClient(sessionStorage.getItem('username')).subscribe(data => {
       if (data.code === 'D200') {
         console.log(data);
         this.showLoader = false;

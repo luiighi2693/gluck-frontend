@@ -292,4 +292,16 @@ export class AdminService {
     };
     return this.http.post(`${environment.basePath}/api/user/rechargue`, params, {headers});
   }
+
+  getTransactions(): Observable<any> {
+    return this.http.get(`${environment.basePath}/api/get/?model=q_transaction`, {headers});
+  }
+
+  getTransactionsClient(name): Observable<any> {
+    const filters = {
+      id: 'username',
+      value: name
+    };
+    return this.http.get(`${environment.basePath}/api/filter?model=q_transaction&filters[]=${encodeURI(JSON.stringify(filters))}`, {headers});
+  }
 }

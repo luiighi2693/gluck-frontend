@@ -62,9 +62,16 @@
         </ng-container>
 
         <!-- Fruit Column -->
-        <ng-container matColumnDef="date">
+        <ng-container matColumnDef="date_Create">
           <th class="date" mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </th>
-          <td class="date" mat-cell *matCellDef="let row"> {{row.date_Access}} </td>
+          <td class="date" mat-cell *matCellDef="let row"> {{row.date_Create}} </td>
+        </ng-container>
+
+
+        <!-- Fruit Column -->
+        <ng-container matColumnDef="description">
+          <th class="date" mat-header-cell *matHeaderCellDef mat-sort-header> Descripcion </th>
+          <td class="date" mat-cell *matCellDef="let row"> {{row.description}} </td>
         </ng-container>
 
 
