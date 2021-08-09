@@ -23,8 +23,12 @@
       </mat-expansion-panel-header>
 
       <!--     content-->
-      <div class="mat-elevation-z8 mt-4">
-        <table mat-table [dataSource]="dataSource" matSort class="w-100">
+
+      <div *ngIf="oneVsOnePools === []">
+        No Data Set...
+      </div>
+      <div class="mat-elevation-z8 mt-4" *ngIf="oneVsOnePools !== []">
+        <table mat-table [dataSource]="dataSourceOneVsOne" matSort class="w-100">
 
           <!-- ID Column -->
           <ng-container matColumnDef="id">
@@ -111,8 +115,12 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <!--      content-->
-      <div class="mat-elevation-z8 mt-4">
-        <table mat-table [dataSource]="dataSource" matSort class="w-100">
+
+      <div *ngIf="weeklyPools === []">
+        No Data Set...
+      </div>
+      <div class="mat-elevation-z8 mt-4" *ngIf="weeklyPools !== []">
+        <table mat-table [dataSource]="dataSourceWeekly" matSort class="w-100">
 
           <!-- ID Column -->
           <ng-container matColumnDef="id">
@@ -199,8 +207,12 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <!--      content-->
-      <div class="mat-elevation-z8 mt-4">
-        <table mat-table [dataSource]="dataSource" matSort class="w-100">
+
+      <div *ngIf="monthlyPools === []">
+        No Data Set...
+      </div>
+      <div class="mat-elevation-z8 mt-4" *ngIf="monthlyPools !== []">
+        <table mat-table [dataSource]="dataSourceMonthly" matSort class="w-100">
 
           <!-- ID Column -->
           <ng-container matColumnDef="id">
@@ -287,8 +299,12 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <!--      content-->
-      <div class="mat-elevation-z8 mt-4">
-        <table mat-table [dataSource]="dataSource" matSort class="w-100">
+
+      <div *ngIf="privatePools === []">
+        No Data Set...
+      </div>
+      <div class="mat-elevation-z8 mt-4" *ngIf="privatePools !== []">
+        <table mat-table [dataSource]="dataSourceprivate" matSort class="w-100">
 
           <!-- ID Column -->
           <ng-container matColumnDef="id">
@@ -354,12 +370,12 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
           <!-- Row shown when there is no matching data. -->
-          <tr class="mat-row" *matNoDataRow>
-            <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
-          </tr>
+<!--          <tr class="mat-row" *matNoDataRow>-->
+<!--            <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>-->
+<!--          </tr>-->
         </table>
 
-        <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+<!--        <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>-->
       </div>
     </mat-expansion-panel>
   </mat-accordion>

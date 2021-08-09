@@ -304,4 +304,8 @@ export class AdminService {
     };
     return this.http.get(`${environment.basePath}/api/filter?model=q_transaction&filters[]=${encodeURI(JSON.stringify(filters))}`, {headers});
   }
+
+  getAvailablePools(id): Observable<any> {
+    return this.http.get(`${environment.basePath}/api/pool/getMyAvailablePools?userId=${id}`);
+  }
 }

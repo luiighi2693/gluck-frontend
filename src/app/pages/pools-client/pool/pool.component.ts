@@ -6,28 +6,16 @@ import {MatSort} from '@angular/material/sort';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
 import {Router} from '@angular/router';
 import {AdminService} from '../../../services/admin.service';
+import {finalize} from 'rxjs/operators';
 
 
-export interface PeriodicElement {
+export interface UserPool {
   poolName: string;
   id: string;
   sport: string;
   status: number;
   date: string;
 }
-
-const ELEMENT_DATA: PeriodicElement[] = [
-  {id: '1', poolName: 'Hydrogen', sport: 'futbol', status: 1, date: '12-05-2021'},
-  {id: '2', poolName: 'Helium', sport: 'futbol', status: 0, date: '12-05-2021'},
-  {id: '3', poolName: 'Lithium', sport: 'futbol', status: 0, date: '12-05-2021'},
-  {id: '4', poolName: 'Beryllium', sport: 'futbol', status: 0, date: '12-05-2021'},
-  {id: '5', poolName: 'Boron', sport: 'futbol', status: 1, date: '12-05-2021'},
-  {id: '6', poolName: 'Carbon', sport: 'futbol', status: 1, date: '12-05-2021'},
-  {id: '7', poolName: 'Nitrogen', sport: 'futbol', status: 1, date: '12-05-2021'},
-  {id: '8', poolName: 'Oxygen', sport: 'futbol', status: 1, date: '12-05-2021'},
-  {id: '9', poolName: 'Fluorine', sport: 'futbol', status: 0, date: '12-05-2021'},
-  {id: '10', poolName: 'Neon', sport: 'futbol', status: 1, date: '12-05-2021'},
-];
 
 @Component({
   selector: 'app-pool',
@@ -38,11 +26,20 @@ export class PoolComponent implements OnInit, AfterViewInit {
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
   displayedColumns: string[] = ['id', 'poolName', 'sport', 'status', 'date', 'participants', 'remainingTime', 'opts'];
-  dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
+  dataSourceOneVsOne: MatTableDataSource<UserPool>;
+  dataSourceWeekly: MatTableDataSource<UserPool>;
+  dataSourceMonthly: MatTableDataSource<UserPool>;
+  dataSourceprivate: MatTableDataSource<UserPool>;
 
   showLoader = false;
   user: string;
   password: any;
+  userId: string;
+  oneVsOnePools = [];
+  privatePools = [];
+  weeklyPools = [];
+  monthlyPools = [];
+
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -57,40 +54,68 @@ export class PoolComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.user = sessionStorage.getItem('username');
+    this.userId = sessionStorage.getItem('id');
   }
 
   ngAfterViewInit() {
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-    // this.setData();
+    this.setData();
   }
 
-  // setData() {
-  //   this.showLoader = true;
-  //   this.admin.getUsers().subscribe(data => {
-  //     if (data.code === 'D200') {
-  //       this.showLoader = false;
-  //       this.dataSource = new MatTableDataSource<UserData>(data.data);
-  //       this.dataSource.paginator = this.paginator;
-  //       this.dataSource.sort = this.sort;
-  //     } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
-  //       this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
-  //       this.router.navigate(['/auth']);
-  //     }
-  //   }, error => {
-  //     this.showLoader = false;
-  //     this.handleAlertsProvider.presentGenericAlert(error);
-  //   });
+  setData() {
+    this.showLoader = true;
+    this.admin.getAvailablePools(this.userId)
+      .pipe(finalize(() => this.showLoader = false))
+      .subscribe(data => {
+        if (data.code === 'D200') {
+          console.log(data.oneVSone)
+          this.privatePools = data.privadas;
+          this.monthlyPools = data.mensuales;
+          this.oneVsOnePools = data.oneVSone;
+          this.weeklyPools = data.semanales;
+          this.dataSourceOneVsOne = new MatTableDataSource<UserPool>(this.oneVsOnePools);
+          // this.dataSourceOneVsOne.paginator = this.paginator;
+          // this.dataSourceOneVsOne.sort = this.sort;
+
+          this.dataSourceWeekly = new MatTableDataSource<UserPool>(this.weeklyPools);
+          // this.dataSourceWeekly.paginator = this.paginator;
+          // this.dataSourceWeekly.sort = this.sort;
+
+          this.dataSourceMonthly = new MatTableDataSource<UserPool>(this.monthlyPools);
+          // this.dataSourceMonthly.paginator = this.paginator;
+          // this.dataSourceMonthly.sort = this.sort;
+
+          this.dataSourceprivate = new MatTableDataSource<UserPool>( this.privatePools);
+          // this.dataSourceprivate.paginator = this.paginator;
+          // this.dataSourceprivate.sort = this.sort;
+        } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
+          this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
+          this.router.navigate(['/auth']);
+        }
+      }, error => {
+        this.handleAlertsProvider.presentGenericAlert(error);
+      });
+  }
+
+  // applyFilter(event: Event) {
+  //   const filterValue = (event.target as HTMLInputElement).value;
+  //   this.dataSourceOneVsOne.filter = filterValue.trim().toLowerCase();
+  //   this.dataSourceWeekly.filter = filterValue.trim().toLowerCase();
+  //   this.dataSourceMonthly.filter = filterValue.trim().toLowerCase();
+  //   this.dataSourceprivate.filter = filterValue.trim().toLowerCase();
+  //
+  //   if (this.dataSourceOneVsOne.paginator) {
+  //     this.dataSourceOneVsOne.paginator.firstPage();
+  //   }
+  //   if (this.dataSourceWeekly.paginator) {
+  //     this.dataSourceWeekly.paginator.firstPage();
+  //   }
+  //   if (this.dataSourceMonthly.paginator) {
+  //     this.dataSourceMonthly.paginator.firstPage();
+  //   }
+  //   if (this.dataSourceprivate.paginator) {
+  //     this.dataSourceprivate.paginator.firstPage();
+  //   }
   // }
-
-  applyFilter(event: Event) {
-    const filterValue = (event.target as HTMLInputElement).value;
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
 
   editUser(id) {
     this.router.navigate([`/admin/clients/edit-client/${id}`]);
