@@ -5,8 +5,8 @@
 }
 
 .image {
-  width: 250px;
-  height: 250px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
 }
 
@@ -32,3 +32,8 @@ h2 > span {
   background-color: #F6DD06;
 }
 
+.send-button {
+  background-color: #F6DD06;
+  margin-left: 1rem;
+  color: black;
+}

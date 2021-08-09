@@ -144,6 +144,7 @@ export class PoolComponent implements OnInit, AfterViewInit {
       'chocolate',
       50,
       '../../../../../assets/example-user.png',
+      '../../../../../assets/default-rules.png'
     );
   }
 }

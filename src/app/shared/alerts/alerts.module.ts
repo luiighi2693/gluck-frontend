@@ -9,6 +9,7 @@ import { RegisterPoolDialogComponent } from './register-pool-dialog/register-poo
 import { InputDialogComponent } from './input-dialog/input-dialog.component';
 import { FormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
+import { RulesDialogComponent } from './rules-dialog/rules-dialog.component';
 
 
 @NgModule({
@@ -18,7 +19,8 @@ import { MatDialogModule } from '@angular/material/dialog';
     OkConfirmationAlertComponent,
     GenericAlertComponent,
     RegisterPoolDialogComponent,
-    InputDialogComponent
+    InputDialogComponent,
+    RulesDialogComponent
   ],
   imports: [
     CommonModule,

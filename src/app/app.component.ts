@@ -9,7 +9,7 @@ import { Router, NavigationStart, NavigationEnd } from '@angular/router';
 export class AppComponent implements OnInit{
   isLoaded = false;
 
-  constructor(private router: Router  ) {
+  constructor(private router: Router) {
   }
 
   ngOnInit() {
