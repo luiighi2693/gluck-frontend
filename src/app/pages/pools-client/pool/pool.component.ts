@@ -118,6 +118,9 @@ export class PoolComponent implements OnInit, AfterViewInit {
     );
     dialogRef.afterClosed().subscribe(res => {
       console.log(res);
+      if (res === undefined || res === null || res === '') {
+        this.handleAlertsProvider.presentGenericAlert('Por Favor Ingrese una contrasena', 'Aviso');
+      }
     });
   }
 
