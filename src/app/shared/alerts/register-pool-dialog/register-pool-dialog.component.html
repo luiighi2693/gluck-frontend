@@ -13,7 +13,7 @@
   </div>
   <mat-dialog-actions class="d-flex flex-column">
     <div class="mb-4">
-      <button mat-flat-button color="warn" mat-dialog-close>Cancelar</button>
+      <button mat-flat-button color="warn" (click)="dialogRef.close(undefined)">Cancelar</button>
       <button mat-flat-button class="register-button" (click)="ShowRules(data.rulesImage)" cdkFocusInitial>Reglas
       </button>
     </div>

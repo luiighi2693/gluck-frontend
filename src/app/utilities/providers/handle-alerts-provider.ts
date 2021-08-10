@@ -76,7 +76,7 @@ export class HandleAlertsProvider {
     });
   }
 
-  presentTimeRemainingDialog(time = '1 Dia 12:51:04') {
+  presentTimeRemainingDialog(time) {
     return this.dialog.open(TimeRemainingComponent, {
       panelClass: 'dialog-container-custom',
       data: {time}

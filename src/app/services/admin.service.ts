@@ -308,4 +308,8 @@ export class AdminService {
   getAvailablePools(id): Observable<any> {
     return this.http.get(`${environment.basePath}/api/pool/getMyAvailablePools?userId=${id}`);
   }
+
+  getUsersByPool(id): Observable<any> {
+    return this.http.get(`${environment.basePath}/api/pool/getUsersByPool?poolId=${id}`);
+  }
 }

@@ -76,6 +76,7 @@ export class LoginComponent implements OnInit {
         sessionStorage.setItem('money', data.amount);
         sessionStorage.setItem('coins', data.coins);
         sessionStorage.setItem('dateCreate', data.createDate);
+        sessionStorage.setItem('img', data.img);
         if (data.isAdmin) {
           this.router.navigate(['/admin']);
         } else {
@@ -94,5 +95,6 @@ export class LoginComponent implements OnInit {
     sessionStorage.removeItem('money');
     sessionStorage.removeItem('coins');
     sessionStorage.removeItem('dateCreate');
+    sessionStorage.removeItem('img');
   }
 }

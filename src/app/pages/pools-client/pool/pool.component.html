@@ -24,10 +24,10 @@
 
       <!--     content-->
 
-      <div *ngIf="oneVsOnePools === []">
+      <div *ngIf="oneVsOnePools.length === 0">
         No Data Set...
       </div>
-      <div class="mat-elevation-z8 mt-4" *ngIf="oneVsOnePools !== []">
+      <div class="mat-elevation-z8 mt-4" *ngIf="oneVsOnePools.length > 0">
         <table mat-table [dataSource]="dataSourceOneVsOne" matSort class="w-100">
 
           <!-- ID Column -->
@@ -37,9 +37,9 @@
           </ng-container>
 
           <!-- Progress Column -->
-          <ng-container matColumnDef="poolName">
+          <ng-container matColumnDef="name">
             <th class="pool" mat-header-cell *matHeaderCellDef mat-sort-header> Nombre</th>
-            <td class="pool" mat-cell *matCellDef="let row"> {{row.poolName}} </td>
+            <td class="pool" mat-cell *matCellDef="let row"> {{row.name}} </td>
           </ng-container>
 
           <!-- Name Column -->
@@ -60,7 +60,7 @@
           <!-- Fruit Column -->
           <ng-container matColumnDef="date">
             <th class="date" mat-header-cell *matHeaderCellDef mat-sort-header> Fecha</th>
-            <td class="date" mat-cell *matCellDef="let row"> {{row.date}} </td>
+            <td class="date" mat-cell *matCellDef="let row"> {{getFormatDate(row.date)}} </td>
           </ng-container>
 
           <!-- Fruit Column -->
@@ -68,7 +68,7 @@
             <th class="participants" mat-header-cell *matHeaderCellDef mat-sort-header> Participantes</th>
             <td class="participants" mat-cell *matCellDef="let row">
 
-              <button mat-flat-button class="dialog-button" (click)="showParticipants()">	Ver <mat-icon>people</mat-icon></button>
+              <button mat-flat-button class="dialog-button" (click)="showParticipants(row.id)">	Ver <mat-icon>people</mat-icon></button>
             </td>
           </ng-container>
 
@@ -76,7 +76,7 @@
           <ng-container matColumnDef="remainingTime">
             <th class="remaining-time" mat-header-cell *matHeaderCellDef mat-sort-header> Tiempo Restante</th>
             <td class="remaining-time" mat-cell *matCellDef="let row">
-            <button mat-flat-button class="dialog-button" (click)="showRemainingTime()">	Ver <mat-icon>access_time</mat-icon></button>
+            <button mat-flat-button class="dialog-button" (click)="showRemainingTime(row.timeRemaining)">	Ver <mat-icon>access_time</mat-icon></button>
             </td>
           </ng-container>
 
@@ -84,8 +84,11 @@
           <ng-container matColumnDef="opts">
             <th class="opts" mat-header-cell *matHeaderCellDef mat-sort-header></th>
             <td class="opts" mat-cell *matCellDef="let row">
-              <button mat-flat-button aria-label="enter pool" (click)="registerToPool(row)">
+              <button mat-flat-button aria-label="enter pool" *ngIf="!row.registered" (click)="registerToPool(row)">
                 Entrar <mat-icon>exit_to_app</mat-icon>
+              </button>
+              <button mat-flat-button aria-label="enter pool" *ngIf="row.registered" (click)="goToEditResults(row.id)">
+                Editar Resultados <mat-icon>exit_to_app</mat-icon>
               </button>
             </td>
           </ng-container>
@@ -99,7 +102,7 @@
           </tr>
         </table>
 
-        <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+<!--        <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>-->
       </div>
 
     </mat-expansion-panel>
@@ -116,10 +119,10 @@
       </mat-expansion-panel-header>
       <!--      content-->
 
-      <div *ngIf="weeklyPools === []">
+      <div *ngIf="weeklyPools.length === 0">
         No Data Set...
       </div>
-      <div class="mat-elevation-z8 mt-4" *ngIf="weeklyPools !== []">
+      <div class="mat-elevation-z8 mt-4" *ngIf="weeklyPools.length > 0">
         <table mat-table [dataSource]="dataSourceWeekly" matSort class="w-100">
 
           <!-- ID Column -->
@@ -129,9 +132,9 @@
           </ng-container>
 
           <!-- Progress Column -->
-          <ng-container matColumnDef="poolName">
+          <ng-container matColumnDef="name">
             <th class="pool" mat-header-cell *matHeaderCellDef mat-sort-header> Nombre</th>
-            <td class="pool" mat-cell *matCellDef="let row"> {{row.poolName}} </td>
+            <td class="pool" mat-cell *matCellDef="let row"> {{row.name}} </td>
           </ng-container>
 
           <!-- Name Column -->
@@ -152,7 +155,7 @@
           <!-- Fruit Column -->
           <ng-container matColumnDef="date">
             <th class="date" mat-header-cell *matHeaderCellDef mat-sort-header> Fecha</th>
-            <td class="date" mat-cell *matCellDef="let row"> {{row.date}} </td>
+            <td class="date" mat-cell *matCellDef="let row"> {{getFormatDate(row.date)}} </td>
           </ng-container>
 
           <!-- Fruit Column -->
@@ -160,7 +163,7 @@
             <th class="participants" mat-header-cell *matHeaderCellDef mat-sort-header> Participantes</th>
             <td class="participants" mat-cell *matCellDef="let row">
 
-              <button mat-flat-button class="dialog-button" (click)="showParticipants(row.id)">	Ver <mat-icon>people</mat-icon></button>
+              <button mat-flat-button class="dialog-button" (click)="showParticipants()">	Ver <mat-icon>people</mat-icon></button>
             </td>
           </ng-container>
 
@@ -168,7 +171,7 @@
           <ng-container matColumnDef="remainingTime">
             <th class="remaining-time" mat-header-cell *matHeaderCellDef mat-sort-header> Tiempo Restante</th>
             <td class="remaining-time" mat-cell *matCellDef="let row">
-            <button mat-flat-button class="dialog-button" (click)="showRemainingTime(row.id)">	Ver <mat-icon>access_time</mat-icon></button>
+              <button mat-flat-button class="dialog-button" (click)="showRemainingTime()">	Ver <mat-icon>access_time</mat-icon></button>
             </td>
           </ng-container>
 
@@ -191,7 +194,7 @@
           </tr>
         </table>
 
-        <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+<!--        <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>-->
       </div>
     </mat-expansion-panel>
 
@@ -208,10 +211,10 @@
       </mat-expansion-panel-header>
       <!--      content-->
 
-      <div *ngIf="monthlyPools === []">
+      <div *ngIf="monthlyPools.length === 0">
         No Data Set...
       </div>
-      <div class="mat-elevation-z8 mt-4" *ngIf="monthlyPools !== []">
+      <div class="mat-elevation-z8 mt-4" *ngIf="monthlyPools.length > 0">
         <table mat-table [dataSource]="dataSourceMonthly" matSort class="w-100">
 
           <!-- ID Column -->
@@ -221,9 +224,9 @@
           </ng-container>
 
           <!-- Progress Column -->
-          <ng-container matColumnDef="poolName">
+          <ng-container matColumnDef="name">
             <th class="pool" mat-header-cell *matHeaderCellDef mat-sort-header> Nombre</th>
-            <td class="pool" mat-cell *matCellDef="let row"> {{row.poolName}} </td>
+            <td class="pool" mat-cell *matCellDef="let row"> {{row.name}} </td>
           </ng-container>
 
           <!-- Name Column -->
@@ -244,7 +247,7 @@
           <!-- Fruit Column -->
           <ng-container matColumnDef="date">
             <th class="date" mat-header-cell *matHeaderCellDef mat-sort-header> Fecha</th>
-            <td class="date" mat-cell *matCellDef="let row"> {{row.date}} </td>
+            <td class="date" mat-cell *matCellDef="let row"> {{getFormatDate(row.date)}} </td>
           </ng-container>
 
           <!-- Fruit Column -->
@@ -252,7 +255,7 @@
             <th class="participants" mat-header-cell *matHeaderCellDef mat-sort-header> Participantes</th>
             <td class="participants" mat-cell *matCellDef="let row">
 
-              <button mat-flat-button class="dialog-button" (click)="showParticipants(row.id)">	Ver <mat-icon>people</mat-icon></button>
+              <button mat-flat-button class="dialog-button" (click)="showParticipants()">	Ver <mat-icon>people</mat-icon></button>
             </td>
           </ng-container>
 
@@ -260,7 +263,7 @@
           <ng-container matColumnDef="remainingTime">
             <th class="remaining-time" mat-header-cell *matHeaderCellDef mat-sort-header> Tiempo Restante</th>
             <td class="remaining-time" mat-cell *matCellDef="let row">
-            <button mat-flat-button class="dialog-button" (click)="showRemainingTime(row.id)">	Ver <mat-icon>access_time</mat-icon></button>
+              <button mat-flat-button class="dialog-button" (click)="showRemainingTime()">	Ver <mat-icon>access_time</mat-icon></button>
             </td>
           </ng-container>
 
@@ -283,7 +286,7 @@
           </tr>
         </table>
 
-        <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+<!--        <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>-->
       </div>
     </mat-expansion-panel>
 
@@ -300,10 +303,10 @@
       </mat-expansion-panel-header>
       <!--      content-->
 
-      <div *ngIf="privatePools === []">
+      <div *ngIf="privatePools.length === 0">
         No Data Set...
       </div>
-      <div class="mat-elevation-z8 mt-4" *ngIf="privatePools !== []">
+      <div class="mat-elevation-z8 mt-4" *ngIf="privatePools.length > 0">
         <table mat-table [dataSource]="dataSourceprivate" matSort class="w-100">
 
           <!-- ID Column -->
@@ -313,9 +316,9 @@
           </ng-container>
 
           <!-- Progress Column -->
-          <ng-container matColumnDef="poolName">
+          <ng-container matColumnDef="name">
             <th class="pool" mat-header-cell *matHeaderCellDef mat-sort-header> Nombre</th>
-            <td class="pool" mat-cell *matCellDef="let row"> {{row.poolName}} </td>
+            <td class="pool" mat-cell *matCellDef="let row"> {{row.name}} </td>
           </ng-container>
 
           <!-- Name Column -->
@@ -336,7 +339,7 @@
           <!-- Fruit Column -->
           <ng-container matColumnDef="date">
             <th class="date" mat-header-cell *matHeaderCellDef mat-sort-header> Fecha</th>
-            <td class="date" mat-cell *matCellDef="let row"> {{row.date}} </td>
+            <td class="date" mat-cell *matCellDef="let row"> {{getFormatDate(row.date)}} </td>
           </ng-container>
 
           <!-- Fruit Column -->
@@ -344,7 +347,7 @@
             <th class="participants" mat-header-cell *matHeaderCellDef mat-sort-header> Participantes</th>
             <td class="participants" mat-cell *matCellDef="let row">
 
-              <button mat-flat-button class="dialog-button" (click)="showParticipants(row.id)">	Ver <mat-icon>people</mat-icon></button>
+              <button mat-flat-button class="dialog-button" (click)="showParticipants()">	Ver <mat-icon>people</mat-icon></button>
             </td>
           </ng-container>
 
@@ -352,7 +355,7 @@
           <ng-container matColumnDef="remainingTime">
             <th class="remaining-time" mat-header-cell *matHeaderCellDef mat-sort-header> Tiempo Restante</th>
             <td class="remaining-time" mat-cell *matCellDef="let row">
-            <button mat-flat-button class="dialog-button" (click)="showRemainingTime(row.id)">	Ver <mat-icon>access_time</mat-icon></button>
+              <button mat-flat-button class="dialog-button" (click)="showRemainingTime()">	Ver <mat-icon>access_time</mat-icon></button>
             </td>
           </ng-container>
 
@@ -370,9 +373,9 @@
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
           <!-- Row shown when there is no matching data. -->
-<!--          <tr class="mat-row" *matNoDataRow>-->
-<!--            <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>-->
-<!--          </tr>-->
+          <tr class="mat-row" *matNoDataRow>
+            <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+          </tr>
         </table>
 
 <!--        <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>-->

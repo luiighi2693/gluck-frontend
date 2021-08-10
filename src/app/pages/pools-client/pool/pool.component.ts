@@ -7,14 +7,18 @@ import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-p
 import {Router} from '@angular/router';
 import {AdminService} from '../../../services/admin.service';
 import {finalize} from 'rxjs/operators';
-
+import * as moment from 'moment';
+import {PeriodicElement} from "../my-pools/my-pools.component";
+import {environment} from "../../../../environments/environment";
 
 export interface UserPool {
-  poolName: string;
+  name: string;
   id: string;
   sport: string;
   status: number;
   date: string;
+  timeRemaining: string;
+  registered: string;
 }
 
 @Component({
@@ -25,7 +29,7 @@ export interface UserPool {
 export class PoolComponent implements OnInit, AfterViewInit {
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
-  displayedColumns: string[] = ['id', 'poolName', 'sport', 'status', 'date', 'participants', 'remainingTime', 'opts'];
+  displayedColumns: string[] = ['id', 'name', 'sport', 'status', 'date', 'participants', 'remainingTime', 'opts'];
   dataSourceOneVsOne: MatTableDataSource<UserPool>;
   dataSourceWeekly: MatTableDataSource<UserPool>;
   dataSourceMonthly: MatTableDataSource<UserPool>;
@@ -33,7 +37,6 @@ export class PoolComponent implements OnInit, AfterViewInit {
 
   showLoader = false;
   user: string;
-  password: any;
   userId: string;
   oneVsOnePools = [];
   privatePools = [];
@@ -43,6 +46,7 @@ export class PoolComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
+  imagePath;
 
   constructor(
     private handleAlertsProvider: HandleAlertsProvider,
@@ -50,6 +54,7 @@ export class PoolComponent implements OnInit, AfterViewInit {
     private admin: AdminService,
   ) {
     this.admin.initToken();
+    this.imagePath = environment.basePath;
   }
 
   ngOnInit(): void {
@@ -67,26 +72,30 @@ export class PoolComponent implements OnInit, AfterViewInit {
       .pipe(finalize(() => this.showLoader = false))
       .subscribe(data => {
         if (data.code === 'D200') {
-          console.log(data.oneVSone)
           this.privatePools = data.privadas;
           this.monthlyPools = data.mensuales;
           this.oneVsOnePools = data.oneVSone;
           this.weeklyPools = data.semanales;
-          this.dataSourceOneVsOne = new MatTableDataSource<UserPool>(this.oneVsOnePools);
+          console.log(this.privatePools, this.monthlyPools, this.oneVsOnePools, this.weeklyPools);
+
+          this.dataSourceOneVsOne = new MatTableDataSource<any>(this.oneVsOnePools);
+
           // this.dataSourceOneVsOne.paginator = this.paginator;
           // this.dataSourceOneVsOne.sort = this.sort;
 
-          this.dataSourceWeekly = new MatTableDataSource<UserPool>(this.weeklyPools);
+          this.dataSourceWeekly = new MatTableDataSource<any>(this.weeklyPools);
           // this.dataSourceWeekly.paginator = this.paginator;
           // this.dataSourceWeekly.sort = this.sort;
 
-          this.dataSourceMonthly = new MatTableDataSource<UserPool>(this.monthlyPools);
+          this.dataSourceMonthly = new MatTableDataSource<any>(this.monthlyPools);
           // this.dataSourceMonthly.paginator = this.paginator;
           // this.dataSourceMonthly.sort = this.sort;
 
-          this.dataSourceprivate = new MatTableDataSource<UserPool>( this.privatePools);
+          this.dataSourceprivate = new MatTableDataSource<any>( this.privatePools);
           // this.dataSourceprivate.paginator = this.paginator;
           // this.dataSourceprivate.sort = this.sort;
+
+          this.startCounter(this.oneVsOnePools, this.dataSourceOneVsOne);
         } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
           this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
           this.router.navigate(['/auth']);
@@ -134,89 +143,113 @@ export class PoolComponent implements OnInit, AfterViewInit {
       data.id,
       data.poolName,
       this.user,
-      '50$',
-      'chocolate',
-      50,
-      '../../../../../assets/example-user.png',
-      '../../../../../assets/default-rules.png',
-      this.password,
+      data.amountInput + '$ ' + data.coinsInput + 'G',
+      data.awardValue,
+      data.participants,
+       '../../../../../assets/example-user.png',
+    data.rules === '' ? '../../../../../assets/default-rules.png' : (this.imagePath + '/images/' + data.rules),
+      '',
     );
     dialogRef.afterClosed().subscribe(res => {
       console.log(res);
-      if (res === undefined || res === null || res === '') {
-        this.handleAlertsProvider.presentGenericAlert('Por Favor Ingrese una contrasena', 'Aviso');
+
+      if (res !== undefined) {
+        if (data.password === '' || data.password === null) {
+          if (res === '') {
+            this.callRegisterPool(data.id);
+          } else {
+            this.handleAlertsProvider.presentGenericAlert('Las Claves no coinciden!', 'Aviso');
+          }
+        } else {
+          if (data.password !== res) {
+            this.handleAlertsProvider.presentGenericAlert('Las Claves no coinciden!', 'Aviso');
+          } else {
+            this.callRegisterPool(data.id);
+          }
+        }
       }
     });
   }
 
-  showRemainingTime() {
-    this.handleAlertsProvider.presentTimeRemainingDialog();
+  showRemainingTime(timeRamaining) {
+    this.handleAlertsProvider.presentTimeRemainingDialog(timeRamaining);
   }
 
 
-  showParticipants() {
-    const participants = [
-      {
-        username: 'alexperroloco2121',
-        rowid: 32,
-        image: '../../../../../assets/example-user.png',
-      },
-      {
-        username: 'alexperroloco2121',
-        rowid: 32,
-        image: '../../../../../assets/example-user.png',
-      },
-      {
-        username: 'alexperroloco2121',
-        rowid: 32,
-        image: '../../../../../assets/example-user.png',
-      },
-      {
-        username: 'alexperroloco2121',
-        rowid: 32,
-        image: '../../../../../assets/example-user.png',
-      },
-      {
-        username: 'alexperroloco2121',
-        rowid: 32,
-        image: '../../../../../assets/example-user.png',
-      },
-      {
-        username: 'alexperroloco2121',
-        rowid: 32,
-        image: '../../../../../assets/example-user.png',
-      },
-      {
-        username: 'alexperroloco2121',
-        rowid: 32,
-        image: '../../../../../assets/example-user.png',
-      },
-      {
-        username: 'alexperroloco2121',
-        rowid: 32,
-        image: '../../../../../assets/example-user.png',
-      },
-      {
-        username: 'alexperroloco2121',
-        rowid: 32,
-        image: '../../../../../assets/example-user.png',
-      },
-      {
-        username: 'alexperroloco2121',
-        rowid: 32,
-        image: '../../../../../assets/example-user.png',
-      },
-      {
-        username: 'alexperroloco2121',
-        rowid: 32,
-        image: '../../../../../assets/example-user.png',
-      },
-      {
-        username: 'alexperroloco2121',
-        rowid: 32,
-        image: '../../../../../assets/example-user.png',
-      },
-    ];
-    this.handleAlertsProvider.presentParticipantsDialog(participants);
+  showParticipants(id) {
+    this.showLoader = true;
+    this.admin.getUsersByPool(id)
+      .pipe(finalize(() => this.showLoader = false))
+      .subscribe(data => {
+        if (data.code === 'D200') {
+          let participants = [];
+
+          data.data.forEach(user => {
+            participants.push({
+              username: user.username,
+              rowid: user.rowid,
+              image: user.img === '' ? '../../../../../assets/example-user.png' : (this.imagePath + '/images/' + user.img)
+            });
+          });
+
+          this.handleAlertsProvider.presentParticipantsDialog(participants);
+        } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
+          this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
+          this.router.navigate(['/auth']);
+        }
+      }, error => {
+        this.handleAlertsProvider.presentGenericAlert(error);
+      });
+  }
+
+  getFormatDate(date: string) {
+    return moment(date).format('YYYY-MM-DD');
+  }
+
+  startCounter(list, dataSource) {
+    list.forEach(item => {
+      const eventTime = item.timeRemaining === null ? moment() : moment(item.timeRemaining);
+      const currentTime = moment();
+      const leftTime = eventTime.valueOf() - currentTime.valueOf();
+      let duration = moment.duration(leftTime, 'milliseconds');
+
+      setInterval(() => {
+
+        // Time Out check
+        if (duration.asSeconds() > 0) {
+          duration = moment.duration(duration.asSeconds() - 1, 'seconds');
+          // tslint:disable-next-line:max-line-length
+          item.timeRemaining = (duration.days() > 0 ? (duration.days() + ' dia(s) ') : '') + this.formatDate(duration.hours()) + ':' + this.formatDate(duration.minutes()) + ':' + this.formatDate(duration.seconds());
+        } else {
+          item.timeRemaining = '00:00:00';
+        }
+
+        dataSource = new MatTableDataSource<PeriodicElement>(list);
+
+
+      }, 1000);
+    });
+  }
+
+  private formatDate(n: number) {
+    return n < 10 ? ('0' + n) : n;
+  }
+
+  private callRegisterPool(id) {
+    this.showLoader = true;
+    this.admin.registerUserPool(id, sessionStorage.getItem('id')).subscribe(data => {
+      console.log(data);
+      this.showLoader = false;
+      if (data.code === 'D200') {
+        this.goToEditResults(id);
+      } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
+        this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
+        this.router.navigate(['/auth']);
+      }
+    });
+  }
+
+  goToEditResults(poolId) {
+    this.router.navigate([`/home/pools/pool-register/${poolId}`]);
   }
 }
