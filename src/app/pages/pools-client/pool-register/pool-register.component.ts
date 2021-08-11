@@ -72,7 +72,7 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
     this.admin.clientRegisterToPool(this.userId, this.pool).pipe(finalize(() => this.showLoader = false)).subscribe(res => {
       if (res.code === 'D200' ) {
         this.handleAlertsProvider.presentSnackbarSuccess('Has registrado los datos correctamente!');
-        this.router.navigate(['home/pools/list-of-pools']);
+        this.router.navigate(['home/pools']);
       } else if (res.code === 'A401' || res.code === 'A302' || res.code === 'A403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
         this.router.navigate(['/auth']);

@@ -14,9 +14,9 @@ export interface UserData {
   username: string;
   name: string;
   email: string;
-  phone: string;
+  amount: number;
   status: number;
-  date_Access: string;
+  coins: number;
 }
 
 
@@ -40,7 +40,7 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
   limitOfUsers: any;
   hide = true;
 
-  displayedColumns: string[] = ['rowid', 'username', 'name', 'email', 'phone', 'status', 'date_Access', 'opts'];
+  displayedColumns: string[] = ['rowid', 'username', 'name', 'email', 'amount', 'coins', 'status', 'opts'];
   dataSource: MatTableDataSource<UserData>;
   selection = new SelectionModel<UserData>(true, []);
 

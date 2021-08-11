@@ -79,23 +79,14 @@ export class PoolComponent implements OnInit, AfterViewInit {
           console.log(this.privatePools, this.monthlyPools, this.oneVsOnePools, this.weeklyPools);
 
           this.dataSourceOneVsOne = new MatTableDataSource<any>(this.oneVsOnePools);
-
-          // this.dataSourceOneVsOne.paginator = this.paginator;
-          // this.dataSourceOneVsOne.sort = this.sort;
-
           this.dataSourceWeekly = new MatTableDataSource<any>(this.weeklyPools);
-          // this.dataSourceWeekly.paginator = this.paginator;
-          // this.dataSourceWeekly.sort = this.sort;
-
           this.dataSourceMonthly = new MatTableDataSource<any>(this.monthlyPools);
-          // this.dataSourceMonthly.paginator = this.paginator;
-          // this.dataSourceMonthly.sort = this.sort;
-
           this.dataSourceprivate = new MatTableDataSource<any>( this.privatePools);
-          // this.dataSourceprivate.paginator = this.paginator;
-          // this.dataSourceprivate.sort = this.sort;
 
           this.startCounter(this.oneVsOnePools, this.dataSourceOneVsOne);
+          this.startCounter(this.weeklyPools, this.dataSourceWeekly);
+          this.startCounter(this.monthlyPools, this.dataSourceMonthly);
+          this.startCounter(this.privatePools, this.dataSourceprivate);
         } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
           this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
           this.router.navigate(['/auth']);

@@ -8,6 +8,7 @@ import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-p
 import {ActivatedRoute, Router} from '@angular/router';
 import {AdminService} from '../../../services/admin.service';
 import {environment} from '../../../../environments/environment';
+import * as moment from 'moment';
 
 export interface UserData {
   rowid: string;
@@ -238,7 +239,8 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
 
     this.endPools.get('amountInput').setValue(this.poolData.amountInput);
     this.endPools.get('coinsInput').setValue(this.poolData.coinsInput);
-    this.endPools.get('dateFinish').setValue(this.poolData.dateFinish);
+    // console.log(moment(this.poolData.dateFinish, 'YYYY-MM-DD').add(1, 'days').format('YYYY-MM-DD'));
+    this.endPools.get('dateFinish').setValue(moment(this.poolData.dateFinish, 'YYYY-MM-DD').add(1, 'days').format('YYYY-MM-DD'));
     this.endPools.get('timeFinish').setValue(this.poolData.timeFinish === null ? null : this.poolData.timeFinish.split(':')[0] + ':' + this.poolData.timeFinish.split(':')[1] + ' ' + (Number(this.poolData.timeFinish.split(':')[0]) > 11 ? 'pm' : 'am'));
     this.endPools.get('awardType').setValue(this.poolData.awardType);
     this.endPools.get('awardValue').setValue(this.poolData.awardValue);
@@ -278,6 +280,9 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
       }
     });
 
+    const finishDate = (dateFinish === moment(this.poolData.dateFinish, 'YYYY-MM-DD').add(1, 'days').format('YYYY-MM-DD')) ?
+      moment(dateFinish, 'YYYY-MM-DD').subtract(1, 'days').format('YYYY-MM-DD') : dateFinish;
+
     const matchesInfo = this.arrayOfMatches;
     const usersForPool = this.selection.selected;
     const {result, winner, draw, loser} = this.results.value;
@@ -304,7 +309,7 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
       loser,
       amountInput,
       coinsInput,
-      dateFinish,
+      finishDate,
       timeFinish,
       awardType,
       awardValue
@@ -331,7 +336,7 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
       loser,
       amountInput,
       coinsInput,
-      dateFinish,
+      finishDate,
       timeFinish,
       awardType,
       awardValue,

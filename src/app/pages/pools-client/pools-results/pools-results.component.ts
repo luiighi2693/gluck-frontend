@@ -31,6 +31,8 @@ export class PoolsResultsComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.getParam();
     this.poolName = sessionStorage.getItem('poolName');
+    sessionStorage.removeItem('userSearch');
+    sessionStorage.removeItem('usernameSearch');
   }
 
   getParam() {
@@ -61,5 +63,11 @@ export class PoolsResultsComponent implements OnInit, AfterViewInit {
 
   goToMyResults() {
     this.router.navigate([`/home/pools/my-results/${this.currentPool}`]);
+  }
+
+  goToOtherResults(userID, username) {
+    sessionStorage.setItem('userSearch', userID);
+    sessionStorage.setItem('usernameSearch', username);
+    this.goToMyResults();
   }
 }

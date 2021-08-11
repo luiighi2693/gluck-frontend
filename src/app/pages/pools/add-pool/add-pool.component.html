@@ -17,7 +17,7 @@
   <div class="profile__wrapper mb-3">
     <!--    <div class="row">-->
     <!--      <div class="col-12 col-md-8 offset-md-2">-->
-    <mat-stepper orientation="vertical" linear  #stepper>
+    <mat-stepper orientation="vertical"  #stepper>
       <mat-step [stepControl]="config">
         <form [formGroup]="config">
           <ng-template matStepLabel>Configuracion</ng-template>
@@ -345,9 +345,15 @@
             </ng-container>
 
             <!-- Fruit Column -->
-            <ng-container matColumnDef="phone">
-              <th class="phone" mat-header-cell *matHeaderCellDef mat-sort-header> Telefono</th>
-              <td class="phone" mat-cell *matCellDef="let row"> {{row.phone}} </td>
+            <ng-container matColumnDef="amount">
+              <th class="phone" mat-header-cell *matHeaderCellDef mat-sort-header> Monto</th>
+              <td class="phone" mat-cell *matCellDef="let row"> {{row.amount}} </td>
+            </ng-container>
+
+            <!-- Fruit Column -->
+            <ng-container matColumnDef="coins">
+              <th class="lastLogin" mat-header-cell *matHeaderCellDef mat-sort-header> Glucks</th>
+              <td class="lastLogin" mat-cell *matCellDef="let row"> {{row.coins}} </td>
             </ng-container>
 
             <!-- Fruit Column -->
@@ -357,12 +363,6 @@
                 <div [ngClass]="{'active': row.status === 1, 'inactive': row.status === 0}"><p
                   class="m-0">{{row.status === 1 ? 'Activo' : 'Inactivo' }}</p></div>
               </td>
-            </ng-container>
-
-            <!-- Fruit Column -->
-            <ng-container matColumnDef="date_Access">
-              <th class="lastLogin" mat-header-cell *matHeaderCellDef mat-sort-header> Ultimo Acceso</th>
-              <td class="lastLogin" mat-cell *matCellDef="let row"> {{row.date_Access}} </td>
             </ng-container>
 
             <!-- Fruit Column -->

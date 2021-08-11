@@ -66,7 +66,7 @@ export class CalendarComponent implements OnInit {
             if (sessionStorage.getItem('isAdmin') === 'true') {
               this.router.navigate([`/admin/pools/edit-pool/${info.event.id}`]);
             } else {
-              this.router.navigate([`/home/pools/list-of-pools`]);
+              this.router.navigate([`/home/pools`]);
 
             }
           }),

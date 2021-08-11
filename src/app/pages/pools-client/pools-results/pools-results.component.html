@@ -12,7 +12,7 @@
     <div class="col-3 p-3 text-center border-right"><h1 class="m-0">PUNTUACION</h1></div>
     <div class="col-3 p-3 text-center"><h1 class="m-0">GOLES ACERTADOS</h1></div>
   </div>
-  <div class="row panel mb-3" *ngFor="let item of data">
+  <div class="row panel mb-3" *ngFor="let item of data" (click)="goToOtherResults(item.userID, item.username)" style="cursor: pointer;">
     <div class="col-1 d-flex justify-content-center align-items-center"><h1 class="m-0">{{item.userID}}</h1></div>
     <div class="col-5  d-flex justify-content-start align-items-center border-right">
 <!--      <img src="../../../../assets/example-user.png" class="user-image" alt="user image">-->

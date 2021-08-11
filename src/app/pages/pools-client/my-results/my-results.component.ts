@@ -27,7 +27,7 @@ export class MyResultsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.username = sessionStorage.getItem('username');
+    // this.username = sessionStorage.getItem('username');
     this.getCurrentPool = this.route.params.subscribe(params => {
       this.currentPool = params.id;
     });
@@ -39,7 +39,11 @@ export class MyResultsComponent implements OnInit, AfterViewInit {
 
   setData() {
     this.showLoader = true;
-    this.admin.getResultsByPoolAndUser(sessionStorage.getItem('id'), this.currentPool).subscribe(data => {
+
+    const id = sessionStorage.getItem('userSearch') === null ? sessionStorage.getItem('id') : sessionStorage.getItem('userSearch');
+    this.username = sessionStorage.getItem('usernameSearch') === null ? sessionStorage.getItem('username') : sessionStorage.getItem('usernameSearch');
+
+    this.admin.getResultsByPoolAndUser(id, this.currentPool).subscribe(data => {
       this.showLoader = false;
       console.log(data);
       if (data.code === 'D200') {

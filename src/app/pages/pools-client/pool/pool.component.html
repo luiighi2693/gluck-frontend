@@ -163,7 +163,7 @@
             <th class="participants" mat-header-cell *matHeaderCellDef mat-sort-header> Participantes</th>
             <td class="participants" mat-cell *matCellDef="let row">
 
-              <button mat-flat-button class="dialog-button" (click)="showParticipants()">	Ver <mat-icon>people</mat-icon></button>
+              <button mat-flat-button class="dialog-button" (click)="showParticipants(row.id)">	Ver <mat-icon>people</mat-icon></button>
             </td>
           </ng-container>
 
@@ -171,7 +171,7 @@
           <ng-container matColumnDef="remainingTime">
             <th class="remaining-time" mat-header-cell *matHeaderCellDef mat-sort-header> Tiempo Restante</th>
             <td class="remaining-time" mat-cell *matCellDef="let row">
-              <button mat-flat-button class="dialog-button" (click)="showRemainingTime()">	Ver <mat-icon>access_time</mat-icon></button>
+              <button mat-flat-button class="dialog-button" (click)="showRemainingTime(row.timeRemaining)">	Ver <mat-icon>access_time</mat-icon></button>
             </td>
           </ng-container>
 
@@ -179,8 +179,11 @@
           <ng-container matColumnDef="opts">
             <th class="opts" mat-header-cell *matHeaderCellDef mat-sort-header></th>
             <td class="opts" mat-cell *matCellDef="let row">
-              <button mat-flat-button aria-label="enter pool" (click)="registerToPool(row)">
+              <button mat-flat-button aria-label="enter pool" *ngIf="!row.registered" (click)="registerToPool(row)">
                 Entrar <mat-icon>exit_to_app</mat-icon>
+              </button>
+              <button mat-flat-button aria-label="enter pool" *ngIf="row.registered" (click)="goToEditResults(row.id)">
+                Editar Resultados <mat-icon>exit_to_app</mat-icon>
               </button>
             </td>
           </ng-container>
@@ -255,7 +258,7 @@
             <th class="participants" mat-header-cell *matHeaderCellDef mat-sort-header> Participantes</th>
             <td class="participants" mat-cell *matCellDef="let row">
 
-              <button mat-flat-button class="dialog-button" (click)="showParticipants()">	Ver <mat-icon>people</mat-icon></button>
+              <button mat-flat-button class="dialog-button" (click)="showParticipants(row.id)">	Ver <mat-icon>people</mat-icon></button>
             </td>
           </ng-container>
 
@@ -263,7 +266,7 @@
           <ng-container matColumnDef="remainingTime">
             <th class="remaining-time" mat-header-cell *matHeaderCellDef mat-sort-header> Tiempo Restante</th>
             <td class="remaining-time" mat-cell *matCellDef="let row">
-              <button mat-flat-button class="dialog-button" (click)="showRemainingTime()">	Ver <mat-icon>access_time</mat-icon></button>
+              <button mat-flat-button class="dialog-button" (click)="showRemainingTime(row.timeRemaining)">	Ver <mat-icon>access_time</mat-icon></button>
             </td>
           </ng-container>
 
@@ -271,8 +274,11 @@
           <ng-container matColumnDef="opts">
             <th class="opts" mat-header-cell *matHeaderCellDef mat-sort-header></th>
             <td class="opts" mat-cell *matCellDef="let row">
-              <button mat-flat-button aria-label="enter pool" (click)="registerToPool(row)">
+              <button mat-flat-button aria-label="enter pool" *ngIf="!row.registered" (click)="registerToPool(row)">
                 Entrar <mat-icon>exit_to_app</mat-icon>
+              </button>
+              <button mat-flat-button aria-label="enter pool" *ngIf="row.registered" (click)="goToEditResults(row.id)">
+                Editar Resultados <mat-icon>exit_to_app</mat-icon>
               </button>
             </td>
           </ng-container>
@@ -347,7 +353,7 @@
             <th class="participants" mat-header-cell *matHeaderCellDef mat-sort-header> Participantes</th>
             <td class="participants" mat-cell *matCellDef="let row">
 
-              <button mat-flat-button class="dialog-button" (click)="showParticipants()">	Ver <mat-icon>people</mat-icon></button>
+              <button mat-flat-button class="dialog-button" (click)="showParticipants(row.id)">	Ver <mat-icon>people</mat-icon></button>
             </td>
           </ng-container>
 
@@ -355,7 +361,7 @@
           <ng-container matColumnDef="remainingTime">
             <th class="remaining-time" mat-header-cell *matHeaderCellDef mat-sort-header> Tiempo Restante</th>
             <td class="remaining-time" mat-cell *matCellDef="let row">
-              <button mat-flat-button class="dialog-button" (click)="showRemainingTime()">	Ver <mat-icon>access_time</mat-icon></button>
+              <button mat-flat-button class="dialog-button" (click)="showRemainingTime(row.timeRemaining)">	Ver <mat-icon>access_time</mat-icon></button>
             </td>
           </ng-container>
 
@@ -363,8 +369,11 @@
           <ng-container matColumnDef="opts">
             <th class="opts" mat-header-cell *matHeaderCellDef mat-sort-header></th>
             <td class="opts" mat-cell *matCellDef="let row">
-              <button mat-flat-button aria-label="enter pool" (click)="registerToPool(row)">
+              <button mat-flat-button aria-label="enter pool" *ngIf="!row.registered" (click)="registerToPool(row)">
                 Entrar <mat-icon>exit_to_app</mat-icon>
+              </button>
+              <button mat-flat-button aria-label="enter pool" *ngIf="row.registered" (click)="goToEditResults(row.id)">
+                Editar Resultados <mat-icon>exit_to_app</mat-icon>
               </button>
             </td>
           </ng-container>
