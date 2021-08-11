@@ -7,6 +7,7 @@
   max-width: 500px;
   max-height: 500px;
   transition: transform .2s;
+  border-radius: 15px;
 }
 
 .pool-image:hover {
