@@ -16,7 +16,7 @@
   <div class="profile__wrapper mb-3">
     <!--    <div class="row">-->
     <!--      <div class="col-12 col-md-8 offset-md-2">-->
-    <mat-stepper orientation="vertical"  #stepper>
+    <mat-stepper orientation="vertical" #stepper>
       <mat-step [stepControl]="config">
         <form [formGroup]="config">
           <ng-template matStepLabel>Configuracion</ng-template>
@@ -44,7 +44,8 @@
             </div>
             <div class="col-12 col-md-4">
               <mat-form-field appearance="outline" class="w-100">
-                <input matInput [ngxMatColorPicker]="colorPicker" placeholder="Selecciona un Color" formControlName="color"
+                <input matInput [ngxMatColorPicker]="colorPicker" placeholder="Selecciona un Color"
+                       formControlName="color"
                        autocomplete="off" required>
                 <ngx-mat-color-toggle matSuffix [for]="colorPicker"></ngx-mat-color-toggle>
                 <ngx-mat-color-picker #colorPicker></ngx-mat-color-picker>
@@ -69,7 +70,7 @@
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Limite de Usuarios</mat-label>
                 <input matInput type="number" placeholder="15" [(ngModel)]="limitOfUsers" formControlName="usersLimit"
-                       autocomplete="off" >
+                       autocomplete="off">
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
                 </mat-error>
@@ -106,7 +107,7 @@
             <div class="col-12 col-md-4">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Grupos</mat-label>
-                <input matInput type="number" placeholder="6" formControlName="groups" autocomplete="off" >
+                <input matInput type="number" placeholder="6" formControlName="groups" autocomplete="off">
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
                 </mat-error>
@@ -117,7 +118,7 @@
             <div class="col-12 col-md-3">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Equipos por Grupos</mat-label>
-                <input matInput type="number" placeholder="2" formControlName="teamsPerGroup" autocomplete="off" >
+                <input matInput type="number" placeholder="2" formControlName="teamsPerGroup" autocomplete="off">
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
                 </mat-error>
@@ -126,7 +127,7 @@
             <div class="col-12 col-md-3">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Tipo de Quiniela</mat-label>
-                <mat-select formControlName="type" >
+                <mat-select formControlName="type">
                   <mat-option>- Tipo de Quiniela -</mat-option>
                   <mat-option value="1 vs 1">1 Vs 1</mat-option>
                   <mat-option value="mensuales">Quinielas Mensuales</mat-option>
@@ -141,7 +142,7 @@
             <div class="col-12 col-md-3">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Liga - Torneo</mat-label>
-                <mat-select formControlName="league" >
+                <mat-select formControlName="league">
                   <mat-option>- Liga - Torneo -</mat-option>
                   <mat-option value="La Liga">La Liga</mat-option>
                   <mat-option value="Premier League">Premier League</mat-option>
@@ -167,23 +168,28 @@
               </mat-form-field>
             </div>
             <div class="col-12 col-md-3 text-center">
-                <mat-label>Reglas</mat-label>
-                <figure class="avatar__wrapper">
-                  <img [src]="this.config.value.rules !== '' ? (this.imagePath + '/images/' + this.config.value.rules) : '../../../../assets/default-rules.png'" class="avatar" alt="">
-                  <button class="avatar__button" type="button" mat-fab aria-label="change picture" (click)="openUploadFiles()">
-                    <mat-icon>camera_alt</mat-icon>
-                  </button>
-                  <input
-                    #inputFiles
-                    style="display: none"
-                    type="file"
-                    (change)="handleUpload($event)"
-                  />
-                </figure>
+              <mat-label>Reglas</mat-label>
+              <figure class="avatar__wrapper">
+                <img
+                  [src]="this.config.value.rules !== '' ? (this.imagePath + '/images/' + this.config.value.rules) : '../../../../assets/default-rules.png'"
+                  class="avatar" alt="">
+                <button class="avatar__button" type="button" mat-fab aria-label="change picture"
+                        (click)="openUploadFiles()">
+                  <mat-icon>camera_alt</mat-icon>
+                </button>
+                <input
+                  #inputFiles
+                  style="display: none"
+                  type="file"
+                  (change)="handleUpload($event)"
+                />
+              </figure>
             </div>
           </div>
           <div>
-            <button mat-flat-button [disabled]="!config.valid" (click)="makeMatches()" matStepperNext class="action-button">Siguiente</button>
+            <button mat-flat-button [disabled]="!config.valid" (click)="makeMatches()" matStepperNext
+                    class="action-button">Siguiente
+            </button>
           </div>
         </form>
       </mat-step>
@@ -217,15 +223,16 @@
                 <div class="col-12 col-md-2">
                   <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Resultado</mat-label>
-                    <input type="number" matInput  [(ngModel)]="match.result1" placeholder="1"
-                           autocomplete="off" >
+                    <input type="number" matInput [(ngModel)]="match.result1" placeholder="1"
+                           autocomplete="off">
                   </mat-form-field>
                 </div>
                 <div class="col-12 col-md-2">
                   <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Penalty</mat-label>
-                    <input type="number" matInput [disabled]="doPenaltiesExist === '1'" [(ngModel)]="match.penalty1" placeholder="1"
-                           autocomplete="off" >
+                    <input type="number" matInput [disabled]="doPenaltiesExist === '1'" [(ngModel)]="match.penalty1"
+                           placeholder="1"
+                           autocomplete="off">
                   </mat-form-field>
                 </div>
               </div>
@@ -244,15 +251,16 @@
                 <div class="col-12 col-md-2">
                   <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Resultado</mat-label>
-                    <input type="number" matInput  [(ngModel)]="match.result2" placeholder="1"
-                           autocomplete="off" >
+                    <input type="number" matInput [(ngModel)]="match.result2" placeholder="1"
+                           autocomplete="off">
                   </mat-form-field>
                 </div>
                 <div class="col-12 col-md-2">
                   <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Penalty</mat-label>
-                    <input matInput type="number" [disabled]="doPenaltiesExist === '1'" [(ngModel)]="match.penalty2" placeholder="Penalty"
-                           autocomplete="off" >
+                    <input matInput type="number" [disabled]="doPenaltiesExist === '1'" [(ngModel)]="match.penalty2"
+                           placeholder="Penalty"
+                           autocomplete="off">
                   </mat-form-field>
                 </div>
               </div>
@@ -263,7 +271,7 @@
             <div class="col-12 col-md-3">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Fecha</mat-label>
-                <input matInput [(ngModel)]="match.date"  [matDatepicker]="datePicker1" placeholder="15/02/2020">
+                <input matInput [(ngModel)]="match.date" [matDatepicker]="datePicker1" placeholder="15/02/2020">
                 <mat-datepicker-toggle matSuffix [for]="datePicker1"></mat-datepicker-toggle>
                 <mat-datepicker #datePicker1></mat-datepicker>
               </mat-form-field>
@@ -272,7 +280,7 @@
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Hora</mat-label>
                 <input matInput [(ngModel)]="match.time" [ngxTimepicker]="timePicker1" placeholder="8:52:35"
-                       autocomplete="off" >
+                       autocomplete="off">
                 <mat-icon matSuffix>access_time</mat-icon>
                 <ngx-material-timepicker #timePicker1></ngx-material-timepicker>
               </mat-form-field>
@@ -280,7 +288,7 @@
             <div class="col-12 col-md-3">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Estatus</mat-label>
-                <mat-select [(ngModel)]="match.status" >
+                <mat-select [(ngModel)]="match.status">
                   <mat-option>- Estatus -</mat-option>
                   <mat-option value="1">Activo</mat-option>
                   <mat-option value="0">Cerrado</mat-option>
@@ -303,7 +311,7 @@
         </div>
         <div>
           <button mat-button matStepperPrevious>Atras</button>
-          <button mat-button  matStepperNext class="action-button">Siguiente</button>
+          <button mat-button matStepperNext class="action-button">Siguiente</button>
         </div>
         <!--        </form>-->
       </mat-step>
@@ -396,7 +404,7 @@
 
         <div class="mt-5">
           <button mat-flat-button matStepperPrevious>Atras</button>
-          <button mat-flat-button matStepperNext class="action-button">Siguiente</button>
+          <button mat-flat-button (click)="showSelection(stepper)" class="action-button">Siguiente</button>
         </div>
       </mat-step>
       <mat-step [stepControl]="endPools">
@@ -426,7 +434,7 @@
             <div class="col-12 col-md-3">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Fecha de Finalizacion</mat-label>
-                <input matInput formControlName="dateFinish"  [matDatepicker]="datePicker2" placeholder="15/02/2020">
+                <input matInput formControlName="dateFinish" [matDatepicker]="datePicker2" placeholder="15/02/2020">
                 <mat-datepicker-toggle matSuffix [for]="datePicker2"></mat-datepicker-toggle>
                 <mat-datepicker #datePicker2></mat-datepicker>
                 <mat-error>
@@ -438,7 +446,7 @@
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Hora de Finalizacion</mat-label>
                 <input matInput formControlName="timeFinish" [ngxTimepicker]="timePicker2" placeholder="8:52:35"
-                       autocomplete="off" >
+                       autocomplete="off">
                 <mat-icon matSuffix>access_time</mat-icon>
                 <ngx-material-timepicker #timePicker2></ngx-material-timepicker>
                 <mat-error>
@@ -449,7 +457,8 @@
             <div class="col-12 col-md-3">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Tipo de Premio</mat-label>
-                <mat-select formControlName="awardType" required [(ngModel)]="awardType" ngModelOptions="{standalone: true}" (ngModelChange)="getAward()">
+                <mat-select formControlName="awardType" required [(ngModel)]="awardType"
+                            ngModelOptions="{standalone: true}" (ngModelChange)="getAward()">
                   <mat-option>- Tipo de Premio -</mat-option>
                   <mat-option value="fijo">Fijo</mat-option>
                   <mat-option value="total">Total</mat-option>
@@ -462,23 +471,24 @@
             <div class="col-12 col-md-3">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Valor de Premio Total</mat-label>
-                <input matInput type="text" [readOnly]="endPools.value.awardType !== 'total' ? 'false' : 'true'" formControlName="awardValue" placeholder="$500"
+                <input matInput type="text" [readOnly]="endPools.value.awardType !== 'total' ? 'false' : 'true'"
+                       formControlName="awardValue" placeholder="$500"
                        autocomplete="off" required>
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
                 </mat-error>
               </mat-form-field>
             </div>
-<!--            <div class="col-12 col-md-3" *ngIf="endPools.value.awardType === 'fijo'">-->
-<!--              <mat-form-field appearance="outline" class="w-100">-->
-<!--                <mat-label>Valor de Premio Fijo</mat-label>-->
-<!--                <input matInput type="text" formControlName="awardValue" placeholder="$500"-->
-<!--                       autocomplete="off" required>-->
-<!--                <mat-error>-->
-<!--                  Este Campo es <strong>Requerido.</strong>-->
-<!--                </mat-error>-->
-<!--              </mat-form-field>-->
-<!--            </div>-->
+            <!--            <div class="col-12 col-md-3" *ngIf="endPools.value.awardType === 'fijo'">-->
+            <!--              <mat-form-field appearance="outline" class="w-100">-->
+            <!--                <mat-label>Valor de Premio Fijo</mat-label>-->
+            <!--                <input matInput type="text" formControlName="awardValue" placeholder="$500"-->
+            <!--                       autocomplete="off" required>-->
+            <!--                <mat-error>-->
+            <!--                  Este Campo es <strong>Requerido.</strong>-->
+            <!--                </mat-error>-->
+            <!--              </mat-form-field>-->
+            <!--            </div>-->
           </div>
           <div>
             <button mat-flat-button matStepperPrevious>Atras</button>
@@ -533,7 +543,8 @@
           </div>
           <div>
             <button mat-flat-button matStepperPrevious>Atras</button>
-            <button mat-flat-button [disabled]="!poolResults.valid" matStepperNext class="action-button">Siguiente</button>
+            <button mat-flat-button [disabled]="!poolResults.valid" matStepperNext class="action-button">Siguiente
+            </button>
           </div>
         </form>
       </mat-step>
