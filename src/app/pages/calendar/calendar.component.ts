@@ -1,10 +1,9 @@
-import { Component, OnInit } from '@angular/core';
-import { CalendarOptions } from '@fullcalendar/angular';
-import {MatTableDataSource} from '@angular/material/table';
-import {UserData} from '../pools/pools-results-detail/pools-results-detail.component';
+import {Component, OnInit} from '@angular/core';
+import {CalendarOptions} from '@fullcalendar/angular';
 import {HandleAlertsProvider} from '../../utilities/providers/handle-alerts-provider';
 import {Router} from '@angular/router';
 import {AdminService} from '../../services/admin.service';
+import {LoaderProvider} from '../../utilities/providers/loader-provider';
 
 @Component({
   selector: 'app-calendar',
@@ -14,18 +13,23 @@ import {AdminService} from '../../services/admin.service';
 export class CalendarComponent implements OnInit {
 
   calendarOptions: CalendarOptions;
-  showLoader = false;
+
+  // showLoader = false;
 
 
   constructor(
     private handleAlertsProvider: HandleAlertsProvider,
     private router: Router,
     private admin: AdminService,
-  ) { }
+    private loaderValue: LoaderProvider
+  ) {
+  }
 
   ngOnInit(): void {
+    this.loaderValue.updateIsloading(true);
     this.admin.getEventsForUser(sessionStorage.getItem('id')).subscribe(res => {
-      this.showLoader = false;
+      this.loaderValue.updateIsloading(false);
+      // this.showLoader = false;
       if (res.code === 'D200') {
         const events = [];
         res.data.forEach(e => {

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from '../../../services/auth.service';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
 import {Router} from '@angular/router';
+import {LoaderProvider} from '../../../utilities/providers/loader-provider';
 
 
 @Component({
@@ -13,9 +14,13 @@ export class ChangePasswordComponent implements OnInit {
   hide = true;
   password = '';
   passwordConfirm = '';
-  isLoaded = false;
 
-  constructor(private authService: AuthService, private handleAlertsProvider: HandleAlertsProvider, private router: Router) { }
+  constructor(
+    private authService: AuthService,
+    private handleAlertsProvider: HandleAlertsProvider,
+    private router: Router,
+    private loaderValue: LoaderProvider,
+  ) { }
 
   ngOnInit(): void {
   }
@@ -23,10 +28,10 @@ export class ChangePasswordComponent implements OnInit {
   changePassword() {
     if (this.password === this.passwordConfirm) {
       if (this.password !== '') {
-        this.isLoaded = true;
+        this.loaderValue.updateIsloading(true);
         const code = sessionStorage.getItem('code');
         this.authService.recoverPasswordEnd(code, this.password).subscribe(data => {
-          this.isLoaded = false;
+          this.loaderValue.updateIsloading(false);
           if (data.hasError) {
             this.handleAlertsProvider.presentGenericAlert('No se ha encontrado el usuario solicitado... intente de nuevo', 'No se Pudo completar la accion...');
           }

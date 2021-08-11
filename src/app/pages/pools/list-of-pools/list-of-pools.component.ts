@@ -5,8 +5,9 @@ import {MatSort} from '@angular/material/sort';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
 import {Router} from '@angular/router';
 import {AdminService} from '../../../services/admin.service';
+import {LoaderProvider} from '../../../utilities/providers/loader-provider';
 
-export interface PoolData {
+export interface PoolList {
   rowid: string;
   name: string;
   status: number;
@@ -22,8 +23,7 @@ export interface PoolData {
 })
 export class ListOfPoolsComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['rowid', 'name', 'sport', 'status', 'date_Create', 'color', 'opts'];
-  dataSource: MatTableDataSource<PoolData>;
-  showLoader = false;
+  dataSource: MatTableDataSource<PoolList>;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -32,6 +32,7 @@ export class ListOfPoolsComponent implements OnInit, AfterViewInit {
     private handleAlertsProvider: HandleAlertsProvider,
     private router: Router,
     private admin: AdminService,
+    private loaderValue: LoaderProvider,
   ) {
     this.admin.initToken();
   }
@@ -44,12 +45,11 @@ export class ListOfPoolsComponent implements OnInit, AfterViewInit {
   }
 
   setData() {
-    this.showLoader = true;
+    this.loaderValue.updateIsloading(true);
     this.admin.getPools().subscribe(data => {
-      console.log(data);
+      this.loaderValue.updateIsloading(false);
       if (data.code === 'D200') {
-        this.showLoader = false;
-        this.dataSource = new MatTableDataSource<PoolData>(data.data);
+        this.dataSource = new MatTableDataSource<PoolList>(data.data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
@@ -57,7 +57,6 @@ export class ListOfPoolsComponent implements OnInit, AfterViewInit {
         this.router.navigate(['/auth']);
       }
     }, error => {
-      this.showLoader = false;
       this.handleAlertsProvider.presentGenericAlert(error);
     });
   }
@@ -79,9 +78,9 @@ export class ListOfPoolsComponent implements OnInit, AfterViewInit {
     const dialogRef = this.handleAlertsProvider.presentErrorDialogOk(`Esta seguro de eliminar el usuario <b>${pool.name}</b>?`, 'Aviso!');
     dialogRef.afterClosed().subscribe(response => {
       if (response) {
-        this.showLoader = true;
+        this.loaderValue.updateIsloading(true);
         this.admin.deletePool(pool.rowid).subscribe(res => {
-          this.showLoader = false;
+          this.loaderValue.updateIsloading(false);
           if (res.code === 'D200') {
             this.handleAlertsProvider.presentSnackbarSuccess(`Se ha eliminado el user ${pool.name} con exito!`);
             this.setData();

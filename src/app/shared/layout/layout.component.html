@@ -1,4 +1,4 @@
-<app-loader [loading]="loaderValue" ></app-loader>
+<app-loader [loading]="isLoading" ></app-loader>
 <div class="home__wrapper" *ngIf="!isAdmin">
   <mat-drawer-container class="example-container mat-typography" autosize>
     <mat-drawer #drawer mode="side" disableClose="true" opened="true">
@@ -45,7 +45,6 @@
   <main>
     <app-header
       (toggleValue)="toggleSidenav($event)"
-      (showLoader)="showLoader($event)"
     ></app-header>
     <router-outlet></router-outlet>
     <app-footer></app-footer>

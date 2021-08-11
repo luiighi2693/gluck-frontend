@@ -1,46 +1,50 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {Subscription} from 'rxjs';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AdminService} from '../../../services/admin.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
 import {environment} from '../../../../environments/environment';
+import {LoaderProvider} from '../../../utilities/providers/loader-provider';
 
 @Component({
   selector: 'app-edit-profile',
   templateUrl: './edit-profile.component.html',
   styleUrls: ['./edit-profile.component.css']
 })
-export class EditProfileComponent implements OnInit {
+export class EditProfileComponent implements OnInit, AfterViewInit {
   hide = true;
-  getCurrentUser: Subscription;
   userData: any;
   updateUserForm: FormGroup;
-  showLoader = false;
   id = '';
   imagePath;
 
-  @ViewChild('inputFiles', { static: true }) inputFiles: ElementRef;
+  @ViewChild('inputFiles', {static: true}) inputFiles: ElementRef;
 
   constructor(
-    private user: AdminService,
     private router: Router,
     private route: ActivatedRoute,
     private handleAlertsProvider: HandleAlertsProvider,
     private admin: AdminService,
+    private loaderValue: LoaderProvider,
   ) {
-    this.user.initToken();
+    this.admin.initToken();
     this.imagePath = environment.basePath;
   }
 
   ngOnInit(): void {
     this.id = sessionStorage.getItem('id');
     this.createForm();
+    this.setUserData();
+  }
 
-    this.user.getUser(this.id).subscribe(response => {
+  ngAfterViewInit() {
+    this.updateForm();
+  }
+
+  setUserData() {
+    this.admin.getUser(this.id).subscribe(response => {
       if (response.code === 'D200') {
         this.userData = response.data;
-        this.updateForm();
       } else if (response.code === 'A401' || response.code === 'A302' || response.code === 'A403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
         this.router.navigate(['/auth']);
@@ -63,7 +67,7 @@ export class EditProfileComponent implements OnInit {
       city: new FormControl('', Validators.required),
       code: new FormControl('', Validators.required),
       id: new FormControl('', Validators.required),
-      status: new FormControl('', Validators.required ),
+      status: new FormControl('', Validators.required),
       img: new FormControl('')
     });
   }
@@ -84,12 +88,12 @@ export class EditProfileComponent implements OnInit {
   }
 
   updateUser() {
-    this.showLoader = true;
-    const { name, lastname, username, email, phone, password, address, state, city, code, id, status, img } = this.updateUserForm.value;
+    this.loaderValue.updateIsloading(true);
+    const {name, lastname, username, email, phone, password, address, state, city, code, id, status, img} = this.updateUserForm.value;
     console.warn(this.updateUserForm.value);
-    this.user.editUser(name, lastname, username, email, phone, password, address, state, city, code, id, Number(status), img
+    this.admin.editUser(name, lastname, username, email, phone, password, address, state, city, code, id, Number(status), img
     ).subscribe(response => {
-      this.showLoader = false;
+      this.loaderValue.updateIsloading(false);
       if (response.code === 'D200') {
         this.handleAlertsProvider.presentSnackbarSuccess('Se actualizo la informacion con exito!');
         this.router.navigate(['/admin/clients/list-of-clients']);

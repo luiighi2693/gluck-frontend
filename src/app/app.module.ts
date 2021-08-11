@@ -8,6 +8,7 @@ import { AlertsModule } from './shared/alerts/alerts.module';
 import { SharedModule } from './shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import {NgxCaptchaModule} from 'ngx-captcha';
+import { LoaderProvider } from './utilities/providers/loader-provider';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,7 @@ import {NgxCaptchaModule} from 'ngx-captcha';
     AlertsModule,
     HttpClientModule,
   ],
-  providers: [],
+  providers: [LoaderProvider],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

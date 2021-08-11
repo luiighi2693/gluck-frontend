@@ -58,9 +58,7 @@ export class HeaderComponent implements OnInit {
     const dialogRef = this.handleAlertsProvider.presentErrorDialogOk('Quiere cerrar su sesion?', 'Aviso!');
     dialogRef.afterClosed().subscribe(res => {
       if (res) {
-        this.showLoader.emit(true);
         this.auth.logout(this.token).subscribe(response => {
-          this.showLoader.emit(false);
           if (response.code === 'A200') {
             this.router.navigate(['/auth']);
           }

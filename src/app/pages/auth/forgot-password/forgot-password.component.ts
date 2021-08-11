@@ -3,6 +3,7 @@ import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-p
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {AuthService} from '../../../services/auth.service';
 import {Router} from '@angular/router';
+import {LoaderProvider} from '../../../utilities/providers/loader-provider';
 
 @Component({
   selector: 'app-forgot-password',
@@ -11,14 +12,14 @@ import {Router} from '@angular/router';
 })
 export class ForgotPasswordComponent implements OnInit {
   hide = true;
-  isLoaded = false;
   forgotPasswordForm: FormGroup;
 
   constructor(
     private authService: AuthService,
     private handleAlertsProvider: HandleAlertsProvider,
     private router: Router,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private loaderValue: LoaderProvider,
   ) {
   }
 
@@ -33,9 +34,9 @@ export class ForgotPasswordComponent implements OnInit {
   }
 
   sendPassword() {
-    this.isLoaded = true;
+    this.loaderValue.updateIsloading(true);
     this.authService.recoverPasswordInit(this.forgotPasswordForm.value.email).subscribe(data => {
-      this.isLoaded = false;
+      this.loaderValue.updateIsloading(false);
       if (data.hasError) {
         this.handleAlertsProvider.presentGenericAlert('No se ha encontrado el correo  solicitado... intente de nuevo', 'No se Pudo completar la accion...');
       } else {

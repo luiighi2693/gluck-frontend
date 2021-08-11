@@ -7,6 +7,7 @@ import {Router} from '@angular/router';
 import {AdminService} from '../../../services/admin.service';
 import {AuthService} from '../../../services/auth.service';
 import {environment} from '../../../../environments/environment';
+import {LoaderProvider} from '../../../utilities/providers/loader-provider';
 
 export interface TeamData {
   rowid: string;
@@ -24,7 +25,6 @@ export interface TeamData {
 export class ListOfTeamsComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['rowid', 'image', 'name', 'sport', 'status', 'date_Create', 'opts'];
   dataSource: MatTableDataSource<TeamData>;
-  showLoader = false;
   token: string;
   imagePath;
 
@@ -35,7 +35,7 @@ export class ListOfTeamsComponent implements OnInit, AfterViewInit {
     private handleAlertsProvider: HandleAlertsProvider,
     private router: Router,
     private admin: AdminService,
-    private auth: AuthService,
+    private loaderValue: LoaderProvider,
   ) {
     this.admin.initToken();
     this.imagePath = environment.basePath;
@@ -49,10 +49,10 @@ export class ListOfTeamsComponent implements OnInit, AfterViewInit {
   }
 
   setData() {
-    this.showLoader = true;
+    this.loaderValue.updateIsloading(true);
     this.admin.getTeams().subscribe(data => {
       if (data.code === 'D200') {
-        this.showLoader = false;
+        this.loaderValue.updateIsloading(false);
         this.dataSource = new MatTableDataSource<TeamData>(data.data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -61,7 +61,6 @@ export class ListOfTeamsComponent implements OnInit, AfterViewInit {
         this.router.navigate(['/auth']);
       }
     }, error => {
-      this.showLoader = false;
       this.handleAlertsProvider.presentGenericAlert(error);
     });
   }
@@ -83,9 +82,9 @@ export class ListOfTeamsComponent implements OnInit, AfterViewInit {
     const dialogRef = this.handleAlertsProvider.presentErrorDialogOk(`Esta seguro de eliminar el usuario <b>${team.name}</b>?`, 'Aviso!');
     dialogRef.afterClosed().subscribe(response => {
       if (response) {
-        this.showLoader = true;
+        this.loaderValue.updateIsloading(true);
         this.admin.deleteTeam(team.rowid).subscribe(res => {
-          this.showLoader = false;
+          this.loaderValue.updateIsloading(false);
           if (res.code === 'D200') {
             this.handleAlertsProvider.presentSnackbarSuccess(`Se ha eliminado el Team ${team.name} con exito!`);
             this.setData();

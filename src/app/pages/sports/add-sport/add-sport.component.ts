@@ -4,6 +4,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
 import {AdminService} from '../../../services/admin.service';
 import {environment} from '../../../../environments/environment';
+import {LoaderProvider} from '../../../utilities/providers/loader-provider';
 
 @Component({
   selector: 'app-add-sport',
@@ -13,12 +14,16 @@ import {environment} from '../../../../environments/environment';
 export class AddSportComponent implements OnInit {
   hide = false;
   newSportForm: FormGroup;
-  showLoader = false;
   imagePath;
 
-  @ViewChild('inputFiles', { static: true }) inputFiles: ElementRef;
+  @ViewChild('inputFiles', {static: true}) inputFiles: ElementRef;
 
-  constructor(private router: Router, private admin: AdminService, private handleAlertsProvider: HandleAlertsProvider) {
+  constructor(
+    private router: Router,
+    private admin: AdminService,
+    private handleAlertsProvider: HandleAlertsProvider,
+    private loaderValue: LoaderProvider,
+  ) {
     this.admin.initToken();
     this.imagePath = environment.basePath;
   }
@@ -38,27 +43,21 @@ export class AddSportComponent implements OnInit {
   }
 
   createNewSport() {
-    this.showLoader = true;
+    this.loaderValue.updateIsloading(true);
     const newSport = this.newSportForm.value;
-    console.warn(this.newSportForm.value);
-    this.admin.createSport(
-      newSport.name,
-      newSport.description,
-      newSport.date_Create,
-      Number(newSport.status),
-      newSport.img
-    ).subscribe(response => {
-      this.showLoader = false;
-      if (response.code === 'D200') {
-        this.handleAlertsProvider.presentSnackbarSuccess('Se ha creado el usuario con exito!');
-        this.router.navigate(['/admin/sports/list-of-sports']);
-      } else if (response.code === 'A401' || response.code === 'A302' || response.code === 'A403') {
-        this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
-        this.router.navigate(['/auth']);
-      }
-    }, err => {
-      this.handleAlertsProvider.presentGenericAlert(err);
-    });
+    this.admin.createSport(newSport.name, newSport.description, newSport.date_Create, Number(newSport.status), newSport.img)
+      .subscribe(response => {
+        this.loaderValue.updateIsloading(false);
+        if (response.code === 'D200') {
+          this.handleAlertsProvider.presentSnackbarSuccess('Se ha creado el usuario con exito!');
+          this.router.navigate(['/admin/sports/list-of-sports']);
+        } else if (response.code === 'A401' || response.code === 'A302' || response.code === 'A403') {
+          this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
+          this.router.navigate(['/auth']);
+        }
+      }, err => {
+        this.handleAlertsProvider.presentGenericAlert(err);
+      });
   }
 
   handleUpload(event) {

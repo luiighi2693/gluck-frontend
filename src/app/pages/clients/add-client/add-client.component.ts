@@ -4,6 +4,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
 import {AdminService} from '../../../services/admin.service';
 import {environment} from '../../../../environments/environment';
+import {LoaderProvider} from '../../../utilities/providers/loader-provider';
 
 @Component({
   selector: 'app-add-client',
@@ -13,14 +14,17 @@ import {environment} from '../../../../environments/environment';
 export class AddClientComponent implements OnInit {
   hide = true;
   newUserForm: FormGroup;
-  showLoader = false;
   imagePath;
 
   @ViewChild('inputFiles', { static: true }) inputFiles: ElementRef;
 
-  constructor(private router: Router, private user: AdminService, private handleAlertsProvider: HandleAlertsProvider,
-              private admin: AdminService) {
-    this.user.initToken();
+  constructor(
+    private router: Router,
+    private handleAlertsProvider: HandleAlertsProvider,
+    private admin: AdminService,
+    private loaderValue: LoaderProvider,
+  ) {
+    this.admin.initToken();
     this.imagePath = environment.basePath;
   }
 
@@ -46,10 +50,10 @@ export class AddClientComponent implements OnInit {
   }
 
   createNewUser() {
-    this.showLoader = true;
+    this.loaderValue.updateIsloading(true);
     const newUser = this.newUserForm.value;
     console.warn(this.newUserForm.value);
-    this.user.createUser(
+    this.admin.createUser(
       newUser.name,
       newUser.lastname,
       newUser.username,
@@ -63,7 +67,7 @@ export class AddClientComponent implements OnInit {
       Number(newUser.status),
       newUser.img
     ).subscribe(response => {
-      this.showLoader = false;
+      this.loaderValue.updateIsloading(false);
       if (response.code === 'D200') {
         this.handleAlertsProvider.presentSnackbarSuccess('Se ha creado el usuario con exito!');
         this.router.navigate(['/admin/clients/list-of-clients']);

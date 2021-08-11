@@ -4,6 +4,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
 import {AdminService} from '../../../services/admin.service';
 import {environment} from '../../../../environments/environment';
+import {LoaderProvider} from '../../../utilities/providers/loader-provider';
 
 @Component({
   selector: 'app-add-team',
@@ -13,13 +14,17 @@ import {environment} from '../../../../environments/environment';
 export class AddTeamComponent implements OnInit {
   hide = false;
   newTeamForm: FormGroup;
-  showLoader = false;
   sports: any;
   imagePath;
 
   @ViewChild('inputFiles', { static: true }) inputFiles: ElementRef;
 
-  constructor(private router: Router, private admin: AdminService, private handleAlertsProvider: HandleAlertsProvider) {
+  constructor(
+    private router: Router,
+    private admin: AdminService,
+    private handleAlertsProvider: HandleAlertsProvider,
+    private loaderValue: LoaderProvider,
+  ) {
     this.admin.initToken();
     this.imagePath = environment.basePath;
   }
@@ -40,18 +45,11 @@ export class AddTeamComponent implements OnInit {
   }
 
   createNewTeam() {
-    this.showLoader = true;
+    this.loaderValue.updateIsloading(true);
     const newTeam = this.newTeamForm.value;
-    console.warn(this.newTeamForm.value);
-    this.admin.createTeam(
-      newTeam.name,
-      newTeam.description,
-      newTeam.date_Create,
-      Number(newTeam.status),
-      newTeam.asociatedSport,
-      newTeam.img
-    ).subscribe(response => {
-      this.showLoader = false;
+    this.admin.createTeam(newTeam.name, newTeam.description, newTeam.date_Create, Number(newTeam.status), newTeam.asociatedSport,
+      newTeam.img).subscribe(response => {
+      this.loaderValue.updateIsloading(false);
       if (response.code === 'D200') {
         this.handleAlertsProvider.presentSnackbarSuccess('Se ha creado el usuario con exito!');
         this.router.navigate(['/admin/teams/list-of-teams']);
@@ -65,7 +63,9 @@ export class AddTeamComponent implements OnInit {
   }
 
   getSports() {
+    this.loaderValue.updateIsloading(true);
     this.admin.getSports().subscribe(response => {
+      this.loaderValue.updateIsloading(false);
       if (response.code === 'D200') {
         this.sports = response.data;
       } else if (response.code === 'A401' || response.code === 'A302' || response.code === 'A403') {

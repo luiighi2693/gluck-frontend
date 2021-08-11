@@ -5,6 +5,7 @@ import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-p
 import {Router} from '@angular/router';
 import {AdminService} from '../../../services/admin.service';
 import * as moment from 'moment';
+import {LoaderProvider} from '../../../utilities/providers/loader-provider';
 
 export interface PeriodicElement {
   name: string;
@@ -30,7 +31,6 @@ export class MyPoolsComponent implements OnInit, AfterViewInit {
   dataSourceProgress = new MatTableDataSource<PeriodicElement>();
   dataSourceHistorical = new MatTableDataSource<PeriodicElement>();
 
-  showLoader = false;
   user: string;
 
   registered: PeriodicElement[] = [];
@@ -41,16 +41,20 @@ export class MyPoolsComponent implements OnInit, AfterViewInit {
     private handleAlertsProvider: HandleAlertsProvider,
     private router: Router,
     private admin: AdminService,
+    private loaderValue: LoaderProvider,
   ) {
     this.admin.initToken();
   }
 
   ngOnInit(): void {
     this.user = sessionStorage.getItem('username');
-    this.showLoader = true;
+    this.setMyPoolsData();
+  }
+
+  setMyPoolsData() {
+    this.loaderValue.updateIsloading(true);
     this.admin.getMyPools(sessionStorage.getItem('id')).subscribe(data => {
-      console.log(data);
-      this.showLoader = false;
+      this.loaderValue.updateIsloading(false);
       if (data.code === 'D200') {
 
         data.registered.forEach(row => {
@@ -89,10 +93,6 @@ export class MyPoolsComponent implements OnInit, AfterViewInit {
           });
         });
 
-        console.log(this.registered);
-        console.log(this.progress);
-        console.log(this.historical);
-
         this.dataSourceRegistered = new MatTableDataSource<PeriodicElement>(this.registered);
         this.dataSourceProgress = new MatTableDataSource<PeriodicElement>(this.progress);
         this.dataSourceHistorical = new MatTableDataSource<PeriodicElement>(this.historical);
@@ -106,11 +106,8 @@ export class MyPoolsComponent implements OnInit, AfterViewInit {
         this.router.navigate(['/auth']);
       }
     }, error => {
-      this.showLoader = false;
       this.handleAlertsProvider.presentGenericAlert(error);
     });
-
-
   }
 
   startCounter(list, dataSource) {
@@ -146,7 +143,6 @@ export class MyPoolsComponent implements OnInit, AfterViewInit {
   }
 
   registerToPool(id, name) {
-    console.log(id, name);
     sessionStorage.setItem('poolName', name);
     this.router.navigate([`/home/pools/pools-results/${id}`]);
   }

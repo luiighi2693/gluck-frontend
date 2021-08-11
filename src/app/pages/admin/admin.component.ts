@@ -3,6 +3,7 @@ import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {HandleAlertsProvider} from '../../utilities/providers/handle-alerts-provider';
 import {Router} from '@angular/router';
 import {AdminService} from '../../services/admin.service';
+import {LoaderProvider} from '../../utilities/providers/loader-provider';
 
 @Component({
   selector: 'app-admin',
@@ -11,7 +12,6 @@ import {AdminService} from '../../services/admin.service';
 })
 export class AdminComponent implements OnInit {
   emailForm: FormGroup;
-  showLoader = false;
   users = [];
   exampleData = [
     {
@@ -93,6 +93,7 @@ export class AdminComponent implements OnInit {
     private router: Router,
     private admin: AdminService,
     private fb: FormBuilder,
+    private loaderValue: LoaderProvider,
   ) {
     this.admin.initToken();
   }
@@ -113,11 +114,11 @@ export class AdminComponent implements OnInit {
 
   sendEmail() {
     // console.log(this.emailForm.value);
-    this.showLoader = true;
+    this.loaderValue.updateIsloading(true);
     const emailForm = this.emailForm.value;
     // console.warn(emailForm);
     this.admin.sendEmail(emailForm.category, emailForm.subject, emailForm.manualSelection, emailForm.message).subscribe(res => {
-      this.showLoader = false;
+      this.loaderValue.updateIsloading(false);
       if (res.code === 'D200') {
         this.handleAlertsProvider.presentSnackbarSuccess('Se ha enviado el mensaje con exito!');
         this.emailForm.reset();
@@ -131,9 +132,9 @@ export class AdminComponent implements OnInit {
   }
 
   setUsersData() {
-    this.showLoader = true;
+    this.loaderValue.updateIsloading(true);
     this.admin.getUsers().subscribe(res => {
-      this.showLoader = false;
+      this.loaderValue.updateIsloading(false);
       if (res.code === 'D200') {
         this.users = res.data;
       } else if (res.code === 'D401' || res.code === 'D302' || res.code === 'D403') {

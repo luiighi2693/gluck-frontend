@@ -5,6 +5,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
 import {Router} from '@angular/router';
 import {AdminService} from '../../../services/admin.service';
+import {LoaderProvider} from '../../../utilities/providers/loader-provider';
 
 export interface UserData {
   rowid: string;
@@ -24,7 +25,6 @@ export interface UserData {
 export class AdminTransactionsComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['rowid', 'username', 'amount', 'coins', 'date_Create', 'description'];
   dataSource: MatTableDataSource<UserData>;
-  showLoader = false;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -33,6 +33,7 @@ export class AdminTransactionsComponent implements OnInit, AfterViewInit {
     private handleAlertsProvider: HandleAlertsProvider,
     private router: Router,
     private admin: AdminService,
+    private loaderValue: LoaderProvider,
   ) {
     this.admin.initToken();
   }
@@ -45,11 +46,11 @@ export class AdminTransactionsComponent implements OnInit, AfterViewInit {
   }
 
   setData() {
-    this.showLoader = true;
+    this.loaderValue.updateIsloading(true);
     this.admin.getTransactions().subscribe(data => {
+      this.loaderValue.updateIsloading(false);
       if (data.code === 'D200') {
         console.log(data);
-        this.showLoader = false;
         this.dataSource = new MatTableDataSource<UserData>(data.data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -58,7 +59,6 @@ export class AdminTransactionsComponent implements OnInit, AfterViewInit {
         this.router.navigate(['/auth']);
       }
     }, error => {
-      this.showLoader = false;
       this.handleAlertsProvider.presentGenericAlert(error);
     });
   }

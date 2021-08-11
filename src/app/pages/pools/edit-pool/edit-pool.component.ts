@@ -8,6 +8,7 @@ import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-p
 import {ActivatedRoute, Router} from '@angular/router';
 import {AdminService} from '../../../services/admin.service';
 import {environment} from '../../../../environments/environment';
+import {LoaderProvider} from '../../../utilities/providers/loader-provider';
 
 export interface UserData {
   rowid: string;
@@ -31,8 +32,6 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
   matches: FormGroup;
   results: FormGroup;
   endPools: FormGroup;
-  showLoader = false;
-  amountOfMatches: number;
   doPenaltiesExist: number;
   arrayOfMatches = [];
   limitOfUsers: any;
@@ -52,7 +51,7 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
 
   imagePath;
 
-  @ViewChild('inputFiles', { static: true }) inputFiles: ElementRef;
+  @ViewChild('inputFiles', {static: true}) inputFiles: ElementRef;
 
   awardType;
 
@@ -62,6 +61,7 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
     private admin: AdminService,
     private fb: FormBuilder,
     private route: ActivatedRoute,
+    private loaderValue: LoaderProvider,
   ) {
     this.admin.initToken();
     this.imagePath = environment.basePath;
@@ -90,9 +90,9 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
   }
 
   getUsers() {
-    this.showLoader = true;
+    this.loaderValue.updateIsloading(true);
     this.admin.getUsers().subscribe(data => {
-      this.showLoader = false;
+      this.loaderValue.updateIsloading(false);
       if (data.code === 'D200') {
         this.dataSource = new MatTableDataSource<UserData>(data.data);
         this.dataSource.paginator = this.paginator;
@@ -102,48 +102,45 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
         this.router.navigate(['/auth']);
       }
     }, error => {
-      this.showLoader = false;
       this.handleAlertsProvider.presentGenericAlert(error);
     });
   }
 
   setTeamsData() {
-    this.showLoader = true;
+    this.loaderValue.updateIsloading(true);
     this.admin.getTeams().subscribe(data => {
+      this.loaderValue.updateIsloading(false);
       if (data.code === 'D200') {
-        this.showLoader = false;
         this.teams = data.data;
       } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
         this.router.navigate(['/auth']);
       }
     }, error => {
-      this.showLoader = false;
       this.handleAlertsProvider.presentGenericAlert(error);
     });
   }
 
   setSportsData() {
-    this.showLoader = true;
+    this.loaderValue.updateIsloading(true);
     this.admin.getSports().subscribe(data => {
+      this.loaderValue.updateIsloading(false);
       if (data.code === 'D200') {
-        this.showLoader = false;
         this.sports = data.data;
       } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
         this.router.navigate(['/auth']);
       }
     }, error => {
-      this.showLoader = false;
       this.handleAlertsProvider.presentGenericAlert(error);
     });
   }
 
 
   getPool() {
-    this.showLoader = true;
+    this.loaderValue.updateIsloading(true);
     this.admin.getPoolForEdit(this.currentPool).subscribe(data => {
-      this.showLoader = false;
+      this.loaderValue.updateIsloading(false);
       if (data.code === 'D200') {
         console.log(data);
         this.selection = new SelectionModel<UserData>(true, data.data.usersForPool);
@@ -155,7 +152,6 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
         this.router.navigate(['/auth']);
       }
     }, error => {
-      this.showLoader = false;
       this.handleAlertsProvider.presentGenericAlert(error);
     });
   }
@@ -168,21 +164,6 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
       this.dataSource.paginator.firstPage();
     }
   }
-
-  // /** Whether the number of selected elements matches the total number of rows. */
-  // isAllSelected() {
-  //   const numSelected = this.selection.selected.length;
-  //   const numRows = this.dataSource.data.length;
-  //   return numSelected === numRows;
-  // }
-  //
-  // /** Selects all rows if they are not all selected; otherwise clear selection. */
-  // masterToggle() {
-  //   this.isAllSelected() ?
-  //     this.selection.clear() :
-  //     this.dataSource.data.forEach(row => this.selection.select(row));
-  // }
-
 
   private createForms() {
     this.config = this.fb.group({
@@ -244,10 +225,6 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
     this.endPools.get('awardValue').setValue(this.poolData.awardValue);
   }
 
-  show() {
-    console.log(this.config.value.color.hex);
-  }
-
   makeMatches() {
     this.poolData.matchesInfo.forEach(match => {
       match.time = match.time.split(':')[0] + ':' + match.time.split(':')[1] + ' ' + (Number(match.time.split(':')[0]) > 11 ? 'pm' : 'am');
@@ -267,8 +244,9 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
   }
 
   registerPool() {
-    this.showLoader = true;
-    const {name, sport, color, matches, usersLimit, status, penalty, groups, teamsPerGroup, type, league, password, rules} = this.config.value;
+    this.loaderValue.updateIsloading(true);
+    const {name, sport, color, matches, usersLimit, status, penalty, groups, teamsPerGroup, type, league, password,
+      rules } = this.config.value;
     const {amountInput, coinsInput, dateFinish, timeFinish, awardType, awardValue} = this.endPools.value;
     // convert all times in good format
     this.arrayOfMatches.forEach(match => {
@@ -281,62 +259,10 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
     const matchesInfo = this.arrayOfMatches;
     const usersForPool = this.selection.selected;
     const {result, winner, draw, loser} = this.results.value;
-    // const colorValue = color.hex.includes('#') ? color.hex : `#${color.hex}`;
-    console.log({
-      name,
-      sport,
-      color,
-      matches,
-      usersLimit,
-      status,
-      penalty,
-      groups,
-      teamsPerGroup,
-      type,
-      league,
-      password,
-      rules,
-      matchesInfo,
-      usersForPool,
-      result,
-      winner,
-      draw,
-      loser,
-      amountInput,
-      coinsInput,
-      dateFinish,
-      timeFinish,
-      awardType,
-      awardValue
-    });
-    this.admin.createAndUpdatePool(
-      name,
-      sport,
-      color,
-      matches,
-      usersLimit,
-      status,
-      penalty,
-      groups,
-      teamsPerGroup,
-      type,
-      league,
-      password,
-      rules,
-      matchesInfo,
-      usersForPool,
-      result,
-      winner,
-      draw,
-      loser,
-      amountInput,
-      coinsInput,
-      dateFinish,
-      timeFinish,
-      awardType,
-      awardValue,
+    this.admin.createAndUpdatePool(name, sport, color, matches, usersLimit, status, penalty, groups, teamsPerGroup, type, league, password,
+      rules, matchesInfo, usersForPool, result, winner, draw, loser, amountInput, coinsInput, dateFinish, timeFinish, awardType, awardValue,
       'update', this.currentPool).subscribe(data => {
-      this.showLoader = false;
+      this.loaderValue.updateIsloading(false);
       if (data.code === 'D200') {
         this.handleAlertsProvider.presentSnackbarSuccess('Se Actualizo la quiniela con exito!');
         this.router.navigate(['admin/pools/list-of-pools']);
@@ -345,7 +271,6 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
         this.router.navigate(['/auth']);
       }
     }, error => {
-      this.showLoader = false;
       this.handleAlertsProvider.presentGenericAlert(error);
     });
   }

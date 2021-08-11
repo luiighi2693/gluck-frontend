@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {LoaderProvider} from '../../utilities/providers/loader-provider';
 
 @Component({
   selector: 'app-layout',
@@ -16,12 +17,17 @@ export class LayoutComponent implements OnInit {
   isAdmin: boolean;
   name: string;
   option = false;
-  loaderValue = false;
+  isLoading: any;
 
-  constructor() {
+  constructor(
+    private loaderValue: LoaderProvider,
+  ) {
   }
 
   ngOnInit(): void {
+    this.loaderValue.getIsLoadingValue().subscribe(res => {
+      this.isLoading = res;
+    });
     this.isExpanded = true;
     this.isAdmin = JSON.parse(sessionStorage.getItem('isAdmin'));
     this.name = sessionStorage.getItem('username');
@@ -53,9 +59,5 @@ export class LayoutComponent implements OnInit {
 
   toggleTeamsOptions() {
     this.teamOptions = !this.teamOptions;
-  }
-
-  showLoader($event: boolean) {
-    this.loaderValue = $event;
   }
 }
