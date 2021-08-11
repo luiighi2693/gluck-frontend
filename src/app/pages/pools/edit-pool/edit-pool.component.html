@@ -69,7 +69,7 @@
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Limite de Usuarios</mat-label>
                 <input matInput type="number" placeholder="15" [(ngModel)]="limitOfUsers" formControlName="usersLimit"
-                       autocomplete="off" >
+                       autocomplete="off" required>
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
                 </mat-error>
@@ -352,11 +352,16 @@
             </ng-container>
 
             <!-- Fruit Column -->
-            <ng-container matColumnDef="phone">
-              <th class="phone" mat-header-cell *matHeaderCellDef mat-sort-header> Telefono</th>
-              <td class="phone" mat-cell *matCellDef="let row"> {{row.phone}} </td>
+            <ng-container matColumnDef="amount">
+              <th class="phone" mat-header-cell *matHeaderCellDef mat-sort-header> Monto</th>
+              <td class="phone" mat-cell *matCellDef="let row"> {{row.amount}} </td>
             </ng-container>
 
+            <!-- Fruit Column -->
+            <ng-container matColumnDef="coins">
+              <th class="lastLogin" mat-header-cell *matHeaderCellDef mat-sort-header> Glucks</th>
+              <td class="lastLogin" mat-cell *matCellDef="let row"> {{row.coins}} </td>
+            </ng-container>
             <!-- Fruit Column -->
             <ng-container matColumnDef="status">
               <th class="status" mat-header-cell *matHeaderCellDef mat-sort-header> Estatus</th>
@@ -364,12 +369,6 @@
                 <div [ngClass]="{'active': row.status === 1, 'inactive': row.status === 0}"><p
                   class="m-0">{{row.status === 1 ? 'Activo' : 'Inactivo' }}</p></div>
               </td>
-            </ng-container>
-
-            <!-- Fruit Column -->
-            <ng-container matColumnDef="date_Access">
-              <th class="lastLogin" mat-header-cell *matHeaderCellDef mat-sort-header> Ultimo Acceso</th>
-              <td class="lastLogin" mat-cell *matCellDef="let row"> {{row.date_Access}} </td>
             </ng-container>
 
             <!-- Fruit Column -->
@@ -385,7 +384,7 @@
                 <mat-checkbox (click)="$event.stopPropagation()"
                               color="primary"
                               (change)="$event ? selection.toggle(row.rowid) : null"
-                              [checked]="selection.isSelected(row.rowid)">
+                              [checked]="selection.isSelected(row.rowid)" [disabled]="getExistInUsersSelected(row.rowid)">
                 </mat-checkbox>
               </td>
             </ng-container>
@@ -480,7 +479,7 @@
           </div>
           <div>
             <button mat-flat-button matStepperPrevious>Atras</button>
-            <button mat-flat-button [disabled]="!endPools.valid" matStepperNext class="action-button">Siguiente</button>
+            <button mat-flat-button [disabled]="!endPools.valid" (click)="validateUsers(stepper)" class="action-button">Siguiente</button>
           </div>
         </form>
       </mat-step>

@@ -150,4 +150,8 @@ export class MyPoolsComponent implements OnInit, AfterViewInit {
   private formatDate(n: number) {
     return n < 10 ? ('0' + n) : n;
   }
+
+  goToEditResult(id) {
+    this.router.navigate([`/home/pools/pool-register/${id}`]);
+  }
 }

@@ -16,7 +16,8 @@
   <div class="profile__wrapper mb-3">
     <!--    <div class="row">-->
     <!--      <div class="col-12 col-md-8 offset-md-2">-->
-    <mat-stepper orientation="vertical" #stepper>
+    <mat-stepper orientation="vertical" linear #stepper>
+<!--    <mat-stepper orientation="vertical" #stepper>-->
       <mat-step [stepControl]="config">
         <form [formGroup]="config">
           <ng-template matStepLabel>Configuracion</ng-template>
@@ -70,7 +71,7 @@
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Limite de Usuarios</mat-label>
                 <input matInput type="number" placeholder="15" [(ngModel)]="limitOfUsers" formControlName="usersLimit"
-                       autocomplete="off">
+                       autocomplete="off" required>
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
                 </mat-error>
@@ -492,7 +493,7 @@
           </div>
           <div>
             <button mat-flat-button matStepperPrevious>Atras</button>
-            <button mat-flat-button [disabled]="!endPools.valid" matStepperNext class="action-button">Siguiente</button>
+            <button mat-flat-button [disabled]="!endPools.valid" (click)="validateUsers(stepper)" class="action-button">Siguiente</button>
           </div>
         </form>
       </mat-step>

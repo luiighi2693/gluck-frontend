@@ -29,6 +29,7 @@ export interface UserData {
 export class AddPoolComponent implements OnInit, AfterViewInit {
   config: FormGroup;
   users: FormGroup;
+  usersData = [];
   matches: FormGroup;
   poolResults: FormGroup;
   endPools: FormGroup;
@@ -80,6 +81,7 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
     this.admin.getUsers().subscribe(data => {
       this.loaderValue.updateIsloading(false);
       if (data.code === 'D200') {
+        this.usersData = data.data;
         this.dataSource = new MatTableDataSource<UserData>(data.data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -137,7 +139,7 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
       sport: ['', Validators.required],
       color: ['', Validators.required],
       matches: ['', Validators.required],
-      usersLimit: [''],
+      usersLimit: ['', Validators.required],
       status: ['', Validators.required],
       penalty: ['', Validators.required],
       groups: [''],
@@ -181,14 +183,32 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
   }
 
   showSelection(stepper) {
-    if (!this.selection.hasValue()) {
-      this.handleAlertsProvider.presentSnackbarError('Selecciona los usuarios participantes!');
-    } else if (this.selection.selected.length > this.limitOfUsers) {
+    if (this.selection.selected.length > this.limitOfUsers) {
       this.handleAlertsProvider.presentGenericAlert(`Has superado el limite de participantes en esta quiniela, el limite es <b>${this.limitOfUsers}</b>`, 'Aviso!');
     } else {
       stepper.next();
     }
     console.log(this.selection.selected.length);
+  }
+
+  validateUsers(stepper) {
+    const {amountInput, coinsInput, dateFinish, timeFinish, awardType, awardValue} = this.endPools.value;
+    let isValid = true;
+    // verificamos que todos los usuarios cumplan los requisitos de ingreso de la quiniela
+    const users = this.selection.selected;
+
+    users.forEach(userId => {
+      const user = this.usersData.find(x => x.rowid === userId);
+      if (user.amount < amountInput || user.coins < coinsInput) {
+        isValid = false;
+      }
+    });
+
+    if (isValid) {
+      stepper.next();
+    } else {
+      this.handleAlertsProvider.presentGenericAlert(`Uno de los usuarios no cumple los requisitos minimos para el ingreso de la quiniela!`, 'Aviso!');
+    }
   }
 
   resetForm(stepper) {
@@ -200,6 +220,11 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
         stepper.reset();
       }
     });
+  }
+
+  showUsers() {
+    const usersForPool = this.selection.selected;
+    console.log(usersForPool);
   }
 
   registerPool() {
