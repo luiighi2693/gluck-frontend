@@ -404,7 +404,7 @@
 
         <div class="mt-5">
           <button mat-flat-button matStepperPrevious>Atras</button>
-          <button mat-flat-button matStepperNext class="action-button">Siguiente</button>
+          <button mat-flat-button (click)="showSelection(stepper)" class="action-button">Siguiente</button>
         </div>
       </mat-step>
       <mat-step [stepControl]="endPools">

@@ -309,4 +309,15 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
       this.endPools.get('awardValue').setValue(0);
     }
   }
+
+  showSelection(stepper) {
+    if (!this.selection.hasValue()) {
+      this.handleAlertsProvider.presentSnackbarError('Selecciona los usuarios participantes!');
+    } else if (this.selection.selected.length > this.limitOfUsers) {
+      this.handleAlertsProvider.presentGenericAlert(`Has superado el limite de participantes en esta quiniela, el limite es <b>${this.limitOfUsers}</b>`, 'Aviso!');
+    } else {
+      stepper.next();
+    }
+    console.log(this.selection.selected.length);
+  }
 }
