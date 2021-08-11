@@ -1,13 +1,10 @@
-import { Component, ElementRef, ViewChild, OnInit } from '@angular/core';
-import {COMMA, ENTER} from '@angular/cdk/keycodes';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-// import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
-import {MatChipInputEvent} from '@angular/material/chips';
-import {Observable} from 'rxjs';
+import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+
 import {AdminService} from '../../../services/admin.service';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
 import {Router} from '@angular/router';
-// import {map, startWith} from 'rxjs/operators';
+import {LoaderProvider} from '../../../utilities/providers/loader-provider';
 
 @Component({
   selector: 'app-profile-form',
@@ -16,30 +13,27 @@ import {Router} from '@angular/router';
 })
 export class ProfileFormComponent implements OnInit {
 
-  // selectable = true;
-  // removable = true;
-  // separatorKeysCodes: number[] = [ENTER, COMMA];
-  // sportsCtrl = new FormControl();
-  // filteredSports: Observable<string[]>;
-  // sports: string[] = ['Futbol'];
-  // allSports: string[] = ['Futbol', 'Beisbol', 'Baloncesto', 'Formula 1'];
-
-  // @ViewChild('sportsInput') sportsInput: ElementRef<HTMLInputElement>;
-
   updateProfileForm: FormGroup;
   hide = true;
   userData = null;
   imageData = null;
-  isLoaded = false;
   id: string;
 
-  @ViewChild('inputFiles', { static: true }) inputFiles: ElementRef;
+  @ViewChild('inputFiles', {static: true}) inputFiles: ElementRef;
 
-  constructor(private admin: AdminService, private handleAlertsProvider: HandleAlertsProvider, private router: Router) {
+  constructor(
+    private admin: AdminService,
+    private handleAlertsProvider: HandleAlertsProvider,
+    private router: Router,
+    private loaderValue: LoaderProvider,
+  ) {
     this.admin.initToken();
-    // this.filteredSports = this.sportsCtrl.valueChanges.pipe(
-    //   startWith(null),
-    //   map((fruit: string | null) => fruit ? this._filter(fruit) : this.allSports.slice()));
+  }
+
+  ngOnInit(): void {
+    this.id = sessionStorage.getItem('id');
+    this.getCurrentUser();
+    this.createForm();
   }
 
   private createForm() {
@@ -62,30 +56,28 @@ export class ProfileFormComponent implements OnInit {
       state: new FormControl('', Validators.required),
       city: new FormControl('', Validators.required),
       code: new FormControl('', Validators.required),
-      status: new FormControl('', Validators.required)
+      status: new FormControl('',)
     });
-
   }
-  ngOnInit(): void {
-    this.id =  sessionStorage.getItem('id');
-    this.createForm();
-    this.isLoaded = true;
+
+  getCurrentUser() {
+    this.loaderValue.updateIsloading(true);
     this.admin.getUser(this.id).subscribe(response => {
-      this.isLoaded = false;
+      this.loaderValue.updateIsloading(false);
       if (response.code === 'D200') {
         this.userData = response.data;
         this.updateProfileForm.setValue(this.userData);
 
         if (this.userData.img !== null) {
-          this.isLoaded = true;
+          this.loaderValue.updateIsloading(true);
           this.admin.getFile(this.userData.img).subscribe(responseImg => {
-            this.isLoaded = false;
+            this.loaderValue.updateIsloading(false);
             this.imageData = responseImg;
           }, err => {
             this.handleAlertsProvider.presentGenericAlert(err);
           });
         }
-      }  else if (response.code === 'A401' || response.code === 'A302' || response.code === 'A403') {
+      } else if (response.code === 'A401' || response.code === 'A302' || response.code === 'A403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
         this.router.navigate(['/auth']);
       }
@@ -95,8 +87,8 @@ export class ProfileFormComponent implements OnInit {
   }
 
   submitForm() {
-    alert(JSON.stringify(this.updateProfileForm.value));
-    console.warn(this.updateProfileForm.value);
+    const { rowid, type, fk_sport, img, ranking, date_Access, date_Create, contador, username,
+      name, lastname, password, email, phone, address, state, city, code, status} = this.updateProfileForm.value;
   }
 
   handleUpload(event) {
@@ -104,9 +96,7 @@ export class ProfileFormComponent implements OnInit {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = async () => {
-      // const imageCompressed = await this.compressImage(reader.result, 1200, 600);
       this.imageData = reader.result;
-      // this.imageType = event.target.files[0].type;
     };
   }
 
@@ -114,38 +104,4 @@ export class ProfileFormComponent implements OnInit {
     const el: HTMLElement = this.inputFiles.nativeElement as HTMLElement;
     el.click();
   }
-
-  // addSport(event: MatChipInputEvent): void {
-  //   const value = (event.value || '').trim();
-  //
-  //   // Add our fruit
-  //   if (value) {
-  //     this.sports.push(value);
-  //   }
-  //
-  //   // Clear the input value
-  //   event.chipInput!.clear();
-  //
-  //   this.sportsCtrl.setValue(null);
-  // }
-
-  // removeSport(sport: string): void {
-  //   const index = this.sports.indexOf(sport);
-  //
-  //   if (index >= 0) {
-  //     this.sports.splice(index, 1);
-  //   }
-  // }
-  //
-  // selected(event: MatAutocompleteSelectedEvent): void {
-  //   this.sports.push(event.option.viewValue);
-  //   this.sportsInput.nativeElement.value = '';
-  //   this.sportsCtrl.setValue(null);
-  // }
-
-  // private _filter(value: string): string[] {
-  //   const filterValue = value.toLowerCase();
-  //
-  //   return this.allSports.filter(fruit => fruit.toLowerCase().includes(filterValue));
-  // }
 }

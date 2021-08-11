@@ -7,10 +7,14 @@ import {Router} from '@angular/router';
 import {AdminService} from '../../../services/admin.service';
 import {environment} from '../../../../environments/environment';
 import {MatDialog} from '@angular/material/dialog';
+import {LoaderProvider} from '../../../utilities/providers/loader-provider';
 
 
-export interface UserData {
+export interface Client {
   rowid: string;
+  image: string;
+  amount: string;
+  coins: string;
   username: string;
   name: string;
   email: string;
@@ -26,8 +30,7 @@ export interface UserData {
 })
 export class ListOfClientsComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['rowid', 'image', 'username', 'amount', 'coins', 'email', 'phone', 'status', 'date_Access', 'opts'];
-  dataSource: MatTableDataSource<UserData>;
-  showLoader = false;
+  dataSource: MatTableDataSource<Client>;
   imagePath;
   amountToRecharge = '';
 
@@ -39,6 +42,7 @@ export class ListOfClientsComponent implements OnInit, AfterViewInit {
     private router: Router,
     private admin: AdminService,
     private dialog: MatDialog,
+    private loaderValue: LoaderProvider,
   ) {
     this.admin.initToken();
     this.imagePath = environment.basePath;
@@ -52,12 +56,12 @@ export class ListOfClientsComponent implements OnInit, AfterViewInit {
   }
 
   setData() {
-    this.showLoader = true;
+    this.loaderValue.updateIsloading(true);
     this.admin.getUsers().subscribe(data => {
+      this.loaderValue.updateIsloading(false);
       if (data.code === 'D200') {
-        console.log(data)
-        this.showLoader = false;
-        this.dataSource = new MatTableDataSource<UserData>(data.data);
+        console.log(data);
+        this.dataSource = new MatTableDataSource<Client>(data.data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
@@ -65,7 +69,6 @@ export class ListOfClientsComponent implements OnInit, AfterViewInit {
         this.router.navigate(['/auth']);
       }
     }, error => {
-      this.showLoader = false;
       this.handleAlertsProvider.presentGenericAlert(error);
     });
   }
@@ -87,9 +90,9 @@ export class ListOfClientsComponent implements OnInit, AfterViewInit {
     const dialogRef = this.handleAlertsProvider.presentErrorDialogOk(`Esta seguro de eliminar el usuario <b>${user.name}</b>?`, 'Aviso!');
     dialogRef.afterClosed().subscribe(response => {
       if (response) {
-        this.showLoader = true;
+        this.loaderValue.updateIsloading(true);
         this.admin.deleteUser(user.rowid).subscribe(res => {
-          this.showLoader = false;
+          this.loaderValue.updateIsloading(false);
           if (res.code === 'D200') {
             this.handleAlertsProvider.presentSnackbarSuccess(`Se ha eliminado el user ${user.name} con exito!`);
             this.setData();
@@ -111,12 +114,10 @@ export class ListOfClientsComponent implements OnInit, AfterViewInit {
       `${type === 'glucks' ? 'Recargar Glucks' : 'Recargar Dinero'}`,
       this.amountToRecharge);
     dialogRef.afterClosed().subscribe(result => {
-      // console.log(result);
       if (result !== '') {
-        // console.log(this.amountToRecharge);
-        this.showLoader = true;
+        this.loaderValue.updateIsloading(true);
         this.admin.recharge(id, type, result).subscribe(res => {
-          this.showLoader = false;
+          this.loaderValue.updateIsloading(false);
           if (res.code === 'D200') {
             this.handleAlertsProvider.presentSnackbarSuccess(
               `Se ha recargado con exito la cantidad de ${result} ${type === 'amount' ? 'Dolares' : 'Coins'}`);

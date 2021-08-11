@@ -3,6 +3,7 @@ import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-p
 import {ActivatedRoute, Router} from '@angular/router';
 import {AdminService} from '../../../services/admin.service';
 import {environment} from '../../../../environments/environment';
+import {LoaderProvider} from '../../../utilities/providers/loader-provider';
 
 @Component({
   selector: 'app-pool-result',
@@ -10,42 +11,44 @@ import {environment} from '../../../../environments/environment';
   styleUrls: ['./my-results.component.css']
 })
 export class MyResultsComponent implements OnInit, AfterViewInit {
-  showLoader = false;
   data = null;
-  getCurrentPool;
   currentPool;
-  username;
+  username: string;
   imagePath;
 
   constructor(
     private handleAlertsProvider: HandleAlertsProvider,
     private router: Router,
     private admin: AdminService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private loaderValue: LoaderProvider,
   ) {
     this.imagePath = environment.basePath;
   }
 
   ngOnInit(): void {
-    // this.username = sessionStorage.getItem('username');
-    this.getCurrentPool = this.route.params.subscribe(params => {
-      this.currentPool = params.id;
-    });
+    this.username = sessionStorage.getItem('username');
+    this.getCurrentPool();
   }
 
   ngAfterViewInit() {
     this.setData();
   }
 
-  setData() {
-    this.showLoader = true;
+  getCurrentPool() {
+    this.route.params.subscribe(params => {
+      this.currentPool = params.id;
+    });
+  }
 
+  setData() {
+    this.loaderValue.updateIsloading(true);
     const id = sessionStorage.getItem('userSearch') === null ? sessionStorage.getItem('id') : sessionStorage.getItem('userSearch');
     this.username = sessionStorage.getItem('usernameSearch') === null ? sessionStorage.getItem('username') : sessionStorage.getItem('usernameSearch');
 
     this.admin.getResultsByPoolAndUser(id, this.currentPool).subscribe(data => {
-      this.showLoader = false;
-      console.log(data);
+
+      this.loaderValue.updateIsloading(true);
       if (data.code === 'D200') {
         this.data = data;
       } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
@@ -53,7 +56,6 @@ export class MyResultsComponent implements OnInit, AfterViewInit {
         this.router.navigate(['/auth']);
       }
     }, error => {
-      this.showLoader = false;
       this.handleAlertsProvider.presentGenericAlert(error);
     });
   }

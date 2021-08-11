@@ -5,7 +5,8 @@ import {MatSort} from '@angular/material/sort';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
 import {Router} from '@angular/router';
 import {AdminService} from '../../../services/admin.service';
-import {environment} from "../../../../environments/environment";
+import {environment} from '../../../../environments/environment';
+import {LoaderProvider} from '../../../utilities/providers/loader-provider';
 
 export interface SportData {
   rowid: string;
@@ -25,7 +26,6 @@ const sports: SportData[] = [];
 export class ListOfSportsComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['rowid', 'image', 'name', 'status', 'date_Create', 'opts'];
   dataSource: MatTableDataSource<SportData>;
-  showLoader = false;
   imagePath;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -35,6 +35,7 @@ export class ListOfSportsComponent implements OnInit, AfterViewInit {
     private handleAlertsProvider: HandleAlertsProvider,
     private router: Router,
     private admin: AdminService,
+    private loaderValue: LoaderProvider,
   ) {
     this.admin.initToken();
     this.imagePath = environment.basePath;
@@ -48,19 +49,18 @@ export class ListOfSportsComponent implements OnInit, AfterViewInit {
   }
 
   setData() {
-    this.showLoader = true;
+    this.loaderValue.updateIsloading(true);
     this.admin.getSports().subscribe(data => {
+      this.loaderValue.updateIsloading(false);
       if (data.code === 'D200') {
-      this.showLoader = false;
-      this.dataSource = new MatTableDataSource<SportData>(data.data);
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;
+        this.dataSource = new MatTableDataSource<SportData>(data.data);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
       } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
         this.router.navigate(['/auth']);
       }
     }, error => {
-      this.showLoader = false;
       this.handleAlertsProvider.presentGenericAlert(error);
     });
   }
@@ -82,9 +82,9 @@ export class ListOfSportsComponent implements OnInit, AfterViewInit {
     const dialogRef = this.handleAlertsProvider.presentErrorDialogOk(`Esta seguro de eliminar el usuario <b>${sport.name}</b>?`, 'Aviso!');
     dialogRef.afterClosed().subscribe(response => {
       if (response) {
-        this.showLoader = true;
+        this.loaderValue.updateIsloading(true);
         this.admin.deleteSport(sport.rowid).subscribe(res => {
-          this.showLoader = false;
+          this.loaderValue.updateIsloading(false);
           if (res.code === 'D200') {
             this.handleAlertsProvider.presentSnackbarSuccess(`Se ha eliminado el user ${sport.name} con exito!`);
             this.setData();

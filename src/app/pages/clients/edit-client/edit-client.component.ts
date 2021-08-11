@@ -1,10 +1,10 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {AdminService} from '../../../services/admin.service';
-import { Router, ActivatedRoute } from '@angular/router';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import {Subscription} from 'rxjs';
-import { HandleAlertsProvider } from '../../../utilities/providers/handle-alerts-provider';
+import {ActivatedRoute, Router} from '@angular/router';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
 import {environment} from '../../../../environments/environment';
+import {LoaderProvider} from '../../../utilities/providers/loader-provider';
 
 @Component({
   selector: 'app-edit-client',
@@ -13,34 +13,40 @@ import {environment} from '../../../../environments/environment';
 })
 export class EditClientComponent implements OnInit {
   hide = true;
-  getCurrentUser: Subscription;
   currentUser: string;
   userData: any;
   updateUserForm: FormGroup;
-  showLoader = false;
   imagePath;
 
-  @ViewChild('inputFiles', { static: true }) inputFiles: ElementRef;
+  @ViewChild('inputFiles', {static: true}) inputFiles: ElementRef;
 
   constructor(
-    private user: AdminService,
     private router: Router,
     private route: ActivatedRoute,
     private handleAlertsProvider: HandleAlertsProvider,
     private admin: AdminService,
+    private loaderValue: LoaderProvider,
   ) {
-    this.user.initToken();
+    this.admin.initToken();
     this.imagePath = environment.basePath;
   }
 
   ngOnInit(): void {
     this.createForm();
-    this.getCurrentUser =
-      this.route.params.subscribe(params => {
+    this.getCurrentUser();
+    this.setUserData();
+  }
+
+  getCurrentUser() {
+    this.route.params.subscribe(params => {
       this.currentUser = params.id;
     });
+  }
 
-    this.user.getUser(this.currentUser).subscribe(response => {
+  setUserData() {
+    this.loaderValue.updateIsloading(true);
+    this.admin.getUser(this.currentUser).subscribe(response => {
+      this.loaderValue.updateIsloading(false);
       if (response.code === 'D200') {
         this.userData = response.data;
         this.updateForm();
@@ -52,6 +58,7 @@ export class EditClientComponent implements OnInit {
       this.handleAlertsProvider.presentGenericAlert(err);
     });
   }
+
 
   private createForm() {
     this.updateUserForm = new FormGroup({
@@ -66,7 +73,7 @@ export class EditClientComponent implements OnInit {
       city: new FormControl('', Validators.required),
       code: new FormControl('', Validators.required),
       id: new FormControl('', Validators.required),
-      status: new FormControl('', Validators.required ),
+      status: new FormControl('', Validators.required),
       img: new FormControl('')
     });
   }
@@ -87,10 +94,10 @@ export class EditClientComponent implements OnInit {
   }
 
   updateUser() {
-    this.showLoader = true;
+    this.loaderValue.updateIsloading(true);
     const updatedUser = this.updateUserForm.value;
     console.warn(this.updateUserForm.value);
-    this.user.editUser(
+    this.admin.editUser(
       updatedUser.name,
       updatedUser.lastname,
       updatedUser.username,
@@ -103,9 +110,9 @@ export class EditClientComponent implements OnInit {
       updatedUser.code,
       updatedUser.id,
       Number(updatedUser.status),
-    updatedUser.img
+      updatedUser.img
     ).subscribe(response => {
-      this.showLoader = false;
+      this.loaderValue.updateIsloading(false);
       if (response.code === 'D200') {
         this.handleAlertsProvider.presentSnackbarSuccess('Se actualizo la informacion con exito!');
         this.router.navigate(['/admin/clients/list-of-clients']);

@@ -4,6 +4,7 @@ import {AuthService} from '../../../services/auth.service';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
 import {ActivatedRoute, Router} from '@angular/router';
 import { environment } from '../../../../environments/environment';
+import {LoaderProvider} from '../../../utilities/providers/loader-provider';
 
 @Component({
   selector: 'app-login',
@@ -12,7 +13,6 @@ import { environment } from '../../../../environments/environment';
 })
 export class LoginComponent implements OnInit {
   hide = true;
-  isLoaded = false;
   loginForm: FormGroup;
   siteKey: string;
 
@@ -20,7 +20,8 @@ export class LoginComponent implements OnInit {
     private authService: AuthService,
     private handleAlertsProvider: HandleAlertsProvider,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private loaderValue: LoaderProvider,
   ) {
     this.siteKey = environment.siteKey;
   }
@@ -31,9 +32,9 @@ export class LoginComponent implements OnInit {
       console.log(params);
       if (params.type) {
         if (params.type === 'activateAccount') {
-          this.isLoaded = true;
+          this.loaderValue.updateIsloading(true);
           this.authService.activateAccount(params.code).subscribe(data => {
-            this.isLoaded = false;
+            this.loaderValue.updateIsloading(false);
             if (data.hasError) {
               this.handleAlertsProvider.presentGenericAlert('No se ha podido activar su cuenta... intente de nuevo', 'No se Pudo completar la accion...');
             } else {
@@ -61,10 +62,10 @@ export class LoginComponent implements OnInit {
 
   login() {
     const { username, password } = this.loginForm.value;
-    this.isLoaded = true;
+    this.loaderValue.updateIsloading(true);
     this.authService.login(username, password).subscribe(data => {
       console.log(data);
-      this.isLoaded = false;
+      this.loaderValue.updateIsloading(false);
       if (data.hasError) {
         this.handleAlertsProvider.presentGenericAlert('No se ha encontrado el usuario solicitado... intente de nuevo', 'No se Pudo completar la accion...');
       } else {

@@ -5,8 +5,8 @@ import {MatTableDataSource} from '@angular/material/table';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AdminService} from '../../../services/admin.service';
-import {finalize} from 'rxjs/operators';
 import {environment} from '../../../../environments/environment';
+import {LoaderProvider} from '../../../utilities/providers/loader-provider';
 
 export interface UserData {
   rowid: string;
@@ -26,11 +26,8 @@ export interface UserData {
 export class ResultsPerUserComponent implements OnInit, AfterViewInit {
   displayedColumns: string[] = ['game', 'userResults', 'finalResults', 'score'];
   dataSource: MatTableDataSource<UserData>;
-  showLoader = false;
   currentPool: any;
   currentUser: any;
-  getCurrentPool: any;
-  getCurrentUser: any;
   tableData: any;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -42,6 +39,7 @@ export class ResultsPerUserComponent implements OnInit, AfterViewInit {
     private router: Router,
     private admin: AdminService,
     private route: ActivatedRoute,
+    private loaderValue: LoaderProvider,
   ) {
     this.admin.initToken();
     this.imagePath = environment.basePath;
@@ -57,21 +55,18 @@ export class ResultsPerUserComponent implements OnInit, AfterViewInit {
   }
 
   getParams() {
-    this.getCurrentPool = this.route.params.subscribe(params => {
+    this.route.params.subscribe(params => {
       this.currentPool = params.pool;
     });
-    this.getCurrentUser = this.route.params.subscribe(params => {
+    this.route.params.subscribe(params => {
       this.currentUser = params.id;
     });
   }
 
   getData() {
-    this.showLoader = true;
-    console.log(this.showLoader);
+    this.loaderValue.updateIsloading(true);
     this.admin.getResultsByPoolAndUser(this.currentUser, this.currentPool).subscribe(data => {
-      this.showLoader = false;
-      console.log(this.showLoader);
-      console.log(data);
+      this.loaderValue.updateIsloading(false);
       if (data.code === 'D200') {
         this.tableData = data;
       } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
@@ -79,7 +74,6 @@ export class ResultsPerUserComponent implements OnInit, AfterViewInit {
         this.router.navigate(['/auth']);
       }
     }, error => {
-      this.showLoader = false;
       this.handleAlertsProvider.presentGenericAlert(error);
     });
   }

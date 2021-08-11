@@ -6,10 +6,10 @@ import {MatSort} from '@angular/material/sort';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
 import {Router} from '@angular/router';
 import {AdminService} from '../../../services/admin.service';
-import {finalize} from 'rxjs/operators';
 import * as moment from 'moment';
-import {PeriodicElement} from "../my-pools/my-pools.component";
-import {environment} from "../../../../environments/environment";
+import {PeriodicElement} from '../my-pools/my-pools.component';
+import {environment} from '../../../../environments/environment';
+import {LoaderProvider} from '../../../utilities/providers/loader-provider';
 
 export interface UserPool {
   name: string;
@@ -35,7 +35,6 @@ export class PoolComponent implements OnInit, AfterViewInit {
   dataSourceMonthly: MatTableDataSource<UserPool>;
   dataSourceprivate: MatTableDataSource<UserPool>;
 
-  showLoader = false;
   user: string;
   userId: string;
   oneVsOnePools = [];
@@ -52,6 +51,7 @@ export class PoolComponent implements OnInit, AfterViewInit {
     private handleAlertsProvider: HandleAlertsProvider,
     private router: Router,
     private admin: AdminService,
+    private loaderValue: LoaderProvider,
   ) {
     this.admin.initToken();
     this.imagePath = environment.basePath;
@@ -67,16 +67,15 @@ export class PoolComponent implements OnInit, AfterViewInit {
   }
 
   setData() {
-    this.showLoader = true;
-    this.admin.getAvailablePools(this.userId)
-      .pipe(finalize(() => this.showLoader = false))
-      .subscribe(data => {
-        if (data.code === 'D200') {
-          this.privatePools = data.privadas;
-          this.monthlyPools = data.mensuales;
-          this.oneVsOnePools = data.oneVSone;
-          this.weeklyPools = data.semanales;
-          console.log(this.privatePools, this.monthlyPools, this.oneVsOnePools, this.weeklyPools);
+    this.loaderValue.updateIsloading(true);
+    this.admin.getAvailablePools(this.userId).subscribe(data => {
+      this.loaderValue.updateIsloading(false);
+      if (data.code === 'D200') {
+        this.privatePools = data.privadas;
+        this.monthlyPools = data.mensuales;
+        this.oneVsOnePools = data.oneVSone;
+        this.weeklyPools = data.semanales;
+        console.log(this.privatePools, this.monthlyPools, this.oneVsOnePools, this.weeklyPools);
 
           this.dataSourceOneVsOne = new MatTableDataSource<any>(this.oneVsOnePools);
           this.dataSourceWeekly = new MatTableDataSource<any>(this.weeklyPools);
@@ -96,39 +95,6 @@ export class PoolComponent implements OnInit, AfterViewInit {
       });
   }
 
-  // applyFilter(event: Event) {
-  //   const filterValue = (event.target as HTMLInputElement).value;
-  //   this.dataSourceOneVsOne.filter = filterValue.trim().toLowerCase();
-  //   this.dataSourceWeekly.filter = filterValue.trim().toLowerCase();
-  //   this.dataSourceMonthly.filter = filterValue.trim().toLowerCase();
-  //   this.dataSourceprivate.filter = filterValue.trim().toLowerCase();
-  //
-  //   if (this.dataSourceOneVsOne.paginator) {
-  //     this.dataSourceOneVsOne.paginator.firstPage();
-  //   }
-  //   if (this.dataSourceWeekly.paginator) {
-  //     this.dataSourceWeekly.paginator.firstPage();
-  //   }
-  //   if (this.dataSourceMonthly.paginator) {
-  //     this.dataSourceMonthly.paginator.firstPage();
-  //   }
-  //   if (this.dataSourceprivate.paginator) {
-  //     this.dataSourceprivate.paginator.firstPage();
-  //   }
-  // }
-
-  editUser(id) {
-    this.router.navigate([`/admin/clients/edit-client/${id}`]);
-  }
-
-  enterPool(id) {
-    alert(id);
-  }
-
-  goToRegister(data) {
-    alert(data);
-  }
-
   registerToPool(data) {
     const dialogRef = this.handleAlertsProvider.registerPoolDialog(
       data.id,
@@ -137,13 +103,11 @@ export class PoolComponent implements OnInit, AfterViewInit {
       data.amountInput + '$ ' + data.coinsInput + 'G',
       data.awardValue,
       data.participants,
-       '../../../../../assets/example-user.png',
-    data.rules === '' ? '../../../../../assets/default-rules.png' : (this.imagePath + '/images/' + data.rules),
+      '../../../../../assets/example-user.png',
+      data.rules === '' ? '../../../../../assets/default-rules.png' : (this.imagePath + '/images/' + data.rules),
       '',
     );
     dialogRef.afterClosed().subscribe(res => {
-      console.log(res);
-
       if (res !== undefined) {
         if (data.password === '' || data.password === null) {
           if (res === '') {
@@ -168,29 +132,28 @@ export class PoolComponent implements OnInit, AfterViewInit {
 
 
   showParticipants(id) {
-    this.showLoader = true;
-    this.admin.getUsersByPool(id)
-      .pipe(finalize(() => this.showLoader = false))
-      .subscribe(data => {
-        if (data.code === 'D200') {
-          let participants = [];
+    this.loaderValue.updateIsloading(true);
+    this.admin.getUsersByPool(id).subscribe(data => {
+      this.loaderValue.updateIsloading(false);
+      if (data.code === 'D200') {
+        const participants = [];
 
-          data.data.forEach(user => {
-            participants.push({
-              username: user.username,
-              rowid: user.rowid,
-              image: user.img === '' ? '../../../../../assets/example-user.png' : (this.imagePath + '/images/' + user.img)
-            });
+        data.data.forEach(user => {
+          participants.push({
+            username: user.username,
+            rowid: user.rowid,
+            image: user.img === '' ? '../../../../../assets/example-user.png' : (this.imagePath + '/images/' + user.img)
           });
+        });
 
-          this.handleAlertsProvider.presentParticipantsDialog(participants);
-        } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
-          this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
-          this.router.navigate(['/auth']);
-        }
-      }, error => {
-        this.handleAlertsProvider.presentGenericAlert(error);
-      });
+        this.handleAlertsProvider.presentParticipantsDialog(participants);
+      } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
+        this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
+        this.router.navigate(['/auth']);
+      }
+    }, error => {
+      this.handleAlertsProvider.presentGenericAlert(error);
+    });
   }
 
   getFormatDate(date: string) {
@@ -227,10 +190,10 @@ export class PoolComponent implements OnInit, AfterViewInit {
   }
 
   private callRegisterPool(id) {
-    this.showLoader = true;
+    this.loaderValue.updateIsloading(true);
     this.admin.registerUserPool(id, sessionStorage.getItem('id')).subscribe(data => {
       console.log(data);
-      this.showLoader = false;
+      this.loaderValue.updateIsloading(false);
       if (data.code === 'D200') {
         this.goToEditResults(id);
       } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {

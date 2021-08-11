@@ -2,6 +2,7 @@ import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
 import {Router} from '@angular/router';
 import {AdminService} from '../../../services/admin.service';
+import {LoaderProvider} from '../../../utilities/providers/loader-provider';
 
 @Component({
   selector: 'app-list-of-pools',
@@ -10,12 +11,14 @@ import {AdminService} from '../../../services/admin.service';
 })
 export class ListOfPoolsComponent implements OnInit, AfterViewInit {
 
-  showLoader = false;
   pools = [];
 
-  constructor(private handleAlertsProvider: HandleAlertsProvider,
-              private router: Router,
-              private admin: AdminService) {
+  constructor(
+    private handleAlertsProvider: HandleAlertsProvider,
+    private router: Router,
+    private admin: AdminService,
+    private loaderValue: LoaderProvider,
+  ) {
     this.admin.initToken();
   }
 
@@ -27,25 +30,19 @@ export class ListOfPoolsComponent implements OnInit, AfterViewInit {
   }
 
   setData() {
-    this.showLoader = true;
+    this.loaderValue.updateIsloading(true);
     this.admin.getPools().subscribe(data => {
-      this.showLoader = false;
-      console.log(data);
+      this.loaderValue.updateIsloading(false);
       if (data.code === 'D200') {
         this.pools = data.data.filter(x => x.status === 1);
-
         this.admin.getPoolsByUser(sessionStorage.getItem('id')).subscribe(data2 => {
-          console.log(data2);
           if (data2.code === 'D200') {
             this.setMyPools(data2.data);
-            console.log(this.pools);
-            // this.pools = data.data.filter(x => x.status === 1);
           } else if (data2.code === 'A401' || data2.code === 'A302' || data2.code === 'A403') {
             this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
             this.router.navigate(['/auth']);
           }
         }, error => {
-          this.showLoader = false;
           this.handleAlertsProvider.presentGenericAlert(error);
         });
       } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
@@ -53,21 +50,16 @@ export class ListOfPoolsComponent implements OnInit, AfterViewInit {
         this.router.navigate(['/auth']);
       }
     }, error => {
-      this.showLoader = false;
       this.handleAlertsProvider.presentGenericAlert(error);
     });
   }
 
   registerPool(pool: any) {
-    console.log(pool.password);
-    console.log(pool.passwordMatch);
-
     if (pool.password === '' || pool.password === null) {
       if (pool.passwordMatch === '' || pool.passwordMatch === undefined) {
-        this.showLoader = true;
+        this.loaderValue.updateIsloading(true);
         this.admin.registerUserPool(pool.rowid, sessionStorage.getItem('id')).subscribe(data => {
-          console.log(data);
-          this.showLoader = false;
+          this.loaderValue.updateIsloading(false);
           if (data.code === 'D200') {
             this.goToEditResults(pool.rowid);
           } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
@@ -80,10 +72,9 @@ export class ListOfPoolsComponent implements OnInit, AfterViewInit {
       }
     } else {
       if (pool.password === pool.passwordMatch) {
-        this.showLoader = true;
+        this.loaderValue.updateIsloading(true);
         this.admin.registerUserPool(pool.rowid, sessionStorage.getItem('id')).subscribe(data => {
-          console.log(data);
-          this.showLoader = false;
+          this.loaderValue.updateIsloading(false);
           if (data.code === 'D200') {
             this.goToEditResults(pool.rowid);
           } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
@@ -92,7 +83,7 @@ export class ListOfPoolsComponent implements OnInit, AfterViewInit {
           }
         });
       } else {
-        alert('Claves no coinciden!');
+        this.handleAlertsProvider.presentSnackbarError('Las Claves no coinciden!');
       }
     }
   }

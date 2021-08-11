@@ -263,10 +263,11 @@ export class AdminService {
   }
 
 
-  sendEmail(category, subject, message): Observable<any> {
+  sendEmail(category, subject, manualSelection, message): Observable<any> {
     const params = {
       category,
       subject,
+      manualSelection,
       message
     };
     return this.http.post(`${environment.basePath}/api/utilities/semdEmailByCategory`, params);

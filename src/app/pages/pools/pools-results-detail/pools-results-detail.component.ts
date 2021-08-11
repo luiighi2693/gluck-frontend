@@ -5,6 +5,7 @@ import {MatTableDataSource} from '@angular/material/table';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AdminService} from '../../../services/admin.service';
+import {LoaderProvider} from '../../../utilities/providers/loader-provider';
 
 export interface UserData {
   rowid: string;
@@ -16,9 +17,6 @@ export interface UserData {
   date_Access: string;
 }
 
-const users: UserData[] = [];
-
-
 @Component({
   selector: 'app-pools-results-detail',
   templateUrl: './pools-results-detail.component.html',
@@ -28,9 +26,7 @@ export class PoolsResultsDetailComponent implements OnInit, AfterViewInit {
 
   displayedColumns: string[] = ['rowid', 'name', 'email', 'phone', 'score', 'goalsScored', 'date_Access'];
   dataSource: MatTableDataSource<UserData>;
-  showLoader = false;
   currentPool: any;
-  getCurrentPool: any;
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
@@ -39,25 +35,30 @@ export class PoolsResultsDetailComponent implements OnInit, AfterViewInit {
     private handleAlertsProvider: HandleAlertsProvider,
     private router: Router,
     private admin: AdminService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private loaderValue: LoaderProvider
   ) {
     this.admin.initToken();
   }
 
   ngOnInit(): void {
-    this.getCurrentPool = this.route.params.subscribe(params => {
-      this.currentPool = params.id;
-    });
+    this.getCurrentPool();
   }
 
   ngAfterViewInit() {
     this.setData();
   }
 
+  getCurrentPool() {
+    this.route.params.subscribe(params => {
+      this.currentPool = params.id;
+    });
+  }
+
   setData() {
-    this.showLoader = true;
+    this.loaderValue.updateIsloading(true);
     this.admin.getResultsByPool(this.currentPool).subscribe(res => {
-      this.showLoader = false;
+      this.loaderValue.updateIsloading(false);
       if (res.code === 'D200') {
         this.dataSource = new MatTableDataSource<UserData>(res.data);
         this.dataSource.paginator = this.paginator;

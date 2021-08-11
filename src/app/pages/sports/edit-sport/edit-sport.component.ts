@@ -1,10 +1,10 @@
 import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {Subscription} from 'rxjs';
-import {FormGroup, FormControl, Validators} from '@angular/forms';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {AdminService} from '../../../services/admin.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
 import {environment} from '../../../../environments/environment';
+import {LoaderProvider} from '../../../utilities/providers/loader-provider';
 
 @Component({
   selector: 'app-edit-sport',
@@ -12,34 +12,46 @@ import {environment} from '../../../../environments/environment';
   styleUrls: ['./edit-sport.component.css']
 })
 export class EditSportComponent implements OnInit {
-  getCurrentSport: Subscription;
   currentSport: string;
   sportData: any;
   updateSportForm: FormGroup;
   hide = false;
-  showLoader = false;
   imagePath;
 
-  @ViewChild('inputFiles', { static: true }) inputFiles: ElementRef;
+  @ViewChild('inputFiles', {static: true}) inputFiles: ElementRef;
 
   constructor(
     private admin: AdminService,
     private router: Router,
     private route: ActivatedRoute,
     private handleAlertsProvider: HandleAlertsProvider,
+    private loaderValue: LoaderProvider,
   ) {
     this.admin.initToken();
     this.imagePath = environment.basePath;
   }
 
   ngOnInit(): void {
+    this.getSportId();
+    this.getCurrentSport();
     this.createForm();
-    this.getCurrentSport =
-      this.route.params.subscribe(params => {
-        this.currentSport = params.id;
-      });
+  }
 
+  private createForm() {
+    this.updateSportForm = new FormGroup({
+      name: new FormControl('', Validators.required),
+      date_Create: new FormControl('', Validators.required),
+      description: new FormControl('', Validators.required),
+      id: new FormControl('', Validators.required),
+      img: new FormControl(''),
+      status: new FormControl('', Validators.required)
+    });
+  }
+
+  getCurrentSport() {
+    this.loaderValue.updateIsloading(true);
     this.admin.getSport(this.currentSport).subscribe(response => {
+      this.loaderValue.updateIsloading(false);
       if (response.code === 'D200') {
         this.sportData = response.data;
         this.updateForm();
@@ -52,14 +64,9 @@ export class EditSportComponent implements OnInit {
     });
   }
 
-  private createForm() {
-    this.updateSportForm = new FormGroup({
-      name: new FormControl('', Validators.required),
-      date_Create: new FormControl('', Validators.required),
-      description: new FormControl('', Validators.required),
-      id: new FormControl('', Validators.required),
-      img: new FormControl(''),
-      status: new FormControl('', Validators.required )
+  getSportId() {
+    this.route.params.subscribe(params => {
+      this.currentSport = params.id;
     });
   }
 
@@ -72,18 +79,11 @@ export class EditSportComponent implements OnInit {
   }
 
   updateSport() {
-    this.showLoader = true;
+    this.loaderValue.updateIsloading(true);
     const updatedSport = this.updateSportForm.value;
-    console.warn(this.updateSportForm.value);
-    this.admin.editSport(
-      updatedSport.id,
-      updatedSport.name,
-      updatedSport.date_Create,
-      Number(updatedSport.status),
-      updatedSport.description,
-      updatedSport.img
-    ).subscribe(response => {
-      this.showLoader = false;
+    this.admin.editSport(updatedSport.id, updatedSport.name, updatedSport.date_Create, Number(updatedSport.status),
+      updatedSport.description, updatedSport.img).subscribe(response => {
+      this.loaderValue.updateIsloading(false);
       if (response.code === 'D200') {
         this.handleAlertsProvider.presentSnackbarSuccess('Se actualizo la informacion con exito!');
         this.router.navigate(['/admin/sports/list-of-sports']);
