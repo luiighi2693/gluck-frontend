@@ -64,7 +64,6 @@ export class LoginComponent implements OnInit {
     const { username, password } = this.loginForm.value;
     this.loaderValue.updateIsloading(true);
     this.authService.login(username, password).subscribe(data => {
-      console.log(data);
       this.loaderValue.updateIsloading(false);
       if (data.hasError) {
         this.handleAlertsProvider.presentGenericAlert('No se ha encontrado el usuario solicitado... intente de nuevo', 'No se Pudo completar la accion...');
