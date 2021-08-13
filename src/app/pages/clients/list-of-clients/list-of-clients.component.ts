@@ -114,7 +114,7 @@ export class ListOfClientsComponent implements OnInit, AfterViewInit {
       `${type === 'glucks' ? 'Recargar Glucks' : 'Recargar Dinero'}`,
       this.amountToRecharge);
     dialogRef.afterClosed().subscribe(result => {
-      if (result !== '') {
+      if (result !== '' && result !== undefined && result !== null) {
         this.loaderValue.updateIsloading(true);
         this.admin.recharge(id, type, result).subscribe(res => {
           this.loaderValue.updateIsloading(false);
