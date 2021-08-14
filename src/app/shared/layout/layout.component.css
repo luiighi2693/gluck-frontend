@@ -44,7 +44,7 @@ main {
 }
 
 .logo__expanded {
-  max-width: 17rem;
+  /*max-width: 17rem;*/
   text-align: center;
 }
 
@@ -60,7 +60,7 @@ main {
 }
 
 .avatar {
-  max-width: 17rem;
+  /* max-width: 17rem; */
   text-align: center;
 }
 
@@ -74,7 +74,7 @@ main {
 
 .welcome__message {
   color: white;
-  width: 90%;
+  /* width: 90%; */
   text-align: center;
 }
 
