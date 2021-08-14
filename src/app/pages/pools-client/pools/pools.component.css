@@ -3,6 +3,13 @@
   cursor: pointer;
 }
 
+.image-disabled {
+  max-width: 500px;
+  max-height: 500px;
+  border-radius: 15px;
+  opacity: 0.2;
+}
+
 .pool-image {
   max-width: 500px;
   max-height: 500px;
@@ -15,8 +22,8 @@
   cursor: pointer;
 }
 
-@keyframes scale {
-  to {
-    transform: scale(1.5);
-  }
-}
+/*@keyframes scale {*/
+/*  to {*/
+/*    transform: scale(1.5);*/
+/*  }*/
+/*}*/

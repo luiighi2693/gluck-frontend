@@ -29,10 +29,6 @@ const routes: Routes = [
         path: 'transactions',
         loadChildren: () => import('./pages/transactions/transactions.module').then(m => m.TransactionsModule)
       },
-      {
-        path: 'brackets',
-        loadChildren: () => import('./pages/brackets/brackets.module').then(m => m.BracketsModule)
-      },
     ]
   },
   {

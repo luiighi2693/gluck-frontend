@@ -84,8 +84,11 @@
               <button mat-flat-button aria-label="enter pool" class="action-button mb-1" (click)="goToEditResult(row.id)">
                 Editar Resultados
               </button>
-              <button mat-flat-button aria-label="enter pool" class="action-button" (click)="registerToPool(row.id, row.name)">
+              <button mat-flat-button aria-label="view pool participants" class="action-button" (click)="registerToPool(row.id, row.name)">
                 Visualizar
+              </button>
+              <button mat-flat-button aria-label="see Ranking" class="action-button" (click)="goToRanking()">
+                Ver Ranking
               </button>
             </td>
           </ng-container>
@@ -182,6 +185,9 @@
               <button mat-flat-button aria-label="enter pool" class="action-button" (click)="registerToPool(row.id, row.name)">
                 Visualizar
               </button>
+              <button mat-flat-button aria-label="see Ranking" class="action-button" (click)="goToRanking()">
+                Ver Ranking
+              </button>
             </td>
           </ng-container>
 
@@ -273,6 +279,9 @@
             <td class="opts" mat-cell *matCellDef="let row">
               <button mat-flat-button aria-label="enter pool" class="action-button" (click)="registerToPool(row.id, row.name)">
                 Visualizar
+              </button>
+              <button mat-flat-button aria-label="see Ranking" class="action-button" (click)="goToRanking()">
+                Ver Ranking
               </button>
             </td>
           </ng-container>

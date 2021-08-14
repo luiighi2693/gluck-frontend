@@ -49,6 +49,7 @@ export class EditClientComponent implements OnInit {
       this.loaderValue.updateIsloading(false);
       if (response.code === 'D200') {
         this.userData = response.data;
+        console.log(this.userData);
         this.updateForm();
       } else if (response.code === 'A401' || response.code === 'A302' || response.code === 'A403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
@@ -85,7 +86,8 @@ export class EditClientComponent implements OnInit {
     this.updateUserForm.get('email').setValue(this.userData.email);
     this.updateUserForm.get('phone').setValue(this.userData.phone);
     this.updateUserForm.get('address').setValue(this.userData.address);
-    this.updateUserForm.get('state').setValue(this.userData.state);
+    this.updateUserForm.get('status').setValue(this.userData.status);
+    this.updateUserForm.get('password').setValue(this.userData.password);
     this.updateUserForm.get('state').setValue(this.userData.state);
     this.updateUserForm.get('city').setValue(this.userData.city);
     this.updateUserForm.get('code').setValue(this.userData.code);

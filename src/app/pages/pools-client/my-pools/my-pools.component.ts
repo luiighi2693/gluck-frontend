@@ -154,4 +154,8 @@ export class MyPoolsComponent implements OnInit, AfterViewInit {
   goToEditResult(id) {
     this.router.navigate([`/home/pools/pool-register/${id}`]);
   }
+
+  goToRanking() {
+    this.router.navigate(['/home/pools/ranking']);
+  }
 }

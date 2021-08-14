@@ -142,10 +142,10 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
       usersLimit: ['', Validators.required],
       status: ['', Validators.required],
       penalty: ['', Validators.required],
-      groups: [''],
-      teamsPerGroup: [''],
-      type: [''],
-      league: [''],
+      groups: ['', Validators.required],
+      teamsPerGroup: ['', Validators.required],
+      type: ['', Validators.required],
+      league: ['', Validators.required],
       password: [''],
       rules: ['']
     });

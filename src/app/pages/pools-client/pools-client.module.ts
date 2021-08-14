@@ -13,6 +13,7 @@ import {RegisterToPoolComponent} from './register-to-pool/register-to-pool.compo
 import {FormsModule} from '@angular/forms';
 import {PoolRegisterComponent} from './pool-register/pool-register.component';
 import {MyPoolsComponent} from './my-pools/my-pools.component';
+import {BracketsComponent} from './brackets/brackets.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import {MyPoolsComponent} from './my-pools/my-pools.component';
     MyResultsComponent,
     RegisterToPoolComponent,
     PoolRegisterComponent,
-    MyPoolsComponent
+    MyPoolsComponent,
+    BracketsComponent
   ],
   imports: [
     CommonModule,
@@ -67,6 +69,10 @@ import {MyPoolsComponent} from './my-pools/my-pools.component';
           path: 'my-pools',
           component: MyPoolsComponent
         },
+      {
+        path: 'ranking',
+        component: BracketsComponent,
+      }
       ]
     ),
     FormsModule
