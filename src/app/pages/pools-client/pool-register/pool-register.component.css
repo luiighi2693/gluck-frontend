@@ -34,4 +34,11 @@
   padding: 0.5rem 4rem;
 }
 
+.team-text {
+  inline-size: 157px;
+  overflow-wrap: break-word;
+  font-size: 18px;
+  font-weight: 400;
+}
+
 

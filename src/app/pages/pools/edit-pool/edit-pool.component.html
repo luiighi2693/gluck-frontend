@@ -178,7 +178,7 @@
               <mat-label>Reglas</mat-label>
               <figure class="avatar__wrapper">
                 <img [src]="this.config.value.rules !== '' ? (this.imagePath + '/images/' + this.config.value.rules) : '../../../../assets/default-rules.png'" class="avatar" alt="">
-                <button class="avatar__button" type="button" mat-fab aria-label="change picture" (click)="openUploadFiles()">
+                <button class="action-button" type="button" mat-fab aria-label="change picture" (click)="openUploadFiles()">
                   <mat-icon>camera_alt</mat-icon>
                 </button>
                 <input

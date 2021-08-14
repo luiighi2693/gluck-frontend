@@ -1,6 +1,7 @@
 <div class="d-flex justify-content-between text-white m-4">
   <div class="d-flex align-items-center">
-    <mat-icon class="mx-3">rowing</mat-icon> <h1 class="m-0">Lista de Deportes</h1> <span class="mt-2 mx-4 badge">Admin</span>
+    <mat-icon class="mx-3">rowing</mat-icon>
+    <h1 class="m-0">Lista de Deportes</h1> <span class="mt-2 mx-4 badge">Admin</span>
   </div>
   <div class="d-flex align-items-center">
     <div class="d-flex align-items-center home__link" routerLink="/admin">
@@ -34,42 +35,52 @@
 
         <!-- ID Column -->
         <ng-container matColumnDef="rowid">
-          <th class="id" mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+          <th class="id" mat-header-cell *matHeaderCellDef mat-sort-header> ID</th>
           <td class="id" mat-cell *matCellDef="let row"> {{row.rowid}} </td>
         </ng-container>
 
-        <!-- Name Column -->
-        <ng-container matColumnDef="image">
-          <th class="image-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Imagen </th>
-          <td class="image-cell" mat-cell *matCellDef="let row"> <img class="image" [src]="imagePath + '/images/' + (row.img === '' ? 'logo.png' : row.img)" [alt]="row.img"> </td>
-        </ng-container>
+        <!--        &lt;!&ndash; Name Column &ndash;&gt;-->
+        <!--        <ng-container matColumnDef="image">-->
+        <!--          <th class="image-cell" mat-header-cell *matHeaderCellDef mat-sort-header> Imagen </th>-->
+        <!--          <td class="image-cell" mat-cell *matCellDef="let row">  </td>-->
+        <!--        </ng-container>-->
 
         <!-- Progress Column -->
         <ng-container matColumnDef="name">
-          <th class="username" mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
-          <td class="username" mat-cell *matCellDef="let row"> {{row.name}} </td>
+          <th class="username" mat-header-cell *matHeaderCellDef mat-sort-header> Nombre</th>
+          <td class="username" mat-cell *matCellDef="let row">
+            <div class="d-flex">
+              <span class="mx-2"><img class="image"
+                                      [src]="imagePath + '/images/' + (row.img === '' ? 'logo.png' : row.img)"
+                                      [alt]="row.img"></span>
+              <span><p class="limit-text m-0">{{row.name}}</p></span>
+            </div>
+          </td>
         </ng-container>
 
         <!-- Fruit Column -->
         <ng-container matColumnDef="status">
-          <th class="status" mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </th>
-          <td class="status" mat-cell *matCellDef="let row"> <div [ngClass]="{'active': row.status === 1, 'inactive': row.status !== 1}"><p class="m-0">{{row.status === 1 ? 'Activo' : 'Inactivo' }}</p></div> </td>
+          <th class="status" mat-header-cell *matHeaderCellDef mat-sort-header> Estatus</th>
+          <td class="status" mat-cell *matCellDef="let row">
+            <div [ngClass]="{'active': row.status === 1, 'inactive': row.status !== 1}"><p
+              class="m-0">{{row.status === 1 ? 'Activo' : 'Inactivo' }}</p></div>
+          </td>
         </ng-container>
 
         <!-- Fruit Column -->
         <ng-container matColumnDef="date_Create">
-          <th class="lastLogin" mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de Registro </th>
+          <th class="lastLogin" mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de Registro</th>
           <td class="lastLogin" mat-cell *matCellDef="let row"> {{row.date_Create}} </td>
         </ng-container>
 
         <!-- Fruit Column -->
         <ng-container matColumnDef="opts">
-          <th class="opts" mat-header-cell *matHeaderCellDef mat-sort-header>  </th>
+          <th class="opts" mat-header-cell *matHeaderCellDef mat-sort-header></th>
           <td class="opts" mat-cell *matCellDef="let row">
             <button mat-icon-button aria-label="edit" (click)="editSport(row.rowid)">
               <mat-icon>edit</mat-icon>
             </button>
-            <button mat-icon-button aria-label="delete"(click)="deleteSport(row)" >
+            <button mat-icon-button aria-label="delete" (click)="deleteSport(row)">
               <mat-icon>delete</mat-icon>
             </button>
           </td>

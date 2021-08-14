@@ -23,7 +23,7 @@ export interface TeamData {
   styleUrls: ['./list-of-teams.component.css']
 })
 export class ListOfTeamsComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['rowid', 'image', 'name', 'sport', 'status', 'date_Create', 'opts'];
+  displayedColumns: string[] = ['rowid', 'name', 'sport', 'status', 'date_Create', 'opts'];
   dataSource: MatTableDataSource<TeamData>;
   token: string;
   imagePath;

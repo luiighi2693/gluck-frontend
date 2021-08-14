@@ -29,7 +29,7 @@ export interface Client {
   styleUrls: ['./list-of-clients.component.css']
 })
 export class ListOfClientsComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['rowid', 'image', 'username', 'amount', 'coins', 'email', 'phone', 'status', 'date_Access', 'opts'];
+  displayedColumns: string[] = ['rowid', 'username', 'amount', 'coins', 'email', 'phone', 'status', 'date_Access', 'opts'];
   dataSource: MatTableDataSource<Client>;
   imagePath;
   amountToRecharge = '';

@@ -9,15 +9,15 @@ table {
 
 
 .id {
-  width: 5%;
+  width: 3%;
 }
 
 .status {
-  width: 7%;
+  width: 5%;
 }
 
 .sport {
-  width: 10%;
+  width: 6%;
 }
 
 .name {
@@ -45,6 +45,7 @@ table {
   height: 30px;
   border-radius: 50%;
 }
+
 .listOf__users--wrapper {
   background-color: white;
   color: black;
@@ -53,26 +54,31 @@ table {
   margin-bottom: 1rem;
   min-height: 700px;
 }
-
 .active {
-  padding: 0.5rem;
+  /* padding: 0.5rem; */
   color: white;
   background-color: #4caf50;
   border-radius: 15px;
   text-align: center;
-  width: 75%;
-  letter-spacing: 1px;
+  width: 50%;
+  font-size: 12px;
 }
 
 .inactive {
-  padding: 0.5rem;
+  /* padding: 0.5rem; */
   color: white;
   background-color: red;
   border-radius: 15px;
   text-align: center;
-  width: 75%;
-  letter-spacing: 1px;
+  width: 50%;
+  font-size: 12px;
 }
+
+.limit-text {
+  inline-size: 230px;
+  overflow-wrap: break-word;
+}
+
 
 .home__link:hover {
   color: #F6DD06;

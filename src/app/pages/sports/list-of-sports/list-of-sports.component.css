@@ -12,7 +12,7 @@ td, th {
 }
 
 .id {
-  width: 5%;
+  width: 3%;
 }
 
 .image-cell {
@@ -20,7 +20,7 @@ td, th {
 }
 
 .status {
-  width: 7%;
+  width: 5%;
 }
 
 .username {
@@ -59,24 +59,30 @@ td, th {
 }
 
 .active {
-  padding: 0.5rem;
+  /* padding: 0.5rem; */
   color: white;
   background-color: #4caf50;
   border-radius: 15px;
   text-align: center;
-  width: 75%;
-  letter-spacing: 1px;
+  width: 50%;
+  font-size: 12px;
 }
 
 .inactive {
-  padding: 0.5rem;
+  /* padding: 0.5rem; */
   color: white;
   background-color: red;
   border-radius: 15px;
   text-align: center;
-  width: 75%;
-  letter-spacing: 1px;
+  width: 50%;
+  font-size: 12px;
 }
+
+.limit-text {
+  inline-size: 230px;
+  overflow-wrap: break-word;
+}
+
 
 .home__link:hover {
   color: #F6DD06;
@@ -101,4 +107,9 @@ td, th {
   background-color: #333232;
   border-radius: 15px;
   cursor: pointer;
+}
+
+.limit-text {
+  inline-size: 230px;
+  overflow-wrap: break-word;
 }

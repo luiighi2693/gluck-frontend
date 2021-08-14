@@ -12,6 +12,7 @@
   height: auto;
   border-radius: 100px;
   border: 3px solid #333232;
+  object-fit: cover;
 }
 
 .avatar__wrapper {
