@@ -5,7 +5,7 @@
 }
 
 .nav__list--item--padding {
-  margin: 0 10rem 0 0!important;
+  margin: 0 5rem 0 0!important;
 }
 
 main {
@@ -17,6 +17,8 @@ main {
 
 .mat-drawer {
   background-color: #000 !important;
+  position: fixed;
+  overflow-y: hidden;
 }
 
 .sidenav__item {
@@ -51,7 +53,7 @@ main {
 .logo__expanded > img {
   max-width: 200px;
   max-height: 200px;
-  width: 75%;
+  /*width: 75%;*/
   height: auto;
 }
 
@@ -67,7 +69,7 @@ main {
 .avatar > img {
   max-width: 150px;
   max-height: 150px;
-  width: 75%;
+  /*width: 75%;*/
   height: auto;
   border-radius: 75px;
 }
@@ -78,4 +80,12 @@ main {
   text-align: center;
 }
 
+.limit-text-sidenav {
+  inline-size: 264px;
+  overflow-wrap: break-word;
+}
+
+.main-content {
+  min-height: 100vh;
+}
 
