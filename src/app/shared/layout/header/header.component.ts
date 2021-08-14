@@ -17,7 +17,7 @@ export class HeaderComponent implements OnInit {
   isAdmin: boolean;
   name: string;
   coins = '10';
-  money = '10$';
+  money = '10';
   dateCreate: any;
 
   constructor(
