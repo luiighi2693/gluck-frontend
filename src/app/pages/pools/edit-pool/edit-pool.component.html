@@ -16,7 +16,7 @@
   <div class="profile__wrapper mb-3">
     <!--    <div class="row">-->
     <!--      <div class="col-12 col-md-8 offset-md-2">-->
-    <mat-stepper orientation="vertical" linear #stepper>
+    <mat-stepper orientation="vertical"  #stepper>
       <mat-step [stepControl]="config">
         <form [formGroup]="config">
           <ng-template matStepLabel>Configuracion</ng-template>
@@ -24,7 +24,7 @@
             <div class="col-12 col-md-4">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Nombre de Quiniela</mat-label>
-                <input matInput placeholder=" name" formControlName="name" autocomplete="off" required>
+                <input matInput placeholder=" name" formControlName="name" autocomplete="off" >
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
                 </mat-error>
@@ -33,7 +33,7 @@
             <div class="col-12 col-md-4">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Deporte</mat-label>
-                <mat-select formControlName="sport" required>
+                <mat-select formControlName="sport" >
                   <mat-option>- Deporte -</mat-option>
                   <mat-option *ngFor="let sport of sports" [value]="sport.rowid">{{sport.name}}</mat-option>
                 </mat-select>
@@ -45,7 +45,7 @@
             <div class="col-12 col-md-4">
               <mat-form-field appearance="outline" class="w-100">
                 <input matInput [ngxMatColorPicker]="picker" placeholder="Selecciona un Color" formControlName="color"
-                       autocomplete="off" required>
+                       autocomplete="off" >
                 <ngx-mat-color-toggle matSuffix [for]="picker"></ngx-mat-color-toggle>
                 <ngx-mat-color-picker #picker></ngx-mat-color-picker>
                 <mat-error>
@@ -69,7 +69,7 @@
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Limite de Usuarios</mat-label>
                 <input matInput type="number" placeholder="15" [(ngModel)]="limitOfUsers" formControlName="usersLimit"
-                       autocomplete="off" required>
+                       autocomplete="off" >
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
                 </mat-error>
@@ -80,7 +80,7 @@
             <div class="col-12 col-md-4">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Estatus de Quiniela</mat-label>
-                <mat-select formControlName="status" required>
+                <mat-select formControlName="status" >
                   <mat-option>- Estatus -</mat-option>
                   <mat-option [value]="1">Activo</mat-option>
                   <mat-option [value]="2">Cerrado</mat-option>
@@ -93,7 +93,7 @@
             <div class="col-12 col-md-4">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Penalty</mat-label>
-                <mat-select formControlName="penalty" [(ngModel)]="doPenaltiesExist" required>
+                <mat-select formControlName="penalty" [(ngModel)]="doPenaltiesExist" >
                   <mat-option>- Penalty -</mat-option>
                   <mat-option [value]="0">Si</mat-option>
                   <mat-option [value]="1">No</mat-option>
@@ -158,7 +158,7 @@
             <div class="col-12 col-md-3">
 <!--              <mat-form-field appearance="outline" class="w-100">-->
 <!--                <mat-label>Contrasena</mat-label>-->
-<!--                <input matInput type="password" placeholder="123456789" formControlName="password" autocomplete="off" required>-->
+<!--                <input matInput type="password" placeholder="123456789" formControlName="password" autocomplete="off" >-->
 <!--                <mat-error>-->
 <!--                  Este Campo es <strong>Requerido.</strong>-->
 <!--                </mat-error>-->
@@ -414,7 +414,7 @@
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Valor de entrada (Dolares)</mat-label>
                 <input matInput type="number" formControlName="amountInput" placeholder="5"
-                       autocomplete="off" required (blur)="getAward()">
+                       autocomplete="off"  (blur)="getAward()">
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
                 </mat-error>
@@ -424,7 +424,7 @@
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Valor de entrada (Coins)</mat-label>
                 <input matInput type="number" formControlName="coinsInput" placeholder="5"
-                       autocomplete="off" required>
+                       autocomplete="off" >
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
                 </mat-error>
@@ -456,7 +456,7 @@
             <div class="col-12 col-md-3">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Tipo de Premio</mat-label>
-                <mat-select formControlName="awardType" required [(ngModel)]="awardType" ngModelOptions="{standalone: true}" (ngModelChange)="getAward()">
+                <mat-select formControlName="awardType"  [(ngModel)]="awardType" ngModelOptions="{standalone: true}" (ngModelChange)="getAward()">
                   <mat-option>- Tipo de Premio -</mat-option>
                   <mat-option value="fijo">Fijo</mat-option>
                   <mat-option value="total">Total</mat-option>
@@ -470,7 +470,7 @@
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Valor de Premio Total</mat-label>
                 <input matInput type="text" [readOnly]="endPools.value.awardType !== 'total' ? 'false' : 'true'" formControlName="awardValue" placeholder="$500"
-                       autocomplete="off" required>
+                       autocomplete="off" >
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
                 </mat-error>
@@ -491,7 +491,7 @@
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Resultado</mat-label>
                 <input matInput type="number" formControlName="result" placeholder="3"
-                       autocomplete="off" required>
+                       autocomplete="off" >
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
                 </mat-error>
@@ -501,7 +501,7 @@
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Ganador</mat-label>
                 <input matInput type="number" formControlName="winner" placeholder="5"
-                       autocomplete="off" required>
+                       autocomplete="off" >
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
                 </mat-error>
@@ -511,7 +511,7 @@
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Empate</mat-label>
                 <input matInput type="number" formControlName="draw" placeholder="2"
-                       autocomplete="off" required>
+                       autocomplete="off" >
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
                 </mat-error>
@@ -521,7 +521,7 @@
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Perdedor</mat-label>
                 <input matInput type="number" formControlName="loser" placeholder="0"
-                       autocomplete="off" required>
+                       autocomplete="off" >
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
                 </mat-error>

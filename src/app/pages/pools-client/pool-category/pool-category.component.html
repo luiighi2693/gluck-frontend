@@ -11,7 +11,10 @@
   <div class="row">
     <div class="col-12 col-md-6 mb-5" *ngFor="let pool of pools">
       <h1>{{pool.name}}</h1>
-      <img class="pool-image" (click)="goToPool(pool.id)" [src]="pool.img" alt="">
+      <span class="mx-3" *ngIf="pool.disabled">Proximamente...</span>
+      <img [ngClass]="pool.disabled
+       ? 'image-disabled'
+       : 'pool-image'" (click)="!pool.disabled ? goToPool(pool.id) : null" [src]="pool.img" alt="">
     </div>
   </div>
 </div>

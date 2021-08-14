@@ -13,21 +13,25 @@ export class PoolsComponent implements OnInit {
       name: 'Futbol',
       value: 'football',
       img: '../../../../assets/futbol-gluck.png',
+      disabled: false,
     },
     {
       name: 'Beisbol (MLB)',
       value: 'baseball',
       img: '../../../../assets/beisbol-gluck.png',
+      disabled: true,
     },
     {
       name: 'Baloncesto (NBA)',
       value: 'basketball',
       img: '../../../../assets/baloncesto-gluck.png',
+      disabled: true,
     },
     {
       name: 'Formula 1',
       value: 'formula-1',
       img: '../../../../assets/formula-1-gluck.png',
+      disabled: true,
     },
   ];
 

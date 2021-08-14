@@ -127,8 +127,8 @@
                 <mat-form-field appearance="outline"  class="dual__input--item">
                   <mat-label>Estatus</mat-label>
                   <mat-select formControlName="status" required >
-                    <mat-option value='0'>Inactivo</mat-option>
-                    <mat-option value="1">Activo</mat-option>
+                    <mat-option [value]='0'>Inactivo</mat-option>
+                    <mat-option [value]="1">Activo </mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
