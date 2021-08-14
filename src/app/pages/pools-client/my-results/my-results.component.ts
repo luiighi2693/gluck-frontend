@@ -48,7 +48,7 @@ export class MyResultsComponent implements OnInit, AfterViewInit {
 
     this.admin.getResultsByPoolAndUser(id, this.currentPool).subscribe(data => {
 
-      this.loaderValue.updateIsloading(true);
+      this.loaderValue.updateIsloading(false);
       if (data.code === 'D200') {
         this.data = data;
       } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
