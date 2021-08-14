@@ -65,23 +65,23 @@ td, th {
 }
 
 .active {
-  padding: 0.5rem;
+  /* padding: 0.5rem; */
   color: white;
   background-color: #4caf50;
   border-radius: 15px;
   text-align: center;
-  width: 75%;
-  letter-spacing: 1px;
+  width: 50%;
+  font-size: 12px;
 }
 
 .inactive {
-  padding: 0.5rem;
+  /* padding: 0.5rem; */
   color: white;
   background-color: red;
   border-radius: 15px;
   text-align: center;
-  width: 75%;
-  letter-spacing: 1px;
+  width: 50%;
+  font-size: 12px;
 }
 
 .home__link:hover {

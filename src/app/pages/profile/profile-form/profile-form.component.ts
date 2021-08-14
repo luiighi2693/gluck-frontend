@@ -56,7 +56,7 @@ export class ProfileFormComponent implements OnInit {
       state: new FormControl('', Validators.required),
       city: new FormControl('', Validators.required),
       code: new FormControl('', Validators.required),
-      status: new FormControl('',)
+      status: new FormControl('')
     });
   }
 
@@ -89,6 +89,19 @@ export class ProfileFormComponent implements OnInit {
   submitForm() {
     const { rowid, type, fk_sport, img, ranking, date_Access, date_Create, contador, username,
       name, lastname, password, email, phone, address, state, city, code, status} = this.updateProfileForm.value;
+    this.loaderValue.updateIsloading(true);
+    this.admin.editUser(name, lastname, username, email, phone, password, address, state, city, code, rowid, status, img).subscribe(res => {
+      this.loaderValue.updateIsloading(false);
+      if (res.code === 'D200') {
+        this.handleAlertsProvider.presentSnackbarSuccess('Se actualizaron los datos con exito!');
+        this.router.navigate(['home']);
+      } else if (res.code === 'A401' || res.code === 'A302' || res.code === 'A403') {
+        this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
+        this.router.navigate(['/auth']);
+      }
+    }, err => {
+      this.handleAlertsProvider.presentGenericAlert(err);
+    });
   }
 
   handleUpload(event) {

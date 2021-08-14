@@ -24,7 +24,7 @@ const sports: SportData[] = [];
   styleUrls: ['./list-of-sports.component.css']
 })
 export class ListOfSportsComponent implements OnInit, AfterViewInit {
-  displayedColumns: string[] = ['rowid', 'image', 'name', 'status', 'date_Create', 'opts'];
+  displayedColumns: string[] = ['rowid', 'name', 'status', 'date_Create', 'opts'];
   dataSource: MatTableDataSource<SportData>;
   imagePath;
 

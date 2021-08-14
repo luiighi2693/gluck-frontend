@@ -49,3 +49,10 @@ td, th {
 .opts {
   width: 10%;
 }
+
+.action-button {
+  color: #333232;
+  background-color: #F6DD06;
+}
+
+

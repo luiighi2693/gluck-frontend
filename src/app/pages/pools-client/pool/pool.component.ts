@@ -108,7 +108,7 @@ export class PoolComponent implements OnInit, AfterViewInit {
       '',
     );
     dialogRef.afterClosed().subscribe(res => {
-      if (res !== undefined) {
+      if (res !== undefined && res !== null &&  res !== '') {
         if (data.password === '' || data.password === null) {
           if (res === '') {
             this.callRegisterPool(data.id);

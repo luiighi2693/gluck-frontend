@@ -41,7 +41,7 @@
         <!-- Progress Column -->
         <ng-container matColumnDef="name">
           <th class="name" mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
-          <td class="name" (click)="goToDetail(row.status, row.rowid)" mat-cell *matCellDef="let row"> {{row.name}} </td>
+          <td class="name" (click)="goToDetail(row.status, row.rowid)" mat-cell *matCellDef="let row"> <p class="limit-text">{{row.name}}</p> </td>
         </ng-container>
 
         <!-- Progress Column -->
