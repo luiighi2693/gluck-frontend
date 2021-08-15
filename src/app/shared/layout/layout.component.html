@@ -44,6 +44,8 @@
   <mat-drawer-content>
     <main>
       <app-header
+        [coins]="coins"
+        [money]="money"
         (toggleValue)="toggleSidenav($event)"
       ></app-header>
       <div class="main-content">
@@ -230,6 +232,8 @@
   <mat-drawer-content>
     <main>
       <app-header
+        [money]="money"
+        [coins]="coins"
         (toggleValue)="toggleSidenav($event)"
       ></app-header>
       <div class="main-content">

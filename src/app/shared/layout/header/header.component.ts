@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthService} from '../../../services/auth.service';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
+import {EventBusService} from 'ng-simple-event-bus';
 
 @Component({
   selector: 'app-header',
@@ -31,8 +32,6 @@ export class HeaderComponent implements OnInit {
     this.token = sessionStorage.getItem('token');
     this.isAdmin = JSON.parse(sessionStorage.getItem('isAdmin'));
     this.name = sessionStorage.getItem('username');
-    this.coins = sessionStorage.getItem('coins');
-    this.money = sessionStorage.getItem('money');
     this.dateCreate = sessionStorage.getItem('dateCreate').slice(0, 10);
   }
 

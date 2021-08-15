@@ -44,14 +44,14 @@
           <!-- Name Column -->
           <ng-container matColumnDef="sport">
             <th class="sport" mat-header-cell *matHeaderCellDef mat-sort-header> Deporte</th>
-            <td class="sport" mat-cell *matCellDef="let row"> {{row.sport}} </td>
+            <td class="sport" mat-cell *matCellDef="let row" (click)="updateCoins()"> {{row.sport}} </td>
           </ng-container>
 
           <!-- Fruit Column -->
           <ng-container matColumnDef="status">
             <th class="status" mat-header-cell *matHeaderCellDef mat-sort-header> Status</th>
             <td class="status" mat-cell *matCellDef="let row">
-              <div [ngClass]="{'active': row.status === 1, 'inactive': row.status === 0}"><p
+              <div [ngClass]="{'active': row.status === 1, 'inactive': row.status === 0}" (click)="updateMoney()"><p
                 class="m-0">{{row.status === 1 ? 'Activo' : 'Inactivo' }}</p></div>
             </td>
           </ng-container>

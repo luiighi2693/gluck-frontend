@@ -10,6 +10,7 @@ import * as moment from 'moment';
 import {PeriodicElement} from '../my-pools/my-pools.component';
 import {environment} from '../../../../environments/environment';
 import {LoaderProvider} from '../../../utilities/providers/loader-provider';
+import {EventBusService} from 'ng-simple-event-bus';
 
 export interface UserPool {
   name: string;
@@ -52,6 +53,7 @@ export class PoolComponent implements OnInit, AfterViewInit {
     private router: Router,
     private admin: AdminService,
     private loaderValue: LoaderProvider,
+    private event: EventBusService,
   ) {
     this.admin.initToken();
     this.imagePath = environment.basePath;
@@ -77,22 +79,22 @@ export class PoolComponent implements OnInit, AfterViewInit {
         this.weeklyPools = data.semanales;
         console.log(this.privatePools, this.monthlyPools, this.oneVsOnePools, this.weeklyPools);
 
-          this.dataSourceOneVsOne = new MatTableDataSource<any>(this.oneVsOnePools);
-          this.dataSourceWeekly = new MatTableDataSource<any>(this.weeklyPools);
-          this.dataSourceMonthly = new MatTableDataSource<any>(this.monthlyPools);
-          this.dataSourceprivate = new MatTableDataSource<any>( this.privatePools);
+        this.dataSourceOneVsOne = new MatTableDataSource<any>(this.oneVsOnePools);
+        this.dataSourceWeekly = new MatTableDataSource<any>(this.weeklyPools);
+        this.dataSourceMonthly = new MatTableDataSource<any>(this.monthlyPools);
+        this.dataSourceprivate = new MatTableDataSource<any>(this.privatePools);
 
-          this.startCounter(this.oneVsOnePools, this.dataSourceOneVsOne);
-          this.startCounter(this.weeklyPools, this.dataSourceWeekly);
-          this.startCounter(this.monthlyPools, this.dataSourceMonthly);
-          this.startCounter(this.privatePools, this.dataSourceprivate);
-        } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
-          this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
-          this.router.navigate(['/auth']);
-        }
-      }, error => {
-        this.handleAlertsProvider.presentGenericAlert(error);
-      });
+        this.startCounter(this.oneVsOnePools, this.dataSourceOneVsOne);
+        this.startCounter(this.weeklyPools, this.dataSourceWeekly);
+        this.startCounter(this.monthlyPools, this.dataSourceMonthly);
+        this.startCounter(this.privatePools, this.dataSourceprivate);
+      } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
+        this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
+        this.router.navigate(['/auth']);
+      }
+    }, error => {
+      this.handleAlertsProvider.presentGenericAlert(error);
+    });
   }
 
   registerToPool(data) {
@@ -108,7 +110,7 @@ export class PoolComponent implements OnInit, AfterViewInit {
       '',
     );
     dialogRef.afterClosed().subscribe(res => {
-      if (res !== undefined && res !== null &&  res !== '') {
+      if (res !== undefined && res !== null && res !== '') {
         if (data.password === '' || data.password === null) {
           if (res === '') {
             this.callRegisterPool(data.id);
@@ -205,5 +207,13 @@ export class PoolComponent implements OnInit, AfterViewInit {
 
   goToEditResults(poolId) {
     this.router.navigate([`/home/pools/pool-register/${poolId}`]);
+  }
+
+  updateMoney() {
+    this.event.trigger('getMoney', 10);
+  }
+
+  updateCoins() {
+    this.event.trigger('getCoins', 10);
   }
 }

@@ -9,6 +9,7 @@ import { SharedModule } from './shared/shared.module';
 import { HttpClientModule } from '@angular/common/http';
 import {NgxCaptchaModule} from 'ngx-captcha';
 import { LoaderProvider } from './utilities/providers/loader-provider';
+import {EventBusService} from 'ng-simple-event-bus';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import { LoaderProvider } from './utilities/providers/loader-provider';
     AlertsModule,
     HttpClientModule,
   ],
-  providers: [LoaderProvider],
+  providers: [LoaderProvider, EventBusService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
