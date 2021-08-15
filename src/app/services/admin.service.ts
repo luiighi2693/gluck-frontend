@@ -270,7 +270,7 @@ export class AdminService {
       manualSelection,
       message
     };
-    return this.http.post(`${environment.basePath}/api/utilities/semdEmailByCategory`, params);
+    return this.http.post(`${environment.basePath}/api/utilities/sendEmailByCategory`, params);
   }
 
   uploadFile(imageData: any) {

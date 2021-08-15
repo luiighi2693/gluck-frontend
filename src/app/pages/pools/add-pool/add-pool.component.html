@@ -16,8 +16,8 @@
   <div class="profile__wrapper mb-3">
     <!--    <div class="row">-->
     <!--      <div class="col-12 col-md-8 offset-md-2">-->
-    <mat-stepper orientation="vertical" linear #stepper>
-<!--    <mat-stepper orientation="vertical" #stepper>-->
+<!--    <mat-stepper orientation="vertical" linear #stepper>-->
+          <mat-stepper orientation="vertical" #stepper>
       <mat-step [stepControl]="config">
         <form [formGroup]="config">
           <ng-template matStepLabel>Configuracion</ng-template>
@@ -25,7 +25,7 @@
             <div class="col-12 col-md-4">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Nombre de Quiniela</mat-label>
-                <input matInput placeholder=" name" formControlName="name" autocomplete="off" >
+                <input matInput placeholder=" name" formControlName="name" autocomplete="off">
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
                 </mat-error>
@@ -34,7 +34,7 @@
             <div class="col-12 col-md-4">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Deporte</mat-label>
-                <mat-select formControlName="sport" >
+                <mat-select formControlName="sport">
                   <mat-option>- Deporte -</mat-option>
                   <mat-option *ngFor="let sport of sports" [value]="sport.rowid">{{sport.name}}</mat-option>
                 </mat-select>
@@ -47,7 +47,7 @@
               <mat-form-field appearance="outline" class="w-100">
                 <input matInput [ngxMatColorPicker]="colorPicker" placeholder="Selecciona un Color"
                        formControlName="color"
-                       autocomplete="off" >
+                       autocomplete="off">
                 <ngx-mat-color-toggle matSuffix [for]="colorPicker"></ngx-mat-color-toggle>
                 <ngx-mat-color-picker #colorPicker></ngx-mat-color-picker>
                 <mat-error>
@@ -61,7 +61,7 @@
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Cantidad de Partidos</mat-label>
                 <input matInput type="number" placeholder="5" [(ngModel)]="amountOfMatches" formControlName="matches"
-                       autocomplete="off" >
+                       autocomplete="off">
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
                 </mat-error>
@@ -71,7 +71,7 @@
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Limite de Usuarios</mat-label>
                 <input matInput type="number" placeholder="15" [(ngModel)]="limitOfUsers" formControlName="usersLimit"
-                       autocomplete="off" >
+                       autocomplete="off">
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
                 </mat-error>
@@ -82,7 +82,7 @@
             <div class="col-12 col-md-4">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Estatus de Quiniela</mat-label>
-                <mat-select formControlName="status" >
+                <mat-select formControlName="status">
                   <mat-option>- Estatus -</mat-option>
                   <mat-option value="1">Activo</mat-option>
                   <mat-option value="2">Cerrado</mat-option>
@@ -95,7 +95,7 @@
             <div class="col-12 col-md-4">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Penalty</mat-label>
-                <mat-select formControlName="penalty" [(ngModel)]="doPenaltiesExist" >
+                <mat-select formControlName="penalty" [(ngModel)]="doPenaltiesExist">
                   <mat-option>- Penalty -</mat-option>
                   <mat-option value="0">Si</mat-option>
                   <mat-option value="1">No</mat-option>
@@ -108,7 +108,8 @@
             <div class="col-12 col-md-4">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Grupos</mat-label>
-                <input matInput type="number" placeholder="6" formControlName="groups" autocomplete="off">
+                <input matInput type="number" placeholder="6" formControlName="groups" [(ngModel)]="amountOfGroups"
+                       autocomplete="off">
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
                 </mat-error>
@@ -119,7 +120,8 @@
             <div class="col-12 col-md-3">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Equipos por Grupos</mat-label>
-                <input matInput type="number" placeholder="2" formControlName="teamsPerGroup" autocomplete="off">
+                <input matInput type="number" placeholder="2" formControlName="teamsPerGroup"
+                       [(ngModel)]="amountOfTeams" autocomplete="off">
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
                 </mat-error>
@@ -188,14 +190,52 @@
             </div>
           </div>
           <div>
-            <button mat-flat-button [disabled]="!config.valid" (click)="makeMatches()" matStepperNext
+<!--            <button mat-flat-button [disabled]="!config.valid" (click)="makeSecondStep()" matStepperNext-->
+            <button mat-flat-button (click)="makeSecondStep()" matStepperNext
                     class="action-button">Siguiente
             </button>
           </div>
         </form>
       </mat-step>
       <mat-step>
-        <!--        <form [formGroup]="matches">-->
+        <!--        <form [formGroup]="groups">-->
+        <ng-template matStepLabel>Groups</ng-template>
+        <div *ngFor="let group of arrayOfGroups, index as i">
+          <div class="row">
+            <div class="col-12">
+              <h1> Grupo #{{i + 1}}</h1>
+            </div>
+            <mat-divider class="my-3"></mat-divider>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Nombre de Grupo</mat-label>
+                <input matInput [(ngModel)]="group.title" placeholder='Grupo A' autocomplete="off">
+              </mat-form-field>
+            </div>
+            <div class="row" *ngIf="teamsGroupFlag">
+              <div class="col-12 col-md-3" *ngFor="let teamObject of group.teams, index as j">
+                <mat-form-field appearance="outline" class="w-100" >
+                  <mat-label>Equipo {{j + 1}}</mat-label>
+                  <mat-select [(ngModel)]="teamObject">
+                    <mat-option *ngFor="let team of teams" [value]="team">{{team.name}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <mat-divider class="my-5"></mat-divider>
+        </div>
+        <div>
+          <button mat-button matStepperPrevious>Atras</button>
+          <button mat-button matStepperNext class="action-button">Siguiente</button>
+        </div>
+        <!--        </form>-->
+      </mat-step>
+      <mat-step>
+        <!--        <form [formGroup]="macthes">-->
         <ng-template matStepLabel>Partidos</ng-template>
         <div *ngFor="let match of arrayOfMatches, index as i">
           <div class="row">
@@ -416,7 +456,7 @@
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Valor de entrada (Dolares)</mat-label>
                 <input matInput type="number" formControlName="amountInput" placeholder="5"
-                       autocomplete="off"  (blur)="getAward()">
+                       autocomplete="off" (blur)="getAward()">
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
                 </mat-error>
@@ -426,7 +466,7 @@
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Valor de entrada (Coins)</mat-label>
                 <input matInput type="number" formControlName="coinsInput" placeholder="5"
-                       autocomplete="off" >
+                       autocomplete="off">
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
                 </mat-error>
@@ -458,7 +498,7 @@
             <div class="col-12 col-md-3">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Tipo de Premio</mat-label>
-                <mat-select formControlName="awardType"  [(ngModel)]="awardType"
+                <mat-select formControlName="awardType" [(ngModel)]="awardType"
                             ngModelOptions="{standalone: true}" (ngModelChange)="getAward()">
                   <mat-option>- Tipo de Premio -</mat-option>
                   <mat-option value="fijo">Fijo</mat-option>
@@ -474,7 +514,7 @@
                 <mat-label>Valor de Premio Total</mat-label>
                 <input matInput type="text" [readOnly]="endPools.value.awardType !== 'total' ? 'false' : 'true'"
                        formControlName="awardValue" placeholder="$500"
-                       autocomplete="off" >
+                       autocomplete="off">
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
                 </mat-error>
@@ -493,7 +533,9 @@
           </div>
           <div>
             <button mat-flat-button matStepperPrevious>Atras</button>
-            <button mat-flat-button [disabled]="!endPools.valid" (click)="validateUsers(stepper)" class="action-button">Siguiente</button>
+            <button mat-flat-button [disabled]="!endPools.valid" (click)="validateUsers(stepper)" class="action-button">
+              Siguiente
+            </button>
           </div>
         </form>
       </mat-step>
@@ -505,7 +547,7 @@
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Resultado</mat-label>
                 <input matInput type="number" formControlName="result" placeholder="3"
-                       autocomplete="off" >
+                       autocomplete="off">
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
                 </mat-error>
@@ -515,7 +557,7 @@
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Ganador</mat-label>
                 <input matInput type="number" formControlName="winner" placeholder="5"
-                       autocomplete="off" >
+                       autocomplete="off">
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
                 </mat-error>
@@ -525,7 +567,7 @@
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Empate</mat-label>
                 <input matInput type="number" formControlName="draw" placeholder="2"
-                       autocomplete="off" >
+                       autocomplete="off">
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
                 </mat-error>
@@ -535,7 +577,7 @@
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Perdedor</mat-label>
                 <input matInput type="number" formControlName="loser" placeholder="0"
-                       autocomplete="off" >
+                       autocomplete="off">
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
                 </mat-error>

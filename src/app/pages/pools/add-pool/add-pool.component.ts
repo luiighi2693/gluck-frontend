@@ -34,8 +34,11 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
   poolResults: FormGroup;
   endPools: FormGroup;
   amountOfMatches: number;
+  amountOfGroups: number;
+  amountOfTeams: number;
   doPenaltiesExist = '';
   arrayOfMatches = [];
+  arrayOfGroups = [];
   sports = [];
   teams = [];
   limitOfUsers: any;
@@ -51,9 +54,10 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
 
   imagePath;
 
-  @ViewChild('inputFiles', { static: true }) inputFiles: ElementRef;
+  @ViewChild('inputFiles', {static: true}) inputFiles: ElementRef;
 
   awardType;
+  teamsGroupFlag = false;
 
   constructor(
     private handleAlertsProvider: HandleAlertsProvider,
@@ -169,17 +173,44 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
     console.log(this.config.value.color.hex);
   }
 
-  makeMatches() {
+  makeSecondStep() {
+    console.log(this.amountOfTeams);
+    console.log(this.amountOfGroups);
     this.arrayOfMatches = [];
+    this.arrayOfGroups = [];
     this.limitOfUsers = Number(this.config.value.usersLimit);
     this.doPenaltiesExist = this.config.value.penalty;
+
+    for (let i = 0; i < this.amountOfGroups; i++) {
+      // tslint:disable-next-line:prefer-const
+      let group = {
+        title: '',
+        teams: [] = new Array(this.amountOfTeams)
+      };
+
+      group.teams.forEach(x => {
+        x = {
+          rowid: 0
+        };
+      });
+
+      // for (let j = 0; j < this.amountOfTeams; j++) {
+      //   group.teams.push({
+      //     rowid: 0
+      //   });
+      // }
+
+      // this.arrayOfGroups.push(group);
+    }
+
+    this.teamsGroupFlag = true;
+
     for (let i = 0; i < this.amountOfMatches; i++) {
-      this.arrayOfMatches.push({title: '', team1: '', penalty1: '', result1: '', team2: '', penalty2: '', result2: '', date: '',
+      this.arrayOfMatches.push({
+        title: '', team1: '', penalty1: '', result1: '', team2: '', penalty2: '', result2: '', date: '',
         time: '', status: '', result: 'sin comenzar',
       });
     }
-    console.log(this.arrayOfMatches);
-    console.log(this.limitOfUsers);
   }
 
   showSelection(stepper) {
@@ -229,8 +260,10 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
 
   registerPool() {
     this.loaderValue.updateIsloading(true);
-    const {name, sport, color, matches, usersLimit, status, penalty, groups, teamsPerGroup, type, league, password,
-      rules} = this.config.value;
+    const {
+      name, sport, color, matches, usersLimit, status, penalty, groups, teamsPerGroup, type, league, password,
+      rules
+    } = this.config.value;
     const {amountInput, coinsInput, dateFinish, timeFinish, awardType, awardValue} = this.endPools.value;
     this.arrayOfMatches.forEach(match => {
       if (match.time.toUpperCase().includes('PM')) {
@@ -285,5 +318,9 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
     } else {
       this.endPools.get('awardValue').setValue(0);
     }
+  }
+
+  setTeamGroup($event: any) {
+    console.log($event);
   }
 }
