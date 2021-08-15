@@ -48,6 +48,9 @@ export class PoolComponent implements OnInit, AfterViewInit {
   @ViewChild(MatSort) sort: MatSort;
   imagePath;
 
+  amountSelected;
+  coinsSelected;
+
   constructor(
     private handleAlertsProvider: HandleAlertsProvider,
     private router: Router,
@@ -98,6 +101,8 @@ export class PoolComponent implements OnInit, AfterViewInit {
   }
 
   registerToPool(data) {
+    this.amountSelected = data.amountInput;
+    this.coinsSelected = data.coinsInput;
     const dialogRef = this.handleAlertsProvider.registerPoolDialog(
       data.id,
       data.poolName,
@@ -197,6 +202,8 @@ export class PoolComponent implements OnInit, AfterViewInit {
       console.log(data);
       this.loaderValue.updateIsloading(false);
       if (data.code === 'D200') {
+        this.updateMoney();
+        this.updateCoins();
         this.goToEditResults(id);
       } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
@@ -210,10 +217,10 @@ export class PoolComponent implements OnInit, AfterViewInit {
   }
 
   updateMoney() {
-    this.event.trigger('getMoney', 10);
+    this.event.trigger('getMoney', this.amountSelected * (-1));
   }
 
   updateCoins() {
-    this.event.trigger('getCoins', 10);
+    this.event.trigger('getCoins', this.coinsSelected * (-1));
   }
 }

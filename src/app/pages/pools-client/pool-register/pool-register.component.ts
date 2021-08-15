@@ -54,6 +54,24 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
           match.resultTeam2 = 0;
         });
         this.pool = res.data;
+
+        this.loaderValue.updateIsloading(true);
+        this.admin.getResultsByPoolAndUser(sessionStorage.getItem('id'), this.currentPool).subscribe(data2 => {
+          this.loaderValue.updateIsloading(false);
+          if (data2.code === 'D200') {
+            this.matches.forEach(match => {
+              const result = data2.data.find(x => (x.teamId1 === match.team1) && (x.teamId2 === match.team2));
+              console.log(result);
+              match.resultTeam1 = result.teamResult1;
+              match.resultTeam2 = result.teamResult2;
+            });
+          } else if (data2.code === 'A401' || data2.code === 'A302' || data2.code === 'A403') {
+            this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
+            this.router.navigate(['/auth']);
+          }
+        }, error => {
+          this.handleAlertsProvider.presentGenericAlert(error);
+        });
       } else if (res.code === 'A401' || res.code === 'A302' || res.code === 'A403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
         this.router.navigate(['/auth']);

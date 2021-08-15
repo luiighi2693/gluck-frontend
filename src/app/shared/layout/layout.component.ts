@@ -34,9 +34,11 @@ export class LayoutComponent implements OnInit {
   ngOnInit(): void {
     this.event.on('getMoney', (payload: any) => {
       this.money = Number(this.money) + payload;
+      sessionStorage.setItem('money', this.money);
     });
     this.event.on('getCoins', (payload: any) => {
       this.coins = Number(this.money) + payload;
+      sessionStorage.setItem('coins', this.coins);
     });
     this.loaderValue.getIsLoadingValue().subscribe(res => {
       this.isLoading = res;
