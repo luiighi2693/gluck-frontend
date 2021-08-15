@@ -19,6 +19,7 @@ export class LayoutComponent implements OnInit {
   name: string;
   option = false;
   isLoading: any;
+  pageWidth: any;
 
   constructor(
     private loaderValue: LoaderProvider,
@@ -33,6 +34,7 @@ export class LayoutComponent implements OnInit {
     this.isExpanded = false;
     this.isAdmin = JSON.parse(sessionStorage.getItem('isAdmin'));
     this.name = sessionStorage.getItem('username');
+    this.pageWidth = window.innerWidth;
   }
 
   toggleSidenav($event) {
