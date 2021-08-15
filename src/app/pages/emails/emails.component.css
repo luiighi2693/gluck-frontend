@@ -61,4 +61,9 @@
   }
 }
 
+.users-selection-table {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
 

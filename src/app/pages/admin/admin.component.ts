@@ -1,18 +1,29 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnInit} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {HandleAlertsProvider} from '../../utilities/providers/handle-alerts-provider';
 import {Router} from '@angular/router';
 import {AdminService} from '../../services/admin.service';
 import {LoaderProvider} from '../../utilities/providers/loader-provider';
+import {MatTableDataSource} from '@angular/material/table';
+import {SelectionModel} from '@angular/cdk/collections';
+
+export interface UserData {
+  rowid: string;
+  username: string;
+  name: string;
+  email: string;
+  amount: number;
+  status: number;
+  coins: number;
+}
 
 @Component({
   selector: 'app-admin',
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
-export class AdminComponent implements OnInit {
+export class AdminComponent implements OnInit, AfterViewInit {
   emailForm: FormGroup;
-  users = [];
   exampleData = [
     {
       name: 'exampleName',
@@ -88,6 +99,10 @@ export class AdminComponent implements OnInit {
     },
   ];
 
+  displayedColumns: string[] = ['username', 'email', 'opts'];
+  dataSource: MatTableDataSource<UserData>;
+  selection = new SelectionModel<UserData>(true, []);
+
   constructor(
     private handleAlertsProvider: HandleAlertsProvider,
     private router: Router,
@@ -103,6 +118,10 @@ export class AdminComponent implements OnInit {
     this.createForm();
   }
 
+  ngAfterViewInit() {
+    this.setUsersData();
+  }
+
   createForm() {
     this.emailForm = this.fb.group({
       category: ['', Validators.required],
@@ -116,6 +135,7 @@ export class AdminComponent implements OnInit {
     // console.log(this.emailForm.value);
     this.loaderValue.updateIsloading(true);
     const emailForm = this.emailForm.value;
+    emailForm.manualSelection = this.selection.selected;
     // console.warn(emailForm);
     this.admin.sendEmail(emailForm.category, emailForm.subject, emailForm.manualSelection, emailForm.message).subscribe(res => {
       this.loaderValue.updateIsloading(false);
@@ -136,7 +156,7 @@ export class AdminComponent implements OnInit {
     this.admin.getUsers().subscribe(res => {
       this.loaderValue.updateIsloading(false);
       if (res.code === 'D200') {
-        this.users = res.data;
+        this.dataSource = new MatTableDataSource<UserData>(res.data);
       } else if (res.code === 'D401' || res.code === 'D302' || res.code === 'D403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
         this.router.navigate(['/auth']);
@@ -146,4 +166,8 @@ export class AdminComponent implements OnInit {
     });
   }
 
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
 }

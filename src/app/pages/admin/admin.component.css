@@ -131,3 +131,8 @@
     margin: 1rem auto;
   }
 }
+
+.users-selection-table {
+  max-height: 400px;
+  overflow-y: auto;
+}

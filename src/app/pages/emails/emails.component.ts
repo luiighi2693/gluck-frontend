@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {AdminService} from '../../services/admin.service';
 import {HandleAlertsProvider} from '../../utilities/providers/handle-alerts-provider';
@@ -6,8 +6,6 @@ import {Router} from '@angular/router';
 import {LoaderProvider} from '../../utilities/providers/loader-provider';
 import {MatTableDataSource} from '@angular/material/table';
 import {SelectionModel} from '@angular/cdk/collections';
-import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
 
 export interface UserData {
   rowid: string;
@@ -25,16 +23,12 @@ export interface UserData {
   templateUrl: './emails.component.html',
   styleUrls: ['./emails.component.css']
 })
-export class EmailsComponent implements OnInit {
-  users = [];
+export class EmailsComponent implements OnInit, AfterViewInit {
   emailForm: FormGroup;
 
   displayedColumns: string[] = ['username', 'email', 'opts'];
   dataSource: MatTableDataSource<UserData>;
   selection = new SelectionModel<UserData>(true, []);
-
-  @ViewChild(MatPaginator) paginator: MatPaginator;
-  @ViewChild(MatSort) sort: MatSort;
 
   constructor(
     private admin: AdminService,
@@ -47,8 +41,11 @@ export class EmailsComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.setUsersData();
     this.createForm();
+  }
+
+  ngAfterViewInit() {
+    this.setUsersData();
   }
 
   private createForm() {
@@ -84,10 +81,7 @@ export class EmailsComponent implements OnInit {
       this.loaderValue.updateIsloading(false);
       if (res.code === 'D200') {
         console.log('res: ', res);
-        this.users = res.data;
         this.dataSource = new MatTableDataSource<UserData>(res.data);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
       } else if (res.code === 'D401' || res.code === 'D302' || res.code === 'D403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
         this.router.navigate(['/auth']);
@@ -100,9 +94,5 @@ export class EmailsComponent implements OnInit {
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
   }
 }
