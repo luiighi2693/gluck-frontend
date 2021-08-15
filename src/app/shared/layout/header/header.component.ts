@@ -1,4 +1,4 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthService} from '../../../services/auth.service';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
@@ -16,8 +16,8 @@ export class HeaderComponent implements OnInit {
   token: string;
   isAdmin: boolean;
   name: string;
-  coins = '10';
-  money = '10';
+  @Input() coins;
+  @Input() money;
   dateCreate: any;
 
   constructor(

@@ -17,8 +17,8 @@ import { LoaderComponent } from './loader/loader.component';
   ],
   imports: [
     CommonModule,
-    RouterModule,
     MaterialModule,
+    RouterModule,
   ],
   exports: [FooterComponent, LoaderComponent]
 })
