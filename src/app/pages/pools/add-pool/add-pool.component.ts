@@ -57,7 +57,6 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
   @ViewChild('inputFiles', {static: true}) inputFiles: ElementRef;
 
   awardType;
-  teamsGroupFlag = false;
 
   constructor(
     private handleAlertsProvider: HandleAlertsProvider,
@@ -185,25 +184,20 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
       // tslint:disable-next-line:prefer-const
       let group = {
         title: '',
-        teams: [] = new Array(this.amountOfTeams)
+        teams: []
       };
 
-      group.teams.forEach(x => {
-        x = {
-          rowid: 0
-        };
-      });
+      // group.teams.forEach(x => {
+      // });
 
-      // for (let j = 0; j < this.amountOfTeams; j++) {
-      //   group.teams.push({
-      //     rowid: 0
-      //   });
-      // }
+      for (let j = 0; j < this.amountOfTeams; j++) {
+        group.teams[j] = 0;
+      }
 
-      // this.arrayOfGroups.push(group);
+      this.arrayOfGroups.push(group);
     }
 
-    this.teamsGroupFlag = true;
+    console.log(JSON.stringify(this.arrayOfGroups));
 
     for (let i = 0; i < this.amountOfMatches; i++) {
       this.arrayOfMatches.push({
@@ -320,7 +314,23 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
     }
   }
 
-  setTeamGroup($event: any) {
-    console.log($event);
+  validateChangeTeamGroup(event: any, i, j) {
+    console.log(event);
+    let result = [];
+    result = result.concat(...this.arrayOfGroups.map(x => x.teams));
+    console.log(result);
+    console.log(result.filter(x => x === event).length);
+
+    // coincidences
+    if (result.filter(x => x === event).length > 1) {
+      setTimeout(() => {
+        this.arrayOfGroups[i].teams[j] = 0;
+        this.handleAlertsProvider.presentSnackbarError('Este Equipo ya fue seleccionado!');
+
+        console.log(result);
+        console.log(result.filter(x => x === event).length);
+      }, 300);
+    }
+
   }
 }

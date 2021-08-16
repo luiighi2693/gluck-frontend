@@ -214,12 +214,12 @@
                 <input matInput [(ngModel)]="group.title" placeholder='Grupo A' autocomplete="off">
               </mat-form-field>
             </div>
-            <div class="row" *ngIf="teamsGroupFlag">
-              <div class="col-12 col-md-3" *ngFor="let teamObject of group.teams, index as j">
+            <div class="row">
+              <div class="col-12 col-md-3" *ngFor="let teamObject of group.teams.slice().reverse(), index as j">
                 <mat-form-field appearance="outline" class="w-100" >
                   <mat-label>Equipo {{j + 1}}</mat-label>
-                  <mat-select [(ngModel)]="teamObject">
-                    <mat-option *ngFor="let team of teams" [value]="team">{{team.name}}</mat-option>
+                  <mat-select [(ngModel)]="group.teams[j]" (ngModelChange)="validateChangeTeamGroup($event, i, j)">
+                    <mat-option *ngFor="let team of teams" [value]="team.rowid">{{team.name}}</mat-option>
                   </mat-select>
                 </mat-form-field>
               </div>
