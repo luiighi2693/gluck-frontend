@@ -32,11 +32,11 @@ export class BreadcrumbComponent implements OnInit, AfterViewInit {
       this.accountType = 'User';
     }
     if (this.router.url.includes('home')) {
-      this.baseRoute = '/home';
-      this.currentRoute = this.router.url.slice(5);
+      this.baseRoute = 'home';
+      this.currentRoute = this.router.url.slice(5).split('/').join(' > ');
     } else if (this.router.url.includes('admin')) {
-      this.baseRoute = '/admin';
-      this.currentRoute = this.router.url.slice(6);
+      this.baseRoute = 'admin';
+      this.currentRoute = this.router.url.slice(6).split('/').join(' > ');
     }
     console.log(this.currentRoute);
     console.log(this.baseRoute);
