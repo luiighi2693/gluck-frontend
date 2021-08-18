@@ -3,3 +3,10 @@
   height: 400px;
   object-fit: contain;
 }
+
+@media screen and (max-width: 560px) {
+  .rules-iamge {
+    width: 100%;
+    height: auto;
+  }
+}

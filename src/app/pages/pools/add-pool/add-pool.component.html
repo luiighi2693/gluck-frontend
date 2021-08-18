@@ -1,23 +1,11 @@
-<div class="d-flex justify-content-between text-white m-4">
-  <div class="d-flex align-items-center">
-    <h1 class="m-0">Registro de Quiniela</h1> <span class="mt-2 mx-4 badge">Admin</span>
-  </div>
-  <div class="d-flex align-items-center">
-    <div class="d-flex align-items-center home__link" routerLink="/admin">
-      <mat-icon>home</mat-icon>
-      <h3 class="m-0">Home</h3>
-    </div>
-    <mat-icon>keyboard_arrow_right</mat-icon>
-    <h3 class="m-0">Registro de Quiniela</h3>
-  </div>
-</div>
+<app-breadcrumb [icon]="'add'" [currentView]="'Registro de Quinielas'"></app-breadcrumb>
 
 <div class="container-lg">
   <div class="profile__wrapper mb-3">
     <!--    <div class="row">-->
     <!--      <div class="col-12 col-md-8 offset-md-2">-->
     <mat-stepper orientation="vertical" linear #stepper>
-<!--          <mat-stepper orientation="vertical" #stepper>-->
+      <!--          <mat-stepper orientation="vertical" #stepper>-->
       <mat-step [stepControl]="config">
         <form [formGroup]="config">
           <ng-template matStepLabel>Configuracion</ng-template>
@@ -175,8 +163,8 @@
               <figure class="avatar__wrapper">
                 <img
                   [src]="this.config.value.rules !== '' ? (this.imagePath + '/images/' + this.config.value.rules) : '../../../../assets/default-rules.png'"
-                  class="rules-iamge" alt="">
-                <button class="avatar__button" type="button" mat-fab aria-label="change picture"
+                  class="rules-image" alt="">
+                <button class="action-button" type="button" mat-fab aria-label="change picture"
                         (click)="openUploadFiles()">
                   <mat-icon>camera_alt</mat-icon>
                 </button>
@@ -190,7 +178,7 @@
             </div>
           </div>
           <div>
-<!--            <button mat-flat-button [disabled]="!config.valid" (click)="makeSecondStep()" matStepperNext-->
+            <!--            <button mat-flat-button [disabled]="!config.valid" (click)="makeSecondStep()" matStepperNext-->
             <button mat-flat-button (click)="makeSecondStep()" matStepperNext
                     class="action-button">Siguiente
             </button>
@@ -216,7 +204,7 @@
             </div>
             <div class="row">
               <div class="col-12 col-md-3" *ngFor="let teamObject of group.teams.slice().reverse(), index as j">
-                <mat-form-field appearance="outline" class="w-100" >
+                <mat-form-field appearance="outline" class="w-100">
                   <mat-label>Equipo {{j + 1}}</mat-label>
                   <mat-select [(ngModel)]="group.teams[j]" (ngModelChange)="validateChangeTeamGroup($event, i, j)">
                     <mat-option *ngFor="let team of teams" [value]="team.rowid">{{team.name}}</mat-option>
@@ -365,7 +353,40 @@
           </mat-form-field>
         </div>
 
-        <div class="mat-elevation-z8">
+        <div class="mat-elevation-z8 d-block d-md-none">
+          <table mat-table [dataSource]="dataSource" matSort class="w-100">
+            <ng-container matColumnDef="username">
+              <th class="username" mat-header-cell *matHeaderCellDef mat-sort-header> Usuario</th>
+              <td class="username" mat-cell *matCellDef="let row"> {{row.username}} </td>
+            </ng-container>
+            <ng-container matColumnDef="opts">
+              <!--                <th mat-header-cell *matHeaderCellDef mat-sort-header>  </th>-->
+              <!--                <td mat-cell *matCellDef="let row">-->
+              <!--                  <button class="example-margin" (click)="selection.toggle(row)"> click me</button>-->
+              <!--                </td>-->
+              <th class="opts" mat-header-cell *matHeaderCellDef mat-sort-header>
+                -
+              </th>
+              <td class="opts" mat-cell *matCellDef="let row">
+                <mat-checkbox (click)="$event.stopPropagation()"
+                              color="primary"
+                              (change)="$event ? selection.toggle(row.rowid) : null"
+                              [checked]="selection.isSelected(row.rowid)">
+                </mat-checkbox>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsMobile"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsMobile;"></tr>
+
+            <!-- Row shown when there is no matching data. -->
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+            </tr>
+          </table>
+          <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+        </div>
+
+        <div class="mat-elevation-z8 d-none d-md-block">
           <table mat-table [dataSource]="dataSource" matSort class="w-100">
 
             <!-- ID Column -->
@@ -387,7 +408,7 @@
             </ng-container>
 
             <!-- Fruit Column -->
-            <ng-container matColumnDef="email">
+            <ng-container matColumnDef="email" >
               <th class="email" mat-header-cell *matHeaderCellDef mat-sort-header> Email</th>
               <td class="email" mat-cell *matCellDef="let row"> {{row.email}} </td>
             </ng-container>

@@ -1,3 +1,6 @@
+<button mat-mini-fab class="mx-4 action-button" (click)="goBack()" *ngIf="currentRoute !== '' && isMobile">
+  <mat-icon>arrow_back</mat-icon>
+</button>
 <div class="d-flex justify-content-between text-white m-4">
   <div class="d-flex align-items-center">
     <mat-icon class="mx-3">{{ icon }}</mat-icon>

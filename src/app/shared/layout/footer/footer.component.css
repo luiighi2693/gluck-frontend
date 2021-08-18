@@ -14,7 +14,7 @@
 }
 
 @media screen and (max-width: 990px) {
-  .footer {
+  .footer-static {
     position: absolute;
     bottom: 0;
     right: 0;

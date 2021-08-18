@@ -1,5 +1,5 @@
-<div class="footer-helper"></div>
-<div class="footer">
+<div class="footer-helper" *ngIf="currentRoute !== '/auth'"></div>
+<div class="footer" [ngClass]="currentRoute !== '/auth' ? 'footer-static' : ''">
   <div class="footer__options row">
     <div class="footer__options--item col col-md-6 text-center">
       <h1>Contact us</h1>

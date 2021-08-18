@@ -13,6 +13,11 @@
   min-height: 700px;
 }
 
+.action-button {
+  color: #333232;
+  background-color: #F6DD06;
+}
+
 @media screen and (max-width: 450px) {
   .profile__wrapper {
     padding: 0;
@@ -21,6 +26,12 @@
     max-width: 250px;
   }
 }
+
+/*@media screen and (max-width: 990px) {*/
+/*  ::ng-deep.fixed-wrapper {*/
+/*    min-width: 1200px !important;*/
+/*  }*/
+/*}*/
 
 
 

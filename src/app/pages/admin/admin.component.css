@@ -72,6 +72,28 @@
   display: flex;
   justify-content: space-between;
 }
+
+::ng-deep .tox-toolbar {
+  flex-wrap: wrap !important;
+}
+
+@media screen and (max-width: 450px){
+  .current__pools--header {
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+  }
+  .current__pools--content {
+    height: auto !important;
+    overflow-y: hidden !important;
+  }
+  .current-pool {
+    flex-direction: column;
+  }
+  .current-pool > p {
+    margin: 0.5rem 0 !important;
+  }
+}
 .other-pools {
   background-color: white;
   color: black;
@@ -109,7 +131,7 @@
 }
 
 .current__pools--content {
-  max-height: 500px;
+  height: 500px;
   overflow-y: auto;
   margin-top: 0.5rem;
 }

@@ -45,6 +45,7 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
   hide = true;
 
   displayedColumns: string[] = ['rowid', 'username', 'name', 'email', 'amount', 'coins', 'status', 'opts'];
+  displayedColumnsMobile: string[] = ['username', 'opts'];
   dataSource: MatTableDataSource<UserData>;
   selection = new SelectionModel<UserData>(true, []);
 
@@ -171,6 +172,7 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
   // show() {
   //   console.log(this.config.value.color.hex);
   // }
+
 
   makeSecondStep() {
     // console.log(this.amountOfTeams);

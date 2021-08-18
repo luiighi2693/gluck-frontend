@@ -4,6 +4,13 @@
   background-color: black;
 }
 
+@media screen and (max-width: 560px) {
+  .register-dialog {
+    width: 100%;
+    height: auto;
+  }
+}
+
 .image {
   width: 150px;
   height: 150px;

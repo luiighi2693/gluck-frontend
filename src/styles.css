@@ -50,4 +50,13 @@ input[type=number] {
   background: black;
 }
 
+/*::ng-deep.mat-dialog-container {*/
+/*  background-color: black ;*/
+/*  color: white;*/
+/*}*/
+
+/*::ng-deep.mat-form-field-flex {*/
+/*  background-color: white;*/
+/*}*/
+
 

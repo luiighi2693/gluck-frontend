@@ -3,13 +3,13 @@
   <div mat-dialog-content class="register-dialog-content">
     <div *ngFor="let participant of data.participants, index as i">
       <div class="row panel mb-3">
-        <div class="col-1 d-flex justify-content-center align-items-center">
+        <div class="col-12 col-sm-1 d-flex justify-content-center align-items-center">
           {{participant.rowid}}
         </div>
-        <div class="col-2 d-flex justify-content-center align-items-center">
+        <div class="col-12 col-sm-2 d-flex justify-content-center align-items-center">
           <img class="image" [src]="participant.image" alt="">
         </div>
-        <div class="col d-flex justify-content-center align-items-center">
+        <div class="col-12 col-sm-9 d-flex justify-content-center align-items-center">
           <h2 class="m-0">{{participant.username}}</h2>
         </div>
       </div>

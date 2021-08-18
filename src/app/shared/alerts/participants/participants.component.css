@@ -14,3 +14,12 @@
 .participants-dialog {
   width: 400px;
 }
+
+@media screen and (max-width: 560px) {
+  .participants-dialog {
+    width: 100%;
+  }
+  .panel {
+    padding: 0;
+  }
+}

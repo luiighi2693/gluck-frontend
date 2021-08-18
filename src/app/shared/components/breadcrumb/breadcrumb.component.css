@@ -19,3 +19,8 @@
     font-size: 16px;
   }
 }
+
+.action-button {
+  color: black;
+  background-color: #F6DD06;
+}

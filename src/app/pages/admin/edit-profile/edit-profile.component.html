@@ -1,16 +1,4 @@
-<div class="d-flex justify-content-between text-white m-4">
-  <div class="d-flex align-items-center">
-    <h1 class="m-0">Edicion de Perfil</h1> <span class="mt-2 mx-4 badge">Admin</span>
-  </div>
-  <div class="d-flex align-items-center">
-    <div class="d-flex align-items-center home__link" routerLink="/admin">
-      <mat-icon>home</mat-icon>
-      <h3 class="m-0">Home</h3>
-    </div>
-    <mat-icon>keyboard_arrow_right</mat-icon>
-    <h3 class="m-0">Edicion de Perfil</h3>
-  </div>
-</div>
+<app-breadcrumb [icon]="'edit'" [currentView]="'Edición de Perfil'"></app-breadcrumb>
 
 <div class="container">
   <div class="container profile__wrapper mb-3">

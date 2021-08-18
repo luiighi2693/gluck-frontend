@@ -1,0 +1,13 @@
+.done-button {
+  color: black;
+  background-color: #F6DD06;
+}
+
+.cancel-button {
+  background-color: red;
+  color: white;
+}
+
+.nat-form-field-flex {
+  background-color: white !important;
+}

@@ -47,6 +47,7 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
   hide = true;
 
   displayedColumns: string[] = ['rowid', 'username', 'name', 'email', 'amount', 'coins', 'status', 'opts'];
+  displayedColumnsMobile: string[] = ['username', 'opts'];
   dataSource: MatTableDataSource<UserData>;
   selection = new SelectionModel<UserData>(true, []);
 

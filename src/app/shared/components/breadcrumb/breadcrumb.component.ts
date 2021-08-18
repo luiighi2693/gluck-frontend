@@ -1,5 +1,6 @@
 import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
+import {Location} from '@angular/common';
 
 @Component({
   selector: 'app-breadcrumb',
@@ -12,17 +13,19 @@ export class BreadcrumbComponent implements OnInit, AfterViewInit {
   baseRoute: string;
   accountType: any;
   @Input() icon: any;
+  isMobile = false;
 
 
   constructor(
     private router: Router,
+    private location: Location
   ) {
   }
 
   ngOnInit(): void {
-    // if (this.currentView.length > 10) {
-    //   this.currentView.slice(11);
-    // }
+    if (window.innerWidth < 992) {
+      this.isMobile = true;
+    }
     if (JSON.parse(sessionStorage.getItem('isAdmin')) === true) {
       this.accountType = 'Admin';
     } else {
@@ -33,6 +36,7 @@ export class BreadcrumbComponent implements OnInit, AfterViewInit {
       this.currentRoute = this.router.url.slice(5);
     } else if (this.router.url.includes('admin')) {
       this.baseRoute = '/admin';
+      this.currentRoute = this.router.url.slice(6);
     }
     console.log(this.currentRoute);
     console.log(this.baseRoute);
@@ -47,4 +51,7 @@ export class BreadcrumbComponent implements OnInit, AfterViewInit {
     }, 1000);
   }
 
+  goBack() {
+    this.location.back();
+  }
 }

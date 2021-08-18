@@ -4,6 +4,7 @@ import { HomeComponent } from './home.component';
 import { RouterModule } from '@angular/router';
 import { HomeBannerComponent } from './home-banner/home-banner.component';
 import { MaterialModule } from '../../material/material.module';
+import { SharedModule } from '../../shared/shared.module';
 
 
 @NgModule({
@@ -11,6 +12,7 @@ import { MaterialModule } from '../../material/material.module';
   imports: [
     CommonModule,
     MaterialModule,
+    SharedModule,
     RouterModule.forChild([{path: '', component: HomeComponent}])
   ]
 })

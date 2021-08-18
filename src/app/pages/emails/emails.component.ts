@@ -62,8 +62,9 @@ export class EmailsComponent implements OnInit, AfterViewInit {
     const emailForm = this.emailForm.value;
     emailForm.manualSelection = this.selection.selected;
     this.admin.sendEmail(emailForm.category, emailForm.subject, emailForm.manualSelection, emailForm.message).subscribe(res => {
+      console.log(res.code);
       this.loaderValue.updateIsloading(false);
-      if (res.code === 'D200') {
+      if (res.code === 'A200') {
         this.handleAlertsProvider.presentSnackbarSuccess('Se ha enviado el mensaje con exito!');
         this.emailForm.reset();
       } else if (res.code === 'D401' || res.code === 'D302' || res.code === 'D403') {

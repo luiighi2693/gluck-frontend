@@ -3,6 +3,6 @@
   <p [innerHTML]="data.message"></p>
 </div>
 <mat-dialog-actions align="center">
-  <button mat-button color="warn" mat-dialog-close>Cancel</button>
-  <button mat-button color="primary" [mat-dialog-close]="true" cdkFocusInitial>Ok</button>
+  <button mat-button class="cancel-button" mat-dialog-close>Cancel</button>
+  <button mat-button class="ok-button" [mat-dialog-close]="true" cdkFocusInitial>Ok</button>
 </mat-dialog-actions>
