@@ -6,7 +6,7 @@
     <mat-icon class="mx-3">{{ icon }}</mat-icon>
     <h1 class="page-title">{{ currentView }}</h1> <span class="mt-2 mx-4 px-2 badge-account">{{ accountType }}</span>
   </div>
-  <div class="d-none align-items-center d-md-flex">
+  <div class="d-none align-items-center d-md-flex" *ngIf="currentRoute !== ''">
     <div class="d-flex me-2 align-items-center home__link" [routerLink]="[baseRoute]">
       <mat-icon>home</mat-icon>
       <h3 class="m-0">{{ baseRoute }}</h3>
