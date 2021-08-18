@@ -17,7 +17,7 @@ export class PoolsResultsComponent implements OnInit, AfterViewInit {
   data = [];
   currentPool;
   imagePath;
-  poolName;
+  poolName: string;
 
   constructor(
     private handleAlertsProvider: HandleAlertsProvider,
@@ -30,7 +30,7 @@ export class PoolsResultsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.poolName = sessionStorage.getItem('poolName');
+    this.poolName = 'Resultados de Quiniela ' + sessionStorage.getItem('poolName');
     this.getParam();
     sessionStorage.removeItem('userSearch');
     sessionStorage.removeItem('usernameSearch');

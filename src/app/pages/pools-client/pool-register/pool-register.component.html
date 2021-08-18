@@ -1,12 +1,4 @@
-<div class="d-flex justify-content-between align-items-center text-white m-4">
-  <h1>Registrar a Quiniela</h1>
-  <div class="d-flex align-items-center">
-    <h3 class="home__link m-0" routerLink="/home">Home</h3>
-    <mat-icon>keyboard_arrow_right</mat-icon>
-    <h3 class="home__link m-0">Registrar a Quiniela</h3>
-  </div>
-</div>
-
+<app-breadcrumb [icon]="'schedule'" [currentView]="'Registro a Quiniela'"></app-breadcrumb>
 <div class="container min-height">
   <div class="row text-center text-white">
     <h1>{{ pool ? pool.name : 'cargando...' }}</h1>

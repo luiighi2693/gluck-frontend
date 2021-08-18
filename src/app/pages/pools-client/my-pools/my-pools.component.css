@@ -100,3 +100,9 @@ main {
   color: #F6DD06;
 }
 
+@media screen and (max-width: 990px) {
+  .fixed-accordion {
+    min-width: 1200px;
+  }
+}
+

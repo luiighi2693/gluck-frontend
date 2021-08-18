@@ -6,15 +6,27 @@
 .yellow-panel {
   background-color: #F6DD06;
   color: black;
-  padding: 1rem;
+  /*padding: 1rem;*/
   border-radius: 25px;
+}
+@media screen and (max-width: 650px) {
+  .yellow-panel-header{
+    font-size: 16px !important;
+  }
+  .user-image {
+    width: 45px !important;
+    height: 45px !important;
+  }
+  .user-stats {
+    font-size: 14px;
+  }
 }
 
 .panel {
   background-color: lightgray;
   color: black;
   border-radius: 25px;
-  padding: 1rem;
+  padding: .5rem 0;
 }
 
 .user-image {

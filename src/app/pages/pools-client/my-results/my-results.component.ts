@@ -15,7 +15,7 @@ export class MyResultsComponent implements OnInit, AfterViewInit {
   currentPool;
   username: string;
   imagePath;
-  breadcrumbName: string;
+  poolName: string;
 
   constructor(
     private handleAlertsProvider: HandleAlertsProvider,
@@ -28,6 +28,7 @@ export class MyResultsComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.poolName = 'Resultados de Quiniela ' + sessionStorage.getItem('poolName');
     this.username = sessionStorage.getItem('username');
     this.getCurrentPool();
   }
@@ -52,7 +53,6 @@ export class MyResultsComponent implements OnInit, AfterViewInit {
       this.loaderValue.updateIsloading(false);
       if (data.code === 'D200') {
         this.data = data;
-        this.breadcrumbName = `Resultados de Quiniela ${data.poolName}`;
       } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
         this.router.navigate(['/auth']);

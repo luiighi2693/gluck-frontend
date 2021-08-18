@@ -1,11 +1,4 @@
-<div class="d-flex justify-content-between align-items-center text-white m-4">
-  <h1>Lista de Quinielas</h1>
-  <div class="d-flex align-items-center">
-    <h3 class="home__link m-0" routerLink="/home">Home</h3>
-    <mat-icon>keyboard_arrow_right</mat-icon>
-    <h3 class="home__link m-0">Lista de Quinielas</h3>
-  </div>
-</div>
+<app-breadcrumb [currentView]="'Lista de Quinielas'" [icon]="'list'"></app-breadcrumb>
 
 <div class="row text-white mx-3">
   <div class="col-12 col-md-6 mb-4 p-4"  *ngFor="let pool of pools">
