@@ -11,6 +11,11 @@
   border-radius: 25px;
 }
 
+.limit-text {
+  inline-size: 230px;
+  overflow-wrap: break-word;
+}
+
 .panel  {
   background-color: lightgray;
   border-radius: 25px;

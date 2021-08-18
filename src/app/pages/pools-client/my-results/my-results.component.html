@@ -1,13 +1,15 @@
-<div class="d-flex justify-content-between align-items-center text-white m-4" *ngIf="data">
-  <h1>Resultados de Quiniela {{data.poolName}}</h1>
-  <div class="d-flex align-items-center">
-    <h3 class="home__link m-0" routerLink="/home">Home</h3>
-    <mat-icon>keyboard_arrow_right</mat-icon>
-    <h3 class="home__link m-0">Resultados de Quiniela </h3>
-  </div>
-</div>
+<!--<div class="d-flex justify-content-between align-items-center text-white m-4" *ngIf="data">-->
+<!--  <h1>Resultados de Quiniela {{data.poolName}}</h1>-->
+<!--  <div class="d-flex align-items-center">-->
+<!--    <h3 class="home__link m-0" routerLink="/home">Home</h3>-->
+<!--    <mat-icon>keyboard_arrow_right</mat-icon>-->
+<!--    <h3 class="home__link m-0">Resultados de Quiniela </h3>-->
+<!--  </div>-->
+<!--</div>-->
 
-<div class="container min-height"  *ngIf="data">
+<app-breadcrumb [currentView]="breadcrumbName"  [icon]="'poll'"></app-breadcrumb>
+
+<div class="container-lg"  *ngIf="data">
   <h1 class="text-white"> Usuario: {{username}}</h1>
   <div class="row yellow-panel mb-3">
     <div class="col-4 p-3 text-center border-right"><h1 class="m-0">Resultados de usuario</h1></div>

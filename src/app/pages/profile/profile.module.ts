@@ -18,8 +18,8 @@ import {SharedModule} from '../../shared/shared.module';
     MaterialModule,
     FormsModule,
     ReactiveFormsModule,
+    SharedModule,
     RouterModule.forChild([{path: '', component: ProfileComponent}]),
-    SharedModule
   ]
 })
 export class ProfileModule { }

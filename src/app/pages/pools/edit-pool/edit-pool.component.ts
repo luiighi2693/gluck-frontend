@@ -38,6 +38,7 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
   amountOfMatches: number;
   doPenaltiesExist: number;
   arrayOfMatches = [];
+  arrayOfGroups = [];
   limitOfUsers: any;
   currentPool: string;
   poolData: any;
@@ -149,7 +150,6 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
     this.admin.getPoolForEdit(this.currentPool).subscribe(data => {
       this.loaderValue.updateIsloading(false);
       if (data.code === 'D200') {
-        console.log(data);
         this.usersForPool = data.data.usersForPool;
         this.selection = new SelectionModel<UserData>(true, data.data.usersForPool);
         this.poolData = data.data;
@@ -239,6 +239,7 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
       match.time = match.time.split(':')[0] + ':' + match.time.split(':')[1] + ' ' + (Number(match.time.split(':')[0]) > 11 ? 'pm' : 'am');
     });
     this.arrayOfMatches = this.poolData.matchesInfo;
+    this.arrayOfGroups = this.poolData.groupsInfo;
   }
 
   resetForm(stepper) {
@@ -269,10 +270,11 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
       moment(dateFinish, 'YYYY-MM-DD').subtract(1, 'days').format('YYYY-MM-DD') : dateFinish;
 
     const matchesInfo = this.arrayOfMatches;
+    const groupsInfo = this.arrayOfGroups;
     const usersForPool = this.selection.selected;
     const {result, winner, draw, loser} = this.results.value;
     this.admin.createAndUpdatePool(name, sport, color, matches, usersLimit, status, penalty, groups, teamsPerGroup, type, league, password,
-      rules, matchesInfo, usersForPool, result, winner, draw, loser, amountInput, coinsInput, finishDate, timeFinish, awardType, awardValue,
+      rules, matchesInfo, groupsInfo, usersForPool, result, winner, draw, loser, amountInput, coinsInput, finishDate, timeFinish, awardType, awardValue,
       'update', this.currentPool).subscribe(data => {
       this.loaderValue.updateIsloading(false);
       if (data.code === 'D200') {

@@ -168,13 +168,13 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
     });
   }
 
-  show() {
-    console.log(this.config.value.color.hex);
-  }
+  // show() {
+  //   console.log(this.config.value.color.hex);
+  // }
 
   makeSecondStep() {
-    console.log(this.amountOfTeams);
-    console.log(this.amountOfGroups);
+    // console.log(this.amountOfTeams);
+    // console.log(this.amountOfGroups);
     this.arrayOfMatches = [];
     this.arrayOfGroups = [];
     this.limitOfUsers = Number(this.config.value.usersLimit);
@@ -183,7 +183,7 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
     for (let i = 0; i < this.amountOfGroups; i++) {
       // tslint:disable-next-line:prefer-const
       let group = {
-        title: '',
+        name: '',
         teams: []
       };
 
@@ -197,7 +197,7 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
       this.arrayOfGroups.push(group);
     }
 
-    console.log(JSON.stringify(this.arrayOfGroups));
+    // console.log(JSON.stringify(this.arrayOfGroups));
 
     for (let i = 0; i < this.amountOfMatches; i++) {
       this.arrayOfMatches.push({
@@ -213,7 +213,7 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
     } else {
       stepper.next();
     }
-    console.log(this.selection.selected.length);
+    // console.log(this.selection.selected.length);
   }
 
   validateUsers(stepper) {
@@ -249,7 +249,7 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
 
   showUsers() {
     const usersForPool = this.selection.selected;
-    console.log(usersForPool);
+    // console.log(usersForPool);
   }
 
   registerPool() {
@@ -267,11 +267,15 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
     });
 
     const matchesInfo = this.arrayOfMatches;
+    const groupsInfo = this.arrayOfGroups;
     const usersForPool = this.selection.selected;
     const {result, winner, draw, loser} = this.poolResults.value;
     const colorValue = color.hex.includes('#') ? color.hex : `#${color.hex}`;
+    console.log({name, sport, colorValue, matches, usersLimit, status, penalty, groups, teamsPerGroup, type,
+      league, password, rules, matchesInfo, groupsInfo, usersForPool, result, winner, draw, loser, amountInput, coinsInput, dateFinish, timeFinish,
+      awardType, awardValue});
     this.admin.createAndUpdatePool(name, sport, colorValue, matches, usersLimit, status, penalty, groups, teamsPerGroup, type,
-      league, password, rules, matchesInfo, usersForPool, result, winner, draw, loser, amountInput, coinsInput, dateFinish, timeFinish,
+      league, password, rules, matchesInfo, groupsInfo, usersForPool, result, winner, draw, loser, amountInput, coinsInput, dateFinish, timeFinish,
       awardType, awardValue,
       'create').subscribe(data => {
       if (data.code === 'D200') {

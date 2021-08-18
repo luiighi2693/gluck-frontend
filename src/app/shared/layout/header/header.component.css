@@ -1,7 +1,20 @@
 .header {
   background-color: #000;
   color: white;
+  padding: 0.5rem 0;
+}
 
+@media screen and (max-width: 990px) {
+  .header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .header-helper  {
+    margin-bottom: 8rem;
+  }
 }
 
 .notification__button {
@@ -23,6 +36,12 @@
 .profile__options:hover {
   color: #F6DD06;
   cursor: pointer;
+}
+
+@media screen and (max-width: 450px) {
+  .profile__options {
+    flex-direction: column;
+  }
 }
 
 .user__options {
@@ -121,5 +140,12 @@
   color: black;
   background-color: #F6DD06;
   padding: 0 1rem;
+}
+
+@media screen and (max-width: 450px) {
+  .recharge-button {
+    padding: 0;
+    font-size: 12px;
+  }
 }
 

@@ -13,6 +13,17 @@
   min-height: 700px;
 }
 
+@media screen and (max-width: 450px) {
+  .profile__wrapper {
+    padding: 0;
+  }
+  .rules-image {
+    max-width: 250px;
+  }
+}
+
+
+
 .action-button {
   background-color: #F6DD06;
   color: black;

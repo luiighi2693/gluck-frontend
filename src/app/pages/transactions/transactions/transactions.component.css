@@ -64,6 +64,12 @@ td, th {
   min-height: 700px;
 }
 
+@media screen and (max-width: 990px){
+  .listOf__users--wrapper {
+    min-width: 1200px;
+  }
+}
+
 .active {
   padding: 0.5rem;
   color: white;

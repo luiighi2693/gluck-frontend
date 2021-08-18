@@ -5,6 +5,7 @@
 
 .pool-image {
   max-width: 500px;
+  width: 100%;
   max-height: 500px;
   transition: transform .2s;
   border-radius: 15px;
@@ -12,6 +13,7 @@
 
 .image-disabled {
   max-width: 500px;
+  width: 100%;
   max-height: 500px;
   border-radius: 15px;
   opacity: 0.2;

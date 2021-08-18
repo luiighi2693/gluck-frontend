@@ -6,6 +6,7 @@ import {MaterialModule} from '../material/material.module';
 import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { LoaderComponent } from './loader/loader.component';
+import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 
 
 @NgModule({
@@ -14,12 +15,13 @@ import { LoaderComponent } from './loader/loader.component';
     HeaderComponent,
     FooterComponent,
     LoaderComponent,
+    BreadcrumbComponent,
   ],
   imports: [
     CommonModule,
     MaterialModule,
     RouterModule,
   ],
-  exports: [FooterComponent, LoaderComponent]
+  exports: [FooterComponent, LoaderComponent, BreadcrumbComponent]
 })
 export class SharedModule { }

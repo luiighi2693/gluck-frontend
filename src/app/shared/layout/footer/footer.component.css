@@ -13,6 +13,18 @@
   /*z-index: 100;*/
 }
 
+@media screen and (max-width: 990px) {
+  .footer {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    left: 0;
+  }
+  .footer-helper {
+    margin-top: 8rem;
+  }
+}
+
 .footer__options {
   max-width: 35rem;
   width: 100%;

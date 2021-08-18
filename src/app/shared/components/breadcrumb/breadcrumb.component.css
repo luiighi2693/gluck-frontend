@@ -1,0 +1,21 @@
+.home__link:hover {
+  color: #F6DD06;
+  cursor: pointer;
+}
+
+.badge-account {
+  color: black;
+  background-color: #F6DD06;
+  border: 1px solid black;
+  border-radius: 15px;
+}
+
+.page-title {
+  margin: 0;
+}
+
+@media screen and (max-width: 450px) {
+  .page-title {
+    font-size: 16px;
+  }
+}

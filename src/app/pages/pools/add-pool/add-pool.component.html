@@ -12,12 +12,12 @@
   </div>
 </div>
 
-<div class="container">
+<div class="container-lg">
   <div class="profile__wrapper mb-3">
     <!--    <div class="row">-->
     <!--      <div class="col-12 col-md-8 offset-md-2">-->
-<!--    <mat-stepper orientation="vertical" linear #stepper>-->
-          <mat-stepper orientation="vertical" #stepper>
+    <mat-stepper orientation="vertical" linear #stepper>
+<!--          <mat-stepper orientation="vertical" #stepper>-->
       <mat-step [stepControl]="config">
         <form [formGroup]="config">
           <ng-template matStepLabel>Configuracion</ng-template>
@@ -175,7 +175,7 @@
               <figure class="avatar__wrapper">
                 <img
                   [src]="this.config.value.rules !== '' ? (this.imagePath + '/images/' + this.config.value.rules) : '../../../../assets/default-rules.png'"
-                  class="avatar" alt="">
+                  class="rules-iamge" alt="">
                 <button class="avatar__button" type="button" mat-fab aria-label="change picture"
                         (click)="openUploadFiles()">
                   <mat-icon>camera_alt</mat-icon>
@@ -211,7 +211,7 @@
             <div class="col-12">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Nombre de Grupo</mat-label>
-                <input matInput [(ngModel)]="group.title" placeholder='Grupo A' autocomplete="off">
+                <input matInput [(ngModel)]="group.name" placeholder='Grupo A' autocomplete="off">
               </mat-form-field>
             </div>
             <div class="row">
