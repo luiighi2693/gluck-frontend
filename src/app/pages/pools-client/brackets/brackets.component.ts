@@ -19,6 +19,10 @@ export class BracketsComponent implements OnInit, AfterViewInit {
   dataSource: MatTableDataSource<GroupData>;
   groups = groups;
   groupsTableData = groupsTableData;
+  fakeRoundData = [];
+  category = {
+    name: 'alex',
+  };
 
   constructor() {
   }

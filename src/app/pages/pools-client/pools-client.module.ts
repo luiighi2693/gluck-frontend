@@ -14,6 +14,8 @@ import {FormsModule} from '@angular/forms';
 import {PoolRegisterComponent} from './pool-register/pool-register.component';
 import {MyPoolsComponent} from './my-pools/my-pools.component';
 import {BracketsComponent} from './brackets/brackets.component';
+import { BattleTableComponent } from './battle-table/battle-table.component';
+import { BattleHomeStepComponent } from './battle-home-step/battle-home-step.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +28,9 @@ import {BracketsComponent} from './brackets/brackets.component';
     RegisterToPoolComponent,
     PoolRegisterComponent,
     MyPoolsComponent,
-    BracketsComponent
+    BracketsComponent,
+    BattleTableComponent,
+    BattleHomeStepComponent
   ],
   imports: [
     CommonModule,

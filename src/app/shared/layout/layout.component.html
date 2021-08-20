@@ -1,6 +1,7 @@
 <app-loader [loading]="isLoading"></app-loader>
-<mat-drawer-container class="mat-typography" autosize *ngIf="!isAdmin">
-  <mat-drawer #drawer [mode]="pageWidth >= 992 ? 'side' : 'over' "  [opened]="pageWidth >= 992 ? 'true' : isExpanded">
+<mat-drawer-container  class="mat-typography"  autosize *ngIf="!isAdmin">
+  <mat-drawer #drawer [mode]="pageWidth >= 992 ? 'side' : 'over' "
+              [opened]="pageWidth >= 992 ? 'true' : isExpanded" >
     <mat-nav-list class="nav__list">
       <figure class="logo__expanded" routerLink="/home">
         <img src="../../../assets/logo.png" width="200px" alt="">
@@ -46,6 +47,7 @@
       <app-header
         [coins]="coins"
         [money]="money"
+        [isExpanded]="isExpanded"
         (toggleValue)="toggleSidenav($event)"
       ></app-header>
       <div class="main-content">

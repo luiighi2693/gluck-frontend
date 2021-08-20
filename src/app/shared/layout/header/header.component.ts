@@ -2,7 +2,6 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthService} from '../../../services/auth.service';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
-import {EventBusService} from 'ng-simple-event-bus';
 
 @Component({
   selector: 'app-header',
@@ -10,7 +9,7 @@ import {EventBusService} from 'ng-simple-event-bus';
   styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
-  isOpen = true;
+  isOpen = false;
   @Output() toggleValue: EventEmitter<boolean> = new EventEmitter<boolean>();
   @Output() showLoader: EventEmitter<boolean> = new EventEmitter<boolean>();
   userOptions = false;
@@ -19,7 +18,9 @@ export class HeaderComponent implements OnInit {
   name: string;
   @Input() coins;
   @Input() money;
+  @Input() isExpanded;
   dateCreate: any;
+  isMobile: boolean;
 
   constructor(
     private router: Router,
@@ -29,6 +30,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.isMobile = window.innerWidth < 992;
     this.token = sessionStorage.getItem('token');
     this.isAdmin = JSON.parse(sessionStorage.getItem('isAdmin'));
     this.name = sessionStorage.getItem('username');
@@ -37,11 +39,14 @@ export class HeaderComponent implements OnInit {
 
   toggle() {
     if (this.isOpen) {
+      console.log('i am closed!');
       this.toggleValue.emit(false);
     } else {
+      console.log('i am opened!');
       this.toggleValue.emit(true);
     }
     this.isOpen = !this.isOpen;
+    console.log(this.isExpanded);
   }
 
   editUser() {

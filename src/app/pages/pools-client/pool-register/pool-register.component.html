@@ -1,10 +1,10 @@
 <app-breadcrumb [icon]="'schedule'" [currentView]="'Registro a Quiniela'"></app-breadcrumb>
-<div class="container min-height">
+<div class="container-lg min-height">
   <div class="row text-center text-white">
     <h1>{{ pool ? pool.name : 'cargando...' }}</h1>
   </div>
   <div *ngFor="let match of matches">
-    <div class="row pool-box" >
+    <div class="row pool-box d-none d-md-flex" >
       <div class="col-12">
         <h1>{{match.title}}</h1>
       </div>
@@ -37,7 +37,43 @@
         </div>
       </div>
     </div>
-    <mat-divider class="separator"></mat-divider>
+  </div>
+  <div *ngFor="let match of matches">
+    <div class="row pool-box d-block d-md-none">
+      <div class="col-12 text-center">
+        <h1 class="fw-bold">{{match.title}}</h1>
+      </div>
+      <div class="col-12 text-center">
+        <p>{{match.date}}</p>
+        <p>{{match.time}}</p>
+      </div>
+      <div class="col-12">
+        <div class="row">
+          <div class="col-5">
+            <div class="text-center">
+              <img
+                [src]="match.image1 !== '' ? (this.imagePath + '/images/' + match.image1) : '../../../../assets/default-team-logo.png'"
+                class="team-image" alt="">
+              <p class="team-text">{{match.teamName1}}</p>
+              <input type="number" [(ngModel)]="match.resultTeam1" [ngModelOptions]="{standalone: true}" class="input">
+            </div>
+          </div>
+          <div class="col-2 d-flex justify-content-center align-items-center">
+            <p style="font-size: 26px">VS</p>
+          </div>
+          <div class="col-5 ">
+            <div class="text-center">
+              <img
+                [src]="match.image2 !== '' ? (this.imagePath + '/images/' + match.image2) : '../../../../assets/default-team-logo.png'"
+                class="team-image" alt="">
+
+              <p class="team-text">{{match.teamName2}}</p>
+              <input type="number" [(ngModel)]="match.resultTeam2" [ngModelOptions]="{standalone: true}" class="input">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
  <div class="d-flex justify-content-center my-5">
    <button mat-flat-button class="submit" (click)="registerValues()">Registrarme!</button>

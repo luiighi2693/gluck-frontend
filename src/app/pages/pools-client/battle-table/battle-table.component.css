@@ -1,0 +1,171 @@
+.line-right {
+  border-width: 0 2px 0 0;
+  border-style: solid;
+  border-color: black;
+}
+.line-right-bottom {
+  border-width: 0 2px 2px 0;
+  border-style: solid;
+  border-color: black;
+}
+.line-bottom {
+  border-width: 0 0 2px 0;
+  border-style: solid;
+  border-color: black;
+}
+.separation {
+  margin-top: 121px;
+}
+.separation div div {
+  width: 20px;
+  height: 48px;
+}
+div.rival {
+  height: 48px;
+  padding: 12px;
+  border: 1px solid #aaa;
+  border-top-width: 0;
+  font-size: 14px;
+  flex-grow: 100;
+  text-overflow: ellipsis;
+  max-width: 202px;
+  overflow: hidden;
+  white-space: nowrap;
+}
+div.score {
+  height: 48px;
+  width: 48px !important;
+  text-align: center;
+  padding-top: 12px;
+  border: 1px solid #aaa;
+  border-top-width: 0;
+  border-left-width: 0;
+  font-size: 14px;
+}
+div.container-step-1 {
+  padding: 0;
+  margin: 0;
+  border: 0 solid #aaa;
+  border-top-width: 1px;
+}
+div.container-step-2 {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+div.container-step-3 {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+div.container-step-4 {
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+div.container-rival-par {
+  border: 0 solid #aaa;
+  border-top-width: 1px;
+}
+.step-title {
+  height: 70px;
+  margin: 25px 0;
+  font-size: 14px;
+  border: 1px solid #aaa;
+  background-color: #f2f2f2;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.step-title p {
+  text-align: center;
+  margin: 0;
+}
+.col.p-0.d-flex.flex-column {
+  max-width: 250px;
+}
+@media (max-width: 570px) {
+  .col.p-0.d-flex.flex-column {
+    max-width: 100%;
+  }
+  div.rival {
+    max-width: 100%;
+  }
+}
+.shield {
+  border: 10px solid darkgray;
+  border-radius: 50% 50% 50% 50% / 12% 12% 88% 88%;
+  position: relative;
+  background-image: linear-gradient(128deg, #000 49%, #000 49%, #000 48%, #000 81%);
+}
+.shield-flag {
+  position: absolute;
+  right: -20px;
+  top: -10px;
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+}
+.shield-flag span {
+  position: absolute;
+  border-radius: 50%;
+  border: 5px solid darkgray;
+  width: 100%;
+  height: 100%;
+}
+.shield-flag img {
+  max-width: 130%;
+  max-height: 130%;
+  position: absolute;
+  top: -7px;
+  left: -7px;
+  clip-path: circle(34% at 50% 50%);
+}
+.shield-name {
+  background: linear-gradient(135deg, #af1205 16%, #fb0b0b 35%, #ff2c2c 59%, #f73535 65%, #ca1c05 79%, #310101 100%);
+  color: white;
+  text-align: center;
+  text-transform: uppercase;
+  border-radius: 92% 92% 3% 3% / 59% 59% 100% 100%;
+  padding: 1rem 0.5rem 0.2rem;
+  margin-bottom: 1rem;
+  min-height: 102px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.shield-name h2 {
+  margin-left: 2px;
+  margin-right: 2px;
+}
+.shield-details {
+  margin-bottom: 1rem;
+}
+.shield-details hr {
+  margin-top: 0.7rem;
+  margin-bottom: 0.7rem;
+  border: 0;
+  width: 40%;
+  border-bottom: 1px solid #f1f1f1;
+  box-shadow: 0 2px 4px 0 #4c4b4b;
+}
+.shield-details__step {
+  margin-bottom: 5px;
+}
+.shield-details__step p {
+  text-align: center;
+  text-transform: uppercase;
+  line-height: 1.2;
+  margin-bottom: 5px;
+}
+.shield-details__step p span {
+  color: red;
+}
+.rival-photo {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}

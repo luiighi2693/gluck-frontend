@@ -43,7 +43,7 @@ export class LayoutComponent implements OnInit {
     this.loaderValue.getIsLoadingValue().subscribe(res => {
       this.isLoading = res;
     });
-    this.isExpanded = false;
+    // this.isExpanded = false;
     this.isAdmin = JSON.parse(sessionStorage.getItem('isAdmin'));
     this.name = sessionStorage.getItem('username');
     this.coins = sessionStorage.getItem('coins');
@@ -58,6 +58,13 @@ export class LayoutComponent implements OnInit {
     this.emailOptions = false;
     this.sportOptions = false;
     this.teamOptions = false;
+  }
+
+  toggleSidenavMobile(value: boolean) {
+    if (value) {
+
+
+    }
   }
 
   togglePoolsOptions() {
@@ -80,8 +87,7 @@ export class LayoutComponent implements OnInit {
     this.teamOptions = !this.teamOptions;
   }
 
-  // selectRouterOption(route: string) {
-  //   this.isExpanded = false;
-  //   this.router.navigate([route]);
-  // }
+  catchValue(value: string) {
+    alert(value);
+  }
 }

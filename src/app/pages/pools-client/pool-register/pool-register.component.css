@@ -1,6 +1,7 @@
 .pool-box {
   background-color: lightgray;
   padding: 1rem !important;
+  margin: 1rem 0;
 }
 
 .team-image {
@@ -39,6 +40,14 @@
   overflow-wrap: break-word;
   font-size: 18px;
   font-weight: 400;
+}
+
+@media screen and (max-width: 760px) {
+  .team-text {
+    inline-size: auto;
+    font-size: 16px !important;
+    font-weight: normal !important;
+  }
 }
 
 

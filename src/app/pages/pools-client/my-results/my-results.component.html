@@ -1,18 +1,37 @@
-<app-breadcrumb [currentView]="poolName"  [icon]="'poll'"></app-breadcrumb>
+<app-breadcrumb [currentView]="poolName" [icon]="'poll'"></app-breadcrumb>
 
-<div class="container-lg"  *ngIf="data">
+<div class="container-lg" *ngIf="data">
   <h1 class="text-white"> Usuario: {{username}}</h1>
-  <div class="row yellow-panel mb-3">
+  <div class="row yellow-panel mb-3 d-none d-md-flex">
     <div class="col-4 p-3 text-center border-right"><h1 class="m-0">Resultados de usuario</h1></div>
     <div class="col-4 p-3 text-center border-right"><h1 class="m-0">Resultados Finales</h1></div>
     <div class="col-4 p-3 text-center"><h1 class="m-0">Putuacion</h1></div>
   </div>
-  <div class="row d-flex justify-content-around" style="margin-bottom: 1rem;" *ngFor="let item of data.data">
-    <div class="col-3 panel">
+  <div class="row user-panel mt-3 d-block d-md-none" *ngIf="data">
+    <div class="d-flex justify-content-center flex-column align-items-center">
+      <img src="../../../../assets/example-user.png"
+           class="user-image" alt="user image">
+      <h1 class="mx-lg-5 mb-0 user-stats">{{username}}</h1>
+    </div>
+    <div class=" d-flex justify-content-center align-items-center"><h1 class="m-0 user-stats">{{data.resultado}}
+      Pts</h1>
+    </div>
+    <div class=" d-flex justify-content-center align-items-center"><h1 class="m-0 user-stats">{{data.goles}}
+      Goles</h1>
+    </div>
+  </div>
+
+  <div class="row d-flex user-panel justify-content-around d-md-none" style="margin-bottom: 1rem;" *ngFor="let item of data.data">
+    <div class="col-12">
+      <div class="col-12 text-center">
+        <h3 class="fw-bold"> Resultados de Usuario</h3>
+      </div>
       <div class="row ">
         <div class="col-6 d-flex align-items-center justify-content-evenly">
           <div class="text-center">
-            <img [src]="item.image1 !== '' ? (this.imagePath + '/images/' + item.image1) : '../../../../assets/default-team-logo.png'" class="team-image" alt="">
+            <img
+              [src]="item.image1 !== '' ? (this.imagePath + '/images/' + item.image1) : '../../../../assets/default-team-logo.png'"
+              class="team-image" alt="">
             <p>{{item.teamName1}}</p>
           </div>
           <div>
@@ -24,17 +43,24 @@
             <h1>{{item.teamResult2}}</h1>
           </div>
           <div class="text-center">
-            <img [src]="item.image2 !== '' ? (this.imagePath + '/images/' + item.image2) : '../../../../assets/default-team-logo.png'" class="team-image" alt="">
+            <img
+              [src]="item.image2 !== '' ? (this.imagePath + '/images/' + item.image2) : '../../../../assets/default-team-logo.png'"
+              class="team-image" alt="">
             <p>{{item.teamName2}}</p>
           </div>
         </div>
       </div>
     </div>
-    <div class="col-3 panel">
+    <div class="col-12">
       <div class="row">
+        <div class="col-12 text-center">
+          <h3 class="fw-bold"> Resultados de Usuario</h3>
+        </div>
         <div class="col-6 d-flex align-items-center justify-content-evenly">
           <div class="text-center">
-            <img [src]="item.image1 !== '' ? (this.imagePath + '/images/' + item.image1) : '../../../../assets/default-team-logo.png'" class="team-image" alt="">
+            <img
+              [src]="item.image1 !== '' ? (this.imagePath + '/images/' + item.image1) : '../../../../assets/default-team-logo.png'"
+              class="team-image" alt="">
             <p>{{item.teamName1}}</p>
           </div>
           <div>
@@ -46,7 +72,73 @@
             <h1>{{item.teamResult2Admin}}</h1>
           </div>
           <div class="text-center">
-            <img [src]="item.image2 !== '' ? (this.imagePath + '/images/' + item.image2) : '../../../../assets/default-team-logo.png'" class="team-image" alt="">
+            <img
+              [src]="item.image2 !== '' ? (this.imagePath + '/images/' + item.image2) : '../../../../assets/default-team-logo.png'"
+              class="team-image" alt="">
+            <p>{{item.teamName2}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-12 d-flex justify-content-center align-items-center" style="flex-direction: column;">
+      <div class="text-center">
+        <h2 class="fw-bold">Puntuacion</h2>
+      </div>
+      <h1 class="m-0">{{item.resultado}}</h1>
+      <span class="badge bg-success" *ngIf="item.status === 'F'">Finalizado</span>
+      <span class="badge bg-warning" *ngIf="item.status === 'C'">Sin Comenzar</span>
+      <span class="badge bg-danger" *ngIf="item.status === 'S'">Suspendido</span>
+    </div>
+  </div>
+
+  <div class="row d-none d-md-flex justify-content-around" style="margin-bottom: 1rem;" *ngFor="let item of data.data">
+    <div class="col-3 panel">
+      <div class="row ">
+        <div class="col-6 d-flex align-items-center justify-content-evenly">
+          <div class="text-center">
+            <img
+              [src]="item.image1 !== '' ? (this.imagePath + '/images/' + item.image1) : '../../../../assets/default-team-logo.png'"
+              class="team-image" alt="">
+            <p>{{item.teamName1}}</p>
+          </div>
+          <div>
+            <h1>{{item.teamResult1}}</h1>
+          </div>
+        </div>
+        <div class="col-6 d-flex align-items-center justify-content-evenly">
+          <div class="text-center">
+            <h1>{{item.teamResult2}}</h1>
+          </div>
+          <div class="text-center">
+            <img
+              [src]="item.image2 !== '' ? (this.imagePath + '/images/' + item.image2) : '../../../../assets/default-team-logo.png'"
+              class="team-image" alt="">
+            <p>{{item.teamName2}}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-3 panel">
+      <div class="row">
+        <div class="col-6 d-flex align-items-center justify-content-evenly">
+          <div class="text-center">
+            <img
+              [src]="item.image1 !== '' ? (this.imagePath + '/images/' + item.image1) : '../../../../assets/default-team-logo.png'"
+              class="team-image" alt="">
+            <p>{{item.teamName1}}</p>
+          </div>
+          <div>
+            <h1>{{item.teamResult1Admin}}</h1>
+          </div>
+        </div>
+        <div class="col-6 d-flex align-items-center justify-content-evenly">
+          <div class="text-center">
+            <h1>{{item.teamResult2Admin}}</h1>
+          </div>
+          <div class="text-center">
+            <img
+              [src]="item.image2 !== '' ? (this.imagePath + '/images/' + item.image2) : '../../../../assets/default-team-logo.png'"
+              class="team-image" alt="">
             <p>{{item.teamName2}}</p>
           </div>
         </div>
@@ -60,13 +152,15 @@
     </div>
   </div>
 
-  <div class="row user-panel mt-3" *ngIf="data">
-<!--    <div class="col-1 d-flex justify-content-center align-items-center"><h1 class="m-0">45</h1></div>-->
+  <div class="row user-panel mt-3 d-none d-md-flex" *ngIf="data">
+    <!--    <div class="col-1 d-flex justify-content-center align-items-center"><h1 class="m-0">45</h1></div>-->
     <div class="col-5  d-flex justify-content-around align-items-center border-right">
       <img src="../../../../assets/example-user.png" class="pool-image" alt="pool image">
       <h1 class="m-0">{{username}}</h1></div>
-    <div class="col-3 d-flex justify-content-center align-items-center border-right"><h1 class="m-0">{{data.resultado}} PTS</h1>
+    <div class="col-3 d-flex justify-content-center align-items-center border-right"><h1
+      class="m-0">{{data.resultado}} PTS</h1>
     </div>
-    <div class="col-3 d-flex justify-content-center align-items-center"><h1 class="m-0">{{data.goles}} Goles</h1></div>
+    <div class="col-3 d-flex justify-content-center align-items-center"><h1 class="m-0">{{data.goles}} Goles</h1>
+    </div>
   </div>
 </div>

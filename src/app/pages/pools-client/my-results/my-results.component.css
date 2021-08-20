@@ -32,6 +32,7 @@
   color: black;
   border-radius: 25px;
   padding: 1rem;
+  margin-bottom: 1rem;
 }
 
 .pool-image {
@@ -43,3 +44,14 @@
 .border-right {
   border-right: 1px solid gray;
 }
+
+@media screen and (max-width: 650px) {
+  .user-image {
+    width: 60px !important;
+    height: 60px !important;
+  }
+  .user-stats {
+    font-size: 18px;
+  }
+}
+
