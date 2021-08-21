@@ -24,8 +24,6 @@
   border-right: 1px solid lightgray;
 }
 
-
-
 .group-title {
   background-color: #F6DD06;
   font-weight: bold;
@@ -42,15 +40,9 @@
   text-align: center;
 }
 
-/*.team-title {*/
-/*  inline-size: 100px;*/
-/*  overflow-wrap: break-word;*/
-/*}*/
-
-.vs {
-  margin-top: .75rem;
+.team-title {
+  font-size: 12px;
 }
-
 table {
   width: 100%;
 }
@@ -78,9 +70,71 @@ table {
   text-align: center;
 }
 
+
+.vs {
+  margin-top: .75rem;
+}
+
 @media (max-width: 990px) {
   .teams {
     border-bottom: 1px solid lightgray !important;
     padding-bottom: 1rem !important;
   }
 }
+
+.playoffs-wrapper {
+  background-color: #3e3e3e;
+  padding: 1rem 0;
+  margin: 1rem 0;
+  border-radius: 25px;
+}
+
+@media screen and (max-width: 992px) {
+  .playoffs-wrapper {
+    min-width: 1200px;
+  }
+}
+
+.col-name {
+  text-align: center;
+}
+
+.col-name > h2 {
+  color: #F6DD06;
+  font-weight: bold;
+}
+
+.teams-group {
+  margin-bottom: 3rem;
+}
+
+.team {
+  margin-bottom: 1rem;
+}
+
+.team-image {
+  width: 35px;
+  height: 35px;
+  border-radius: 25px;
+  margin-right: 1rem;
+}
+
+.team-info {
+  background-color: gray;
+  padding: 0.5rem;
+}
+
+.champion {
+  background-color: #F6DD06;
+  padding: 0.5rem;
+}
+
+.team-info > p {
+  font-size: 12px;
+}
+
+.input {
+  width: 30px;
+  background-color: black;
+}
+

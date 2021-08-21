@@ -314,4 +314,8 @@ export class AdminService {
   getUsersByPool(id): Observable<any> {
     return this.http.get(`${environment.basePath}/api/pool/getUsersByPool?poolId=${id}`);
   }
+
+  getRankingForPool(id): Observable<any> {
+    return this.http.get(`${environment.basePath}/api/result/getRankingForPool?poolId=${id}`);
+  }
 }

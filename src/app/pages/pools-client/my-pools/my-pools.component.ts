@@ -155,7 +155,7 @@ export class MyPoolsComponent implements OnInit, AfterViewInit {
     this.router.navigate([`/home/pools/pool-register/${id}`]);
   }
 
-  goToRanking() {
-    this.router.navigate(['/home/pools/ranking']);
+  goToRanking(id) {
+    this.router.navigate([`/home/pools/ranking/${id}`]);
   }
 }

@@ -36,7 +36,8 @@
           <th class="name" mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
           <td class="name" mat-cell *matCellDef="let row">
             <div class="d-flex">
-              <soan class="mx-2"><img class="image" [src]="imagePath + '/images/' + (row.img === '' ? 'logo.png' : row.img)" [alt]="row.img"></soan>
+              <soan class="mx-2"><img class="image" [src]="imagePath + '/images/' + (row.img === '' ? 'logo.png' : row.img)"
+                                      [alt]="row.img"></soan>
               <span><p class="limit-text">{{row.name}}</p></span>
             </div>
           </td>
