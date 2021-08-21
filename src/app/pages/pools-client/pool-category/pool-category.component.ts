@@ -13,7 +13,7 @@ export class PoolCategoryComponent implements OnInit {
       name: 'Copa America',
       id: 'copa-america',
       img: '../../../../assets/copa-america.png',
-      disabled: true,
+      disabled: false,
     },
     {
       name: 'La Liga',
@@ -25,25 +25,25 @@ export class PoolCategoryComponent implements OnInit {
       name: 'Premiere League',
       id: 'premiere-league',
       img: '../../../../assets/premier-league.png',
-      disabled: true,
+      disabled: false,
     },
     {
       name: 'Bounders Liga',
       id: 'bounders-liga',
       img: '../../../../assets/bundesliga.png',
-      disabled: true,
+      disabled: false,
     },
     {
       name: 'Serie A',
       id: 'serie-a',
       img: '../../../../assets/serie-a.png',
-      disabled: true,
+      disabled: false,
     },
     {
       name: 'Liga 1',
       id: 'liga-1',
       img: '../../../../assets/ligue-1.png',
-      disabled: true,
+      disabled: false,
     },
     {
       name: 'Champions League',
@@ -60,7 +60,8 @@ export class PoolCategoryComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  goToPool(id) {
+  goToPool(id, name) {
+    sessionStorage.setItem('poolCategory', name);
     this.router.navigate([`/home/pools/pool/${id}`]);
   }
 }

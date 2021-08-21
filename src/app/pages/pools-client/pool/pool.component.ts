@@ -50,6 +50,7 @@ export class PoolComponent implements OnInit, AfterViewInit {
 
   amountSelected;
   coinsSelected;
+  poolCategory;
 
   constructor(
     private handleAlertsProvider: HandleAlertsProvider,
@@ -65,6 +66,7 @@ export class PoolComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.user = sessionStorage.getItem('username');
     this.userId = sessionStorage.getItem('id');
+    this.poolCategory = sessionStorage.getItem('poolCategory');
   }
 
   ngAfterViewInit() {
@@ -73,7 +75,7 @@ export class PoolComponent implements OnInit, AfterViewInit {
 
   setData() {
     this.loaderValue.updateIsloading(true);
-    this.admin.getAvailablePools(this.userId).subscribe(data => {
+    this.admin.getAvailablePools(this.userId, this.poolCategory).subscribe(data => {
       this.loaderValue.updateIsloading(false);
       if (data.code === 'D200') {
         this.privatePools = data.privadas;

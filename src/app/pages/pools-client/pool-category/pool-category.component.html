@@ -7,7 +7,7 @@
       <span class="mx-3" *ngIf="pool.disabled">Proximamente...</span>
       <img [ngClass]="pool.disabled
        ? 'image-disabled'
-       : 'pool-image'" (click)="!pool.disabled ? goToPool(pool.id) : null" [src]="pool.img" alt="">
+       : 'pool-image'" (click)="!pool.disabled ? goToPool(pool.id, pool.name) : null" [src]="pool.img" alt="">
     </div>
   </div>
 </div>

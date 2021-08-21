@@ -136,7 +136,8 @@
                   <mat-option value="Boundes Liga">Boundes Liga</mat-option>
                   <mat-option value="Serie A">Serie A</mat-option>
                   <mat-option value="Ligue 1">Ligue 1</mat-option>
-                  <mat-option value="Champions League">Champions League</mat-option>
+                  <mat-option value="Copa America">Copa America</mat-option>
+                  <mat-option value="Champions League" disabled>Champions League</mat-option>
                 </mat-select>
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
@@ -221,7 +222,7 @@
         </div>
         <div>
           <button mat-button matStepperPrevious>Atras</button>
-          <button mat-button matStepperNext class="action-button">Siguiente</button>
+          <button mat-button (click)="makeSecondStep()" matStepperNext class="action-button">Siguiente</button>
         </div>
         <!--        </form>-->
       </mat-step>
@@ -236,19 +237,33 @@
             <mat-divider class="my-3"></mat-divider>
           </div>
           <div class="row">
-            <div class="col-12">
+            <div class="col-{{isBracket(match) ? '8' : '12'}}">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Titulo del Partido</mat-label>
-                <input matInput [(ngModel)]="match.title" placeholder='FC Barcelona VS Real Madrid' autocomplete="off"
-                       disabled>
+                <input matInput [(ngModel)]="match.title" placeholder='FC Barcelona VS Real Madrid' autocomplete="off">
               </mat-form-field>
             </div>
+            <div class="col-4" *ngIf="isBracket(match)">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Tipo de Bracket</mat-label>
+                <mat-select [(ngModel)]="match.bracketType">
+                  <mat-option disabled>Tipo de Bracket</mat-option>
+                  <mat-option value="Cuartos de Final">Cuartos de Final</mat-option>
+                  <mat-option value="Semifinal">Semifinal</mat-option>
+                  <mat-option value="Final">Final</mat-option>
+                </mat-select>
+                <mat-error>
+                  Este Campo es <strong>Requerido.</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
             <div class="col-12 col-md-5 ">
               <div class="row">
                 <div class="col-12 col-md-8">
                   <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Equipo 1</mat-label>
-                    <mat-select [(ngModel)]="match.team1" disabled>
+                    <mat-select [(ngModel)]="match.team1">
                       <mat-option *ngFor="let team of teams, index as i" [value]="team.rowid">{{team.name}}</mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -256,7 +271,7 @@
                 <div class="col-12 col-md-2">
                   <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Resultado</mat-label>
-                    <input type="number" matInput [(ngModel)]="match.result1" placeholder="1" disabled
+                    <input type="number" matInput [(ngModel)]="match.result1" placeholder="1"
                            autocomplete="off">
                   </mat-form-field>
                 </div>
@@ -264,7 +279,7 @@
                   <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Penalty</mat-label>
                     <input type="number" matInput [(ngModel)]="match.penalty1" placeholder="1"
-                           autocomplete="off" disabled>
+                           autocomplete="off">
                   </mat-form-field>
                 </div>
               </div>
@@ -274,7 +289,7 @@
                 <div class="col-12 col-md-8">
                   <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Equipo 2</mat-label>
-                    <mat-select [(ngModel)]="match.team2" disabled>
+                    <mat-select [(ngModel)]="match.team2">
                       <mat-option *ngFor="let team of teams, index as i" [value]="team.rowid">{{team.name}}</mat-option>
                     </mat-select>
                   </mat-form-field>
@@ -283,7 +298,7 @@
                 <div class="col-12 col-md-2">
                   <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Resultado</mat-label>
-                    <input type="number" matInput [(ngModel)]="match.result2" placeholder="1" disabled
+                    <input type="number" matInput [(ngModel)]="match.result2" placeholder="1"
                            autocomplete="off">
                   </mat-form-field>
                 </div>
@@ -291,7 +306,7 @@
                   <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Penalty</mat-label>
                     <input matInput type="number" [(ngModel)]="match.penalty2" placeholder="Penalty"
-                           autocomplete="off" disabled>
+                           autocomplete="off">
                   </mat-form-field>
                 </div>
               </div>
@@ -302,7 +317,7 @@
             <div class="col-12 col-md-3">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Fecha</mat-label>
-                <input matInput [(ngModel)]="match.date" disabled [matDatepicker]="picker" placeholder="15/02/2020">
+                <input matInput [(ngModel)]="match.date" [matDatepicker]="picker" placeholder="15/02/2020">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
               </mat-form-field>
@@ -310,7 +325,7 @@
             <div class="col-12 col-md-3">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Hora</mat-label>
-                <input matInput [(ngModel)]="match.time" disabled [ngxTimepicker]="timePicker" placeholder="8:52:35"
+                <input matInput [(ngModel)]="match.time" [ngxTimepicker]="timePicker" placeholder="8:52:35"
                        autocomplete="off" format="24">
                 <mat-icon matSuffix>access_time</mat-icon>
                 <ngx-material-timepicker #timePicker></ngx-material-timepicker>
@@ -319,7 +334,7 @@
             <div class="col-12 col-md-3">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Estatus</mat-label>
-                <mat-select [(ngModel)]="match.status" disabled>
+                <mat-select [(ngModel)]="match.status">
                   <mat-option>- Estatus -</mat-option>
                   <mat-option [value]="1">Activo</mat-option>
                   <mat-option [value]="0">Cerrado</mat-option>
@@ -329,7 +344,7 @@
             <div class="col-12 col-md-3">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Resultado</mat-label>
-                <mat-select [(ngModel)]="match.result" disabled>
+                <mat-select [(ngModel)]="match.result">
                   <mat-option>- Resultado -</mat-option>
                   <mat-option value="C">Sin Comenzar</mat-option>
                   <mat-option value="F">Resultado Final</mat-option>

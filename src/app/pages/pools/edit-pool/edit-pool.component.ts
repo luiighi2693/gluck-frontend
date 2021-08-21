@@ -352,4 +352,22 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
     // console.log(id, this.usersForPool.find(x => x === id) !== undefined, this.usersForPool);
     return this.usersForPool.find(x => x === id) !== undefined;
   }
+
+  makeSecondStep() {
+    if (this.config.get('league').value === 'Copa America') {
+      if (this.poolData.matches < Number(this.config.get('matches').value)) {
+        const lenght = Number(this.config.get('matches').value) - this.poolData.matches;
+        for (let i = 0; i < lenght; i++) {
+          this.arrayOfMatches.push({
+            title: '', team1: '', penalty1: '', result1: '', team2: '', penalty2: '', result2: '', date: '',
+            time: '', status: '', result: 'sin comenzar', bracketType: ''
+          });
+        }
+      }
+    }
+  }
+
+  isBracket(match) {
+    return match.bracketType !== null && match.bracketType !== undefined;
+  }
 }
