@@ -13,9 +13,17 @@ import { PoolsResultsDetailComponent } from './pools-results-detail/pools-result
 import { MAT_COLOR_FORMATS, NgxMatColorPickerModule, NGX_MAT_COLOR_FORMATS } from '@angular-material-components/color-picker';
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { ResultsPerUserComponent } from './results-per-user/results-per-user.component';
+import {ClonePoolComponent} from './clone-pool/clone-pool.component';
 
 @NgModule({
-  declarations: [PoolsComponent, AddPoolComponent, ListOfPoolsComponent, EditPoolComponent, PoolsResultsDetailComponent, ResultsPerUserComponent],
+  declarations: [
+    PoolsComponent,
+    AddPoolComponent,
+    ListOfPoolsComponent,
+    EditPoolComponent,
+    PoolsResultsDetailComponent,
+    ResultsPerUserComponent,
+    ClonePoolComponent],
   imports: [
     CommonModule,
     MaterialModule,
@@ -48,6 +56,10 @@ import { ResultsPerUserComponent } from './results-per-user/results-per-user.com
       {
         path: 'list-of-pools',
         component: ListOfPoolsComponent
+      },
+      {
+        path: 'clone-pool/:id',
+        component: ClonePoolComponent
       }
     ])
   ],  providers: [

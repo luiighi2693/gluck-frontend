@@ -74,6 +74,10 @@ export class ListOfPoolsComponent implements OnInit, AfterViewInit {
     this.router.navigate([`/admin/pools/edit-pool/${id}`]);
   }
 
+  clonePool(id) {
+    this.router.navigate([`/admin/pools/clone-pool/${id}`]);
+  }
+
   deletePool(pool) {
     const dialogRef = this.handleAlertsProvider.presentErrorDialogOk(`Esta seguro de eliminar el usuario <b>${pool.name}</b>?`, 'Aviso!');
     dialogRef.afterClosed().subscribe(response => {

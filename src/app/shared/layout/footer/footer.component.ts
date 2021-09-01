@@ -8,6 +8,7 @@ import {Router} from '@angular/router';
 })
 export class FooterComponent implements OnInit {
   currentRoute: string;
+  isAdmin: string;
 
   constructor(
     private router: Router,
@@ -15,6 +16,14 @@ export class FooterComponent implements OnInit {
 
   ngOnInit(): void {
     this.currentRoute = this.router.url;
+
   }
 
+  goToLegalAgreement() {
+    if (sessionStorage.getItem('isAdmin')) {
+      this.router.navigate(['/admin/legal-agreement']);
+    } else {
+      this.router.navigate(['/home/legal-agreement']);
+    }
+  }
 }

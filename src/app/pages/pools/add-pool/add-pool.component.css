@@ -13,6 +13,26 @@
   min-height: 700px;
 }
 
+.active {
+  padding: 0.5rem;
+  color: white;
+  background-color: #4caf50;
+  border-radius: 15px;
+  text-align: center;
+  width: 75%;
+  letter-spacing: 1px;
+}
+
+.inactive {
+  padding: 0.5rem;
+  color: white;
+  background-color: red;
+  border-radius: 15px;
+  text-align: center;
+  width: 75%;
+  letter-spacing: 1px;
+}
+
 .action-button {
   color: #333232;
   background-color: #F6DD06;

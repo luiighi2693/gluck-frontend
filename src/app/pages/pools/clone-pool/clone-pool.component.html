@@ -1,0 +1,633 @@
+<app-breadcrumb [icon]="'share'" [currentView]="'Creacion de Quinielas (Clon)'"></app-breadcrumb>
+
+<div class="container">
+  <div class="profile__wrapper mb-3">
+    <!--    <div class="row">-->
+    <!--      <div class="col-12 col-md-8 offset-md-2">-->
+    <mat-stepper orientation="vertical" linear #stepper>
+      <mat-step [stepControl]="config">
+        <form [formGroup]="config">
+          <ng-template matStepLabel>Configuracion</ng-template>
+          <div class="row">
+            <div class="col-12 col-md-4">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Nombre de Quiniela</mat-label>
+                <input matInput placeholder=" name" formControlName="name" autocomplete="off">
+                <mat-error>
+                  Este Campo es <strong>Requerido.</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-4">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Deporte</mat-label>
+                <mat-select formControlName="sport">
+                  <mat-option>- Deporte -</mat-option>
+                  <mat-option *ngFor="let sport of sports" [value]="sport.rowid">{{sport.name}}</mat-option>
+                </mat-select>
+                <mat-error>
+                  Este Campo es <strong>Requerido.</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-4">
+              <mat-form-field appearance="outline" class="w-100">
+                <input matInput [ngxMatColorPicker]="picker" placeholder="Selecciona un Color" formControlName="color"
+                       autocomplete="off">
+                <ngx-mat-color-toggle matSuffix [for]="picker"></ngx-mat-color-toggle>
+                <ngx-mat-color-picker #picker></ngx-mat-color-picker>
+                <mat-error>
+                  Este Campo es <strong>Requerido.</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-6">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Cantidad de Partidos</mat-label>
+                <input matInput type="number" placeholder="5" disabled formControlName="matches"
+                       autocomplete="off">
+                <mat-error>
+                  Este Campo es <strong>Requerido.</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-6">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Limite de Usuarios</mat-label>
+                <input matInput type="number" placeholder="15" [(ngModel)]="limitOfUsers" formControlName="usersLimit"
+                       autocomplete="off">
+                <mat-error>
+                  Este Campo es <strong>Requerido.</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-4">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Estatus de Quiniela</mat-label>
+                <mat-select formControlName="status">
+                  <mat-option>- Estatus -</mat-option>
+                  <mat-option [value]="1">Activo</mat-option>
+                  <mat-option [value]="2">Cerrado</mat-option>
+                </mat-select>
+                <mat-error>
+                  Este Campo es <strong>Requerido.</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-4">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Penalty</mat-label>
+                <mat-select formControlName="penalty" [(ngModel)]="doPenaltiesExist">
+                  <mat-option>- Penalty -</mat-option>
+                  <mat-option [value]="0">Si</mat-option>
+                  <mat-option [value]="1">No</mat-option>
+                </mat-select>
+                <mat-error>
+                  Este Campo es <strong>Requerido.</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-4">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Grupos</mat-label>
+                <input matInput type="number" placeholder="6" formControlName="groups" autocomplete="off">
+                <mat-error>
+                  Este Campo es <strong>Requerido.</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-12 col-md-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Equipos por Grupos</mat-label>
+                <input matInput type="number" placeholder="2" formControlName="teamsPerGroup" autocomplete="off">
+                <mat-error>
+                  Este Campo es <strong>Requerido.</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Tipo de Quiniela</mat-label>
+                <mat-select formControlName="type">
+                  <mat-option>- Tipo de Quiniela -</mat-option>
+                  <mat-option value="1 vs 1">1 Vs 1</mat-option>
+                  <mat-option value="mensuales">Quinielas Mensuales</mat-option>
+                  <mat-option value="semanales">Quinielas Semanales</mat-option>
+                  <mat-option value="privadas">Quinielas Privadas</mat-option>
+                </mat-select>
+                <mat-error>
+                  Este Campo es <strong>Requerido.</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Liga - Torneo</mat-label>
+                <mat-select formControlName="league">
+                  <mat-option>- Liga - Torneo -</mat-option>
+                  <mat-option value="La Liga">La Liga</mat-option>
+                  <mat-option value="Premier League">Premier League</mat-option>
+                  <mat-option value="Boundes Liga">Boundes Liga</mat-option>
+                  <mat-option value="Serie A">Serie A</mat-option>
+                  <mat-option value="Ligue 1">Ligue 1</mat-option>
+                  <mat-option value="Copa America">Copa America</mat-option>
+                  <mat-option value="Champions League" disabled>Champions League</mat-option>
+                </mat-select>
+                <mat-error>
+                  Este Campo es <strong>Requerido.</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-3">
+              <!--              <mat-form-field appearance="outline" class="w-100">-->
+              <!--                <mat-label>Contrasena</mat-label>-->
+              <!--                <input matInput type="password" placeholder="123456789" formControlName="password" autocomplete="off" >-->
+              <!--                <mat-error>-->
+              <!--                  Este Campo es <strong>Requerido.</strong>-->
+              <!--                </mat-error>-->
+              <!--              </mat-form-field>-->
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Contrasena</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" placeholder="Contrasena"
+                       autocomplete="off">
+                <button mat-icon-button matSuffix type="button" (click)="hide = !hide"
+                        [attr.aria-label]="'Hide password'"
+                        [attr.aria-pressed]="hide">
+                  <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+                <mat-error>Este Campo es <b>Requerido</b>.</mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-3 text-center">
+              <mat-label>Reglas</mat-label>
+              <figure class="avatar__wrapper">
+                <img
+                  [src]="this.config.value.rules !== '' ? (this.imagePath + '/images/' + this.config.value.rules) : '../../../../assets/default-rules.png'"
+                  class="avatar" alt="">
+                <button class="action-button" type="button" mat-fab aria-label="change picture"
+                        (click)="openUploadFiles()">
+                  <mat-icon>camera_alt</mat-icon>
+                </button>
+                <input
+                  #inputFiles
+                  style="display: none"
+                  type="file"
+                  (change)="handleUpload($event)"
+                />
+              </figure>
+            </div>
+          </div>
+          <div>
+            <button mat-flat-button [disabled]="!config.valid" matStepperNext class="action-button">Siguiente</button>
+          </div>
+        </form>
+      </mat-step>
+
+      <mat-step>
+        <!--        <form [formGroup]="groups">-->
+        <ng-template matStepLabel>Groups</ng-template>
+        <div *ngFor="let group of arrayOfGroups, index as i">
+          <div class="row">
+            <div class="col-12">
+              <h1> Grupo #{{i + 1}}</h1>
+            </div>
+            <mat-divider class="my-3"></mat-divider>
+          </div>
+          <div class="row">
+            <div class="col-12">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Nombre de Grupo</mat-label>
+                <input matInput [(ngModel)]="group.name"  placeholder='Grupo A' autocomplete="off">
+              </mat-form-field>
+            </div>
+            <div class="row">
+              <div class="col-12 col-md-3" *ngFor="let teamObject of group.teams.slice().reverse(), index as j">
+                <mat-form-field appearance="outline" class="w-100">
+                  <mat-label>Equipo {{j + 1}}</mat-label>
+                  <mat-select [(ngModel)]="group.teams[j]" >
+                    <mat-option *ngFor="let team of teams" [value]="team.rowid">{{team.name}}</mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+            </div>
+          </div>
+
+          <mat-divider class="my-5"></mat-divider>
+        </div>
+        <div>
+          <button mat-button matStepperPrevious>Atras</button>
+          <button mat-button (click)="makeSecondStep()" matStepperNext class="action-button">Siguiente</button>
+        </div>
+        <!--        </form>-->
+      </mat-step>
+      <mat-step>
+        <!--        <form [formGroup]="matches">-->
+        <ng-template matStepLabel>Partidos</ng-template>
+        <div *ngFor="let match of arrayOfMatches, index as i">
+          <div class="row">
+            <div class="col-12">
+              <h1> Partido #{{i + 1}}</h1>
+            </div>
+            <mat-divider class="my-3"></mat-divider>
+          </div>
+          <div class="row">
+            <div class="col-{{isBracket(match) ? '8' : '12'}}">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Titulo del Partido</mat-label>
+                <input matInput [(ngModel)]="match.title" placeholder='FC Barcelona VS Real Madrid' autocomplete="off">
+              </mat-form-field>
+            </div>
+            <div class="col-4" *ngIf="isBracket(match)">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Tipo de Bracket</mat-label>
+                <mat-select [(ngModel)]="match.bracketType">
+                  <mat-option disabled>Tipo de Bracket</mat-option>
+                  <mat-option value="Cuartos de Final">Cuartos de Final</mat-option>
+                  <mat-option value="Semifinal">Semifinal</mat-option>
+                  <mat-option value="Final">Final</mat-option>
+                </mat-select>
+                <mat-error>
+                  Este Campo es <strong>Requerido.</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+
+            <div class="col-12 col-md-5 ">
+              <div class="row">
+                <div class="col-12 col-md-8">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Equipo 1</mat-label>
+                    <mat-select [(ngModel)]="match.team1">
+                      <mat-option *ngFor="let team of teams, index as i" [value]="team.rowid">{{team.name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-12 col-md-2">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Resultado</mat-label>
+                    <input type="number" matInput [(ngModel)]="match.result1" placeholder="1"
+                           autocomplete="off">
+                  </mat-form-field>
+                </div>
+                <div class="col-12 col-md-2">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Penalty</mat-label>
+                    <input type="number" matInput [(ngModel)]="match.penalty1" placeholder="1"
+                           autocomplete="off">
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+            <div class="col-12 col-md-5 offset-md-2">
+              <div class="row">
+                <div class="col-12 col-md-8">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Equipo 2</mat-label>
+                    <mat-select [(ngModel)]="match.team2">
+                      <mat-option *ngFor="let team of teams, index as i" [value]="team.rowid">{{team.name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+
+                <div class="col-12 col-md-2">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Resultado</mat-label>
+                    <input type="number" matInput [(ngModel)]="match.result2" placeholder="1"
+                           autocomplete="off">
+                  </mat-form-field>
+                </div>
+                <div class="col-12 col-md-2">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Penalty</mat-label>
+                    <input matInput type="number" [(ngModel)]="match.penalty2" placeholder="Penalty"
+                           autocomplete="off">
+                  </mat-form-field>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-12 col-md-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Fecha</mat-label>
+                <input matInput [(ngModel)]="match.date" [matDatepicker]="picker" placeholder="15/02/2020">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker></mat-datepicker>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Hora</mat-label>
+                <input matInput [(ngModel)]="match.time" [ngxTimepicker]="timePicker" placeholder="8:52:35"
+                       autocomplete="off" format="24">
+                <mat-icon matSuffix>access_time</mat-icon>
+                <ngx-material-timepicker #timePicker></ngx-material-timepicker>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Estatus</mat-label>
+                <mat-select [(ngModel)]="match.status">
+                  <mat-option>- Estatus -</mat-option>
+                  <mat-option [value]="1">Activo</mat-option>
+                  <mat-option [value]="0">Cerrado</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Resultado</mat-label>
+                <mat-select [(ngModel)]="match.result">
+                  <mat-option>- Resultado -</mat-option>
+                  <mat-option value="C">Sin Comenzar</mat-option>
+                  <mat-option value="F">Resultado Final</mat-option>
+                  <mat-option value="S">Suspendido</mat-option>
+                </mat-select>
+              </mat-form-field>
+            </div>
+          </div>
+          <mat-divider class="my-5"></mat-divider>
+        </div>
+        <div>
+          <button mat-button matStepperPrevious>Atras</button>
+          <button mat-button matStepperNext class="action-button">Siguiente</button>
+        </div>
+        <!--        </form>-->
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Usuarios</ng-template>
+        <div class="col-12">
+          <mat-form-field appearance="standard" class="w-100">
+            <mat-label>Buscar</mat-label>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Ej. Pepito perez" #input>
+          </mat-form-field>
+        </div>
+        <div class="mat-elevation-z8 d-block d-md-none">
+          <table mat-table [dataSource]="dataSource" matSort class="w-100">
+            <ng-container matColumnDef="username">
+              <th class="username" mat-header-cell *matHeaderCellDef mat-sort-header> Usuario</th>
+              <td class="username" mat-cell *matCellDef="let row"> {{row.username}} </td>
+            </ng-container>
+            <ng-container matColumnDef="opts">
+              <!--                <th mat-header-cell *matHeaderCellDef mat-sort-header>  </th>-->
+              <!--                <td mat-cell *matCellDef="let row">-->
+              <!--                  <button class="example-margin" (click)="selection.toggle(row)"> click me</button>-->
+              <!--                </td>-->
+              <th class="opts" mat-header-cell *matHeaderCellDef mat-sort-header>
+                -
+              </th>
+              <td class="opts" mat-cell *matCellDef="let row">
+                <mat-checkbox (click)="$event.stopPropagation()"
+                              color="primary"
+                              (change)="$event ? selection.toggle(row.rowid) : null"
+                              [checked]="selection.isSelected(row.rowid)"
+                              [disabled]="getExistInUsersSelected(row.rowid)">
+                </mat-checkbox>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsMobile"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsMobile;"></tr>
+
+            <!-- Row shown when there is no matching data. -->
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+            </tr>
+          </table>
+          <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+        </div>
+        <div class="mat-elevation-z8 d-none d-md-block">
+          <table mat-table [dataSource]="dataSource" matSort class="w-100">
+
+            <!-- ID Column -->
+            <ng-container matColumnDef="rowid">
+              <th class="id" mat-header-cell *matHeaderCellDef mat-sort-header> ID</th>
+              <td class="id" mat-cell *matCellDef="let row"> {{row.rowid}} </td>
+            </ng-container>
+
+            <!-- Progress Column -->
+            <ng-container matColumnDef="username">
+              <th class="username" mat-header-cell *matHeaderCellDef mat-sort-header> Usuario</th>
+              <td class="username" mat-cell *matCellDef="let row"> {{row.username}} </td>
+            </ng-container>
+
+            <!-- Name Column -->
+            <ng-container matColumnDef="name">
+              <th class="name" mat-header-cell *matHeaderCellDef mat-sort-header> Nombre</th>
+              <td class="name" mat-cell *matCellDef="let row"> {{row.name}} </td>
+            </ng-container>
+
+            <!-- Fruit Column -->
+            <ng-container matColumnDef="email">
+              <th class="email" mat-header-cell *matHeaderCellDef mat-sort-header> Email</th>
+              <td class="email" mat-cell *matCellDef="let row"> {{row.email}} </td>
+            </ng-container>
+
+            <!-- Fruit Column -->
+            <ng-container matColumnDef="amount">
+              <th class="amount" mat-header-cell *matHeaderCellDef mat-sort-header> Monto</th>
+              <td class="amount" mat-cell *matCellDef="let row"> {{row.amount}} </td>
+            </ng-container>
+
+            <!-- Fruit Column -->
+            <ng-container matColumnDef="coins">
+              <th class="glucks" mat-header-cell *matHeaderCellDef mat-sort-header> Glucks</th>
+              <td class="glucks" mat-cell *matCellDef="let row"> {{row.coins}} </td>
+            </ng-container>
+            <!-- Fruit Column -->
+            <ng-container matColumnDef="status">
+              <th class="status" mat-header-cell *matHeaderCellDef mat-sort-header> Estatus</th>
+              <td class="status" mat-cell *matCellDef="let row">
+                <div [ngClass]="{'active': row.status === 1, 'inactive': row.status === 0}"><p
+                  class="m-0">{{row.status === 1 ? 'Activo' : 'Inactivo' }}</p></div>
+              </td>
+            </ng-container>
+
+            <!-- Fruit Column -->
+            <ng-container matColumnDef="opts">
+              <!--                <th mat-header-cell *matHeaderCellDef mat-sort-header>  </th>-->
+              <!--                <td mat-cell *matCellDef="let row">-->
+              <!--                  <button class="example-margin" (click)="selection.toggle(row)"> click me</button>-->
+              <!--                </td>-->
+              <th class="opts" mat-header-cell *matHeaderCellDef mat-sort-header>
+                -
+              </th>
+              <td class="opts" mat-cell *matCellDef="let row">
+                <mat-checkbox (click)="$event.stopPropagation()"
+                              color="primary"
+                              (change)="$event ? selection.toggle(row.rowid) : null"
+                              [checked]="selection.isSelected(row.rowid)"
+                              [disabled]="getExistInUsersSelected(row.rowid)">
+                </mat-checkbox>
+              </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            <!-- Row shown when there is no matching data. -->
+            <tr class="mat-row" *matNoDataRow>
+              <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+            </tr>
+          </table>
+
+          <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+        </div>
+
+        <div class="mt-5">
+          <button mat-flat-button matStepperPrevious>Atras</button>
+          <button mat-flat-button (click)="showSelection(stepper)" class="action-button">Siguiente</button>
+        </div>
+      </mat-step>
+      <mat-step [stepControl]="endPools">
+        <form [formGroup]="endPools">
+          <ng-template matStepLabel>Valores de Quiniela</ng-template>
+          <div class="row">
+            <div class="col-12 col-md-5">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Valor de entrada (Dolares)</mat-label>
+                <input matInput type="number" formControlName="amountInput" placeholder="5"
+                       autocomplete="off" (blur)="getAward()">
+                <mat-error>
+                  Este Campo es <strong>Requerido.</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-5">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Valor de entrada (Coins)</mat-label>
+                <input matInput type="number" formControlName="coinsInput" placeholder="5"
+                       autocomplete="off">
+                <mat-error>
+                  Este Campo es <strong>Requerido.</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Fecha de Finalizacion</mat-label>
+                <input matInput formControlName="dateFinish" [matDatepicker]="datePicker2" placeholder="15/02/2020">
+                <mat-datepicker-toggle matSuffix [for]="datePicker2"></mat-datepicker-toggle>
+                <mat-datepicker #datePicker2></mat-datepicker>
+                <mat-error>
+                  Este Campo es <strong>Requerido.</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Hora de Finalizacion</mat-label>
+                <input matInput formControlName="timeFinish" [ngxTimepicker]="timePicker2" placeholder="8:52:35"
+                       autocomplete="off">
+                <mat-icon matSuffix>access_time</mat-icon>
+                <ngx-material-timepicker #timePicker2></ngx-material-timepicker>
+                <mat-error>
+                  Este Campo es <strong>Requerido.</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Tipo de Premio</mat-label>
+                <mat-select formControlName="awardType" [(ngModel)]="awardType" ngModelOptions="{standalone: true}"
+                            (ngModelChange)="getAward()">
+                  <mat-option>- Tipo de Premio -</mat-option>
+                  <mat-option value="fijo">Fijo</mat-option>
+                  <mat-option value="total">Total</mat-option>
+                </mat-select>
+                <mat-error>
+                  Este Campo es <strong>Requerido.</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Valor de Premio Total</mat-label>
+                <input matInput type="text" [readOnly]="endPools.value.awardType !== 'total' ? 'false' : 'true'"
+                       formControlName="awardValue" placeholder="$500"
+                       autocomplete="off">
+                <mat-error>
+                  Este Campo es <strong>Requerido.</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div>
+            <button mat-flat-button matStepperPrevious>Atras</button>
+            <button mat-flat-button [disabled]="!endPools.valid" (click)="validateUsers(stepper)" class="action-button">
+              Siguiente
+            </button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step [stepControl]="results">
+        <form [formGroup]="results">
+          <ng-template matStepLabel>Puntaje</ng-template>
+          <div class="row">
+            <div class="col-12 col-md-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Resultado</mat-label>
+                <input matInput type="number" formControlName="result" placeholder="3"
+                       autocomplete="off">
+                <mat-error>
+                  Este Campo es <strong>Requerido.</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Ganador</mat-label>
+                <input matInput type="number" formControlName="winner" placeholder="5"
+                       autocomplete="off">
+                <mat-error>
+                  Este Campo es <strong>Requerido.</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Empate</mat-label>
+                <input matInput type="number" formControlName="draw" placeholder="2"
+                       autocomplete="off">
+                <mat-error>
+                  Este Campo es <strong>Requerido.</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Perdedor</mat-label>
+                <input matInput type="number" formControlName="loser" placeholder="0"
+                       autocomplete="off">
+                <mat-error>
+                  Este Campo es <strong>Requerido.</strong>
+                </mat-error>
+              </mat-form-field>
+            </div>
+          </div>
+          <div>
+            <button mat-flat-button matStepperPrevious>Atras</button>
+            <button mat-flat-button [disabled]="!results.valid" matStepperNext class="action-button">Siguiente</button>
+          </div>
+        </form>
+      </mat-step>
+      <mat-step>
+        <ng-template matStepLabel>Finalizar</ng-template>
+
+        <div>
+          <button mat-flat-button matStepperPrevious>Atras</button>
+          <button mat-flat-button color="warn" (click)="resetForm(stepper)">Cancelar</button>
+          <button mat-flat-button (click)="registerPool()" class="action-button">Actualizar Quiniela</button>
+        </div>
+      </mat-step>
+    </mat-stepper>
+  </div>
+  <!--    </div>-->
+  <!--  </div>-->
+</div>
