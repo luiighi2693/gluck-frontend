@@ -6,6 +6,7 @@
   border-top: 3px solid #F6DD06;
   display: flex;
   justify-content: center;
+  align-items: center;
   /*position: absolute;*/
   /*bottom: 0;*/
   /*left: 0;*/
@@ -35,11 +36,10 @@
 .social__media--icon {
   width: 40px;
   margin: 0 0.5rem;
-  transition: transform .2s;
 }
 
 .social__media--icon:hover {
-  transform: scale(1.5);
+  cursor: pointer;
 }
 
 .email {

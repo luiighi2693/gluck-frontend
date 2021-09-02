@@ -7,6 +7,7 @@ import { HeaderComponent } from './layout/header/header.component';
 import { FooterComponent } from './layout/footer/footer.component';
 import { LoaderComponent } from './loader/loader.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
+import { LegalAgreementComponent } from './components/legal-agreement/legal-agreement.component';
 
 
 @NgModule({
@@ -16,6 +17,7 @@ import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.componen
     FooterComponent,
     LoaderComponent,
     BreadcrumbComponent,
+    LegalAgreementComponent,
   ],
   imports: [
     CommonModule,

@@ -22,55 +22,66 @@
 
         <!-- ID Column -->
         <ng-container matColumnDef="rowid">
-          <th class="id" mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+          <th class="id" mat-header-cell *matHeaderCellDef mat-sort-header> ID</th>
           <td class="id" (click)="goToDetail(row.status, row.rowid)" mat-cell *matCellDef="let row"> {{row.rowid}} </td>
         </ng-container>
 
         <!-- Progress Column -->
         <ng-container matColumnDef="name">
-          <th class="name" mat-header-cell *matHeaderCellDef mat-sort-header> Nombre </th>
-          <td class="name" (click)="goToDetail(row.status, row.rowid)" mat-cell *matCellDef="let row"> <p class="limit-text">{{row.name}}</p> </td>
+          <th class="name" mat-header-cell *matHeaderCellDef mat-sort-header> Nombre</th>
+          <td class="name" (click)="goToDetail(row.status, row.rowid)" mat-cell *matCellDef="let row"><p
+            class="limit-text">{{row.name}}</p></td>
         </ng-container>
 
         <!-- Progress Column -->
         <ng-container matColumnDef="sport">
-          <th class="sport" mat-header-cell *matHeaderCellDef mat-sort-header> Deporte </th>
-          <td class="sport" (click)="goToDetail(row.status, row.rowid)" mat-cell *matCellDef="let row"> {{row.sport ? row.sport.name : ''}} </td>
+          <th class="sport" mat-header-cell *matHeaderCellDef mat-sort-header> Deporte</th>
+          <td class="sport" (click)="goToDetail(row.status, row.rowid)" mat-cell
+              *matCellDef="let row"> {{row.sport ? row.sport.name : ''}} </td>
         </ng-container>
 
         <!-- Fruit Column -->
         <ng-container matColumnDef="status">
-          <th class="status" mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </th>
-          <td class="status" (click)="goToDetail(row.status, row.rowid)" mat-cell *matCellDef="let row"> <div [ngClass]="{'active': row.status === 1, 'inactive': row.status !== 1}"><p class="m-0">{{row.status === 1 ? 'Activo' : 'Inactivo' }}</p></div> </td>
+          <th class="status" mat-header-cell *matHeaderCellDef mat-sort-header> Estatus</th>
+          <td class="status" (click)="goToDetail(row.status, row.rowid)" mat-cell *matCellDef="let row">
+            <div [ngClass]="{'active': row.status === 1, 'inactive': row.status !== 1}"><p
+              class="m-0">{{row.status === 1 ? 'Activo' : 'Inactivo' }}</p></div>
+          </td>
         </ng-container>
 
         <!-- Fruit Column -->
         <ng-container matColumnDef="date_Create">
-          <th class="lastLogin" mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de Registro </th>
-          <td class="lastLogin" (click)="goToDetail(row.status, row.rowid)" mat-cell *matCellDef="let row"> {{row.date_Create}} </td>
+          <th class="lastLogin" mat-header-cell *matHeaderCellDef mat-sort-header> Fecha de Registro</th>
+          <td class="lastLogin" (click)="goToDetail(row.status, row.rowid)" mat-cell
+              *matCellDef="let row"> {{row.date_Create}} </td>
         </ng-container>
 
         <!-- Fruit Column -->
         <ng-container matColumnDef="color">
-          <th class="color" mat-header-cell *matHeaderCellDef mat-sort-header> Color </th>
-          <td class="color" (click)="goToDetail(row.status, row.rowid)" mat-cell *matCellDef="let row"> <span [style]="{'background-color': row.color}" *ngIf="row.color"></span>  {{row.color ? row.color : 'No Color ...'}}</td>
+          <th class="color" mat-header-cell *matHeaderCellDef mat-sort-header> Color</th>
+          <td class="color" (click)="goToDetail(row.status, row.rowid)" mat-cell *matCellDef="let row"><span
+            [style]="{'background-color': row.color}"
+            *ngIf="row.color"></span>  {{row.color ? row.color : 'No Color ...'}}</td>
         </ng-container>
 
         <!-- Fruit Column -->
         <ng-container matColumnDef="opts">
-          <th class="opts" mat-header-cell *matHeaderCellDef mat-sort-header>  </th>
+          <th class="opts" mat-header-cell *matHeaderCellDef mat-sort-header></th>
           <td class="opts" mat-cell *matCellDef="let row">
-<!--            <div *ngIf="row.status !== 2">-->
-              <button mat-icon-button aria-label="edit" (click)="editPool(row.rowid)">
-                <mat-icon>edit</mat-icon>
-              </button>
-              <button mat-icon-button aria-label="delete"(click)="deletePool(row)" >
-                <mat-icon>delete</mat-icon>
-              </button>
-<!--            </div>-->
-<!--            <button mat-icon-button aria-label="goToDetail"(click)="goToDetail(row.rowid)" >-->
-<!--              <mat-icon>exit_to_app</mat-icon>-->
-<!--            </button>-->
+            <!--            <div *ngIf="row.status !== 2">-->
+            <button mat-icon-button aria-label="edit" (click)="editPool(row.rowid)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button aria-label="delete" (click)="deletePool(row)">
+              <mat-icon>delete</mat-icon>
+            </button>
+            <button mat-icon-button aria-label="delete" (click)="clonePool(row.rowid)">
+              <mat-icon>share</mat-icon>
+            </button>
+            <!--            </div>-->
+            <!--            <button mat-icon-button aria-label="goToDetail"(click)="goToDetail(row.rowid)" >-->
+            <!--              <mat-icon>exit_to_app</mat-icon>-->
+            <!--            </button>-->
           </td>
         </ng-container>
 

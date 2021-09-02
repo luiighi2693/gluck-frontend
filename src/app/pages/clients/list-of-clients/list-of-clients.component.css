@@ -114,6 +114,21 @@ td, th {
   padding: 0.5rem;
 }
 
+.export-users {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+  border-radius: 15px;
+  background-color: #F6DD06;
+}
+
+.export-users:hover {
+  color: #F6DD06;
+  background-color: #333232;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
 .add-user:hover {
   color: #F6DD06;
   background-color: #333232;

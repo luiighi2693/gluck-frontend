@@ -15,7 +15,7 @@
 
 <div class="container-lg">
   <div class="listOf__users--wrapper">
-    <div class="row">
+    <div class="row mb-3">
       <div class="col-12 col-md-10">
         <mat-form-field appearance="standard">
           <mat-label>Buscar</mat-label>
@@ -23,9 +23,15 @@
         </mat-form-field>
       </div>
       <div class="col-12 col-md-2 d-flex align-items-center justify-content-center">
-        <div class="add-user" routerLink="/admin/clients/add-client">
-          <mat-icon>add</mat-icon>
-          <p class="m-0">Crear Usuario</p>
+        <div>
+          <div class="export-users">
+            <mat-icon class="mx-2">cloud_download</mat-icon>
+            <p class="m-0">Exportar Usuarios</p>
+          </div>
+          <div class="add-user" routerLink="/admin/clients/add-client">
+            <mat-icon class="mx-2">add</mat-icon>
+            <p class="m-0">Crear Usuario</p>
+          </div>
         </div>
       </div>
     </div>

@@ -5,43 +5,45 @@ import {SelectionModel} from '@angular/cdk/collections';
 import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {AdminService} from '../../../services/admin.service';
 import {environment} from '../../../../environments/environment';
 import {LoaderProvider} from '../../../utilities/providers/loader-provider';
+import * as moment from 'moment';
+
 
 export interface UserData {
   rowid: string;
   username: string;
   name: string;
   email: string;
-  amount: number;
+  amount: string;
   status: number;
-  coins: number;
+  coins: string;
 }
 
 
 @Component({
-  selector: 'app-add-pool',
-  templateUrl: './add-pool.component.html',
-  styleUrls: ['./add-pool.component.css']
+  selector: 'app-clone-pool',
+  templateUrl: './clone-pool.component.html',
+  styleUrls: ['./clone-pool.component.css']
 })
-export class AddPoolComponent implements OnInit, AfterViewInit {
+export class ClonePoolComponent implements OnInit, AfterViewInit {
   config: FormGroup;
   users: FormGroup;
-  usersData = [];
   matches: FormGroup;
-  poolResults: FormGroup;
+  results: FormGroup;
   endPools: FormGroup;
+  showLoader = false;
   amountOfMatches: number;
-  amountOfGroups: number;
-  amountOfTeams: number;
-  doPenaltiesExist = '';
+  doPenaltiesExist: number;
   arrayOfMatches = [];
   arrayOfGroups = [];
-  sports = [];
-  teams = [];
   limitOfUsers: any;
+  currentPool: string;
+  poolData: any;
+  sports: any;
+  teams: any;
   hide = true;
 
   displayedColumns: string[] = ['rowid', 'username', 'name', 'email', 'amount', 'coins', 'status', 'opts'];
@@ -58,12 +60,15 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
   @ViewChild('inputFiles', {static: true}) inputFiles: ElementRef;
 
   awardType;
+  usersData = [];
+  usersForPool = [];
 
   constructor(
     private handleAlertsProvider: HandleAlertsProvider,
     private router: Router,
     private admin: AdminService,
     private fb: FormBuilder,
+    private route: ActivatedRoute,
     private loaderValue: LoaderProvider,
   ) {
     this.admin.initToken();
@@ -71,25 +76,51 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.getCurrentPool();
     this.createForms();
   }
 
   ngAfterViewInit() {
-    this.setUsersData();
+    this.setData();
+  }
+
+  getCurrentPool() {
+    this.route.params.subscribe(params => {
+      this.currentPool = params.id;
+    });
+  }
+
+  setData() {
+    this.getUsers();
+    this.getPool();
     this.setSportsData();
     this.setTeamsData();
   }
 
-  setUsersData() {
+  getUsers() {
     this.loaderValue.updateIsloading(true);
     this.admin.getUsers().subscribe(data => {
       this.loaderValue.updateIsloading(false);
       if (data.code === 'D200') {
         this.usersData = data.data;
-        console.log(data);
         this.dataSource = new MatTableDataSource<UserData>(data.data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
+      } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
+        this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
+        this.router.navigate(['/auth']);
+      }
+    }, error => {
+      this.handleAlertsProvider.presentGenericAlert(error);
+    });
+  }
+
+  setTeamsData() {
+    this.loaderValue.updateIsloading(true);
+    this.admin.getTeams().subscribe(data => {
+      this.loaderValue.updateIsloading(false);
+      if (data.code === 'D200') {
+        this.teams = data.data;
       } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
         this.router.navigate(['/auth']);
@@ -114,12 +145,17 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
     });
   }
 
-  setTeamsData() {
+
+  getPool() {
     this.loaderValue.updateIsloading(true);
-    this.admin.getTeams().subscribe(data => {
+    this.admin.getPoolForEdit(this.currentPool).subscribe(data => {
       this.loaderValue.updateIsloading(false);
       if (data.code === 'D200') {
-        this.teams = data.data;
+        this.usersForPool = data.data.usersForPool;
+        this.selection = new SelectionModel<UserData>(true, data.data.usersForPool);
+        this.poolData = data.data;
+        this.updateForms();
+        this.makeMatches();
       } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
         this.router.navigate(['/auth']);
@@ -152,9 +188,9 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
       type: ['', Validators.required],
       league: ['', Validators.required],
       password: [''],
-      rules: ['']
+      rules: [''],
     });
-    this.poolResults = this.fb.group({
+    this.results = this.fb.group({
       result: ['', Validators.required],
       winner: ['', Validators.required],
       draw: ['', Validators.required],
@@ -170,73 +206,42 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
     });
   }
 
-  // show() {
-  //   console.log(this.config.value.color.hex);
-  // }
+  updateForms() {
+    this.config.get('name').setValue(this.poolData.name);
+    this.config.get('sport').setValue(this.poolData.sport);
+    this.config.get('color').setValue(this.poolData.color);
+    this.config.get('matches').setValue(this.poolData.matches);
+    this.config.get('usersLimit').setValue(this.poolData.usersLimit);
+    this.config.get('status').setValue(this.poolData.status);
+    this.config.get('penalty').setValue(this.poolData.penalty);
+    this.config.get('groups').setValue(this.poolData.groups);
+    this.config.get('teamsPerGroup').setValue(this.poolData.teamsPerGroup);
+    this.config.get('type').setValue(this.poolData.type);
+    this.config.get('league').setValue(this.poolData.league);
+    this.config.get('password').setValue(this.poolData.password);
+    this.config.get('rules').setValue(this.poolData.rules);
 
+    this.results.get('winner').setValue(this.poolData.winner);
+    this.results.get('loser').setValue(this.poolData.loser);
+    this.results.get('draw').setValue(this.poolData.draw);
+    this.results.get('result').setValue(this.poolData.result);
 
-  makeSecondStep() {
-    // console.log(this.amountOfTeams);
-    // console.log(this.amountOfGroups);
-    this.arrayOfMatches = [];
-    this.arrayOfGroups = [];
-    this.limitOfUsers = Number(this.config.value.usersLimit);
-    this.doPenaltiesExist = this.config.value.penalty;
-
-    for (let i = 0; i < this.amountOfGroups; i++) {
-      // tslint:disable-next-line:prefer-const
-      let group = {
-        name: '',
-        teams: []
-      };
-
-      // group.teams.forEach(x => {
-      // });
-
-      for (let j = 0; j < this.amountOfTeams; j++) {
-        group.teams[j] = 0;
-      }
-
-      this.arrayOfGroups.push(group);
-    }
-
-    // console.log(JSON.stringify(this.arrayOfGroups));
-
-    for (let i = 0; i < this.amountOfMatches; i++) {
-      this.arrayOfMatches.push({
-        title: '', team1: '', penalty1: '', result1: '', team2: '', penalty2: '', result2: '', date: '',
-        time: '', status: '', result: 'sin comenzar',
-      });
-    }
+    this.endPools.get('amountInput').setValue(this.poolData.amountInput);
+    this.endPools.get('coinsInput').setValue(this.poolData.coinsInput);
+    // console.log(moment(this.poolData.dateFinish, 'YYYY-MM-DD').add(1, 'days').format('YYYY-MM-DD'));
+    this.endPools.get('dateFinish').setValue(moment(this.poolData.dateFinish, 'YYYY-MM-DD').add(1, 'days').format('YYYY-MM-DD'));
+    this.endPools.get('timeFinish').setValue(this.poolData.timeFinish === null ? null : this.poolData.timeFinish.split(':')[0] + ':' + this.poolData.timeFinish.split(':')[1] + ' ' + (Number(this.poolData.timeFinish.split(':')[0]) > 11 ? 'pm' : 'am'));
+    this.endPools.get('awardType').setValue(this.poolData.awardType);
+    this.endPools.get('awardValue').setValue(this.poolData.awardValue);
   }
 
-  showSelection(stepper) {
-    if (this.selection.selected.length > this.limitOfUsers) {
-      this.handleAlertsProvider.presentGenericAlert(`Has superado el limite de participantes en esta quiniela, el limite es <b>${this.limitOfUsers}</b>`, 'Aviso!');
-    } else {
-      stepper.next();
-    }
-    // console.log(this.selection.selected.length);
-  }
+  makeMatches() {
 
-  validateUsers(stepper) {
-    const {amountInput, coinsInput, dateFinish, timeFinish, awardType, awardValue} = this.endPools.value;
-    let isValid = true;
-    // verificamos que todos los usuarios cumplan los requisitos de ingreso de la quiniela
-    const users = this.selection.selected;
-
-    users.forEach(userId => {
-      const user = this.usersData.find(x => x.rowid === userId);
-      if (user.amount < amountInput || user.coins < coinsInput) {
-        isValid = false;
-      }
+    this.poolData.matchesInfo.forEach(match => {
+      match.time = match.time.split(':')[0] + ':' + match.time.split(':')[1] + ' ' + (Number(match.time.split(':')[0]) > 11 ? 'pm' : 'am');
     });
-
-    if (isValid) {
-      stepper.next();
-    } else {
-      this.handleAlertsProvider.presentGenericAlert(`Uno de los usuarios no cumple los requisitos minimos para el ingreso de la quiniela!`, 'Aviso!');
-    }
+    this.arrayOfMatches = this.poolData.matchesInfo;
+    this.arrayOfGroups = this.poolData.groupsInfo;
   }
 
   resetForm(stepper) {
@@ -250,18 +255,12 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
     });
   }
 
-  showUsers() {
-    const usersForPool = this.selection.selected;
-    // console.log(usersForPool);
-  }
-
   registerPool() {
     this.loaderValue.updateIsloading(true);
-    const {
-      name, sport, color, matches, usersLimit, status, penalty, groups, teamsPerGroup, type, league, password,
-      rules
-    } = this.config.value;
+    const {name, sport, color, matches, usersLimit, status, penalty, groups, teamsPerGroup, type, league, password,
+      rules } = this.config.value;
     const {amountInput, coinsInput, dateFinish, timeFinish, awardType, awardValue} = this.endPools.value;
+    // convert all times in good format
     this.arrayOfMatches.forEach(match => {
       if (match.time.toUpperCase().includes('PM')) {
         const newTime = match.time.toUpperCase().replace(' PM', '');
@@ -269,21 +268,19 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
       }
     });
 
+    const finishDate = (dateFinish === moment(this.poolData.dateFinish, 'YYYY-MM-DD').add(1, 'days').format('YYYY-MM-DD')) ?
+      moment(dateFinish, 'YYYY-MM-DD').subtract(1, 'days').format('YYYY-MM-DD') : dateFinish;
+
     const matchesInfo = this.arrayOfMatches;
     const groupsInfo = this.arrayOfGroups;
     const usersForPool = this.selection.selected;
-    const {result, winner, draw, loser} = this.poolResults.value;
-    const colorValue = color.hex.includes('#') ? color.hex : `#${color.hex}`;
-    console.log({name, sport, colorValue, matches, usersLimit, status, penalty, groups, teamsPerGroup, type,
-      league, password, rules, matchesInfo, groupsInfo, usersForPool, result, winner, draw, loser, amountInput, coinsInput, dateFinish, timeFinish,
-      awardType, awardValue});
-    this.admin.createAndUpdatePool(name, sport, colorValue, matches, usersLimit, status, penalty, groups, teamsPerGroup, type,
-      league, password, rules, matchesInfo, groupsInfo, usersForPool, result, winner, draw, loser, amountInput, coinsInput, dateFinish, timeFinish,
-      awardType, awardValue,
-      'create').subscribe(data => {
+    const {result, winner, draw, loser} = this.results.value;
+    this.admin.createAndUpdatePool(name, sport, color, matches, usersLimit, status, penalty, groups, teamsPerGroup, type, league, password,
+      rules, matchesInfo, groupsInfo, usersForPool, result, winner, draw, loser, amountInput, coinsInput, finishDate, timeFinish, awardType, awardValue,
+      'create', this.currentPool).subscribe(data => {
+      this.loaderValue.updateIsloading(false);
       if (data.code === 'D200') {
-        this.loaderValue.updateIsloading(false);
-        this.handleAlertsProvider.presentSnackbarSuccess('Se creo la quiniela con exito!');
+        this.handleAlertsProvider.presentSnackbarSuccess('Se Creo la quiniela con exito!');
         this.router.navigate(['admin/pools/list-of-pools']);
       } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
@@ -321,23 +318,58 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
     }
   }
 
-  validateChangeTeamGroup(event: any, i, j) {
-    console.log(event);
-    let result = [];
-    result = result.concat(...this.arrayOfGroups.map(x => x.teams));
-    console.log(result);
-    console.log(result.filter(x => x === event).length);
-
-    // coincidences
-    if (result.filter(x => x === event).length > 1) {
-      setTimeout(() => {
-        this.arrayOfGroups[i].teams[j] = 0;
-        this.handleAlertsProvider.presentSnackbarError('Este Equipo ya fue seleccionado!');
-
-        console.log(result);
-        console.log(result.filter(x => x === event).length);
-      }, 300);
+  showSelection(stepper) {
+    console.log(this.selection);
+    if (this.selection.selected.length > this.limitOfUsers) {
+      this.handleAlertsProvider.presentGenericAlert(`Has superado el limite de participantes en esta quiniela, el limite es <b>${this.limitOfUsers}</b>`, 'Aviso!');
+    } else {
+      stepper.next();
     }
+    console.log(this.selection.selected.length);
+  }
 
+  validateUsers(stepper) {
+    const {amountInput, coinsInput, dateFinish, timeFinish, awardType, awardValue} = this.endPools.value;
+    let isValid = true;
+    // verificamos que todos los usuarios cumplan los requisitos de ingreso de la quiniela
+    const users = this.selection.selected;
+
+    users.forEach(userId => {
+      if (!this.getExistInUsersSelected(userId)) {
+        const user = this.usersData.find(x => x.rowid === userId);
+        if (user.amount < amountInput || user.coins < coinsInput) {
+          isValid = false;
+        }
+      }
+    });
+
+    if (isValid) {
+      stepper.next();
+    } else {
+      this.handleAlertsProvider.presentGenericAlert(`Uno de los usuarios no cumple los requisitos minimos para el ingreso de la quiniela!`, 'Aviso!');
+    }
+  }
+
+  getExistInUsersSelected(id) {
+    // console.log(id, this.usersForPool.find(x => x === id) !== undefined, this.usersForPool);
+    return this.usersForPool.find(x => x === id) !== undefined;
+  }
+
+  makeSecondStep() {
+    if (this.config.get('league').value === 'Copa America') {
+      if (this.poolData.matches < Number(this.config.get('matches').value)) {
+        const lenght = Number(this.config.get('matches').value) - this.poolData.matches;
+        for (let i = 0; i < lenght; i++) {
+          this.arrayOfMatches.push({
+            title: '', team1: '', penalty1: '', result1: '', team2: '', penalty2: '', result2: '', date: '',
+            time: '', status: '', result: 'sin comenzar', bracketType: ''
+          });
+        }
+      }
+    }
+  }
+
+  isBracket(match) {
+    return match.bracketType !== null && match.bracketType !== undefined;
   }
 }

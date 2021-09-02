@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes} from '@angular/router';
 import {LayoutComponent} from './shared/layout/layout.component';
 import { AuthClientGuard } from './guards/auth-client.guard';
+import {LegalAgreementComponent} from './shared/components/legal-agreement/legal-agreement.component';
 
 const routes: Routes = [
   {
@@ -29,6 +30,10 @@ const routes: Routes = [
         path: 'transactions',
         loadChildren: () => import('./pages/transactions/transactions.module').then(m => m.TransactionsModule)
       },
+      {
+        path: 'legal-agreement',
+        component: LegalAgreementComponent,
+      }
     ]
   },
   {
@@ -67,6 +72,10 @@ const routes: Routes = [
       {
         path: 'transactions',
         loadChildren: () => import('./pages/admin-transactions/admin-transactions.module').then(m => m.AdminTransactionsModule)
+      },
+      {
+        path: 'legal-agreement',
+        component: LegalAgreementComponent,
       }
     ]
   },
