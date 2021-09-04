@@ -86,7 +86,6 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
       this.loaderValue.updateIsloading(false);
       if (data.code === 'D200') {
         this.usersData = data.data;
-        console.log(data);
         this.dataSource = new MatTableDataSource<UserData>(data.data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -119,7 +118,11 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
     this.admin.getTeams().subscribe(data => {
       this.loaderValue.updateIsloading(false);
       if (data.code === 'D200') {
-        this.teams = data.data;
+        this.teams = data.data.sort((a, b) => {
+          if (a.name < b.name) { return -1; }
+          if (a.name > b.name) { return 1; }
+          return 0;
+        });
       } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
         this.router.navigate(['/auth']);
@@ -170,14 +173,7 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
     });
   }
 
-  // show() {
-  //   console.log(this.config.value.color.hex);
-  // }
-
-
   makeSecondStep() {
-    // console.log(this.amountOfTeams);
-    // console.log(this.amountOfGroups);
     this.arrayOfMatches = [];
     this.arrayOfGroups = [];
     this.limitOfUsers = Number(this.config.value.usersLimit);
@@ -190,17 +186,12 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
         teams: []
       };
 
-      // group.teams.forEach(x => {
-      // });
-
       for (let j = 0; j < this.amountOfTeams; j++) {
         group.teams[j] = 0;
       }
 
       this.arrayOfGroups.push(group);
     }
-
-    // console.log(JSON.stringify(this.arrayOfGroups));
 
     for (let i = 0; i < this.amountOfMatches; i++) {
       this.arrayOfMatches.push({
@@ -216,7 +207,6 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
     } else {
       stepper.next();
     }
-    // console.log(this.selection.selected.length);
   }
 
   validateUsers(stepper) {
@@ -250,11 +240,6 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
     });
   }
 
-  showUsers() {
-    const usersForPool = this.selection.selected;
-    // console.log(usersForPool);
-  }
-
   registerPool() {
     this.loaderValue.updateIsloading(true);
     const {
@@ -274,9 +259,6 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
     const usersForPool = this.selection.selected;
     const {result, winner, draw, loser} = this.poolResults.value;
     const colorValue = color.hex.includes('#') ? color.hex : `#${color.hex}`;
-    console.log({name, sport, colorValue, matches, usersLimit, status, penalty, groups, teamsPerGroup, type,
-      league, password, rules, matchesInfo, groupsInfo, usersForPool, result, winner, draw, loser, amountInput, coinsInput, dateFinish, timeFinish,
-      awardType, awardValue});
     this.admin.createAndUpdatePool(name, sport, colorValue, matches, usersLimit, status, penalty, groups, teamsPerGroup, type,
       league, password, rules, matchesInfo, groupsInfo, usersForPool, result, winner, draw, loser, amountInput, coinsInput, dateFinish, timeFinish,
       awardType, awardValue,
@@ -311,7 +293,6 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
   }
 
   getAward() {
-    console.log(this.awardType);
     if (this.awardType === 'total') {
       const value = this.selection.selected.length * Number(this.endPools.get('amountInput').value === '' ? 0 : this.endPools.get('amountInput').value);
       this.endPools.get('awardValue').setValue(value);
@@ -322,11 +303,8 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
   }
 
   validateChangeTeamGroup(event: any, i, j) {
-    console.log(event);
     let result = [];
     result = result.concat(...this.arrayOfGroups.map(x => x.teams));
-    console.log(result);
-    console.log(result.filter(x => x === event).length);
 
     // coincidences
     if (result.filter(x => x === event).length > 1) {
@@ -334,8 +312,6 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
         this.arrayOfGroups[i].teams[j] = 0;
         this.handleAlertsProvider.presentSnackbarError('Este Equipo ya fue seleccionado!');
 
-        console.log(result);
-        console.log(result.filter(x => x === event).length);
       }, 300);
     }
 

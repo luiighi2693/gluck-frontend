@@ -60,7 +60,6 @@ export class ListOfClientsComponent implements OnInit, AfterViewInit {
     this.admin.getUsers().subscribe(data => {
       this.loaderValue.updateIsloading(false);
       if (data.code === 'D200') {
-        console.log(data);
         this.dataSource = new MatTableDataSource<Client>(data.data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;

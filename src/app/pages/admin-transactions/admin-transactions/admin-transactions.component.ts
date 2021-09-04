@@ -50,7 +50,6 @@ export class AdminTransactionsComponent implements OnInit, AfterViewInit {
     this.admin.getTransactions().subscribe(data => {
       this.loaderValue.updateIsloading(false);
       if (data.code === 'D200') {
-        console.log(data);
         this.dataSource = new MatTableDataSource<UserData>(data.data);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;

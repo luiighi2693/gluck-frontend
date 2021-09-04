@@ -49,7 +49,6 @@ export class EditClientComponent implements OnInit {
       this.loaderValue.updateIsloading(false);
       if (response.code === 'D200') {
         this.userData = response.data;
-        console.log(this.userData);
         this.updateForm();
       } else if (response.code === 'A401' || response.code === 'A302' || response.code === 'A403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
@@ -98,7 +97,6 @@ export class EditClientComponent implements OnInit {
   updateUser() {
     this.loaderValue.updateIsloading(true);
     const updatedUser = this.updateUserForm.value;
-    console.warn(this.updateUserForm.value);
     this.admin.editUser(
       updatedUser.name,
       updatedUser.lastname,

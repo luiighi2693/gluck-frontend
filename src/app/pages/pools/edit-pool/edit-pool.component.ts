@@ -349,7 +349,6 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
   }
 
   getExistInUsersSelected(id) {
-    // console.log(id, this.usersForPool.find(x => x === id) !== undefined, this.usersForPool);
     return this.usersForPool.find(x => x === id) !== undefined;
   }
 

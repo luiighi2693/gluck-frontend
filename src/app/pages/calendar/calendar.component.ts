@@ -14,9 +14,6 @@ export class CalendarComponent implements OnInit {
 
   calendarOptions: CalendarOptions;
 
-  // showLoader = false;
-
-
   constructor(
     private handleAlertsProvider: HandleAlertsProvider,
     private router: Router,
@@ -29,7 +26,6 @@ export class CalendarComponent implements OnInit {
     this.loaderValue.updateIsloading(true);
     this.admin.getEventsForUser(sessionStorage.getItem('id')).subscribe(res => {
       this.loaderValue.updateIsloading(false);
-      // this.showLoader = false;
       if (res.code === 'D200') {
         const events = [];
         res.data.forEach(e => {

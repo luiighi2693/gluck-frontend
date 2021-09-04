@@ -12,6 +12,7 @@
 }
 
 .login__form {
+  /*margin: 5rem 0;*/
   max-width: 50rem;
   padding: 2rem;
   background-color: white;
@@ -150,6 +151,13 @@
   .login__logo {
     max-width: 30rem;
   }
+  /*.login__form {*/
+  /*  margin: 45rem 0;*/
+  /*}*/
+  /*.login__wrapper {*/
+  /*  max-height: 1200px;*/
+  /*  overflow-y: auto;*/
+  /*}*/
 }
 
 @media (max-width: 450px ) {

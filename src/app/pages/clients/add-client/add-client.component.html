@@ -44,21 +44,21 @@
               <div class="col-12 col-md-6 text-center">
                 <mat-form-field appearance="outline" class="dual__input--item">
                   <mat-label>Nombre de Usuario</mat-label>
-                  <input matInput type="text"  formControlName="username" placeholder="Ej. pepito12345" autocomplete="off" required>
+                  <input matInput type="text"  formControlName="username" placeholder="Nombre de usuario" autocomplete="off" required>
                   <mat-error>Este Campo es <b>Requerido</b>.</mat-error>
                 </mat-form-field>
               </div>
               <div class="col-12 col-md-6 text-center">
                 <mat-form-field appearance="outline" class="dual__input--item">
                   <mat-label>Correo Electronico</mat-label>
-                  <input matInput type="text"  formControlName="email" placeholder="Ej. correo@correo.com" autocomplete="off" required>
+                  <input matInput type="text"  formControlName="email" placeholder="Correo electronico" autocomplete="off" required>
                   <mat-error>Este Campo es <b>Requerido</b>.</mat-error>
                 </mat-form-field>
               </div>
               <div class="col-12 col-md-6">
                 <mat-form-field appearance="outline" class="dual__input--item">
                   <mat-label>Numero de Telefono</mat-label>
-                  <input matInput type="text"  formControlName="phone" placeholder="Ej. 04244557895" autocomplete="off" required>
+                  <input matInput type="text"  formControlName="phone" placeholder="numero de telefono" autocomplete="off" required>
                   <mat-error>Este Campo es <b>Requerido</b>.</mat-error>
                 </mat-form-field>
               </div>
@@ -84,28 +84,28 @@
               <div class="col-12 text-center">
                 <mat-form-field appearance="outline" class="unique__input--item">
                   <mat-label>Direccion</mat-label>
-                  <input matInput type="text"  formControlName="address" placeholder="Ej. Calle 185 A 125-371 Av..." autocomplete="off" required>
+                  <input matInput type="text"  formControlName="address" placeholder="direccion" autocomplete="off" required>
                   <mat-error>Este Campo es <b>Requerido</b>.</mat-error>
                 </mat-form-field>
               </div>
               <div class="col-12 col-sm-4 text-center">
                 <mat-form-field appearance="outline" class="dual__input--item">
                   <mat-label>Estado</mat-label>
-                  <input matInput type="text"  formControlName="state" placeholder="Ej. Carabobo" autocomplete="off" required>
+                  <input matInput type="text"  formControlName="state" placeholder="Estado" autocomplete="off" required>
                   <mat-error>Este Campo es <b>Requerido</b>.</mat-error>
                 </mat-form-field>
               </div>
               <div class="col-12 col-sm-4 text-center">
                 <mat-form-field appearance="outline" class="dual__input--item">
                   <mat-label>Ciudad</mat-label>
-                  <input matInput type="text"  formControlName="city" placeholder="Ej. Valencia" autocomplete="off" required>
+                  <input matInput type="text"  formControlName="city" placeholder="Ciudad" autocomplete="off" required>
                   <mat-error>Este Campo es <b>Requerido</b>.</mat-error>
                 </mat-form-field>
               </div>
               <div class="col-12 col-sm-4 text-center">
                 <mat-form-field appearance="outline" class="dual__input--item">
                   <mat-label>Codigo Postal</mat-label>
-                  <input matInput type="text"  formControlName="code" placeholder="Ej. 2005" autocomplete="off" required>
+                  <input matInput type="text"  formControlName="code" placeholder="Codigo postal" autocomplete="off" required>
                   <mat-error>Este Campo es <b>Requerido</b>.</mat-error>
                 </mat-form-field>
               </div>
@@ -127,39 +127,6 @@
                 <button mat-flat-button [disabled]="!newUserForm.valid" class="submit" (click)="createNewUser()">Crear Usuario</button>
               </div>
             </div>
-            <!--        <div class="row">-->
-            <!--          <div class="col-12 text-center">-->
-            <!--            <h1>Informacion Adicional</h1>-->
-            <!--          </div>-->
-            <!--          <div class="col-12">-->
-            <!--            <mat-form-field class="example-chip-list" appearance="outline" class="unique__input&#45;&#45;item">-->
-            <!--              <mat-label>Deportes Favoritos</mat-label>-->
-            <!--              <mat-chip-list #chipList aria-label="Sport selection">-->
-            <!--                <mat-chip-->
-            <!--                  *ngFor="let sport of sports"-->
-            <!--                  [selectable]="selectable"-->
-            <!--                  [removable]="removable"-->
-            <!--                  (removed)="removeSport(sport)">-->
-            <!--                  {{sport}}-->
-            <!--                  <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>-->
-            <!--                </mat-chip>-->
-            <!--                <input-->
-            <!--                  placeholder="Otro Deporte..."-->
-            <!--                  #sportInput-->
-            <!--                  [formControl]="sportsCtrl"-->
-            <!--                  [matAutocomplete]="auto"-->
-            <!--                  [matChipInputFor]="chipList"-->
-            <!--                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"-->
-            <!--                  (matChipInputTokenEnd)="addSport($event)">-->
-            <!--              </mat-chip-list>-->
-            <!--              <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">-->
-            <!--                <mat-option *ngFor="let sport of filteredSports | async" [value]="sport">-->
-            <!--                  {{sport}}-->
-            <!--                </mat-option>-->
-            <!--              </mat-autocomplete>-->
-            <!--            </mat-form-field>-->
-            <!--          </div>-->
-            <!--        </div>-->
           </div>
         </div>
       </form>

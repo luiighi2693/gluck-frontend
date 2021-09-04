@@ -52,7 +52,6 @@ export class BracketsComponent implements OnInit, AfterViewInit {
     this.loaderValue.updateIsloading(true);
     this.admin.getRankingForPool(id).subscribe(res => {
       this.loaderValue.updateIsloading(false);
-      console.log(res);
       this.rankingData = res.groups;
       this.bracketsData = res.brackets;
       this.champion = res.champion;

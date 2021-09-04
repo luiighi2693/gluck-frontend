@@ -61,7 +61,6 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
           if (data2.code === 'D200') {
             this.matches.forEach(match => {
               const result = data2.data.find(x => (x.teamId1 === match.team1) && (x.teamId2 === match.team2));
-              console.log(result);
               match.resultTeam1 = result.teamResult1;
               match.resultTeam2 = result.teamResult2;
             });

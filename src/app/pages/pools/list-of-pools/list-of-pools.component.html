@@ -68,7 +68,6 @@
         <ng-container matColumnDef="opts">
           <th class="opts" mat-header-cell *matHeaderCellDef mat-sort-header></th>
           <td class="opts" mat-cell *matCellDef="let row">
-            <!--            <div *ngIf="row.status !== 2">-->
             <button mat-icon-button aria-label="edit" (click)="editPool(row.rowid)">
               <mat-icon>edit</mat-icon>
             </button>
@@ -78,10 +77,6 @@
             <button mat-icon-button aria-label="delete" (click)="clonePool(row.rowid)">
               <mat-icon>share</mat-icon>
             </button>
-            <!--            </div>-->
-            <!--            <button mat-icon-button aria-label="goToDetail"(click)="goToDetail(row.rowid)" >-->
-            <!--              <mat-icon>exit_to_app</mat-icon>-->
-            <!--            </button>-->
           </td>
         </ng-container>
 

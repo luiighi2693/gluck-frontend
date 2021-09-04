@@ -90,7 +90,6 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
   updateUser() {
     this.loaderValue.updateIsloading(true);
     const {name, lastname, username, email, phone, password, address, state, city, code, id, status, img} = this.updateUserForm.value;
-    console.warn(this.updateUserForm.value);
     this.admin.editUser(name, lastname, username, email, phone, password, address, state, city, code, id, Number(status), img
     ).subscribe(response => {
       this.loaderValue.updateIsloading(false);

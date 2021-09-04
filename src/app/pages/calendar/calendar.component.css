@@ -4,6 +4,12 @@
   border-radius: 25px;
 }
 
+@media screen and (max-width: 990px){
+  .calendar__wrapper {
+    min-width: 1200px;
+  }
+}
+
 .home__link:hover {
   color: #F6DD06;
   cursor: pointer;
