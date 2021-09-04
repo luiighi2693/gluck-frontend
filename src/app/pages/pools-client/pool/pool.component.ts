@@ -82,7 +82,6 @@ export class PoolComponent implements OnInit, AfterViewInit {
         this.monthlyPools = data.mensuales;
         this.oneVsOnePools = data.oneVSone;
         this.weeklyPools = data.semanales;
-        console.log(this.privatePools, this.monthlyPools, this.oneVsOnePools, this.weeklyPools);
 
         this.dataSourceOneVsOne = new MatTableDataSource<any>(this.oneVsOnePools);
         this.dataSourceWeekly = new MatTableDataSource<any>(this.weeklyPools);
@@ -201,7 +200,6 @@ export class PoolComponent implements OnInit, AfterViewInit {
   private callRegisterPool(id) {
     this.loaderValue.updateIsloading(true);
     this.admin.registerUserPool(id, sessionStorage.getItem('id')).subscribe(data => {
-      console.log(data);
       this.loaderValue.updateIsloading(false);
       if (data.code === 'D200') {
         this.updateMoney();

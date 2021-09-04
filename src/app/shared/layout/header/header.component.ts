@@ -39,14 +39,11 @@ export class HeaderComponent implements OnInit {
 
   toggle() {
     if (this.isOpen) {
-      console.log('i am closed!');
       this.toggleValue.emit(false);
     } else {
-      console.log('i am opened!');
       this.toggleValue.emit(true);
     }
     this.isOpen = !this.isOpen;
-    console.log(this.isExpanded);
   }
 
   editUser() {

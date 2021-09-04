@@ -60,13 +60,6 @@ export class LayoutComponent implements OnInit {
     this.teamOptions = false;
   }
 
-  toggleSidenavMobile(value: boolean) {
-    if (value) {
-
-
-    }
-  }
-
   togglePoolsOptions() {
     this.poolsOptions = !this.poolsOptions;
   }
@@ -89,5 +82,10 @@ export class LayoutComponent implements OnInit {
 
   catchValue(value: string) {
     alert(value);
+  }
+
+  backdropClick() {
+    const toggleButton = document.getElementById('toogleButton');
+    toggleButton.click();
   }
 }

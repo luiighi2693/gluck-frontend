@@ -35,7 +35,6 @@ export class ClonePoolComponent implements OnInit, AfterViewInit {
   results: FormGroup;
   endPools: FormGroup;
   showLoader = false;
-  amountOfMatches: number;
   doPenaltiesExist: number;
   arrayOfMatches = [];
   arrayOfGroups = [];
@@ -228,7 +227,6 @@ export class ClonePoolComponent implements OnInit, AfterViewInit {
 
     this.endPools.get('amountInput').setValue(this.poolData.amountInput);
     this.endPools.get('coinsInput').setValue(this.poolData.coinsInput);
-    // console.log(moment(this.poolData.dateFinish, 'YYYY-MM-DD').add(1, 'days').format('YYYY-MM-DD'));
     this.endPools.get('dateFinish').setValue(moment(this.poolData.dateFinish, 'YYYY-MM-DD').add(1, 'days').format('YYYY-MM-DD'));
     this.endPools.get('timeFinish').setValue(this.poolData.timeFinish === null ? null : this.poolData.timeFinish.split(':')[0] + ':' + this.poolData.timeFinish.split(':')[1] + ' ' + (Number(this.poolData.timeFinish.split(':')[0]) > 11 ? 'pm' : 'am'));
     this.endPools.get('awardType').setValue(this.poolData.awardType);
@@ -308,7 +306,6 @@ export class ClonePoolComponent implements OnInit, AfterViewInit {
   }
 
   getAward() {
-    console.log(this.awardType);
     if (this.awardType === 'total') {
       const value = this.selection.selected.length * Number(this.endPools.get('amountInput').value === '' ? 0 : this.endPools.get('amountInput').value);
       this.endPools.get('awardValue').setValue(value);
@@ -319,13 +316,11 @@ export class ClonePoolComponent implements OnInit, AfterViewInit {
   }
 
   showSelection(stepper) {
-    console.log(this.selection);
     if (this.selection.selected.length > this.limitOfUsers) {
       this.handleAlertsProvider.presentGenericAlert(`Has superado el limite de participantes en esta quiniela, el limite es <b>${this.limitOfUsers}</b>`, 'Aviso!');
     } else {
       stepper.next();
     }
-    console.log(this.selection.selected.length);
   }
 
   validateUsers(stepper) {
@@ -351,7 +346,6 @@ export class ClonePoolComponent implements OnInit, AfterViewInit {
   }
 
   getExistInUsersSelected(id) {
-    // console.log(id, this.usersForPool.find(x => x === id) !== undefined, this.usersForPool);
     return this.usersForPool.find(x => x === id) !== undefined;
   }
 

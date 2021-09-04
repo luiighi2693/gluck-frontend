@@ -52,7 +52,6 @@ export class AddClientComponent implements OnInit {
   createNewUser() {
     this.loaderValue.updateIsloading(true);
     const newUser = this.newUserForm.value;
-    console.warn(this.newUserForm.value);
     this.admin.createUser(
       newUser.name,
       newUser.lastname,

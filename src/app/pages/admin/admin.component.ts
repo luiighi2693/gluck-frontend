@@ -1,5 +1,5 @@
 import {AfterViewInit, Component, OnInit} from '@angular/core';
-import {FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {HandleAlertsProvider} from '../../utilities/providers/handle-alerts-provider';
 import {Router} from '@angular/router';
 import {AdminService} from '../../services/admin.service';
@@ -132,11 +132,9 @@ export class AdminComponent implements OnInit, AfterViewInit {
   }
 
   sendEmail() {
-    // console.log(this.emailForm.value);
     this.loaderValue.updateIsloading(true);
     const emailForm = this.emailForm.value;
     emailForm.manualSelection = this.selection.selected;
-    // console.warn(emailForm);
     this.admin.sendEmail(emailForm.category, emailForm.subject, emailForm.manualSelection, emailForm.message).subscribe(res => {
       this.loaderValue.updateIsloading(false);
       if (res.code === 'D200') {

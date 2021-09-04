@@ -56,16 +56,6 @@
           <td class="lastLogin" (click)="goToDetail(row.userID)" mat-cell *matCellDef="let row"> {{row.date_Access}} </td>
         </ng-container>
 
-        <!-- Fruit Column -->
-<!--        <ng-container matColumnDef="opts">-->
-<!--          <th class="opts" mat-header-cell *matHeaderCellDef mat-sort-header>  -</th>-->
-<!--          <td class="opts" mat-cell *matCellDef="let row">-->
-<!--            <button mat-icon-button aria-label="goToDetail"(click)="goToDetail(row.userID)" >-->
-<!--              <mat-icon>exit_to_app</mat-icon>-->
-<!--            </button>-->
-<!--          </td>-->
-<!--        </ng-container>-->
-
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 

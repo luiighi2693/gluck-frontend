@@ -1,6 +1,6 @@
 <div class="header-helper"></div>
 <nav class="header d-flex justify-content-between justify-content-lg-end">
-  <button mat-icon-button (click)="toggle()" class="toggle__button d-block d-lg-none">
+  <button mat-icon-button id="toogleButton" (click)="toggle()" class="toggle__button d-block d-lg-none">
     <mat-icon aria-label="Menu">menu</mat-icon>
   </button>
   <div class="d-flex align-items-center">
@@ -13,7 +13,8 @@
       <p><mat-icon>attach_money</mat-icon> {{money}}</p>
     </div>
     <div class="recharge">
-      <a mat-flat-button class="recharge-button"  href="https://wa.me/584144191721?text=Hola! Quiero recargar algunos Glucks..." target="_blank">Recargar</a>
+
+      <a mat-flat-button class="recharge-button"  href="https://wa.me/13524449978?text=Hola! Quiero recargar algunos Glucks..." target="_blank">Recargar</a>
     </div>
     <div class="profile__options" (click)="userOptions = !userOptions">
       <mat-icon aria-label="Person">person</mat-icon>

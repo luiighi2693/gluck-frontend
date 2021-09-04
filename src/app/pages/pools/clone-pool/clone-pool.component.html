@@ -2,8 +2,6 @@
 
 <div class="container">
   <div class="profile__wrapper mb-3">
-    <!--    <div class="row">-->
-    <!--      <div class="col-12 col-md-8 offset-md-2">-->
     <mat-stepper orientation="vertical" linear #stepper>
       <mat-step [stepControl]="config">
         <form [formGroup]="config">
@@ -12,7 +10,7 @@
             <div class="col-12 col-md-4">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Nombre de Quiniela</mat-label>
-                <input matInput placeholder=" name" formControlName="name" autocomplete="off">
+                <input matInput placeholder=" Nombre de usuario" formControlName="name" autocomplete="off">
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
                 </mat-error>
@@ -46,7 +44,7 @@
             <div class="col-12 col-md-6">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Cantidad de Partidos</mat-label>
-                <input matInput type="number" placeholder="5" disabled formControlName="matches"
+                <input matInput type="number" placeholder="Cantidad de partidos" disabled formControlName="matches"
                        autocomplete="off">
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
@@ -56,7 +54,7 @@
             <div class="col-12 col-md-6">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Limite de Usuarios</mat-label>
-                <input matInput type="number" placeholder="15" [(ngModel)]="limitOfUsers" formControlName="usersLimit"
+                <input matInput type="number" placeholder="Limite de usuarios" [(ngModel)]="limitOfUsers" formControlName="usersLimit"
                        autocomplete="off">
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
@@ -93,8 +91,8 @@
             </div>
             <div class="col-12 col-md-4">
               <mat-form-field appearance="outline" class="w-100">
-                <mat-label>Grupos</mat-label>
-                <input matInput type="number" placeholder="6" formControlName="groups" autocomplete="off">
+                <mat-label>Cantidad Grupos</mat-label>
+                <input matInput type="number" placeholder="Cantidad de Grupos" formControlName="groups" autocomplete="off">
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
                 </mat-error>
@@ -105,7 +103,7 @@
             <div class="col-12 col-md-3">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Equipos por Grupos</mat-label>
-                <input matInput type="number" placeholder="2" formControlName="teamsPerGroup" autocomplete="off">
+                <input matInput type="number" placeholder="Equipos por grupo" formControlName="teamsPerGroup" autocomplete="off">
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
                 </mat-error>
@@ -145,13 +143,6 @@
               </mat-form-field>
             </div>
             <div class="col-12 col-md-3">
-              <!--              <mat-form-field appearance="outline" class="w-100">-->
-              <!--                <mat-label>Contrasena</mat-label>-->
-              <!--                <input matInput type="password" placeholder="123456789" formControlName="password" autocomplete="off" >-->
-              <!--                <mat-error>-->
-              <!--                  Este Campo es <strong>Requerido.</strong>-->
-              <!--                </mat-error>-->
-              <!--              </mat-form-field>-->
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Contrasena</mat-label>
                 <input matInput [type]="hide ? 'password' : 'text'" formControlName="password" placeholder="Contrasena"
@@ -203,7 +194,7 @@
             <div class="col-12">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Nombre de Grupo</mat-label>
-                <input matInput [(ngModel)]="group.name"  placeholder='Grupo A' autocomplete="off">
+                <input matInput [(ngModel)]="group.name"  placeholder='Nombre de grupo' autocomplete="off">
               </mat-form-field>
             </div>
             <div class="row">
@@ -240,7 +231,7 @@
             <div class="col-{{isBracket(match) ? '8' : '12'}}">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Titulo del Partido</mat-label>
-                <input matInput [(ngModel)]="match.title" placeholder='FC Barcelona VS Real Madrid' autocomplete="off">
+                <input matInput [(ngModel)]="match.title" placeholder='Titulo de partido' autocomplete="off">
               </mat-form-field>
             </div>
             <div class="col-4" *ngIf="isBracket(match)">
@@ -271,14 +262,14 @@
                 <div class="col-12 col-md-2">
                   <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Resultado</mat-label>
-                    <input type="number" matInput [(ngModel)]="match.result1" placeholder="1"
+                    <input type="number" matInput [(ngModel)]="match.result1" placeholder="Resultado"
                            autocomplete="off">
                   </mat-form-field>
                 </div>
                 <div class="col-12 col-md-2">
                   <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Penalty</mat-label>
-                    <input type="number" matInput [(ngModel)]="match.penalty1" placeholder="1"
+                    <input type="number" matInput [(ngModel)]="match.penalty1" placeholder="Penalty"
                            autocomplete="off">
                   </mat-form-field>
                 </div>
@@ -298,7 +289,7 @@
                 <div class="col-12 col-md-2">
                   <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Resultado</mat-label>
-                    <input type="number" matInput [(ngModel)]="match.result2" placeholder="1"
+                    <input type="number" matInput [(ngModel)]="match.result2" placeholder="Resultado"
                            autocomplete="off">
                   </mat-form-field>
                 </div>
@@ -317,7 +308,7 @@
             <div class="col-12 col-md-3">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Fecha</mat-label>
-                <input matInput [(ngModel)]="match.date" [matDatepicker]="picker" placeholder="15/02/2020">
+                <input matInput [(ngModel)]="match.date" [matDatepicker]="picker" placeholder="Fecha">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>
               </mat-form-field>
@@ -325,7 +316,7 @@
             <div class="col-12 col-md-3">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Hora</mat-label>
-                <input matInput [(ngModel)]="match.time" [ngxTimepicker]="timePicker" placeholder="8:52:35"
+                <input matInput [(ngModel)]="match.time" [ngxTimepicker]="timePicker" placeholder="Hora"
                        autocomplete="off" format="24">
                 <mat-icon matSuffix>access_time</mat-icon>
                 <ngx-material-timepicker #timePicker></ngx-material-timepicker>
@@ -366,7 +357,7 @@
         <div class="col-12">
           <mat-form-field appearance="standard" class="w-100">
             <mat-label>Buscar</mat-label>
-            <input matInput (keyup)="applyFilter($event)" placeholder="Ej. Pepito perez" #input>
+            <input matInput (keyup)="applyFilter($event)" placeholder="Nombre de usuario" #input>
           </mat-form-field>
         </div>
         <div class="mat-elevation-z8 d-block d-md-none">
@@ -492,7 +483,7 @@
             <div class="col-12 col-md-5">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Valor de entrada (Dolares)</mat-label>
-                <input matInput type="number" formControlName="amountInput" placeholder="5"
+                <input matInput type="number" formControlName="amountInput" placeholder="Valor de entrada (Dolares)"
                        autocomplete="off" (blur)="getAward()">
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
@@ -502,7 +493,7 @@
             <div class="col-12 col-md-5">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Valor de entrada (Coins)</mat-label>
-                <input matInput type="number" formControlName="coinsInput" placeholder="5"
+                <input matInput type="number" formControlName="coinsInput" placeholder="valor de entrada (Coins)"
                        autocomplete="off">
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
@@ -512,7 +503,7 @@
             <div class="col-12 col-md-3">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Fecha de Finalizacion</mat-label>
-                <input matInput formControlName="dateFinish" [matDatepicker]="datePicker2" placeholder="15/02/2020">
+                <input matInput formControlName="dateFinish" [matDatepicker]="datePicker2" placeholder="Fecha de finalizacion">
                 <mat-datepicker-toggle matSuffix [for]="datePicker2"></mat-datepicker-toggle>
                 <mat-datepicker #datePicker2></mat-datepicker>
                 <mat-error>
@@ -523,7 +514,7 @@
             <div class="col-12 col-md-3">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Hora de Finalizacion</mat-label>
-                <input matInput formControlName="timeFinish" [ngxTimepicker]="timePicker2" placeholder="8:52:35"
+                <input matInput formControlName="timeFinish" [ngxTimepicker]="timePicker2" placeholder="Hora de finalizacion"
                        autocomplete="off">
                 <mat-icon matSuffix>access_time</mat-icon>
                 <ngx-material-timepicker #timePicker2></ngx-material-timepicker>
@@ -550,7 +541,7 @@
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Valor de Premio Total</mat-label>
                 <input matInput type="text" [readOnly]="endPools.value.awardType !== 'total' ? 'false' : 'true'"
-                       formControlName="awardValue" placeholder="$500"
+                       formControlName="awardValue" placeholder="Valor de premio"
                        autocomplete="off">
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
@@ -573,7 +564,7 @@
             <div class="col-12 col-md-3">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Resultado</mat-label>
-                <input matInput type="number" formControlName="result" placeholder="3"
+                <input matInput type="number" formControlName="result" placeholder="Resultado"
                        autocomplete="off">
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
@@ -583,7 +574,7 @@
             <div class="col-12 col-md-3">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Ganador</mat-label>
-                <input matInput type="number" formControlName="winner" placeholder="5"
+                <input matInput type="number" formControlName="winner" placeholder="Ganador"
                        autocomplete="off">
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
@@ -593,7 +584,7 @@
             <div class="col-12 col-md-3">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Empate</mat-label>
-                <input matInput type="number" formControlName="draw" placeholder="2"
+                <input matInput type="number" formControlName="draw" placeholder="Empate"
                        autocomplete="off">
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
@@ -603,7 +594,7 @@
             <div class="col-12 col-md-3">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Perdedor</mat-label>
-                <input matInput type="number" formControlName="loser" placeholder="0"
+                <input matInput type="number" formControlName="loser" placeholder="Perdedor"
                        autocomplete="off">
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
