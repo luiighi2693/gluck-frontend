@@ -96,9 +96,6 @@
                 <mat-label>Cantidad de Grupos</mat-label>
                 <input matInput type="number" placeholder="Cantidad de Grupos" formControlName="groups" [(ngModel)]="amountOfGroups"
                        autocomplete="off">
-                <mat-error>
-                  Este Campo es <strong>Requerido.</strong>
-                </mat-error>
               </mat-form-field>
             </div>
           </div>
@@ -108,9 +105,6 @@
                 <mat-label>Equipos por Grupos</mat-label>
                 <input matInput type="number" placeholder="Equipos por Grupos" formControlName="teamsPerGroup"
                        [(ngModel)]="amountOfTeams" autocomplete="off">
-                <mat-error>
-                  Este Campo es <strong>Requerido.</strong>
-                </mat-error>
               </mat-form-field>
             </div>
             <div class="col-12 col-md-3">
@@ -184,7 +178,7 @@
           </div>
         </form>
       </mat-step>
-      <mat-step>
+      <mat-step *ngIf="config.value.league === 'Copa America'">
         <!--        <form [formGroup]="groups">-->
         <ng-template matStepLabel>Groups</ng-template>
         <div *ngFor="let group of arrayOfGroups, index as i">

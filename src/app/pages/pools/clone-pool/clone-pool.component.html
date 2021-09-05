@@ -10,7 +10,7 @@
             <div class="col-12 col-md-4">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Nombre de Quiniela</mat-label>
-                <input matInput placeholder=" Nombre de usuario" formControlName="name" autocomplete="off">
+                <input matInput placeholder=" Nombre de quiniela" formControlName="name" autocomplete="off">
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
                 </mat-error>
@@ -93,9 +93,6 @@
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Cantidad Grupos</mat-label>
                 <input matInput type="number" placeholder="Cantidad de Grupos" formControlName="groups" autocomplete="off">
-                <mat-error>
-                  Este Campo es <strong>Requerido.</strong>
-                </mat-error>
               </mat-form-field>
             </div>
           </div>
@@ -104,9 +101,6 @@
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Equipos por Grupos</mat-label>
                 <input matInput type="number" placeholder="Equipos por grupo" formControlName="teamsPerGroup" autocomplete="off">
-                <mat-error>
-                  Este Campo es <strong>Requerido.</strong>
-                </mat-error>
               </mat-form-field>
             </div>
             <div class="col-12 col-md-3">
@@ -180,7 +174,7 @@
         </form>
       </mat-step>
 
-      <mat-step>
+      <mat-step *ngIf="config.value.league === 'Copa America'">
         <!--        <form [formGroup]="groups">-->
         <ng-template matStepLabel>Groups</ng-template>
         <div *ngFor="let group of arrayOfGroups, index as i">
