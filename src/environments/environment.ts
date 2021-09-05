@@ -5,8 +5,9 @@
 export const environment = {
   production: false,
   siteKey: '6LdsgHsbAAAAAE6brkFq24WQ8xqz_ceuE9Wn-IY7',
-  basePath: 'http://206.189.65.211:3001',
+  basePath: 'http://161.35.109.76:3001',
   basePath_qa: 'http://206.189.65.211:3001',
+  basePath_prod: 'http://206.189.65.211:3001',
   basePath_dev: 'http://localhost:3001',
   captcha: 'dev',
   version: 'X.YY'
