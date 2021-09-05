@@ -28,6 +28,7 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {
+    console.log(environment.version);
     this.captcha = environment.captcha === 'prod';
     console.log('captcha', this.captcha);
     this.clearStorage();
