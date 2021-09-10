@@ -50,7 +50,7 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
   selection = new SelectionModel<UserData>(true, []);
 
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  // @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   imagePath;
@@ -87,7 +87,7 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
       if (data.code === 'D200') {
         this.usersData = data.data;
         this.dataSource = new MatTableDataSource<UserData>(data.data);
-        this.dataSource.paginator = this.paginator;
+        // this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');

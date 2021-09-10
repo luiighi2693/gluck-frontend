@@ -2,7 +2,6 @@ import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {MatTableDataSource} from '@angular/material/table';
 import {SelectionModel} from '@angular/cdk/collections';
-import {MatPaginator} from '@angular/material/paginator';
 import {MatSort} from '@angular/material/sort';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
 import {ActivatedRoute, Router} from '@angular/router';
@@ -52,7 +51,7 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
   selection = new SelectionModel<UserData>(true, []);
 
 
-  @ViewChild(MatPaginator) paginator: MatPaginator;
+  // @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   imagePath;
@@ -104,7 +103,7 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
       if (data.code === 'D200') {
         this.usersData = data.data;
         this.dataSource = new MatTableDataSource<UserData>(data.data);
-        this.dataSource.paginator = this.paginator;
+        // this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
@@ -257,8 +256,10 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
 
   registerPool() {
     this.loaderValue.updateIsloading(true);
-    const {name, sport, color, matches, usersLimit, status, penalty, groups, teamsPerGroup, type, league, password,
-      rules } = this.config.value;
+    const {
+      name, sport, color, matches, usersLimit, status, penalty, groups, teamsPerGroup, type, league, password,
+      rules
+    } = this.config.value;
     const {amountInput, coinsInput, dateFinish, timeFinish, awardType, awardValue} = this.endPools.value;
     // convert all times in good format
     this.arrayOfMatches.forEach(match => {
