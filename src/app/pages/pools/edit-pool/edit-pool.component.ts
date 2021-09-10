@@ -179,7 +179,7 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
       name: ['', Validators.required],
       sport: ['', Validators.required],
       color: ['', Validators.required],
-      matches: ['', Validators.required],
+      matches: [''],
       usersLimit: ['', Validators.required],
       status: ['', Validators.required],
       penalty: ['', Validators.required],
@@ -241,6 +241,7 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
     });
     this.arrayOfMatches = this.poolData.matchesInfo;
     this.arrayOfGroups = this.poolData.groupsInfo;
+    console.log(this.arrayOfGroups);
   }
 
   resetForm(stepper) {

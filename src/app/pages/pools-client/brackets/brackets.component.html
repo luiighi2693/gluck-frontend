@@ -1,3 +1,5 @@
+<app-breadcrumb [icon]="'tournament'" [currentView]="'Ranking de Quiniela'"></app-breadcrumb>
+
 <div class="container-lg">
   <div class="row">
     <div class="col-12 text-center">
@@ -123,10 +125,12 @@
         <ng-container matColumnDef="name">
           <th class="name table-header"mat-header-cell *matHeaderCellDef> Nombre </th>
           <td class="name"mat-cell *matCellDef="let row">
-            <span>
-              <img class="me-3" [src]="imagePath + '/images/' + (row.img === '' ? 'logo.png' : row.img)" width="25" height="25" alt="">
-            </span>
-            <span>{{row.name}}</span>
+            <div class="d-flex align-items-center">
+              <div>
+                <img class="me-3" [src]="imagePath + '/images/' + (row.img === '' ? 'logo.png' : row.img)" width="25" height="25" alt="">
+              </div>
+              <p class="m-0">{{row.name}}</p>
+            </div>
           </td>
         </ng-container>
 
@@ -258,7 +262,31 @@
                 </div>
               </div>
             </div>
+            <div class="teams-group" *ngIf="round.bracket_type === 'Mejor Tercero' " style="margin-top: -12rem;">
+              <div class="col-name">
+                <h2>Mejor Tercero</h2>
+              </div>
+              <div class="team row px-3">
+                <div class="col-10 d-flex align-items-center team-info ">
+                  <img class="me-3" [src]="imagePath + '/images/' + (round.teamImage1 === '' ? 'logo.png' : round.teamImage1)" width="30" height="30" alt="">
+                  <p class="m-0">{{ round.teamName1 }}</p>
+                </div>
+                <div class="col-2 input d-flex align-items-center justify-content-center">
+                  <p class="text-white fw-bold m-0">{{ round.result_team_1 }}</p>
+                </div>
+              </div>
+              <div class="team row px-3">
+                <div class="col-10 d-flex align-items-center team-info ">
+                  <img class="me-3" [src]="imagePath + '/images/' + (round.teamImage2 === '' ? 'logo.png' : round.teamImage2)" width="30" height="30" alt="">
+                  <p class="m-0">{{ round.teamName2 }}</p>
+                </div>
+                <div class="col-2 input d-flex align-items-center justify-content-center">
+                  <p class="text-white fw-bold m-0">{{ round.result_team_2 }}</p>
+                </div>
+              </div>
+            </div>
           </div>
+
         </div>
         <div class="col-3 ">
           <div class="d-flex flex-column justify-content-center h-100">

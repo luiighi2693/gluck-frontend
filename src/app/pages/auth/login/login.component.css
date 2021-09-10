@@ -1,5 +1,5 @@
 .login__wrapper {
-  background-image: url("../../../../assets/login-cover.png");
+  background-image: url("../../../../assets/login-cover.png") !important;
   background-repeat: no-repeat;
   background-size: cover;
   /*background-attachment: fixed;*/

@@ -54,6 +54,7 @@ export class BracketsComponent implements OnInit, AfterViewInit {
       this.loaderValue.updateIsloading(false);
       this.rankingData = res.groups;
       this.bracketsData = res.brackets;
+      console.log(this.bracketsData);
       this.champion = res.champion;
 
       this.rankingData.forEach(group => {

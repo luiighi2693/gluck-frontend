@@ -41,11 +41,11 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-12 col-md-6">
-              <mat-form-field appearance="outline" class="w-100">
+            <div class="col-12 col-md-6 d-none">
+              <mat-form-field appearance="outline" class="w-100" >
                 <mat-label>Cantidad de Partidos</mat-label>
                 <input matInput type="number" placeholder="Cantidad de partidos" disabled formControlName="matches"
-                       autocomplete="off">
+                       autocomplete="off" disabled>
                 <mat-error>
                   Este Campo es <strong>Requerido.</strong>
                 </mat-error>
@@ -182,7 +182,7 @@
 
       <mat-step>
         <!--        <form [formGroup]="groups">-->
-        <ng-template matStepLabel>Groups</ng-template>
+        <ng-template matStepLabel>Grupos</ng-template>
         <div *ngFor="let group of arrayOfGroups, index as i">
           <div class="row">
             <div class="col-12">
