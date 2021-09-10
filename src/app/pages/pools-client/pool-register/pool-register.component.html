@@ -15,13 +15,13 @@
               <img [src]="match.image1 !== '' ? (this.imagePath + '/images/' + match.image1) : '../../../../assets/default-team-logo.png'" class="team-image" alt="">
               <p class="team-text">{{match.teamName1}}</p>
             </div>
-            <input type="number" [(ngModel)]="match.resultTeam1" [ngModelOptions]="{standalone: true}" class="input">
+            <input type="number" [disabled]="match.result !== 'C'" [(ngModel)]="match.resultTeam1" [ngModelOptions]="{standalone: true}" class="input">
           </div>
           <div class="col-2 d-flex justify-content-center align-items-center">
             <p style="font-size: 26px">VS</p>
           </div>
           <div class="col-5 d-flex justify-content-around align-items-center">
-            <input type="number" [(ngModel)]="match.resultTeam2" [ngModelOptions]="{standalone: true}" class="input">
+            <input type="number" [disabled]="match.result !== 'C'" [(ngModel)]="match.resultTeam2" [ngModelOptions]="{standalone: true}" class="input">
             <div class="text-center">
               <img [src]="match.image2 !== '' ? (this.imagePath + '/images/' + match.image2) : '../../../../assets/default-team-logo.png'" class="team-image" alt="">
 
@@ -55,7 +55,7 @@
                 [src]="match.image1 !== '' ? (this.imagePath + '/images/' + match.image1) : '../../../../assets/default-team-logo.png'"
                 class="team-image" alt="">
               <p class="team-text">{{match.teamName1}}</p>
-              <input type="number" [(ngModel)]="match.resultTeam1" [ngModelOptions]="{standalone: true}" class="input">
+              <input type="number" [disabled]="match.result !== 'C'" [(ngModel)]="match.resultTeam1" [ngModelOptions]="{standalone: true}" class="input">
             </div>
           </div>
           <div class="col-2 d-flex justify-content-center align-items-center">
@@ -68,7 +68,7 @@
                 class="team-image" alt="">
 
               <p class="team-text">{{match.teamName2}}</p>
-              <input type="number" [(ngModel)]="match.resultTeam2" [ngModelOptions]="{standalone: true}" class="input">
+              <input type="number" [disabled]="match.result !== 'C'" [(ngModel)]="match.resultTeam2" [ngModelOptions]="{standalone: true}" class="input">
             </div>
           </div>
         </div>
