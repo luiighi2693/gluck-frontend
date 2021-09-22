@@ -4,6 +4,7 @@ import {AdminService} from '../../../services/admin.service';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
 import {environment} from '../../../../environments/environment';
 import {LoaderProvider} from '../../../utilities/providers/loader-provider';
+import {brackets, champion} from '../../../../assets/mock/mock-brackets';
 
 @Component({
   selector: 'app-pool-register',
@@ -14,9 +15,16 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
   pool: any;
   matches: any;
   userId: any;
+  teams: any;
 
   currentPool: string | number;
   imagePath;
+  bracketsData = brackets;
+  finalQuarters = [];
+  semifinals = [];
+  final = [];
+  thirdPosition = [];
+  champion: any;
 
   constructor(
     private router: Router,
@@ -25,17 +33,73 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
     private handleAlertsProvider: HandleAlertsProvider,
     private loaderValue: LoaderProvider,
   ) {
+    this.admin.initToken();
     this.imagePath = environment.basePath;
   }
 
   ngOnInit(): void {
     this.userId = sessionStorage.getItem('id');
     this.getParam();
+    this.champion = champion;
+    this.setTeamsData();
+    this.setArrays();
   }
 
   ngAfterViewInit(): void {
     this.getPoolData();
   }
+
+  setArrays() {
+    for (let i = 0; i < 4; i++) {
+      this.finalQuarters.push({
+        team1: null, result1: 0, team2: null, result2: 0,
+      });
+    }
+
+    for (let i = 0; i < 2; i++) {
+      this.semifinals.push({
+        team1: null, result1: 0, team2: null, result2: 0,
+      });
+    }
+
+    for (let i = 0; i < 1; i++) {
+      this.final.push({
+        team1: null, result1: 0, team2: null, result2: 0,
+      });
+    }
+
+    for (let i = 0; i < 1; i++) {
+      this.thirdPosition.push({
+        team1: null, result1: 0, team2: null, result2: 0,
+      });
+    }
+
+  }
+
+  setTeamsData() {
+    this.loaderValue.updateIsloading(true);
+    this.admin.getTeams().subscribe(data => {
+      this.loaderValue.updateIsloading(false);
+      if (data.code === 'D200') {
+        console.log(data);
+        this.teams = data.data.sort((a, b) => {
+          if (a.name < b.name) {
+            return -1;
+          }
+          if (a.name > b.name) {
+            return 1;
+          }
+          return 0;
+        });
+      } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
+        this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
+        this.router.navigate(['/auth']);
+      }
+    }, error => {
+      this.handleAlertsProvider.presentGenericAlert(error);
+    });
+  }
+
 
   getParam() {
     this.route.params.subscribe(params => {
@@ -54,6 +118,7 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
           match.resultTeam2 = 0;
         });
         this.pool = res.data;
+        console.log(this.pool);
 
         this.loaderValue.updateIsloading(true);
         this.admin.getResultsByPoolAndUser(sessionStorage.getItem('id'), this.currentPool).subscribe(data2 => {
@@ -79,7 +144,12 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
   }
 
   registerValues() {
+    console.log(this.finalQuarters, this.semifinals, this.thirdPosition, this.final);
     this.loaderValue.updateIsloading(true);
+    this.matches.push(...this.finalQuarters);
+    this.matches.push(...this.semifinals);
+    this.matches.push(...this.thirdPosition);
+    this.matches.push(...this.final);
     this.pool.matchesInfo = this.matches;
     this.admin.clientRegisterToPool(this.userId, this.pool).subscribe(res => {
       this.loaderValue.updateIsloading(false);

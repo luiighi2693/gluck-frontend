@@ -13,15 +13,15 @@ export class AppComponent implements OnInit{
   }
 
   ngOnInit() {
-    this.router.events.subscribe(event => {
-      if (event instanceof NavigationStart) {
-        this.isLoaded = true;
-      } else if (event instanceof NavigationEnd) {
-        this.isLoaded = false;
-      }
-    }, error => {
-      this.isLoaded = false;
-      console.error(error);
-    });
+    // this.router.events.subscribe(event => {
+    //   if (event instanceof NavigationStart) {
+    //     this.isLoaded = true;
+    //   } else if (event instanceof NavigationEnd) {
+    //     this.isLoaded = false;
+    //   }
+    // }, error => {
+    //   this.isLoaded = false;
+    //   console.error(error);
+    // });
   }
 }
