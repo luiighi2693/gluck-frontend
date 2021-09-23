@@ -86,7 +86,7 @@
     </div>
   </div>
 
-  <div  class="row">
+  <div *ngIf="pool.league === 'Copa America'" class="row">
     <div class="col-12 text-center">
       <h1 class="yellow-title">Fase de Eliminacion</h1>
     </div>
@@ -112,7 +112,7 @@
                 </div>
                 <div class="col-2 dark-input d-flex align-items-center justify-content-center">
 <!--                  <p class="text-white fw-bold m-0">{{ round.result_team_1 }}</p>-->
-                  <input type="number" class="text-white  fw-bold m-0" [(ngModel)]="match.result1">
+                  <input type="number" class="text-white  fw-bold m-0" [(ngModel)]="match.resultTeam1">
                 </div>
               </div>
               <div class="team row px-3">
@@ -128,7 +128,7 @@
                 </div>
                 <div class="col-2 dark-input d-flex align-items-center justify-content-center">
 <!--                  <p class="text-white fw-bold m-0">{{ round.result_team_2 }}</p>-->
-                  <input type="number" class="text-white  fw-bold m-0" [(ngModel)]="match.result2">
+                  <input type="number" class="text-white  fw-bold m-0" [(ngModel)]="match.resultTeam2">
                 </div>
               </div>
             </div>
@@ -153,7 +153,7 @@
                 </div>
                 <div class="col-2 dark-input d-flex align-items-center justify-content-center">
 <!--                  <p class="text-white fw-bold m-0">{{ round.result_team_1 }}</p>-->
-                  <input type="number" class="text-white  fw-bold m-0" [(ngModel)]="match.result1">
+                  <input type="number" class="text-white  fw-bold m-0" [(ngModel)]="match.resultTeam1">
                 </div>
               </div>
               <div class="team row px-3">
@@ -169,7 +169,7 @@
                 </div>
                 <div class="col-2 dark-input d-flex align-items-center justify-content-center">
 <!--                  <p class="text-white fw-bold m-0">{{ round.result_team_2 }}</p>-->
-                  <input type="number" class="text-white  fw-bold m-0" [(ngModel)]="match.result2">
+                  <input type="number" class="text-white  fw-bold m-0" [(ngModel)]="match.resultTeam2">
                 </div>
               </div>
             </div>
@@ -194,7 +194,7 @@
                 </div>
                 <div class="col-2 dark-input d-flex align-items-center justify-content-center">
 <!--                  <p class="text-white fw-bold m-0">{{ round.result_team_1 }}</p>-->
-                  <input type="number" class="text-white  fw-bold m-0" [(ngModel)]="match.result1">
+                  <input type="number" class="text-white  fw-bold m-0" [(ngModel)]="match.resultTeam1">
                 </div>
               </div>
               <div class="team row px-3">
@@ -202,7 +202,7 @@
                   <mat-form-field appearance="outline">
                     <mat-label>Selecciona un equipo</mat-label>
                     <mat-select [(ngModel)]="match.team2">
-                      <mat-option *ngFor="let team of teams" [value]="team.id">
+                      <mat-option *ngFor="let team of teams" [value]="team.rowid">
                         {{team.name}}
                       </mat-option>
                     </mat-select>
@@ -210,7 +210,7 @@
                 </div>
                 <div class="col-2 dark-input d-flex align-items-center justify-content-center">
 <!--                  <p class="text-white fw-bold m-0">{{ round.result_team_2 }}</p>-->
-                  <input type="number" class="text-white  fw-bold m-0" [(ngModel)]="match.result2">
+                  <input type="number" class="text-white  fw-bold m-0" [(ngModel)]="match.resultTeam2">
                 </div>
               </div>
             </div>
@@ -232,7 +232,7 @@
               </div>
               <div class="col-2 dark-input d-flex align-items-center justify-content-center">
                 <!--                  <p class="text-white fw-bold m-0">{{ round.result_team_1 }}</p>-->
-                <input type="number" class="text-white  fw-bold m-0" [(ngModel)]="anotherMatch.result1">
+                <input type="number" class="text-white  fw-bold m-0" [(ngModel)]="anotherMatch.resultTeam1">
               </div>
             </div>
             <div class="team row px-3">
@@ -248,7 +248,7 @@
               </div>
               <div class="col-2 dark-input d-flex align-items-center justify-content-center">
                 <!--                  <p class="text-white fw-bold m-0">{{ round.result_team_2 }}</p>-->
-                <input type="number" class="text-white  fw-bold m-0" [(ngModel)]="anotherMatch.result2">
+                <input type="number" class="text-white  fw-bold m-0" [(ngModel)]="anotherMatch.resultTeam2">
               </div>
             </div>
           </div>

@@ -40,9 +40,10 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.userId = sessionStorage.getItem('id');
     this.getParam();
-    this.champion = champion;
     this.setTeamsData();
-    this.setArrays();
+    if (this.pool.league === 'Copa America') {
+      this.setArrays();
+    }
   }
 
   ngAfterViewInit(): void {
@@ -52,25 +53,25 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
   setArrays() {
     for (let i = 0; i < 4; i++) {
       this.finalQuarters.push({
-        team1: null, result1: 0, team2: null, result2: 0,
+        team1: null, resultTeam1: 0, team2: null, resultTeam2: 0, date: '2021-09-11', time: '00:00:00', status: 0
       });
     }
 
     for (let i = 0; i < 2; i++) {
       this.semifinals.push({
-        team1: null, result1: 0, team2: null, result2: 0,
+        team1: null, resultTeam1: 0, team2: null, resultTeam2: 0, date: '2021-09-11', time: '00:00:00', status: 0
       });
     }
 
     for (let i = 0; i < 1; i++) {
       this.final.push({
-        team1: null, result1: 0, team2: null, result2: 0,
+        team1: null, resultTeam1: 0, team2: null, resultTeam2: 0, date: '2021-09-11', time: '00:00:00', status: 0
       });
     }
 
     for (let i = 0; i < 1; i++) {
       this.thirdPosition.push({
-        team1: null, result1: 0, team2: null, result2: 0,
+        team1: null, resultTeam1: 0, team2: null, resultTeam2: 0, date: '2021-09-11', time: '00:00:00', status: 0
       });
     }
 
@@ -143,23 +144,37 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
     });
   }
 
+  validateSameResults(result) {
+    return result.teamResult1 === result.teamResult2 ? 'true' : 'false';
+  }
+
+  someValidation(validation) {
+    return validation.resultTeam1 === validation.resultTeam2;
+  }
+
   registerValues() {
     console.log(this.finalQuarters, this.semifinals, this.thirdPosition, this.final);
-    this.loaderValue.updateIsloading(true);
-    this.matches.push(...this.finalQuarters);
-    this.matches.push(...this.semifinals);
-    this.matches.push(...this.thirdPosition);
-    this.matches.push(...this.final);
-    this.pool.matchesInfo = this.matches;
-    this.admin.clientRegisterToPool(this.userId, this.pool).subscribe(res => {
-      this.loaderValue.updateIsloading(false);
-      if (res.code === 'D200') {
-        this.handleAlertsProvider.presentSnackbarSuccess('Has registrado los datos correctamente!');
-        this.router.navigate(['home/pools']);
-      } else if (res.code === 'A401' || res.code === 'A302' || res.code === 'A403') {
-        this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
-        this.router.navigate(['/auth']);
-      }
-    });
+    console.log(this.final.every(this.someValidation));
+    if (this.finalQuarters.every(this.someValidation) || this.semifinals.every(this.someValidation) || this.final.every(this.someValidation) || this.thirdPosition.every(this.someValidation)) {
+      this.handleAlertsProvider.presentGenericAlert('Has colocado un partido con dos resultados iguales "Empate", por favor cambialo...');
+      return;
+    } else {
+      this.loaderValue.updateIsloading(true);
+      this.matches.push(...this.finalQuarters);
+      this.matches.push(...this.semifinals);
+      this.matches.push(...this.thirdPosition);
+      this.matches.push(...this.final);
+      this.pool.matchesInfo = this.matches;
+      this.admin.clientRegisterToPool(this.userId, this.pool).subscribe(res => {
+        this.loaderValue.updateIsloading(false);
+        if (res.code === 'D200') {
+          this.handleAlertsProvider.presentSnackbarSuccess('Has registrado los datos correctamente!');
+          this.router.navigate(['home/pools']);
+        } else if (res.code === 'A401' || res.code === 'A302' || res.code === 'A403') {
+          this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
+          this.router.navigate(['/auth']);
+        }
+      });
+    }
   }
 }
