@@ -113,6 +113,8 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
     this.admin.getPoolForEdit(this.currentPool).subscribe(res => {
       this.loaderValue.updateIsloading(false);
       if (res.code === 'D200') {
+        // filter teams by groups
+
         this.matches = res.data.matchesInfo;
         this.matches.forEach(match => {
           match.resultTeam1 = 0;
@@ -122,6 +124,9 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
         console.log(this.pool);
 
         if (this.pool.league === 'Copa America') {
+          let allGroups = res.data.groupsInfo.map(x => x.teams).join();
+          this.teams = this.teams.filter(x => allGroups.includes(x.rowid));
+
           this.setArrays();
         }
 
