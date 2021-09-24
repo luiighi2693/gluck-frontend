@@ -41,9 +41,9 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
     this.userId = sessionStorage.getItem('id');
     this.getParam();
     this.setTeamsData();
-    if (this.pool.league === 'Copa America') {
-      this.setArrays();
-    }
+    // if (this.pool.league === 'Copa America') {
+    //   this.setArrays();
+    // }
   }
 
   ngAfterViewInit(): void {
@@ -121,15 +121,67 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
         this.pool = res.data;
         console.log(this.pool);
 
+        if (this.pool.league === 'Copa America') {
+          this.setArrays();
+        }
+
         this.loaderValue.updateIsloading(true);
         this.admin.getResultsByPoolAndUser(sessionStorage.getItem('id'), this.currentPool).subscribe(data2 => {
           this.loaderValue.updateIsloading(false);
           if (data2.code === 'D200') {
             this.matches.forEach(match => {
               const result = data2.data.find(x => (x.teamId1 === match.team1) && (x.teamId2 === match.team2));
-              match.resultTeam1 = result.teamResult1;
-              match.resultTeam2 = result.teamResult2;
+              if (result !== undefined) {
+                match.resultTeam1 = result.teamResult1;
+                match.resultTeam2 = result.teamResult2;
+              }
             });
+
+            // en algun momento se lleno los brackets
+            if (this.pool.league === 'Copa America') {
+              let allMatches = this.matches;
+              this.matches = allMatches.filter(x => x.bracketType === null);
+
+              // partidos de eliminatorias
+              if (data2.data.length > 0) {
+
+                let arrayBracket = data2.data.slice(data2.data.length - 8, data2.data.length);
+
+                // llenamos 4tos
+                this.finalQuarters = [];
+                arrayBracket.slice(0, 4).forEach(result => {
+                  this.finalQuarters.push({
+                    team1: result.teamId1, resultTeam1: result.teamResult1, team2: result.teamId2, resultTeam2: result.teamResult2, date: result.date, time: result.hour, status: 0
+                  });
+                });
+
+                // llenamos semifinal
+                this.semifinals = [];
+                arrayBracket.slice(4, 6).forEach(result => {
+                  this.semifinals.push({
+                    team1: result.teamId1, resultTeam1: result.teamResult1, team2: result.teamId2, resultTeam2: result.teamResult2, date: result.date, time: result.hour, status: 0
+                  });
+                });
+
+                // llenamos final
+                this.final = [];
+                arrayBracket.slice(6, 7).forEach(result => {
+                  this.final.push({
+                    team1: result.teamId1, resultTeam1: result.teamResult1, team2: result.teamId2, resultTeam2: result.teamResult2, date: result.date, time: result.hour, status: 0
+                  });
+                });
+
+                // llenamos tercero
+                this.thirdPosition = [];
+                arrayBracket.slice(7, 8).forEach(result => {
+                  this.thirdPosition.push({
+                    team1: result.teamId1, resultTeam1: result.teamResult1, team2: result.teamId2, resultTeam2: result.teamResult2, date: result.date, time: result.hour, status: 0
+                  });
+                });
+
+
+              }
+            }
           } else if (data2.code === 'A401' || data2.code === 'A302' || data2.code === 'A403') {
             this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
             this.router.navigate(['/auth']);
