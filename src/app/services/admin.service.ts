@@ -206,7 +206,7 @@ export class AdminService {
   }
 
   getResultsByPoolAndUser(user, pool): Observable<any> {
-    return this.http.get(`${environment.basePath}/api/result/getResultsByPoolAndUser?poolId=${pool}&userId=${user}`, {headers});
+    return this.http.get(`${environment.basePath}/api/result/getResultsByPoolAndUserWithoutSort?poolId=${pool}&userId=${user}`, {headers});
   }
 
   getResultsUserForClient(user): Observable<any> {
