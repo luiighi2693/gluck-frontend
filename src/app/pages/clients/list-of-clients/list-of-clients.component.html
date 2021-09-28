@@ -61,13 +61,15 @@
           <th class="coins" mat-header-cell *matHeaderCellDef mat-sort-header>
             <div class="d-flex align-items-center">
               <p class="m-0">Cantidad</p>
-              <mat-icon style="color: #F6DD06; font-weight: 600">local_atm</mat-icon>
+<!--              <mat-icon style="color: #F6DD06; font-weight: 600">local_atm</mat-icon>-->
+              <img src="assets/gluck-coin.png" alt="">
             </div>
           </th>
           <td class="coins" mat-cell *matCellDef="let row">
             {{row.coins}}
             <button mat-icon-button aria-label="recarga de Gluck Coins" (click)="recharge('glucks', row.rowid)">
-              <mat-icon style="color: #F6DD06; font-weight: 600">local_atm</mat-icon>
+<!--              <mat-icon style="color: #F6DD06; font-weight: 600">local_atm</mat-icon>-->
+              <img src="assets/gluck-coin.png" alt="">
             </button>
           </td>
         </ng-container>

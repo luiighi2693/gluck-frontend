@@ -16,6 +16,7 @@
   background-color: white;
   color: black;
   margin: 0 0 1rem 0;
+  border-radius: 15px;
 }
 
 
@@ -28,6 +29,8 @@
   background-color: #F6DD06;
   font-weight: bold;
   padding: .75rem;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
 }
 
 .teams {
@@ -122,11 +125,14 @@ table {
 .team-info {
   background-color: gray;
   padding: 0.5rem;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
 }
 
 .champion {
   background-color: #F6DD06;
   padding: 0.5rem;
+  border-radius: 15px;
 }
 
 .team-info > p {
@@ -136,5 +142,7 @@ table {
 .input {
   width: 30px;
   background-color: black;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
 }
 

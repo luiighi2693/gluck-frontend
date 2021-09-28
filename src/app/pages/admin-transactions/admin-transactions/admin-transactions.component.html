@@ -33,7 +33,12 @@
               <mat-icon style="color: green; font-weight: 600">attach_money</mat-icon>
             </div>
           </th>
-          <td class="amount" mat-cell *matCellDef="let row">{{row.amount}}</td>
+          <td class="amount" mat-cell *matCellDef="let row">
+            <span class="d-flex align-items-center">
+              {{row.amount}}
+              <mat-icon style="color: green; font-weight: 600">attach_money</mat-icon>
+            </span>
+          </td>
         </ng-container>
 
 
@@ -41,10 +46,16 @@
           <th class="coins" mat-header-cell *matHeaderCellDef mat-sort-header>
             <div class="d-flex align-items-center">
               <p class="m-0">Costo</p>
-              <mat-icon style="color: #F6DD06; font-weight: 600">local_atm</mat-icon>
+<!--              <mat-icon style="color: #F6DD06; font-weight: 600">local_atm</mat-icon>-->
+              <img src="assets/gluck-coin.png" alt="">
             </div>
           </th>
-          <td class="coins" mat-cell *matCellDef="let row">{{row.coins}}</td>
+          <td class="coins" mat-cell *matCellDef="let row">
+            <span>
+              {{row.coins}}
+              <img src="assets/gluck-coin.png" alt="">
+            </span>
+          </td>
         </ng-container>
 
         <!-- Fruit Column -->
