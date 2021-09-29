@@ -299,13 +299,23 @@
               </mat-form-field>
             </div>
             <div class="col-12 col-md-3">
-              <mat-form-field appearance="outline" class="w-100">
-                <mat-label>Hora</mat-label>
-                <input matInput [(ngModel)]="match.time" [ngxTimepicker]="timePicker1" placeholder="Hora"
-                       autocomplete="off">
-                <mat-icon matSuffix>access_time</mat-icon>
-                <ngx-material-timepicker #timePicker1></ngx-material-timepicker>
+
+              <mat-form-field class="pure-material-textfield-outlined timePicker w-100" appearance="outline">
+                <mat-label>
+                  Hora
+                </mat-label>
+                <input [(ngModel)]="match.time" matInput type="time">
+<!--                <mat-icon matSuffix class="material-icons-outlined mx-2 my-0">schedule</mat-icon>-->
               </mat-form-field>
+
+
+<!--              <mat-form-field appearance="outline" class="w-100">-->
+<!--                <mat-label>Hora</mat-label>-->
+<!--                <input matInput [(ngModel)]="match.time" [ngxTimepicker]="timePicker1" placeholder="Hora"-->
+<!--                       autocomplete="off">-->
+<!--                <mat-icon matSuffix>access_time</mat-icon>-->
+<!--                <ngx-material-timepicker #timePicker1></ngx-material-timepicker>-->
+<!--              </mat-form-field>-->
             </div>
             <div class="col-12 col-md-3">
               <mat-form-field appearance="outline" class="w-100">
@@ -489,15 +499,22 @@
               </mat-form-field>
             </div>
             <div class="col-12 col-md-3">
-              <mat-form-field appearance="outline" class="w-100">
-                <mat-label>Hora de Finalizacion</mat-label>
-                <input matInput formControlName="timeFinish" [ngxTimepicker]="timePicker2" placeholder="Hora de Finalizacion"
-                       autocomplete="off">
-                <mat-icon matSuffix>access_time</mat-icon>
-                <ngx-material-timepicker #timePicker2></ngx-material-timepicker>
-                <mat-error>
-                  Este Campo es <strong>Requerido.</strong>
-                </mat-error>
+<!--              <mat-form-field appearance="outline" class="w-100">-->
+<!--                <mat-label>Hora de Finalizacion</mat-label>-->
+<!--                <input matInput formControlName="timeFinish" [ngxTimepicker]="timePicker2" placeholder="Hora de Finalizacion"-->
+<!--                       autocomplete="off">-->
+<!--                <mat-icon matSuffix>access_time</mat-icon>-->
+<!--                <ngx-material-timepicker #timePicker2></ngx-material-timepicker>-->
+<!--                <mat-error>-->
+<!--                  Este Campo es <strong>Requerido.</strong>-->
+<!--                </mat-error>-->
+<!--              </mat-form-field>-->
+              <mat-form-field class="pure-material-textfield-outlined timePicker w-100" appearance="outline">
+                <mat-label>
+                  Hora
+                </mat-label>
+                <input formControlName="timeFinish" matInput type="time">
+                <!--                <mat-icon matSuffix class="material-icons-outlined mx-2 my-0">schedule</mat-icon>-->
               </mat-form-field>
             </div>
             <div class="col-12 col-md-3">

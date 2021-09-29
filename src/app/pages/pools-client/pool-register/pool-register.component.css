@@ -103,6 +103,8 @@
 .team-info {
   background-color: white;
   padding: 0.5rem;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
 }
 
 .champion {
@@ -117,6 +119,8 @@
 .dark-input {
   width: 30px;
   background-color: black;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
 }
 
 .dark-input > input {
