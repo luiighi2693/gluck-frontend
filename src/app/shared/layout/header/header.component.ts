@@ -2,6 +2,7 @@ import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Router} from '@angular/router';
 import {AuthService} from '../../../services/auth.service';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-header',
@@ -22,12 +23,14 @@ export class HeaderComponent implements OnInit {
   dateCreate: any;
   isMobile: boolean;
   userImage = '';
+  imagePath;
 
   constructor(
     private router: Router,
     private auth: AuthService,
     private handleAlertsProvider: HandleAlertsProvider,
   ) {
+    this.imagePath = environment.basePath;
   }
 
   ngOnInit(): void {

@@ -8,7 +8,7 @@
         <img src="../../../assets/logo.png" width="200px" alt="">
       </figure>
       <figure class="avatar">
-        <img [src]="userImage ? userImage : '../../../assets/default-user-example.jpg'" alt="">
+        <img [src]="userImage ? (this.imagePath + '/images/' + userImage) : '../../../assets/default-user-example.jpg'" alt="">
       </figure>
       <h2  class="welcome__message limit-text-sidenav">¡Bienvenido/a {{name}}!</h2>
       <div *ngIf="!isAdmin">

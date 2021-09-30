@@ -35,8 +35,8 @@ export class ProfileFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.id = sessionStorage.getItem('id');
-    this.getCurrentUser();
     this.createForm();
+    this.getCurrentUser();
   }
 
   private createForm() {
@@ -59,6 +59,9 @@ export class ProfileFormComponent implements OnInit {
       state: new FormControl('', Validators.required),
       city: new FormControl('', Validators.required),
       code: new FormControl('', Validators.required),
+      status_code: new FormControl(''),
+      amount: new FormControl(''),
+      coins: new FormControl(''),
       status: new FormControl('')
     });
   }

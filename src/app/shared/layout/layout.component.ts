@@ -2,6 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {LoaderProvider} from '../../utilities/providers/loader-provider';
 import {Router} from '@angular/router';
 import {EventBusService} from 'ng-simple-event-bus';
+import {environment} from '../../../environments/environment';
 
 @Component({
   selector: 'app-layout',
@@ -24,12 +25,14 @@ export class LayoutComponent implements OnInit {
   coins: any;
   money: any;
   userImage = '';
+  imagePath;
 
   constructor(
     private loaderValue: LoaderProvider,
     private router: Router,
     private event: EventBusService,
   ) {
+    this.imagePath = environment.basePath;
   }
 
   ngOnInit(): void {
