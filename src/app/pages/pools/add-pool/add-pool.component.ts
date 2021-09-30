@@ -247,12 +247,12 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
       rules
     } = this.config.value;
     const {amountInput, coinsInput, dateFinish, timeFinish, awardType, awardValue} = this.endPools.value;
-    this.arrayOfMatches.forEach(match => {
-      if (match.time.toUpperCase().includes('PM')) {
-        const newTime = match.time.toUpperCase().replace(' PM', '');
-        match.time = (Number(newTime.split(':')[0]) + 12) + ':' + newTime.split(':')[1];
-      }
-    });
+    // this.arrayOfMatches.forEach(match => {
+    //   if (match.time.toUpperCase().includes('PM')) {
+    //     const newTime = match.time.toUpperCase().replace(' PM', '');
+    //     match.time = (Number(newTime.split(':')[0]) + 12) + ':' + newTime.split(':')[1];
+    //   }
+    // });
 
     const matchesInfo = this.arrayOfMatches;
     const groupsInfo = this.arrayOfGroups;
