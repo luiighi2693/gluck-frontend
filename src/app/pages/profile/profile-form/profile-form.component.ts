@@ -44,7 +44,7 @@ export class ProfileFormComponent implements OnInit {
       rowid: new FormControl(null, Validators.required),
       type: new FormControl(null, Validators.required),
       fk_sport: new FormControl(null, Validators.required),
-      img: new FormControl(null, Validators.required),
+      img: new FormControl(''),
       ranking: new FormControl(''),
       date_Access: new FormControl(null, Validators.required),
       date_Create: new FormControl(null, Validators.required),
