@@ -23,6 +23,7 @@ export class LayoutComponent implements OnInit {
   pageWidth: any;
   coins: any;
   money: any;
+  userImage = '';
 
   constructor(
     private loaderValue: LoaderProvider,
@@ -32,6 +33,7 @@ export class LayoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.userImage = sessionStorage.getItem('img');
     this.event.on('getMoney', (payload: any) => {
       this.money = Number(this.money) + payload;
       sessionStorage.setItem('money', this.money);

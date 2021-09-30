@@ -21,6 +21,7 @@ export class HeaderComponent implements OnInit {
   @Input() isExpanded;
   dateCreate: any;
   isMobile: boolean;
+  userImage = '';
 
   constructor(
     private router: Router,
@@ -31,6 +32,7 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.isMobile = window.innerWidth < 992;
+    this.userImage = sessionStorage.getItem('img');
     this.token = sessionStorage.getItem('token');
     this.isAdmin = JSON.parse(sessionStorage.getItem('isAdmin'));
     this.name = sessionStorage.getItem('username');

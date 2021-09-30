@@ -28,7 +28,7 @@
         <button class="close-button" (click)="userOptions = false">x</button>
         <div class="col-12 text-center p-0">
           <figure class="user__options--image-wrapper">
-            <img src="../../../../assets/example-user.png" class="user__options--image" alt="example user">
+            <img [src]="userImage ? userImage : '../../../../assets/default-user-example.jpg'" class="user__options--image" alt="example user">
           </figure>
         </div>
         <div class="col-12 text-center">
