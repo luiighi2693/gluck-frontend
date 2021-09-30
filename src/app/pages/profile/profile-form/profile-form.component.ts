@@ -5,6 +5,7 @@ import {AdminService} from '../../../services/admin.service';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
 import {Router} from '@angular/router';
 import {LoaderProvider} from '../../../utilities/providers/loader-provider';
+import {environment} from '../../../../environments/environment';
 
 @Component({
   selector: 'app-profile-form',
@@ -18,6 +19,7 @@ export class ProfileFormComponent implements OnInit {
   userData = null;
   imageData = null;
   id: string;
+  imagePath;
 
   @ViewChild('inputFiles', {static: true}) inputFiles: ElementRef;
 
@@ -28,6 +30,7 @@ export class ProfileFormComponent implements OnInit {
     private loaderValue: LoaderProvider,
   ) {
     this.admin.initToken();
+    this.imagePath = environment.basePath;
   }
 
   ngOnInit(): void {
@@ -42,7 +45,7 @@ export class ProfileFormComponent implements OnInit {
       type: new FormControl(null, Validators.required),
       fk_sport: new FormControl(null, Validators.required),
       img: new FormControl(null, Validators.required),
-      ranking: new FormControl(null, Validators.required),
+      ranking: new FormControl(''),
       date_Access: new FormControl(null, Validators.required),
       date_Create: new FormControl(null, Validators.required),
       contador: new FormControl(null, Validators.required),
@@ -109,7 +112,9 @@ export class ProfileFormComponent implements OnInit {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = async () => {
-      this.imageData = reader.result;
+      const imageData = reader.result;
+      const imageName = await this.admin.uploadFile(imageData).toPromise();
+      this.updateProfileForm.get('img').setValue(imageName);
     };
   }
 
