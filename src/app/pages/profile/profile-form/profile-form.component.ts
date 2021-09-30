@@ -17,7 +17,6 @@ export class ProfileFormComponent implements OnInit {
   updateProfileForm: FormGroup;
   hide = true;
   userData = null;
-  imageData = null;
   id: string;
   imagePath;
 
@@ -73,16 +72,6 @@ export class ProfileFormComponent implements OnInit {
       if (response.code === 'D200') {
         this.userData = response.data;
         this.updateProfileForm.setValue(this.userData);
-
-        if (this.userData.img !== null) {
-          this.loaderValue.updateIsloading(true);
-          this.admin.getFile(this.userData.img).subscribe(responseImg => {
-            this.loaderValue.updateIsloading(false);
-            this.imageData = responseImg;
-          }, err => {
-            this.handleAlertsProvider.presentGenericAlert(err);
-          });
-        }
       } else if (response.code === 'A401' || response.code === 'A302' || response.code === 'A403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
         this.router.navigate(['/auth']);

@@ -42,6 +42,14 @@
           <mat-icon mat-list-icon>account_balance_wallet</mat-icon>
           <h4 mat-line>Historico de <br> Transacciones</h4>
         </mat-list-item>
+        <mat-list-item [ngClass]="{'nav__list--item--padding': isExpanded}" (click)="backdropClick()" class="sidenav__item">
+          <mat-icon mat-list-icon>school</mat-icon>
+          <h4 mat-line>Tutoriales (comming soon...)</h4>
+        </mat-list-item>
+        <mat-list-item [ngClass]="{'nav__list--item--padding': isExpanded}" (click)="backdropClick()"  class="sidenav__item">
+          <mat-icon mat-list-icon>tv</mat-icon>
+          <h4 mat-line>Gluck TV (comming soon...)</h4>
+        </mat-list-item>
       </div>
       <div *ngIf="isAdmin">
         <!--       clients-->
