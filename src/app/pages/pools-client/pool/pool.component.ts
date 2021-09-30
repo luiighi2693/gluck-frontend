@@ -14,7 +14,6 @@ import {EventBusService} from 'ng-simple-event-bus';
 
 export interface UserPool {
   name: string;
-  id: string;
   sport: string;
   status: number;
   date: string;
@@ -30,7 +29,7 @@ export interface UserPool {
 export class PoolComponent implements OnInit, AfterViewInit {
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
-  displayedColumns: string[] = ['id', 'name', 'sport', 'status', 'date', 'participants', 'remainingTime', 'opts'];
+  displayedColumns: string[] = ['name', 'sport', 'status', 'date', 'participants', 'remainingTime', 'opts'];
   dataSourceOneVsOne: MatTableDataSource<UserPool>;
   dataSourceWeekly: MatTableDataSource<UserPool>;
   dataSourceMonthly: MatTableDataSource<UserPool>;
@@ -102,6 +101,7 @@ export class PoolComponent implements OnInit, AfterViewInit {
   }
 
   registerToPool(data) {
+    console.log(data);
     this.amountSelected = data.amountInput;
     this.coinsSelected = data.coinsInput;
     const dialogRef = this.handleAlertsProvider.registerPoolDialog(
@@ -116,13 +116,14 @@ export class PoolComponent implements OnInit, AfterViewInit {
       '',
     );
     dialogRef.afterClosed().subscribe(res => {
-      if (res !== undefined && res !== null && res !== '') {
+      console.log(res);
+      if (res === null) {
         if (data.password === '' || data.password === null) {
-          if (res === '') {
+          // if (res === null) {
             this.callRegisterPool(data.id);
-          } else {
-            this.handleAlertsProvider.presentGenericAlert('Las Claves no coinciden!', 'Aviso');
-          }
+          // } else {
+          //   this.handleAlertsProvider.presentGenericAlert('Las Claves no coinciden!', 'Aviso');
+          // }
         } else {
           if (data.password !== res) {
             this.handleAlertsProvider.presentGenericAlert('Las Claves no coinciden!', 'Aviso');

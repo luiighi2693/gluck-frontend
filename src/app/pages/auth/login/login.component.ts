@@ -120,7 +120,6 @@ export class LoginComponent implements OnInit {
       });
     }
   }
-
   // if (!this.captcha){
   //   // && this.loginForm.value.recaptcha !== undefined) {
   //   const { username, password } = this.loginForm.value;

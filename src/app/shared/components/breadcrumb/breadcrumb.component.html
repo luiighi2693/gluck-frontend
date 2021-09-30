@@ -1,8 +1,8 @@
-<button mat-mini-fab class="mx-4 action-button" (click)="goBack()" *ngIf="currentRoute !== '' && isMobile">
-  <mat-icon>arrow_back</mat-icon>
-</button>
 <div class="breadcrumb-wrapper text-white m-4">
   <div class="d-flex align-items-center">
+    <button mat-mini-fab class=" action-button" (click)="goBack()" *ngIf="currentRoute !== '' && isMobile">
+      <mat-icon>arrow_back</mat-icon>
+    </button>
     <mat-icon class="mx-3">{{ icon }}</mat-icon>
     <h1 class="page-title">{{ currentView }}</h1> <span class="mt-2 mx-4 px-2 badge-account">{{ accountType }}</span>
   </div>

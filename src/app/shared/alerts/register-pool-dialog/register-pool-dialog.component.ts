@@ -41,4 +41,12 @@ export class RegisterPoolDialogComponent implements OnInit {
   ShowRules(rules: string) {
     this.handleAlertsProvider.presentRulesDialog(rules);
   }
+
+  sendPassword() {
+    if (this.data.password === null || this.data.password === '' || this.data.password === undefined) {
+      return this.data.password = null;
+    } else {
+      return this.data.password;
+    }
+  }
 }

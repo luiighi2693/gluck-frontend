@@ -54,8 +54,9 @@ export class HandleAlertsProvider {
     });
   }
 
-  registerPoolDialog(poolId: string | number, title: string, user: string, cost: string, prize: string, participants: number,
-                     image: string, rulesImage: string, password: any) {
+  registerPoolDialog(
+    poolId: string | number, title: string, user: string, cost: string, prize: string, participants: number,
+    image: string, rulesImage: string, password: any) {
     return this.dialog.open(RegisterPoolDialogComponent, {
       panelClass: 'dialog-container-custom',
       data: {poolId, title, cost, prize, participants, image, user, rulesImage, password}
