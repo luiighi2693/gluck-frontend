@@ -76,6 +76,7 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
   private updateForm() {
     this.updateUserForm.get('username').setValue(this.userData.username);
     this.updateUserForm.get('name').setValue(this.userData.name);
+    this.updateUserForm.get('password').setValue(this.userData.password);
     this.updateUserForm.get('lastname').setValue(this.userData.lastname);
     this.updateUserForm.get('email').setValue(this.userData.email);
     this.updateUserForm.get('phone').setValue(this.userData.phone);
@@ -96,6 +97,7 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
       this.loaderValue.updateIsloading(false);
       if (response.code === 'D200') {
         this.handleAlertsProvider.presentSnackbarSuccess('Se actualizo la informacion con exito!');
+        sessionStorage.setItem('img', img);
         this.router.navigate(['/admin/clients/list-of-clients']);
       } else if (response.code === 'A401' || response.code === 'A302' || response.code === 'A403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
@@ -111,8 +113,16 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = async () => {
+      console.log('inicia la lecutra');
+      this.loaderValue.updateIsloading(true);
       const imageData = reader.result;
       const imageName = await this.admin.uploadFile(imageData).toPromise();
+      if (imageName) {
+        console.log('el elemento esta cargado');
+        setTimeout(() => {
+          this.loaderValue.updateIsloading(false);
+        }, 3000);
+      }
       this.updateUserForm.get('img').setValue(imageName);
     };
   }
