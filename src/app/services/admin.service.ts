@@ -22,6 +22,10 @@ export class AdminService {
     return this.http.get(`${environment.basePath}/api/get/?model=q_user`, {headers});
   }
 
+  downloadUsers(): Observable<any> {
+    return this.http.get(`${environment.basePath}/api/download?model=q_user&filters[]=${encodeURI(JSON.stringify([]))}`, {headers});
+  }
+
   getUser(id): Observable<any> {
     return this.http.get(`${environment.basePath}/api/getOne?id=${id}&model=q_user`, {headers});
   }
