@@ -69,7 +69,7 @@
   border-radius: 25px;
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 1400px) {
   .playoffs-wrapper {
     min-width: 1200px;
   }
