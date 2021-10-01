@@ -72,6 +72,10 @@ export class ListOfClientsComponent implements OnInit, AfterViewInit {
     });
   }
 
+  download() {
+    window.open(`${environment.basePath}/api/download?model=q_user`, '_blank');
+  }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
