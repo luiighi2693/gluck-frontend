@@ -38,13 +38,14 @@ export class EditProfileComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    this.updateForm();
+
   }
 
   setUserData() {
     this.admin.getUser(this.id).subscribe(response => {
       if (response.code === 'D200') {
         this.userData = response.data;
+        this.updateForm();
       } else if (response.code === 'A401' || response.code === 'A302' || response.code === 'A403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
         this.router.navigate(['/auth']);
