@@ -6,6 +6,8 @@ import {AdminService} from '../../services/admin.service';
 import {LoaderProvider} from '../../utilities/providers/loader-provider';
 import {MatTableDataSource} from '@angular/material/table';
 import {SelectionModel} from '@angular/cdk/collections';
+import * as moment from 'moment';
+import {PeriodicElement} from '../pools-client/my-pools/my-pools.component';
 
 export interface UserData {
   rowid: string;
@@ -24,80 +26,7 @@ export interface UserData {
 })
 export class AdminComponent implements OnInit, AfterViewInit {
   emailForm: FormGroup;
-  exampleData = [
-    {
-      name: 'exampleName',
-      sport: 'exampleSpport',
-      matches: '6 (partidos)',
-      timeRemaining: '13 Dias'
-    },
-    {
-      name: 'exampleName',
-      sport: 'exampleSpport',
-      matches: '6 (partidos)',
-      timeRemaining: '13 Dias'
-    },
-    {
-      name: 'exampleName',
-      sport: 'exampleSpport',
-      matches: '6 (partidos)',
-      timeRemaining: '13 Dias'
-    },
-    {
-      name: 'exampleName',
-      sport: 'exampleSpport',
-      matches: '6 (partidos)',
-      timeRemaining: '13 Dias'
-    },
-    {
-      name: 'exampleName',
-      sport: 'exampleSpport',
-      matches: '6 (partidos)',
-      timeRemaining: '13 Dias'
-    },
-    {
-      name: 'exampleName',
-      sport: 'exampleSpport',
-      matches: '6 (partidos)',
-      timeRemaining: '13 Dias'
-    },
-    {
-      name: 'exampleName',
-      sport: 'exampleSpport',
-      matches: '6 (partidos)',
-      timeRemaining: '13 Dias'
-    },
-    {
-      name: 'exampleName',
-      sport: 'exampleSpport',
-      matches: '6 (partidos)',
-      timeRemaining: '13 Dias'
-    },
-    {
-      name: 'exampleName',
-      sport: 'exampleSpport',
-      matches: '6 (partidos)',
-      timeRemaining: '13 Dias'
-    },
-    {
-      name: 'exampleName',
-      sport: 'exampleSpport',
-      matches: '6 (partidos)',
-      timeRemaining: '13 Dias'
-    },
-    {
-      name: 'exampleName',
-      sport: 'exampleSpport',
-      matches: '6 (partidos)',
-      timeRemaining: '13 Dias'
-    },
-    {
-      name: 'exampleName',
-      sport: 'exampleSpport',
-      matches: '6 (partidos)',
-      timeRemaining: '13 Dias'
-    },
-  ];
+  exampleData = null;
 
   displayedColumns: string[] = ['username', 'email', 'opts'];
   dataSource: MatTableDataSource<UserData>;
@@ -115,11 +44,12 @@ export class AdminComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.setUsersData();
+    this.setPoolData();
     this.createForm();
   }
 
   ngAfterViewInit() {
-    this.setUsersData();
+    // this.setUsersData();
   }
 
   createForm() {
@@ -164,8 +94,56 @@ export class AdminComponent implements OnInit, AfterViewInit {
     });
   }
 
+  setPoolData() {
+    this.loaderValue.updateIsloading(true);
+    this.admin.getPoolsForAdmin().subscribe(res => {
+      this.loaderValue.updateIsloading(false);
+      if (res.code === 'D200') {
+        this.startCounter(res.pools);
+
+      } else if (res.code === 'D401' || res.code === 'D302' || res.code === 'D403') {
+        this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
+        this.router.navigate(['/auth']);
+      }
+    }, err => {
+      this.handleAlertsProvider.presentGenericAlert(err);
+    });
+  }
+
   applyFilter(event: Event) {
     const filterValue = (event.target as HTMLInputElement).value;
     this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
+
+  private startCounter(list) {
+    list.forEach(item => {
+      const eventTime = item.timeRemaining === null ? moment() : moment(item.timeRemaining);
+      const currentTime = moment();
+      const leftTime = eventTime.valueOf() - currentTime.valueOf();
+      let duration = moment.duration(leftTime, 'milliseconds');
+      setInterval(() => {
+        // Time Out check
+        if (duration.asSeconds() > 0) {
+          duration = moment.duration(duration.asSeconds() - 1, 'seconds');
+          // tslint:disable-next-line:max-line-length
+          item.timeRemaining = (duration.days() > 0 ? (duration.days() + ' dia(s) ') : '') + this.formatDate(duration.hours()) + ':' + this.formatDate(duration.minutes()) + ':' + this.formatDate(duration.seconds());
+        } else {
+          item.timeRemaining = '00:00:00';
+        }
+      }, 1000);
+    });
+    this.exampleData = list;
+  }
+
+  private formatDate(n: number) {
+    return n < 10 ? ('0' + n) : n;
+  }
+
+  getPools(pools: any, isProgress: boolean) {
+    if (isProgress) {
+      return pools.filter(x => x.result === 'IN PROCESS');
+    } else {
+      return pools.filter(x => x.result !== 'IN PROCESS');
+    }
   }
 }

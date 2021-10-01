@@ -22,8 +22,8 @@ export class AdminService {
     return this.http.get(`${environment.basePath}/api/get/?model=q_user`, {headers});
   }
 
-  downloadUsers(): Observable<any> {
-    return this.http.get(`${environment.basePath}/api/download?model=q_user&filters[]=${encodeURI(JSON.stringify([]))}`, {headers});
+  getPoolsForAdmin(): Observable<any> {
+    return this.http.get(`${environment.basePath}/api/pool/getPoolsForAdmin`, {headers});
   }
 
   getUser(id): Observable<any> {

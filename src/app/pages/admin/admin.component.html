@@ -20,7 +20,7 @@
   </div>
 
   <div class="mt-5 pt-5">
-    <div class="row">
+    <div class="row" *ngIf="exampleData !== null">
       <div class="col-12 col-xl-6 ">
         <div class="current-pools">
           <div class="current__pools--header">
@@ -31,10 +31,10 @@
             </button>
           </div>
           <div class="current__pools--content">
-            <div class="current-pool" *ngFor="let pool of exampleData, index as i">
+            <div class="current-pool" *ngFor="let pool of getPools(exampleData, true), index as i">
               <p>{{pool.name}}</p>
               <p>{{pool.sport}}</p>
-              <p>{{pool.matches}}</p>
+              <p>{{pool.matches}} (partidos)</p>
               <p class="time-remaining">
                 <mat-icon class="me-2">access_time</mat-icon>
                 {{pool.timeRemaining}}</p>
@@ -52,10 +52,10 @@
             </button>
           </div>
           <div class="current__pools--content">
-            <div class="current-pool" *ngFor="let pool of exampleData, index as i">
+            <div class="current-pool" *ngFor="let pool of getPools(exampleData, false), index as i">
               <p>{{pool.name}}</p>
               <p>{{pool.sport}}</p>
-              <p>{{pool.matches}}</p>
+              <p>{{pool.matches}} (partidos)</p>
               <p class="time-remaining">
                 <mat-icon class="me-2">access_time</mat-icon>
                 {{pool.timeRemaining}}</p>
