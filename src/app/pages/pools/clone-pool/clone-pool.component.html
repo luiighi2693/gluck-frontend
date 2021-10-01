@@ -1,4 +1,4 @@
-<app-breadcrumb [icon]="'FILE_COPY'" [currentView]="'Creacion de Quinielas (Clon)'"></app-breadcrumb>
+<app-breadcrumb [icon]="'file_copy'" [currentView]="'Creacion de Quinielas (Clon)'"></app-breadcrumb>
 
 <div class="container">
   <div class="profile__wrapper mb-3">
@@ -379,8 +379,7 @@
                 <mat-checkbox (click)="$event.stopPropagation()"
                               color="primary"
                               (change)="$event ? selection.toggle(row.rowid) : null"
-                              [checked]="selection.isSelected(row.rowid)"
-                              [disabled]="getExistInUsersSelected(row.rowid)">
+                              [checked]="selection.isSelected(row.rowid)">
                 </mat-checkbox>
               </td>
             </ng-container>
@@ -453,8 +452,7 @@
                 <mat-checkbox (click)="$event.stopPropagation()"
                               color="primary"
                               (change)="$event ? selection.toggle(row.rowid) : null"
-                              [checked]="selection.isSelected(row.rowid)"
-                              [disabled]="getExistInUsersSelected(row.rowid)">
+                              [checked]="selection.isSelected(row.rowid)">
                 </mat-checkbox>
               </td>
             </ng-container>

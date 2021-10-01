@@ -89,6 +89,7 @@ export class ProfileFormComponent implements OnInit {
       this.loaderValue.updateIsloading(false);
       if (res.code === 'D200') {
         this.handleAlertsProvider.presentSnackbarSuccess('Se actualizaron los datos con exito!');
+        sessionStorage.setItem('img', img);
         this.router.navigate(['home']);
       } else if (res.code === 'A401' || res.code === 'A302' || res.code === 'A403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
@@ -104,8 +105,16 @@ export class ProfileFormComponent implements OnInit {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = async () => {
+      console.log('inicia la carga');
+      this.loaderValue.updateIsloading(true);
       const imageData = reader.result;
       const imageName = await this.admin.uploadFile(imageData).toPromise();
+      if (imageName) {
+        console.log('el elemento esta cargado');
+        setTimeout(() => {
+          this.loaderValue.updateIsloading(false);
+        }, 3000);
+      }
       this.updateProfileForm.get('img').setValue(imageName);
     };
   }

@@ -16,6 +16,12 @@ export class PoolCategoryComponent implements OnInit {
       disabled: false,
     },
     {
+      name: 'Champions League',
+      id: 'champions-league',
+      img: '../../../../assets/uefa-champions-league.png',
+      disabled: false,
+    },
+    {
       name: 'La Liga',
       id: 'la-liga',
       img: '../../../../assets/la-liga.png',
@@ -45,12 +51,7 @@ export class PoolCategoryComponent implements OnInit {
       img: '../../../../assets/ligue-1.png',
       disabled: false,
     },
-    {
-      name: 'Champions League',
-      id: 'champions-league',
-      img: '../../../../assets/uefa-champions-league.png',
-      disabled: true,
-    },
+
   ];
 
   constructor(
