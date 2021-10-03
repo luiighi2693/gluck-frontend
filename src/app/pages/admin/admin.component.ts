@@ -145,7 +145,7 @@ export class AdminComponent implements OnInit, AfterViewInit {
     if (isProgress) {
       return pools.filter(x => x.result === 'IN PROCESS');
     } else {
-      return pools.filter(x => x.result !== 'IN PROCESS');
+      return pools.filter(x => x.result === 'FINISHED');
     }
   }
 
