@@ -8,6 +8,7 @@ import { FooterComponent } from './layout/footer/footer.component';
 import { LoaderComponent } from './loader/loader.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { LegalAgreementComponent } from './components/legal-agreement/legal-agreement.component';
+import { MaxLengthPipe } from './pipes/filter-pools.pipe';
 
 
 @NgModule({
@@ -18,12 +19,13 @@ import { LegalAgreementComponent } from './components/legal-agreement/legal-agre
     LoaderComponent,
     BreadcrumbComponent,
     LegalAgreementComponent,
+    MaxLengthPipe,
   ],
   imports: [
     CommonModule,
     MaterialModule,
     RouterModule,
   ],
-  exports: [FooterComponent, LoaderComponent, BreadcrumbComponent]
+  exports: [FooterComponent, LoaderComponent, BreadcrumbComponent, MaxLengthPipe]
 })
 export class SharedModule { }

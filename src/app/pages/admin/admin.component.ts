@@ -49,7 +49,9 @@ export class AdminComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    // this.setUsersData();
+    setTimeout(() => {
+      console.log(this.exampleData)
+    }, 5000)
   }
 
   createForm() {
@@ -143,7 +145,13 @@ export class AdminComponent implements OnInit, AfterViewInit {
     if (isProgress) {
       return pools.filter(x => x.result === 'IN PROCESS');
     } else {
-      return pools.filter(x => x.result !== 'IN PROCESS');
+      return pools.filter(x => x.result === 'FINISHED');
+    }
+  }
+
+  catchSport(sport: any) {
+    if (sport === 'Futbol') {
+      return 'assets/soccer-ball-variant.svg';
     }
   }
 }

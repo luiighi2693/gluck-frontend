@@ -159,3 +159,10 @@
   max-height: 400px;
   overflow-y: auto;
 }
+
+.pool-status {
+  width: 20px;
+  border-radius: 15px;
+  height: 8px;
+  content: '';
+}
