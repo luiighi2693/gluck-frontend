@@ -77,12 +77,12 @@
               <button mat-flat-button aria-label="enter pool" class="action-button mb-1" (click)="goToEditResult(row.id)">
                 Editar Resultados
               </button>
-              <button mat-flat-button aria-label="see Ranking" class="action-button" (click)="goToRanking(row.id)">
+              <button mat-flat-button aria-label="see Ranking" class="action-button" (click)="registerToPool(row.id, row.name)">
                 Ver Ranking
               </button>
-              <button mat-flat-button aria-label="view pool participants" class="action-button" (click)="registerToPool(row.id, row.name)">
-                Visualizar
-              </button>
+<!--              <button mat-flat-button aria-label="view pool participants" class="action-button" (click)="registerToPool(row.id, row.name)">-->
+<!--                Visualizar-->
+<!--              </button>-->
             </td>
           </ng-container>
 
@@ -174,12 +174,12 @@
               <button mat-flat-button aria-label="enter pool" class="action-button mb-1" (click)="goToEditResult(row.id)">
                 Editar Resultados
               </button>
-              <button mat-flat-button aria-label="see Ranking" class="action-button" (click)="goToRanking(row.id)">
+              <button mat-flat-button aria-label="see Ranking" class="action-button" (click)="registerToPool(row.id, row.name)">
                 Ver Ranking
               </button>
-              <button mat-flat-button aria-label="enter pool" class="action-button" (click)="registerToPool(row.id, row.name)">
-                Visualizar
-              </button>
+<!--              <button mat-flat-button aria-label="enter pool" class="action-button" (click)="registerToPool(row.id, row.name)">-->
+<!--                Visualizar-->
+<!--              </button>-->
             </td>
           </ng-container>
 
@@ -268,12 +268,12 @@
           <ng-container matColumnDef="opts">
             <th class="opts" mat-header-cell *matHeaderCellDef mat-sort-header></th>
             <td class="opts" mat-cell *matCellDef="let row">
-              <button mat-flat-button aria-label="see Ranking" class="action-button" (click)="goToRanking(row.id)">
+              <button mat-flat-button aria-label="see Ranking" class="action-button" (click)="registerToPool(row.id, row.name)">
                 Ver Ranking
               </button>
-              <button mat-flat-button aria-label="enter pool" class="action-button" (click)="registerToPool(row.id, row.name)">
-                Visualizar
-              </button>
+<!--              <button mat-flat-button aria-label="enter pool" class="action-button" (click)="registerToPool(row.id, row.name)">-->
+<!--                Visualizar-->
+<!--              </button>-->
             </td>
           </ng-container>
 

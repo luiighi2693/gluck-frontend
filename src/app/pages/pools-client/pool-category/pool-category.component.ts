@@ -28,13 +28,13 @@ export class PoolCategoryComponent implements OnInit {
       disabled: false,
     },
     {
-      name: 'Premiere League',
+      name: 'Premier League',
       id: 'premiere-league',
       img: '../../../../assets/premier-league.png',
       disabled: false,
     },
     {
-      name: 'Bounders Liga',
+      name: 'Bundes Liga',
       id: 'bounders-liga',
       img: '../../../../assets/bundesliga.png',
       disabled: false,
