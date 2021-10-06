@@ -210,18 +210,34 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
   }
 
   registerValues() {
-    console.log(this.finalQuarters, this.semifinals, this.thirdPosition, this.final);
-    console.log(this.final.every(this.someValidation));
-    if (this.finalQuarters.every(this.someValidation) || this.semifinals.every(this.someValidation) || this.final.every(this.someValidation) || this.thirdPosition.every(this.someValidation)) {
-      this.handleAlertsProvider.presentGenericAlert('Has colocado un partido con dos resultados iguales "Empate", por favor cambialo...');
-      return;
+    if (this.pool.league === 'Copa America') {
+      console.log(this.finalQuarters, this.semifinals, this.thirdPosition, this.final);
+      console.log(this.final.every(this.someValidation));
+      if (this.finalQuarters.every(this.someValidation) || this.semifinals.every(this.someValidation) || this.final.every(this.someValidation) || this.thirdPosition.every(this.someValidation)) {
+        this.handleAlertsProvider.presentGenericAlert('Has colocado un partido con dos resultados iguales "Empate", por favor cambialo...');
+        return;
+      } else {
+        this.loaderValue.updateIsloading(true);
+        this.matches.push(...this.finalQuarters);
+        this.matches.push(...this.semifinals);
+        this.matches.push(...this.thirdPosition);
+        this.matches.push(...this.final);
+        this.pool.matchesInfo = this.matches;
+        this.admin.clientRegisterToPool(this.userId, this.pool).subscribe(res => {
+          this.loaderValue.updateIsloading(false);
+          if (res.code === 'D200') {
+            this.handleAlertsProvider.presentSnackbarSuccess('Has registrado los datos correctamente!');
+            this.router.navigate(['home/pools']);
+          } else if (res.code === 'A401' || res.code === 'A302' || res.code === 'A403') {
+            this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
+            this.router.navigate(['/auth']);
+          }
+        });
+      }
     } else {
       this.loaderValue.updateIsloading(true);
-      this.matches.push(...this.finalQuarters);
-      this.matches.push(...this.semifinals);
-      this.matches.push(...this.thirdPosition);
-      this.matches.push(...this.final);
       this.pool.matchesInfo = this.matches;
+
       this.admin.clientRegisterToPool(this.userId, this.pool).subscribe(res => {
         this.loaderValue.updateIsloading(false);
         if (res.code === 'D200') {
