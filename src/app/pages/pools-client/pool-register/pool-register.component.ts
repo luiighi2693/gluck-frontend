@@ -121,7 +121,7 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
           match.resultTeam2 = 0;
         });
         this.pool = res.data;
-        console.log(this.pool);
+        console.log('pool', this.pool);
 
         if (this.pool.league === 'Copa America') {
           let allGroups = res.data.groupsInfo.map(x => x.teams).join();

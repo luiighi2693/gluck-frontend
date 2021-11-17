@@ -11,8 +11,8 @@
     <div class="col-3 p-3 text-center d-flex align-items-center justify-content-center "><h1 class="m-0 yellow-panel-header">GOLES ACERTADOS</h1></div>
   </div>
   <div class="row panel mb-3 d-none d-sm-flex" *ngFor="let item of data" (click)="goToOtherResults(item.userID, item.username)" style="cursor: pointer;">
-    <div class="col-1 d-flex justify-content-center align-items-center"><h1 class="m-0 user-stats">{{item.userID}}</h1></div>
-    <div class="col-5  d-flex justify-content-start align-items-center border-right">
+<!--    <div class="col-1 d-flex justify-content-center align-items-center"><h1 class="m-0 user-stats">{{item.userID}}</h1></div>-->
+    <div class="col-6  d-flex justify-content-start align-items-center border-right">
       <img [src]="(item.img === '' ? '../../../../assets/example-user.png' : imagePath + '/images/' + item.img)" class="user-image me-3 me-lg-0" alt="user image">
       <h1 class="mx-lg-5 mb-0 user-stats">{{item.name}}</h1></div>
     <div class="col-3 d-flex justify-content-center align-items-center border-right"><h1 class="m-0 user-stats">{{item.resultado}}</h1>

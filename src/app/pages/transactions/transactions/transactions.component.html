@@ -58,7 +58,7 @@
         <!-- Fruit Column -->
         <ng-container matColumnDef="date_Create">
           <th class="date" mat-header-cell *matHeaderCellDef mat-sort-header> Fecha </th>
-          <td class="date" mat-cell *matCellDef="let row"> {{row.date_Create}} </td>
+          <td class="date" mat-cell *matCellDef="let row"> {{row.date_Create | zuluDateTransform}} </td>
         </ng-container>
 
 

@@ -9,6 +9,7 @@ import { LoaderComponent } from './loader/loader.component';
 import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.component';
 import { LegalAgreementComponent } from './components/legal-agreement/legal-agreement.component';
 import { MaxLengthPipe } from './pipes/filter-pools.pipe';
+import { ZuluDateTransformPipe } from './pipes/zulu-date-transform.pipe';
 
 
 @NgModule({
@@ -20,12 +21,13 @@ import { MaxLengthPipe } from './pipes/filter-pools.pipe';
     BreadcrumbComponent,
     LegalAgreementComponent,
     MaxLengthPipe,
+    ZuluDateTransformPipe,
   ],
   imports: [
     CommonModule,
     MaterialModule,
     RouterModule,
   ],
-  exports: [FooterComponent, LoaderComponent, BreadcrumbComponent, MaxLengthPipe]
+  exports: [FooterComponent, LoaderComponent, BreadcrumbComponent, MaxLengthPipe, ZuluDateTransformPipe]
 })
 export class SharedModule { }

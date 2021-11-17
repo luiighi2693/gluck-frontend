@@ -25,7 +25,7 @@ export interface PeriodicElement {
 export class MyPoolsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
-  displayedColumns: string[] = ['id', 'name', 'dollarPrice', 'gCoinPrice', 'prize', 'participants', 'remainingTime', 'opts'];
+  displayedColumns: string[] = [ 'name', 'dollarPrice', 'gCoinPrice', 'prize', 'participants', 'remainingTime', 'opts'];
 
   dataSourceRegistered = new MatTableDataSource<PeriodicElement>();
   dataSourceProgress = new MatTableDataSource<PeriodicElement>();

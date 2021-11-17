@@ -31,7 +31,7 @@
           <!-- Progress Column -->
           <ng-container matColumnDef="name">
             <th class="pool" mat-header-cell *matHeaderCellDef mat-sort-header> Nombre</th>
-            <td class="pool" mat-cell *matCellDef="let row"> {{row.name}} </td>
+            <td class="pool" (click)="goToEditResults(row.id)" mat-cell *matCellDef="let row"> {{row.name}} </td>
           </ng-container>
 
           <!-- Name Column -->
