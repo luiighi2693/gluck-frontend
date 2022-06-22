@@ -1,0 +1,25 @@
+.panel {
+  background-color: lightgray;
+  color: black;
+  border-radius: 25px;
+  padding: .5rem;
+}
+
+.image {
+  width: 35px;
+  height: 35px;
+  border-radius: 50px;
+}
+
+.participants-dialog {
+  width: 400px;
+}
+
+@media screen and (max-width: 560px) {
+  .participants-dialog {
+    width: 100%;
+  }
+  .panel {
+    padding: 0;
+  }
+}

@@ -1,0 +1,12 @@
+<app-breadcrumb [currentView]="'Categorias'" [icon]="'business_center'"></app-breadcrumb>
+
+<div class="container text-white">
+  <div class="row">
+    <div class="col-12 col-lg-6 d-flex align-items-center flex-column mb-5" *ngFor="let pool of pools">
+      <h1>{{pool.name}}</h1>
+      <img [ngClass]="pool.disabled
+       ? 'image-disabled'
+       : 'pool-image'" (click)="!pool.disabled ? goToCategory(pool.value) : null" [src]="pool.img" alt="">
+    </div>
+  </div>
+</div>

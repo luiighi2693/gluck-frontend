@@ -1,0 +1,156 @@
+.header {
+  background-color: #000;
+  color: white;
+  padding: 0.5rem 0;
+}
+
+@media screen and (max-width: 990px) {
+  .header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+  }
+
+  .header-helper  {
+    margin-bottom: 8rem;
+  }
+}
+
+.notification__button {
+  margin: 10px;
+  color: white;
+}
+
+.toggle__button {
+  margin: 10px;
+  color: #F6DD06;
+}
+
+.profile__options {
+  display: flex;
+  align-items: center;
+  padding: 0 1rem;
+}
+
+.profile__options:hover {
+  color: #F6DD06;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 450px) {
+  .profile__options {
+    flex-direction: column;
+  }
+}
+
+.user__options {
+  background-color: white;
+  color: black;
+  position: absolute;
+  top: 6%;
+  right: 1%;
+  max-width: 300px;
+  max-height: 300px;
+  width: 100%;
+  z-index: 100;
+}
+
+.user__options--image {
+  max-width: 200px;
+  max-height: 200px;
+  width: 75%;
+  height: auto;
+  border-radius: 100px;
+  border: 3px solid #333232;
+  object-fit: cover;
+}
+
+.title {
+  font-size: 22px;
+}
+
+
+.black-background {
+  background-color: #333232;
+  color: white;
+  border: 1px solid white;
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
+}
+
+.white-background {
+  background-color: white;
+}
+
+.user__options--buttons {
+  border-bottom: 1px solid black;
+  border-left: 1px solid black;
+  border-right: 1px solid black;
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+
+.close-button {
+  width: 1.5rem;
+  text-align: center;
+  padding: 0;
+  border: none;
+  border-radius: 45px;
+  right: -7px;
+  top: 4px;
+  position: absolute;
+  background-color: #f44336;
+  color: white;
+  font-weight: bold;
+}
+
+.coins {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  margin: 0 1rem;
+}
+
+.coins > p {
+  display: flex;
+  align-items: center;
+  color: #F6DD06;
+  margin: 0;
+}
+
+.coins > h5 {
+  margin: 0;
+}
+
+.money {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.money > p {
+  display: flex;
+  align-items: center;
+  color: green;
+  margin: 0;
+}
+
+.money > h5 {
+  margin: 0;
+}
+
+.recharge-button {
+  border-radius: 25px;
+  color: black;
+  background-color: #69fb06;
+  padding: 0 1rem;
+}
+
+@media screen and (max-width: 450px) {
+  .recharge-button {
+    padding: 0;
+    font-size: 12px;
+  }
+}
+

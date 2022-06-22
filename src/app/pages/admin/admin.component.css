@@ -1,0 +1,168 @@
+.home__banner--item {
+  background-color: #fff;
+  color: #000000;
+  font-size: 22px;
+  font-weight: 500;
+  padding: 4rem 0;
+  margin-bottom: 1rem;
+  border-radius: 25px;
+  border: 1px solid #333232;
+}
+
+.home__banner--item:hover, .home__banner--item:focus {
+  color: #F6DD06;
+  background-color: black;
+  cursor: pointer;
+}
+
+.main__banner--text {
+  background-color: white;
+  text-align: center;
+  padding: 4rem;
+  margin: 1rem 0;
+}
+
+.main__banner--text > h1 {
+  font-size: 42px;
+  font-weight: bold;
+}
+
+.main__banner--image {
+  max-width: 100%;
+  min-height: 250px;
+  height: auto;
+  border: 10px solid white;
+}
+
+.text-right {
+  text-align: right;
+}
+
+.home__options--item {
+  background-color: lightgray;
+  margin: 1rem;
+}
+
+.home__link {
+  margin: 0;
+}
+
+.home__link:hover {
+  color: #F6DD06;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.action-button {
+  color: black;
+  background-color: #F6DD06;
+}
+
+.action-button:hover {
+  color: #F6DD06;
+  background-color: black;
+}
+.current-pools {
+  background-color: white;
+  color: black;
+  min-height: 300px;
+  padding: 1rem;
+}
+
+.current__pools--header {
+  display: flex;
+  justify-content: space-between;
+}
+
+::ng-deep .tox-toolbar {
+  flex-wrap: wrap !important;
+}
+
+@media screen and (max-width: 450px){
+  .current__pools--header {
+    flex-direction: column;
+    text-align: center;
+    justify-content: center;
+  }
+  .current__pools--content {
+    height: auto !important;
+    overflow-y: hidden !important;
+  }
+  .current-pool {
+    flex-direction: column;
+  }
+  .current-pool > p {
+    margin: 0.5rem 0 !important;
+  }
+}
+.other-pools {
+  background-color: white;
+  color: black;
+  min-height: 300px;
+  padding: 1rem;
+}
+
+.map-widget {
+  background-color: white;
+  color: black;
+  min-height: 700px;
+  padding: 1rem;
+  position: relative;
+}
+
+.email-widget {
+  min-height: 500px;
+  background-color: white;
+  color: black;
+  padding: 1rem;
+}
+
+.current-pool {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  background-color: lightgray;
+  margin: 0.5rem 0;
+  padding: 0.25rem 1rem;
+  border-radius: 15px;
+}
+
+.current-pool > p {
+  margin: 0;
+}
+
+.current__pools--content {
+  height: 500px;
+  overflow-y: auto;
+  margin-top: 0.5rem;
+}
+
+.time-remaining {
+  background-color: green;
+  color: white;
+  font-size: 12px;
+  padding: .3rem 1rem;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+}
+
+
+@media (max-width: 768px ) {
+  .home__banner--item {
+    max-width: 20rem;
+    margin: 1rem auto;
+  }
+}
+
+.users-selection-table {
+  max-height: 400px;
+  overflow-y: auto;
+}
+
+.pool-status {
+  width: 20px;
+  border-radius: 15px;
+  height: 8px;
+  content: '';
+}

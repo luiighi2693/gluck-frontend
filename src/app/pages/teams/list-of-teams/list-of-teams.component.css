@@ -1,0 +1,113 @@
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+
+.id {
+  width: 3%;
+}
+
+.status {
+  width: 5%;
+}
+
+.sport {
+  width: 6%;
+}
+
+.name {
+  width: 20%;
+}
+
+.image-cell {
+  width: 5%;
+}
+
+.shield {
+  width: 7%;
+}
+
+.lastLogin {
+  width: 10%;
+}
+
+.opts {
+  width: 7%;
+}
+
+.image {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+}
+
+.listOf__users--wrapper {
+  background-color: white;
+  color: black;
+  padding: 2rem;
+  border-radius: 15px;
+  margin-bottom: 1rem;
+  min-height: 700px;
+}
+
+@media screen and (max-width: 990px){
+  .listOf__users--wrapper {
+    min-width: 1200px;
+  }
+}
+
+.active {
+  /* padding: 0.5rem; */
+  color: white;
+  background-color: #4caf50;
+  border-radius: 15px;
+  text-align: center;
+  width: 50%;
+  font-size: 12px;
+}
+
+.inactive {
+  /* padding: 0.5rem; */
+  color: white;
+  background-color: red;
+  border-radius: 15px;
+  text-align: center;
+  width: 50%;
+  font-size: 12px;
+}
+
+.limit-text {
+  inline-size: 230px;
+  overflow-wrap: break-word;
+}
+
+
+.home__link:hover {
+  color: #F6DD06;
+  cursor: pointer;
+}
+
+.badge {
+  color: black;
+  background-color: #F6DD06;
+  border: 1px solid black;
+  border-radius: 15px;
+}
+
+.add-user {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+}
+
+.add-user:hover {
+  color: #F6DD06;
+  background-color: #333232;
+  border-radius: 15px;
+  cursor: pointer;
+}

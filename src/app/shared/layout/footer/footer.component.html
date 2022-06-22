@@ -1,0 +1,29 @@
+<div class="footer-helper" *ngIf="currentRoute !== '/auth' && currentRoute !== '/auth/register'"></div>
+<!--<div class="footer" [ngClass]="currentRoute !== '/auth' ? 'footer-static' : ''">-->
+<div class="footer" [ngClass]="{'footer-static' : currentRoute !== '/auth' && currentRoute !== '/auth/register'}">
+  <div class="footer__options row">
+    <div class="footer__options--item col-12 my-3 text-center">
+      <a (click)="goToLegalAgreement()" class="email">Terminos y Condiciones Legales</a>
+    </div>
+    <div class="footer__options--item col col-md-6 text-center">
+      <h1>Contact us</h1>
+      <a href="" class="email">
+        info@getgluck.com
+      </a>
+    </div>
+    <div class="footer__options--item col col-md-6 text-center">
+      <h1>Social</h1>
+      <div class="d-flex align-items-center justify-content-center">
+        <a href="https://www.instagram.com/getgluck/" target="_blank">
+          <img src="../../../../assets/instagram.png" class="social__media--icon" alt="">
+        </a>
+        <a href="https://www.facebook.com/getgluck" target="_blank">
+          <img src="../../../../assets/facebook.png" class="social__media--icon" alt="">
+        </a>
+        <a href="https://wa.me/13524449978?text=Hola! Quiero recargar algunos Glucks..." target="_blank">
+          <img src="../../../../assets/whatsapp.png" class="social__media--icon" alt="">
+        </a>
+      </div>
+    </div>
+  </div>
+</div>

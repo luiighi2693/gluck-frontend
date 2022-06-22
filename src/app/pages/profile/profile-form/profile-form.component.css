@@ -1,0 +1,51 @@
+.profile__wrapper {
+  background-color: white;
+  color: black;
+  padding: 2rem;
+  border-radius: 15px;
+}
+
+.avatar {
+  max-width: 200px;
+  max-height: 200px;
+  width: 75%;
+  height: auto;
+  border-radius: 100px;
+  border: 3px solid #333232;
+  object-fit: cover;
+}
+
+.avatar__wrapper {
+  text-align: center;
+  position: relative;
+}
+
+.avatar__button {
+  position: absolute;
+  bottom: 0;
+  left: 55%;
+  background-color: gray;
+}
+
+.dual__input--item {
+  width: 100% !important;
+}
+
+.unique__input--item {
+  width: 100% !important;
+}
+
+.submit {
+  background-color: #F6DD06;
+  color: black;
+  font-size: 20px;
+  padding: 0.5rem 4rem;
+}
+
+@media screen and (max-width: 660px) {
+  .submit {
+    padding: 0.5rem 2rem;
+    font-size: 16px;
+  }
+}
+

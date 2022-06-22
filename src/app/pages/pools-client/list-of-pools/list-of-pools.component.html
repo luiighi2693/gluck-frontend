@@ -1,0 +1,35 @@
+<app-breadcrumb [currentView]="'Lista de Quinielas'" [icon]="'list'"></app-breadcrumb>
+
+<div class="row text-white mx-3">
+  <div class="col-12 col-md-6 mb-4 p-4"  *ngFor="let pool of pools">
+    <div class="p-4" [style.backgroundColor]="pool.color">
+      <div class="row">
+        <div class="col-9">
+          <div class="d-flex mb-3">
+            <button mat-flat-button color="primary" class="mx-3">Reglas</button>
+            <button mat-flat-button color="primary">Participantes</button>
+          </div>
+          <h1>{{pool.name}}</h1>
+          <h3>{{pool.sport ? pool.sport.name : 'Sin Deporte'}}</h3>
+          <p>{{pool.matches.length}} (Partidos)</p>
+        </div>
+        <div class="col-3 text-center">
+          <mat-icon class="calendar-icon">calendar_today</mat-icon>
+        </div>
+      </div>
+      <div class="col-12 text-center password" *ngIf="!pool.subcribed">
+        <input class="input" type="password" [(ngModel)]="pool.passwordMatch" [ngModelOptions]="{standalone: true}"
+               (keyup.enter)="registerPool(pool)" placeholder="Clave de Quiniela">
+        <button class="send-button" mat-mini-fab (click)="registerPool(pool)">
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </div>
+      <div class="col-12 text-center password" *ngIf="pool.subcribed">
+        <span>Editar Resultados</span>
+        <button class="send-button" mat-mini-fab (click)="goToEditResults(pool.rowid)">
+          <mat-icon>arrow_forward</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

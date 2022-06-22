@@ -1,0 +1,128 @@
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+td, th {
+  width: 15%;
+}
+
+.id {
+  width: 15%;
+}
+
+.status {
+  width: 10%;
+}
+
+.username {
+  width: 10%;
+}
+
+.game {
+  width: 25%;
+}
+
+.score {
+  width:10%;
+}
+
+.userResults {
+  width: 32.5%;
+}
+
+.finalResults {
+  width: 32.5%;
+}
+
+.listOf__users--wrapper {
+  background-color: white;
+  color: black;
+  padding: 2rem;
+  border-radius: 15px;
+  margin-bottom: 1rem;
+  min-height: 700px;
+}
+
+@media screen and (max-width: 990px){
+  .listOf__users--wrapper {
+    min-width: 1200px;
+  }
+}
+
+.active {
+  padding: 0.5rem;
+  color: white;
+  background-color: #4caf50;
+  border-radius: 15px;
+  text-align: center;
+  width: 75%;
+  letter-spacing: 1px;
+}
+
+.inactive {
+  padding: 0.5rem;
+  color: white;
+  background-color: red;
+  border-radius: 15px;
+  text-align: center;
+  width: 75%;
+  letter-spacing: 1px;
+}
+
+.home__link:hover {
+  color: #F6DD06;
+  cursor: pointer;
+}
+
+.badge {
+  color: black;
+  background-color: #F6DD06;
+  border: 1px solid black;
+  border-radius: 15px;
+}
+
+.add-user {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem;
+}
+
+.add-user:hover {
+  color: #F6DD06;
+  background-color: #333232;
+  border-radius: 15px;
+  cursor: pointer;
+}
+
+.score-goals {
+  border: 1px solid black;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: bolder;
+  font-size: 16px;
+  /*background-color: #333232;*/
+  /*color: white;*/
+}
+
+.team-1 {
+  padding-right: 1rem;
+}
+.team-2 {
+  padding-left: 1rem;
+}
+
+.total {
+  font-size: 18px;
+}
+
+.team-image {
+  max-width: 4rem;
+}

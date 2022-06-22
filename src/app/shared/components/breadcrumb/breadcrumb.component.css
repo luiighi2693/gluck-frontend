@@ -1,0 +1,38 @@
+.home__link:hover {
+  color: #F6DD06;
+  cursor: pointer;
+}
+
+.breadcrumb-wrapper {
+  display: flex;
+  justify-content: space-between;
+}
+
+@media screen and (max-width: 768px) {
+  .breadcrumb-wrapper {
+    flex-direction: column;
+    justify-content: start;
+  }
+}
+
+.badge-account {
+  color: black;
+  background-color: #F6DD06;
+  border: 1px solid black;
+  border-radius: 15px;
+}
+
+.page-title {
+  margin: 0;
+}
+
+@media screen and (max-width: 450px) {
+  .page-title {
+    font-size: 16px;
+  }
+}
+
+.action-button {
+  color: black;
+  background-color: #F6DD06;
+}

@@ -1,0 +1,203 @@
+<app-breadcrumb [icon]="'home'" [currentView]="'Inicio'"></app-breadcrumb>
+
+<div class="container mb-4">
+  <div class="row text-center">
+    <div class="col-12 col-md-4">
+      <div class="home__banner--item" routerLink="pools/list-of-pools">
+        Quinielas Disponibles
+      </div>
+    </div>
+    <div class="col-12 col-md-4">
+      <div class="home__banner--item" routerLink="clients/list-of-clients">
+        Usuarios Activos
+      </div>
+    </div>
+    <div class="col-12 col-md-4">
+      <div class="home__banner--item" routerLink="calendar">
+        Calendario
+      </div>
+    </div>
+  </div>
+
+  <div class="mt-5 pt-5">
+    <div class="row" *ngIf="exampleData !== null">
+      <div class="col-12 col-xl-6 ">
+        <div class="current-pools">
+          <div class="current__pools--header">
+            <h2>Qunielas en Proceso</h2>
+            <button mat-flat-button class="action-button" routerLink="/admin/pools/add-pool">
+              <mat-icon>add</mat-icon>
+              Agregar Quiniela
+            </button>
+          </div>
+          <div class="current__pools--content">
+            <div class="current-pool" *ngFor="let pool of getPools(exampleData, true), index as i">
+              <p [matTooltip]="pool.name">{{pool.name | maxLength}}</p>
+              <img [matTooltip]="pool.sport" [src]="catchSport(pool.sport)" width="25" alt="">
+              <p>{{pool.matches}} (partidos)</p>
+              <p class="time-remaining">
+                <mat-icon class="me-2">access_time</mat-icon>
+                {{pool.timeRemaining}}</p>
+<!--              <span class="pool-status" [matTooltip]="pool.result" [ngStyle]="-->
+<!--              {'background-color': (pool.result === 'IN PROCESS')-->
+<!--              ? '#F6DD06'-->
+<!--              : (pool.result === 'FINISHED')-->
+<!--              ? 'red'-->
+<!--              : (pool.result === 'FOR START'-->
+<!--              ? 'gray'-->
+<!--              : 'none')}">-->
+<!--              </span>-->
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-12 col-xl-6 mt-5 mt-xl-0">
+        <div class="other-pools">
+          <div class="current__pools--header">
+            <h2>Quinielas Finalizadas</h2>
+            <button mat-flat-button class="action-button" routerLink="/admin/pools/list-of-pools">
+              <mat-icon>remove_red_eye</mat-icon>
+              Ver Lista de Quinielas
+            </button>
+          </div>
+          <div class="current__pools--content">
+            <div class="current-pool" *ngFor="let pool of getPools(exampleData, false), index as i">
+              <p [matTooltip]="pool.name">{{pool.name | maxLength}}</p>
+              <img [matTooltip]="pool.sport" [src]="catchSport(pool.sport)" width="25" alt="">
+              <p>{{pool.matches}} (partidos)</p>
+              <p class="time-remaining">
+                <mat-icon class="me-2">access_time</mat-icon>
+                {{pool.timeRemaining}}</p>
+<!--              <span class="pool-status" [matTooltip]="pool.result" [ngStyle]="-->
+<!--              {'background-color': (pool.result === 'IN PROCESS')-->
+<!--              ? '#F6DD06'-->
+<!--              : (pool.result === 'FINISHED')-->
+<!--              ? 'red'-->
+<!--              : (pool.result === 'FOR START'-->
+<!--              ? 'gray'-->
+<!--              : 'none')}">-->
+<!--              </span>-->
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row d-none d-lg-block">
+        <div class="col-12">
+          <div class="map-widget my-4">
+            <app-map></app-map>
+          </div>
+        </div>
+      </div>
+      <div class="row my-5">
+        <div class="email-widget">
+          <form [formGroup]="emailForm" (submit)="sendEmail()">
+            <div class="col-12 col-lg-8 offset-lg-2">
+              <div class="row">
+                <div class="col-12 ">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Seleccione una Categoria</mat-label>
+                    <mat-select formControlName="category" required>
+                      <mat-option>- Seleccione una categoria -</mat-option>
+                      <mat-option value="active-pools">Quinielas Activas</mat-option>
+                      <mat-option value="all-pools">Todas Las Quinielas</mat-option>
+                      <mat-option value="active-users">Usuarios Activos</mat-option>
+                      <mat-option value="all-users">Todos Los Usuarios</mat-option>
+                      <mat-option value="manual-selection">Seleccion Manual de usuarios</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-12 mb-3" *ngIf="emailForm.value.category === 'manual-selection'">
+                  <!--              table-->
+                  <div class="col-12">
+                    <mat-form-field appearance="standard" class="w-100">
+                      <mat-label>Buscar</mat-label>
+                      <input matInput (keyup)="applyFilter($event)" placeholder="Ej. Pepito perez" #input>
+                    </mat-form-field>
+                  </div>
+
+                  <div class="mat-elevation-z8 users-selection-table">
+                    <table mat-table [dataSource]="dataSource" matSort class="w-100">
+
+                      <!-- Progress Column -->
+                      <ng-container matColumnDef="username">
+                        <th class="username" mat-header-cell *matHeaderCellDef mat-sort-header> Usuario</th>
+                        <td class="username" mat-cell *matCellDef="let row"> {{row.username}} </td>
+                      </ng-container>
+
+                      <!-- Fruit Column -->
+                      <ng-container matColumnDef="email">
+                        <th class="email" mat-header-cell *matHeaderCellDef mat-sort-header> Email</th>
+                        <td class="email" mat-cell *matCellDef="let row"> {{row.email}} </td>
+                      </ng-container>
+
+                      <!-- Fruit Column -->
+                      <ng-container matColumnDef="opts">
+                        <th class="opts" mat-header-cell *matHeaderCellDef mat-sort-header>
+                          -
+                        </th>
+                        <td class="opts" mat-cell *matCellDef="let row">
+                          <mat-checkbox (click)="$event.stopPropagation()"
+                                        color="primary"
+                                        (change)="$event ? selection.toggle(row.email) : null"
+                                        [checked]="selection.isSelected(row.rowid)">
+                          </mat-checkbox>
+                        </td>
+                      </ng-container>
+
+                      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+                      <!-- Row shown when there is no matching data. -->
+                      <tr class="mat-row" *matNoDataRow>
+                        <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+                <div class="col-12 ">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Asunto</mat-label>
+                    <input matInput type="text" formControlName="subject" autocomplete="off" required>
+                  </mat-form-field>
+                </div>
+
+                <editor
+                  formControlName="message"
+                  initialValue="<p>Initial content of the editor</p>"
+                  apiKey="gao32appbrwcqujnv5my901uoth7yqbuia0t7j9pbq40nlf8"
+                  [init]="{
+                  base_url: '/tinymce',
+                  suffix: '.min',
+                  height: 500,
+                  menubar: true,
+                  plugins: [
+                'advlist autolink lists link image charmap print',
+                'preview anchor searchreplace visualblocks code',
+                'fullscreen insertdatetime media table paste',
+                'help wordcount'
+              ],
+              toolbar: 'undo redo | formatselect | ' +
+              'bold italic backcolor | alignleft aligncenter ' +
+              'alignright alignjustify | bullist numlist outdent indent | ' +
+              'removeformat | help',
+              content_style: 'body { font-family:Helvetica,Arial,sans-serif; font-size:14px }'
+              }"
+                >
+                </editor>
+              </div>
+
+              <mat-divider class="my-5"></mat-divider>
+              <div class="col-12 text-center">
+                <div class="col-12 text-center my-4">
+                  <button mat-flat-button type="submit" [disabled]="!emailForm.valid" class="action-button">Enviar
+                    Correo
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>

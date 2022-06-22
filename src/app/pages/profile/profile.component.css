@@ -1,0 +1,11 @@
+.home__link:hover {
+  color: #F6DD06;
+  cursor: pointer;
+}
+
+.badge {
+  color: black;
+  background-color: #F6DD06;
+  border: 1px solid black;
+  border-radius: 15px;
+}

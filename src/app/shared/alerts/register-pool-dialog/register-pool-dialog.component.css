@@ -1,0 +1,46 @@
+.register-dialog {
+  width: 400px;
+  height: 600px;
+  background-color: black;
+}
+
+@media screen and (max-width: 560px) {
+  .register-dialog {
+    width: 100%;
+    height: auto;
+  }
+}
+
+.image {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+}
+
+h1 {
+  font-size: 32px;
+  color: #F6DD06;
+}
+
+h2 {
+  color: white;
+}
+
+h1, h2 {
+  font-weight: bold;
+}
+
+h2 > span {
+  font-weight: normal;
+}
+
+.register-button {
+  color: black;
+  background-color: #F6DD06;
+}
+
+.send-button {
+  background-color: #F6DD06;
+  margin-left: 1rem;
+  color: black;
+}

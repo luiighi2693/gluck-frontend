@@ -1,1 +1,62 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 5px grey;
+  background-color: #333232;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #F6DD06;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #c4b103;
+}
+
+.success-snackBar {
+  background-color: #4caf50;
+  border: 1px solid #4caf50;
+  border-radius: 15px;
+  color: white;
+}
+
+ .error-snackBar {
+  background-color: #f44336;
+  border: 1px solid #f44336;
+  border-radius: 15px;
+  color: white;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  /* display: none; <- Crashes Chrome on hover */
+  -webkit-appearance: none;
+  margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+}
+
+input[type=number] {
+  -moz-appearance:textfield; /* Firefox */
+}
+.dialog-container-custom .mat-dialog-container {
+  background: black;
+}
+
+/*::ng-deep.mat-dialog-container {*/
+/*  background-color: black ;*/
+/*  color: white;*/
+/*}*/
+
+/*::ng-deep.mat-form-field-flex {*/
+/*  background-color: white;*/
+/*}*/
+
+

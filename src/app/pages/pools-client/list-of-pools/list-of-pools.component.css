@@ -1,0 +1,38 @@
+.home__link:hover {
+  color: #F6DD06;
+  cursor: pointer;
+}
+
+.calendar-icon {
+  width: 100px;
+  height: 100px;
+  font-size: 80px;
+  color: gray;
+}
+
+.input {
+  padding: 0.5rem;
+}
+
+.send-button {
+  background-color: #F6DD06;
+  margin-left: 1rem;
+  color: black;
+}
+
+.password {
+  background-color: transparent;
+}
+
+.input-wrapper {
+  position: relative;
+}
+
+.input-icon {
+  position: absolute;
+  right: 5px;
+
+}
+
+
+

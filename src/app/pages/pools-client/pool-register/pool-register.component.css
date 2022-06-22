@@ -1,0 +1,144 @@
+.pool-box {
+  background-color: lightgray;
+  padding: 1rem !important;
+  margin: 1rem 0;
+}
+
+.team-image {
+  width: 75px;
+  height: 75px;
+}
+
+.min-height {
+  min-height: 700px;
+}
+
+.input {
+  width: 30px;
+  height: 30px;
+}
+
+.border-right {
+  border-right: 1px solid gray;
+}
+
+.separator {
+  color: white;
+  background-color: white;
+  margin: 1rem 0;
+}
+
+.submit {
+  background-color: #F6DD06;
+  color: black;
+  font-size: 20px;
+  padding: 0.5rem 4rem;
+}
+
+.submit:disabled {
+  background-color: gray;
+  color: black;
+  font-size: 20px;
+  padding: 0.5rem 4rem;
+}
+
+.team-text {
+  inline-size: 157px;
+  overflow-wrap: break-word;
+  font-size: 18px;
+  font-weight: 400;
+}
+
+@media screen and (max-width: 760px) {
+  .team-text {
+    inline-size: auto;
+    font-size: 16px !important;
+    font-weight: normal !important;
+  }
+}
+
+.yellow-title {
+  color: #F6DD06;
+  margin: 1rem 0;
+}
+
+.playoffs-wrapper {
+  background-color: #3e3e3e;
+  padding: 1rem 0;
+  margin: 1rem 0;
+  border-radius: 25px;
+}
+
+@media screen and (max-width: 1400px) {
+  .playoffs-wrapper {
+    min-width: 1200px;
+  }
+}
+
+.col-name {
+  text-align: center;
+}
+
+.col-name > h2 {
+  color: #F6DD06;
+  font-weight: bold;
+}
+
+.teams-group {
+  margin-bottom: 3rem;
+}
+
+.team {
+  margin-bottom: 1rem;
+}
+
+
+.team-image {
+  width: 35px;
+  height: 35px;
+  border-radius: 25px;
+  margin-right: 1rem;
+}
+
+.team-info {
+  background-color: white;
+  padding: 0.5rem;
+  border-top-left-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+
+.champion {
+  background-color: #F6DD06;
+  padding: 0.5rem;
+}
+
+.team-info > p {
+  font-size: 12px;
+}
+
+.dark-input {
+  width: 30px;
+  background-color: black;
+  border-top-right-radius: 15px;
+  border-bottom-right-radius: 15px;
+}
+
+.dark-input > input {
+  border:none;
+  color: white;
+  width: 30px;
+  text-align: center;
+  background-image:none;
+  background-color:transparent;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
+
+
+::ng-deep .mat-form-field-wrapper {
+  padding: 0;
+}
+
+

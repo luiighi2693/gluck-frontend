@@ -1,0 +1,313 @@
+<app-breadcrumb [icon]="'tournament'" [currentView]="'Ranking de Quiniela'"></app-breadcrumb>
+
+<div class="container-lg">
+  <div class="row">
+    <div class="col-12 text-center">
+      <h1 class="title">Quiniela Mensual Copa America</h1>
+      <h2 class="subtitle">Fase De Grupos</h2>
+    </div>
+    <div class="col-12 col-lg-6 text-center text-white" *ngFor="let group of rankingData">
+      <h2>Grupo {{ group.name }}</h2>
+      <div class="group-container row" *ngFor="let date of group.dates">
+        <div class="col-12 group-title">
+          <h3 class="m-0">{{date.date}}</h3>
+        </div>
+        <div class="col-12  text-center group"
+             [ngClass]="{'col-lg-4': date.matches.length >= 3, 'col-lg-6': date.matches.length === 2, 'col-lg-12': date.matches.length === 1}"
+             *ngFor="let match of date.matches">
+          <h4 class="d-flex align-items-center justify-content-center"><mat-icon>watch_later</mat-icon> {{ match.hour}}</h4>
+          <div class="teams">
+            <div class="team">
+              <img [src]="imagePath + '/images/' + (match.teamImage1 === '' ? 'logo.png' : match.teamImage1)" width="50" height="50" alt="">
+              <h4 class="m-0 team-title ">{{ match.teamName1 }}</h4>
+              <input type="text" class="team-score" [value]="match.result_team_1" disabled>
+            </div>
+            <div class="vs">
+              <h2 class="m-0">VS</h2>
+            </div>
+            <div class="team">
+              <img [src]="imagePath + '/images/' + (match.teamImage2 === '' ? 'logo.png' : match.teamImage2)" width="50" height="50" alt="">
+              <h4 class="m-0 team-title">{{ match.teamName2}}</h4>
+              <input type="text" class="team-score" [value]="match.result_team_2" disabled>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 text-center">
+      <h1 class="title">Tabla de Posicion</h1>
+    </div>
+<!--    <div class="col-12 col-lg-6 text-white mb-5" *ngFor="let group of rankingData, index as i">-->
+<!--      <div class="text-center">-->
+<!--        <h2 class="text-white"> Grupo {{ group.name }}</h2>-->
+<!--      </div>-->
+<!--      <table mat-table [dataSource]="dataSources[i]" class="mat-elevation-z8">-->
+
+<!--        &lt;!&ndash;- Note that these columns can be defined in any order.-->
+<!--              The actual rendered columns are set as a property on the row definition" &ndash;&gt;-->
+
+<!--        &lt;!&ndash; Position Column &ndash;&gt;-->
+<!--        <ng-container matColumnDef="rowid">-->
+<!--          <th class="id table-header p-0" mat-header-cell *matHeaderCellDef> ID </th>-->
+<!--          <td class="id p-0" mat-cell *matCellDef="let row"> {{row.rowid}} </td>-->
+<!--        </ng-container>-->
+
+<!--        &lt;!&ndash; Name Column &ndash;&gt;-->
+<!--        <ng-container matColumnDef="name">-->
+<!--          <th class="name table-header"mat-header-cell *matHeaderCellDef> Nombre </th>-->
+<!--          <td class="name"mat-cell *matCellDef="let row">-->
+<!--            <span>-->
+<!--              <img [src]="row.image" class="mx-2" width="25" height="25" alt="">-->
+<!--            </span>-->
+<!--            <span>{{row.name}}</span>-->
+<!--          </td>-->
+<!--        </ng-container>-->
+
+<!--        &lt;!&ndash; Symbol Column &ndash;&gt;-->
+<!--        <ng-container matColumnDef="data1">-->
+<!--          <th class="data table-header" mat-header-cell *matHeaderCellDef> PG </th>-->
+<!--          <td class="data" mat-cell *matCellDef="let row"> {{row.data1}} </td>-->
+<!--        </ng-container>-->
+
+<!--        &lt;!&ndash; Symbol Column &ndash;&gt;-->
+<!--        <ng-container matColumnDef="data2">-->
+<!--          <th class="data table-header" mat-header-cell *matHeaderCellDef> PP </th>-->
+<!--          <td class="data" mat-cell *matCellDef="let row"> {{row.data2}} </td>-->
+<!--        </ng-container>-->
+
+<!--        &lt;!&ndash; Symbol Column &ndash;&gt;-->
+<!--        <ng-container matColumnDef="data3">-->
+<!--          <th class="data table-header" mat-header-cell *matHeaderCellDef> PE </th>-->
+<!--          <td class="data" mat-cell *matCellDef="let row"> {{row.data3}} </td>-->
+<!--        </ng-container>-->
+
+<!--        &lt;!&ndash; Symbol Column &ndash;&gt;-->
+<!--        <ng-container matColumnDef="data4">-->
+<!--          <th class="data table-header" mat-header-cell *matHeaderCellDef> GF </th>-->
+<!--          <td class="data" mat-cell *matCellDef="let row"> {{row.data4}} </td>-->
+<!--        </ng-container>-->
+
+<!--        &lt;!&ndash; Symbol Column &ndash;&gt;-->
+<!--        <ng-container matColumnDef="data5">-->
+<!--          <th class="data table-header" mat-header-cell *matHeaderCellDef> GS </th>-->
+<!--          <td class="data" mat-cell *matCellDef="let row"> {{row.data5}} </td>-->
+<!--        </ng-container>-->
+
+<!--        &lt;!&ndash; Symbol Column &ndash;&gt;-->
+<!--        <ng-container matColumnDef="data6">-->
+<!--          <th class="data table-header" mat-header-cell *matHeaderCellDef> Pts </th>-->
+<!--          <td class="data" mat-cell *matCellDef="let row"> {{row.data6}} </td>-->
+<!--        </ng-container>-->
+
+<!--        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>-->
+<!--        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>-->
+<!--      </table>-->
+
+<!--    </div>-->
+    <div class="col-12 col-lg-6 text-white mb-5" *ngFor="let group of rankingData, index as i">
+      <div class="text-center">
+        <h2 class="text-white"> Grupo {{ group.name }}</h2>
+      </div>
+      <table mat-table [dataSource]="dataSources[i]" class="mat-elevation-z8">
+
+        <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+
+        <!-- Position Column -->
+        <ng-container matColumnDef="rowid">
+          <th class="id table-header p-0" mat-header-cell *matHeaderCellDef> ID </th>
+          <td class="id p-0" mat-cell *matCellDef="let row"> {{row.rowid}} </td>
+        </ng-container>
+
+        <!-- Name Column -->
+        <ng-container matColumnDef="name">
+          <th class="name table-header"mat-header-cell *matHeaderCellDef> Nombre </th>
+          <td class="name"mat-cell *matCellDef="let row">
+            <div class="d-flex align-items-center">
+              <div>
+                <img class="me-3" [src]="imagePath + '/images/' + (row.img === '' ? 'logo.png' : row.img)" width="25" height="25" alt="">
+              </div>
+              <p class="m-0">{{row.name}}</p>
+            </div>
+          </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="data1">
+          <th class="data table-header" mat-header-cell *matHeaderCellDef> PG </th>
+          <td class="data" mat-cell *matCellDef="let row"> {{row.winMatches}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="data2">
+          <th class="data table-header" mat-header-cell *matHeaderCellDef> PP </th>
+          <td class="data" mat-cell *matCellDef="let row"> {{row.loseMatches}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="data3">
+          <th class="data table-header" mat-header-cell *matHeaderCellDef> PE </th>
+          <td class="data" mat-cell *matCellDef="let row"> {{row.drawMatches}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="data4">
+          <th class="data table-header" mat-header-cell *matHeaderCellDef> GF </th>
+          <td class="data" mat-cell *matCellDef="let row"> {{row.goalsFor}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="data5">
+          <th class="data table-header" mat-header-cell *matHeaderCellDef> GC </th>
+          <td class="data" mat-cell *matCellDef="let row"> {{row.goalsAgainst}} </td>
+        </ng-container>
+
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="data6">
+          <th class="data table-header" mat-header-cell *matHeaderCellDef> Pts </th>
+          <td class="data" mat-cell *matCellDef="let row"> {{row.points}} </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-12 text-center">
+      <h1 class="yellow-title">Fase de Eliminacion</h1>
+    </div>
+<!--    <app-battle-table [round]="fakeRoundData" [category]="category" ></app-battle-table>-->
+    <div class="playoffs-wrapper">
+      <div class="row">
+        <div class="col-3">
+          <div class="col-name">
+            <h2>Cuartos de Final</h2>
+          </div>
+          <div *ngFor="let round of bracketsData">
+            <div class="teams-group" *ngIf="round.bracket_type === 'Cuartos de Final' ">
+              <div class="team row px-3">
+                <div class="col-10 d-flex align-items-center team-info ">
+                  <img class="me-3" [src]="imagePath + '/images/' + (round.teamImage1 === '' ? 'logo.png' : round.teamImage1)" width="30" height="30" alt="">
+                  <p class="m-0">{{ round.teamName1 }}</p>
+                </div>
+                <div class="col-2 input d-flex align-items-center justify-content-center">
+                  <p class="text-white fw-bold m-0">{{ round.result_team_1 }}</p>
+                </div>
+              </div>
+              <div class="team row px-3">
+                <div class="col-10 d-flex align-items-center team-info ">
+                  <img class="me-3" [src]="imagePath + '/images/' + (round.teamImage2 === '' ? 'logo.png' : round.teamImage2)" width="30" height="30" alt="">
+                  <p class="m-0">{{ round.teamName2 }}</p>
+                </div>
+                <div class="col-2 input d-flex align-items-center justify-content-center">
+                  <p class="text-white fw-bold m-0">{{ round.result_team_2 }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="col-name">
+            <h2>Semifinales</h2>
+          </div>
+          <div *ngFor="let round of bracketsData" style="margin-top: 8rem">
+            <div class="teams-group" *ngIf="round.bracket_type === 'Semifinal' ">
+              <div class="team row px-3">
+                <div class="col-10 d-flex align-items-center team-info ">
+                  <img class="me-3" [src]="imagePath + '/images/' + (round.teamImage1 === '' ? 'logo.png' : round.teamImage1)" width="30" height="30" alt="">
+                  <p class="m-0">{{ round.teamName1 }}</p>
+                </div>
+                <div class="col-2 input d-flex align-items-center justify-content-center">
+                  <p class="text-white fw-bold m-0">{{ round.result_team_1 }}</p>
+                </div>
+              </div>
+              <div class="team row px-3">
+                <div class="col-10 d-flex align-items-center team-info ">
+                  <img class="me-3" [src]="imagePath + '/images/' + (round.teamImage2 === '' ? 'logo.png' : round.teamImage2)" width="30" height="30" alt="">
+                  <p class="m-0">{{ round.teamName2 }}</p>
+                </div>
+                <div class="col-2 input d-flex align-items-center justify-content-center">
+                  <p class="text-white fw-bold m-0">{{ round.result_team_2 }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="col-name">
+            <h2>Final</h2>
+          </div>
+          <div *ngFor="let round of bracketsData" style="margin-top: 16rem">
+            <div class="teams-group" *ngIf="round.bracket_type === 'Final' ">
+              <div class="team row px-3">
+                <div class="col-10 d-flex align-items-center team-info ">
+                  <img class="me-3" [src]="imagePath + '/images/' + (round.teamImage1 === '' ? 'logo.png' : round.teamImage1)" width="30" height="30" alt="">
+                  <p class="m-0">{{ round.teamName1 }}</p>
+                </div>
+                <div class="col-2 input d-flex align-items-center justify-content-center">
+                  <p class="text-white fw-bold m-0">{{ round.result_team_1 }}</p>
+                </div>
+              </div>
+              <div class="team row px-3">
+                <div class="col-10 d-flex align-items-center team-info ">
+                  <img class="me-3" [src]="imagePath + '/images/' + (round.teamImage2 === '' ? 'logo.png' : round.teamImage2)" width="30" height="30" alt="">
+                  <p class="m-0">{{ round.teamName2 }}</p>
+                </div>
+                <div class="col-2 input d-flex align-items-center justify-content-center">
+                  <p class="text-white fw-bold m-0">{{ round.result_team_2 }}</p>
+                </div>
+              </div>
+            </div>
+            <div class="teams-group" *ngIf="round.bracket_type === 'Mejor Tercero' " style="margin-top: -12rem;">
+              <div class="col-name">
+                <h2>Mejor Tercero</h2>
+              </div>
+              <div class="team row px-3">
+                <div class="col-10 d-flex align-items-center team-info ">
+                  <img class="me-3" [src]="imagePath + '/images/' + (round.teamImage1 === '' ? 'logo.png' : round.teamImage1)" width="30" height="30" alt="">
+                  <p class="m-0">{{ round.teamName1 }}</p>
+                </div>
+                <div class="col-2 input d-flex align-items-center justify-content-center">
+                  <p class="text-white fw-bold m-0">{{ round.result_team_1 }}</p>
+                </div>
+              </div>
+              <div class="team row px-3">
+                <div class="col-10 d-flex align-items-center team-info ">
+                  <img class="me-3" [src]="imagePath + '/images/' + (round.teamImage2 === '' ? 'logo.png' : round.teamImage2)" width="30" height="30" alt="">
+                  <p class="m-0">{{ round.teamName2 }}</p>
+                </div>
+                <div class="col-2 input d-flex align-items-center justify-content-center">
+                  <p class="text-white fw-bold m-0">{{ round.result_team_2 }}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        <div class="col-3 ">
+          <div class="d-flex flex-column justify-content-center h-100">
+            <div class="" *ngIf="champion">
+              <div class="col-name">
+                <h2>Campeon</h2>
+              </div>
+              <div class="team row px-3">
+                <div class="col-12 d-flex align-items-center champion ">
+                  <img class="me-3" [src]="imagePath + '/images/' + (champion.img === '' ? 'logo.png' : champion.img)" width="30" height="30" alt="">
+                  <p class="m-0 fw-bold">{{ champion.name }}</p>
+                </div>
+                <!--            <div class="col-2 team-score d-flex align-items-center justify-content-center">-->
+                <!--              <p class="text-white fw-bold m-0">2</p>-->
+                <!--            </div>-->
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

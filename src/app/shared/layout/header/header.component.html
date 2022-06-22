@@ -1,0 +1,48 @@
+<div class="header-helper"></div>
+<nav class="header d-flex justify-content-between justify-content-lg-end">
+  <button mat-icon-button id="toogleButton" (click)="toggle()" class="toggle__button d-block d-lg-none">
+    <mat-icon aria-label="Menu">menu</mat-icon>
+  </button>
+  <div class="d-flex align-items-center">
+    <div class="money">
+      <h5 class="d-none d-sm-block">Money</h5>
+      <p><mat-icon>attach_money</mat-icon> {{money}}</p>
+    </div>
+    <div class="coins">
+      <h5 class="d-none d-sm-block">Coins</h5>
+      <span class="d-flex align-items-center">
+        <img src="assets/gluck-coin.png" class="mx-2" alt="">
+        <p class="m-0">{{coins}}</p>
+      </span>
+    </div>
+
+    <div class="recharge">
+
+      <a mat-flat-button class="recharge-button"  href="https://wa.me/13524449978?text=Hola! Quiero recargar algunos Glucks..." target="_blank">Recargar</a>
+    </div>
+    <div class="profile__options" (click)="userOptions = !userOptions">
+      <mat-icon aria-label="Person">person</mat-icon>
+      <p class="m-0">{{isAdmin ? 'Admin' : 'Mi Perfil'}}</p>
+    </div>
+    <div class="user__options" *ngIf="userOptions">
+      <div class="row black-background">
+        <button class="close-button" (click)="userOptions = false">x</button>
+        <div class="col-12 text-center p-0">
+          <figure class="user__options--image-wrapper">
+            <img [src]="userImage !== '' ? (this.imagePath + '/images/' + userImage) : '../../../../assets/default-user-example.jpg'" class="user__options--image" alt="example user">
+          </figure>
+        </div>
+        <div class="col-12 text-center">
+          <p class="title">{{name}}</p>
+          <p class="text">mienbro desde {{dateCreate}}</p>
+        </div>
+      </div>
+      <div class="row white-background p-0">
+        <div class="col-12 d-flex justify-content-between px-3 py-2 user__options--buttons">
+          <button mat-flat-button color="primary" (click)="editUser()">Perfil</button>
+          <button mat-flat-button color="warn" (click)="logout()">Salir</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>

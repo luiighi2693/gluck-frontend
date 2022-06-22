@@ -1,0 +1,5 @@
+<ejs-richtexteditor #toolsRTE id='alltoolRTE' [toolbarSettings]='tools' [showCharCount]='true' (actionComplete)='actionCompleteHandler($event)' [maxLength]='maxLength'>
+  <ng-template #valueTemplate>
+   {{ template }}
+  </ng-template>
+</ejs-richtexteditor>

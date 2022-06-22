@@ -1,0 +1,86 @@
+.badge {
+  color: black;
+  background-color: #F6DD06;
+  border: 1px solid black;
+  border-radius: 15px;
+}
+
+.height-table {
+  max-height: 500px;
+  overflow: auto;
+}
+
+.profile__wrapper {
+  background-color: white;
+  color: black;
+  padding: 2rem;
+  border-radius: 15px;
+  min-height: 700px;
+}
+
+.home__link:hover {
+  color: #F6DD06;
+  cursor: pointer;
+}
+
+td, th {
+  width: 15%;
+}
+
+.id {
+  width: 5%;
+}
+
+.status {
+  width: 6%;
+}
+
+.username {
+  width: 12%;
+}
+
+.name {
+  width: 10%;
+}
+
+.email {
+  width: 15%;
+}
+
+.glucks {
+  width: 5%;
+}
+.amount {
+  width: 5%;
+}
+
+.opts {
+  width: 5%;
+}
+
+.active {
+  padding: 0.5rem;
+  color: white;
+  background-color: #4caf50;
+  border-radius: 15px;
+  text-align: center;
+  width: 75%;
+  letter-spacing: 1px;
+}
+
+.inactive {
+  padding: 0.5rem;
+  color: white;
+  background-color: red;
+  border-radius: 15px;
+  text-align: center;
+  width: 75%;
+  letter-spacing: 1px;
+}
+
+.action-button {
+  color: #333232;
+  background-color: #F6DD06;
+}
+
+

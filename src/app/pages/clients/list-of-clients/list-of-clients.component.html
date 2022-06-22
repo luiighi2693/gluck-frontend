@@ -1,0 +1,126 @@
+<app-breadcrumb [currentView]="'Lista de Usuarios'" [icon]="'group'"></app-breadcrumb>
+
+<div class="container-lg">
+  <div class="listOf__users--wrapper">
+    <div class="row mb-3">
+      <div class="col-12 col-md-10">
+        <mat-form-field appearance="standard">
+          <mat-label>Buscar</mat-label>
+          <input matInput (keyup)="applyFilter($event)" placeholder="Nombre de usuario" #input>
+        </mat-form-field>
+      </div>
+      <div class="col-12 col-md-2 d-flex align-items-center justify-content-center">
+        <div>
+          <div class="export-users" (click)="download()">
+            <mat-icon class="mx-2">cloud_download</mat-icon>
+            <p class="m-0">Exportar Usuarios</p>
+          </div>
+          <div class="add-user" routerLink="/admin/clients/add-client">
+            <mat-icon class="mx-2">add</mat-icon>
+            <p class="m-0">Crear Usuario</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort>
+
+        <!-- ID Column -->
+        <ng-container matColumnDef="rowid">
+          <th class="id" mat-header-cell *matHeaderCellDef mat-sort-header> ID </th>
+          <td class="id" mat-cell *matCellDef="let row"> {{row.rowid}} </td>
+        </ng-container>
+
+        <!-- Progress Column -->
+        <ng-container matColumnDef="username">
+          <th class="username" mat-header-cell *matHeaderCellDef mat-sort-header> Usuario </th>
+          <td class="username" mat-cell *matCellDef="let row">
+            <span class="mx-2"><img class="image" [src]="imagePath + '/images/' + (row.img === '' ? 'logo.png' : row.img)" [alt]="row.img"></span>
+            <span>{{row.username}}</span> </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="amount">
+          <th class="amount" mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div class="d-flex align-items-center">
+              <p class="m-0">Cantidad</p>
+              <mat-icon style="color: green; font-weight: 600">attach_money</mat-icon>
+            </div>
+          </th>
+          <td class="amount" mat-cell *matCellDef="let row">
+            {{row.amount}}
+            <button mat-icon-button aria-label="recarga de dinero" (click)="recharge('amount', row.rowid)">
+              <mat-icon style="color: green; font-weight: 600">attach_money</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+
+        <ng-container matColumnDef="coins">
+          <th class="coins" mat-header-cell *matHeaderCellDef mat-sort-header>
+            <div class="d-flex align-items-center">
+              <p class="m-0">Cantidad</p>
+<!--              <mat-icon style="color: #F6DD06; font-weight: 600">local_atm</mat-icon>-->
+              <img src="assets/gluck-coin.png" alt="">
+            </div>
+          </th>
+          <td class="coins" mat-cell *matCellDef="let row">
+            {{row.coins}}
+            <button mat-icon-button aria-label="recarga de Gluck Coins" (click)="recharge('glucks', row.rowid)">
+<!--              <mat-icon style="color: #F6DD06; font-weight: 600">local_atm</mat-icon>-->
+              <img src="assets/gluck-coin.png" alt="">
+            </button>
+          </td>
+        </ng-container>
+
+        <!-- Fruit Column -->
+        <ng-container matColumnDef="email">
+          <th class="email" mat-header-cell *matHeaderCellDef mat-sort-header> Email </th>
+          <td class="email" mat-cell *matCellDef="let row"> {{row.email}} </td>
+        </ng-container>
+
+        <!-- Fruit Column -->
+        <ng-container matColumnDef="phone">
+          <th class="phone" mat-header-cell *matHeaderCellDef mat-sort-header> Telefono </th>
+          <td class="phone" mat-cell *matCellDef="let row"> {{row.phone}} </td>
+        </ng-container>
+
+        <!-- Fruit Column -->
+        <ng-container matColumnDef="status">
+          <th class="status" mat-header-cell *matHeaderCellDef mat-sort-header> Estatus </th>
+          <td class="status" mat-cell *matCellDef="let row"> <div [ngClass]="{'active': row.status === 1, 'inactive': row.status === 0}"><p class="m-0">{{row.status === 1 ? 'Activo' : 'Inactivo' }}</p></div> </td>
+        </ng-container>
+
+        <!-- Fruit Column -->
+        <ng-container matColumnDef="date_Access">
+          <th class="lastLogin" mat-header-cell *matHeaderCellDef mat-sort-header> Ultimo Acceso </th>
+          <td class="lastLogin" mat-cell *matCellDef="let row"> {{row.date_Access}} </td>
+        </ng-container>
+
+        <!-- Fruit Column -->
+        <ng-container matColumnDef="opts">
+          <th class="opts" mat-header-cell *matHeaderCellDef mat-sort-header>  </th>
+          <td class="opts" mat-cell *matCellDef="let row">
+            <button mat-icon-button aria-label="edit" (click)="editUser(row.rowid)">
+              <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-icon-button aria-label="delete"(click)="deleteUser(row)" >
+              <mat-icon>delete</mat-icon>
+            </button>
+          </td>
+        </ng-container>
+
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+        <!-- Row shown when there is no matching data. -->
+        <tr class="mat-row" *matNoDataRow>
+          <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+        </tr>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[10, 25, 50, 100]"></mat-paginator>
+    </div>
+  </div>
+</div>

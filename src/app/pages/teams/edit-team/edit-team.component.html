@@ -1,0 +1,114 @@
+<app-breadcrumb [currentView]="'Edición de Equipos'" [icon]="'edit'"></app-breadcrumb>
+
+<div class="container">
+  <div class="container profile__wrapper mb-3">
+    <div class="row">
+      <form [formGroup]="updatedTeamForm" (submit)="updateTeam()">
+        <div class="col-12 col-md-8 offset-md-2">
+          <div class="row">
+            <div class="col-12 text-center">
+              <figure class="avatar__wrapper">
+                <img [src]="this.updatedTeamForm.value.img !== '' ? (this.imagePath + '/images/' + this.updatedTeamForm.value.img) : '../../../../assets/default-team-logo.png'" class="avatar" alt="">
+                <button class="avatar__button" type="button" mat-fab aria-label="change picture" (click)="openUploadFiles()">
+                  <mat-icon>camera_alt</mat-icon>
+                </button>
+                <input
+                  #inputFiles
+                  style="display: none"
+                  type="file"
+                  (change)="handleUpload($event)"
+                />
+              </figure>
+            </div>
+            <mat-divider class="my-5"></mat-divider>
+            <div class="row">
+              <div class="col-12 ">
+                <mat-form-field appearance="outline" class="dual__input--item">
+                  <mat-label>Nombre</mat-label>
+                  <input matInput type="text" formControlName="name" placeholder="Nombre"  required>
+                  <mat-error>Este Campo es <b>Requerido</b>.</mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-12 ">
+                <mat-form-field appearance="outline" class="dual__input--item">
+                  <mat-label>Descripcion</mat-label>
+                  <textarea matInput rows="10" formControlName="description" autocomplete="off" required> </textarea>
+                  <mat-error>Este Campo es <b>Requerido</b>.</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <div class="col-12">
+              <mat-form-field appearance="outline" class="dual__input--item">
+                <mat-label>Deporte Asociado</mat-label>
+                <mat-select formControlName="asociatedSport" required>
+                  <mat-option *ngFor="let sport of sports" [value]="sport.rowid"> {{ sport.name }}</mat-option>
+                </mat-select>
+                <mat-error>Este Campo es <b>Requerido</b>.</mat-error>
+              </mat-form-field>
+            </div>
+            <mat-divider class="my-5"></mat-divider>
+            <div class="row">
+              <div class="col-12 col-md-6 text-center">
+                <mat-form-field appearance="outline" class="dual__input--item">
+                  <mat-label>Fecha de Registro</mat-label>
+                  <input matInput type="text" formControlName="date_Create" placeholder="Ej. 10-02-2018" autocomplete="off" required>
+                  <mat-error>Este Campo es <b>Requerido</b>.</mat-error>
+                </mat-form-field>
+              </div>
+              <div class="col-12 col-md-6 text-center">
+                <mat-form-field appearance="outline" class="dual__input--item">
+                  <mat-label>Estatus</mat-label>
+                  <mat-select formControlName="status" required>
+                    <mat-option value="1">Activo</mat-option>
+                    <mat-option value="0">Inactivo</mat-option>
+                  </mat-select>
+                  <mat-error>Este Campo es <b>Requerido</b>.</mat-error>
+                </mat-form-field>
+              </div>
+            </div>
+            <mat-divider class="my-5"></mat-divider>
+            <div class="col-12 text-center">
+              <div class="col-12 text-center my-4">
+                <button mat-flat-button type="submit" [disabled]="!updatedTeamForm.valid" class="submit">Actualizar Equipo</button>
+              </div>
+            </div>
+            <!--        <div class="row">-->
+            <!--          <div class="col-12 text-center">-->
+            <!--            <h1>Informacion Adicional</h1>-->
+            <!--          </div>-->
+            <!--          <div class="col-12">-->
+            <!--            <mat-form-field class="example-chip-list" appearance="outline" class="unique__input&#45;&#45;item">-->
+            <!--              <mat-label>Deportes Favoritos</mat-label>-->
+            <!--              <mat-chip-list #chipList aria-label="Sport selection">-->
+            <!--                <mat-chip-->
+            <!--                  *ngFor="let sport of sports"-->
+            <!--                  [selectable]="selectable"-->
+            <!--                  [removable]="removable"-->
+            <!--                  (removed)="removeSport(sport)">-->
+            <!--                  {{sport}}-->
+            <!--                  <mat-icon matChipRemove *ngIf="removable">cancel</mat-icon>-->
+            <!--                </mat-chip>-->
+            <!--                <input-->
+            <!--                  placeholder="Otro Deporte..."-->
+            <!--                  #sportInput-->
+            <!--                  [formControl]="sportsCtrl"-->
+            <!--                  [matAutocomplete]="auto"-->
+            <!--                  [matChipInputFor]="chipList"-->
+            <!--                  [matChipInputSeparatorKeyCodes]="separatorKeysCodes"-->
+            <!--                  (matChipInputTokenEnd)="addSport($event)">-->
+            <!--              </mat-chip-list>-->
+            <!--              <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">-->
+            <!--                <mat-option *ngFor="let sport of filteredSports | async" [value]="sport">-->
+            <!--                  {{sport}}-->
+            <!--                </mat-option>-->
+            <!--              </mat-autocomplete>-->
+            <!--            </mat-form-field>-->
+            <!--          </div>-->
+            <!--        </div>-->
+          </div>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</div>

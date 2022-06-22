@@ -1,0 +1,18 @@
+.text-right {
+  text-align: right;
+}
+
+.home__options--item {
+  background-color: lightgray;
+  margin: 1rem;
+}
+
+.home__link {
+  margin: 0;
+}
+
+.home__link:hover {
+  color: #F6DD06;
+  cursor: pointer;
+  font-weight: bold;
+}
