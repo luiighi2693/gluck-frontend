@@ -58,6 +58,10 @@ remaining-time {
   width: 30%;
 }
 
+.pointer {
+  cursor: pointer;
+}
+
 .sport {
   width: 7.5%;
 }

@@ -24,9 +24,12 @@ export interface UserData {
   templateUrl: './admin.component.html',
   styleUrls: ['./admin.component.css']
 })
-export class AdminComponent implements OnInit, AfterViewInit {
+export class AdminComponent implements OnInit {
   emailForm: FormGroup;
   exampleData = null;
+  counter = 0;
+  inProcessList = [];
+  finishedList = [];
 
   displayedColumns: string[] = ['username', 'email', 'opts'];
   dataSource: MatTableDataSource<UserData>;
@@ -46,12 +49,6 @@ export class AdminComponent implements OnInit, AfterViewInit {
     this.setUsersData();
     this.setPoolData();
     this.createForm();
-  }
-
-  ngAfterViewInit() {
-    setTimeout(() => {
-      console.log(this.exampleData)
-    }, 5000)
   }
 
   createForm() {
@@ -101,7 +98,9 @@ export class AdminComponent implements OnInit, AfterViewInit {
     this.admin.getPoolsForAdmin().subscribe(res => {
       this.loaderValue.updateIsloading(false);
       if (res.code === 'D200') {
-        this.startCounter(res.pools);
+        this.inProcessList = res.pools.filter(x => x.result === 'IN PROCESS');
+        this.finishedList = res.pools.filter(x => x.result === 'FINISHED');
+        // this.startCounter(res.pools);
 
       } else if (res.code === 'D401' || res.code === 'D302' || res.code === 'D403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
@@ -142,7 +141,9 @@ export class AdminComponent implements OnInit, AfterViewInit {
   }
 
   getPools(pools: any, isProgress: boolean) {
+    this.counter = this.counter + 1;
     if (isProgress) {
+      console.log(this.counter);
       return pools.filter(x => x.result === 'IN PROCESS');
     } else {
       return pools.filter(x => x.result === 'FINISHED');

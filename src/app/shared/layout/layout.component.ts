@@ -89,7 +89,10 @@ export class LayoutComponent implements OnInit {
     alert(value);
   }
 
-  backdropClick() {
+  backdropClick(url?) {
+    if (url) {
+      window.open(url, '_blank');
+    }
     const toggleButton = document.getElementById('toogleButton');
     toggleButton.click();
   }

@@ -19,6 +19,7 @@
 .panel  {
   background-color: lightgray;
   border-radius: 25px;
+  padding: 1rem;
 }
 
 .min-height {

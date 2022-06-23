@@ -4,10 +4,10 @@
   margin: 1rem 0;
 }
 
-.team-image {
-  width: 75px;
-  height: 75px;
-}
+/*.team-image {*/
+/*  width: 75px;*/
+/*  height: 75px;*/
+/*}*/
 
 .min-height {
   min-height: 700px;
@@ -94,10 +94,9 @@
 
 
 .team-image {
-  width: 35px;
-  height: 35px;
+  width: 75px;
+  height: 75px;
   border-radius: 25px;
-  margin-right: 1rem;
 }
 
 .team-info {

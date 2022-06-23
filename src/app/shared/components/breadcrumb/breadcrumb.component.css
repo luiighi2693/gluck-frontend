@@ -3,11 +3,6 @@
   cursor: pointer;
 }
 
-.breadcrumb-wrapper {
-  display: flex;
-  justify-content: space-between;
-}
-
 @media screen and (max-width: 768px) {
   .breadcrumb-wrapper {
     flex-direction: column;

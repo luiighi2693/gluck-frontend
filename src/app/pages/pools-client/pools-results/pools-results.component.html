@@ -10,8 +10,9 @@
     <div class="col-3 p-3 text-center  d-flex align-items-center justify-content-center border-right"><h1 class="m-0 yellow-panel-header">PUNTUACION</h1></div>
     <div class="col-3 p-3 text-center d-flex align-items-center justify-content-center "><h1 class="m-0 yellow-panel-header">GOLES ACERTADOS</h1></div>
   </div>
-  <div class="row panel mb-3 d-none d-sm-flex" *ngFor="let item of data" (click)="goToOtherResults(item.userID, item.username)" style="cursor: pointer;">
-<!--    <div class="col-1 d-flex justify-content-center align-items-center"><h1 class="m-0 user-stats">{{item.userID}}</h1></div>-->
+  <div class="row panel mb-3 d-none d-sm-flex" *ngFor="let item of data, index as i" (click)="goToOtherResults(item.userID, item.username)" style="cursor: pointer;">
+
+<!--    <div class="col-1 d-flex justify-content-center align-items-center"><h1 class="m-0 user-stats">{{i + 1}}</h1></div>-->
     <div class="col-6  d-flex justify-content-start align-items-center border-right">
       <img [src]="(item.img === '' ? '../../../../assets/example-user.png' : imagePath + '/images/' + item.img)" class="user-image me-3 me-lg-0" alt="user image">
       <h1 class="mx-lg-5 mb-0 user-stats">{{item.name}}</h1></div>
@@ -23,7 +24,7 @@
     <div class="text-center"><h1 class="m-0 yellow-panel-header d-flex align-items-center justify-content-center">
       <mat-icon>person</mat-icon>Usuario</h1></div>
     <div class="text-center"><h1 class="m-0 yellow-panel-header d-flex align-items-center justify-content-center">
-      <mat-icon>monetization_on</mat-icon>Puntuacion</h1></div>
+      <mat-icon>monetization_on</mat-icon>Puntuación</h1></div>
     <div class="text-center"><h1 class="m-0 yellow-panel-header d-flex align-items-center justify-content-center">
       <mat-icon>insert_emoticon</mat-icon>Goles Acertados</h1></div>
   </div>

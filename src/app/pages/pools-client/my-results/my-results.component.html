@@ -30,9 +30,10 @@
         <div class="col-6 d-flex align-items-center justify-content-evenly">
           <div class="text-center">
             <img
+              [matTooltip]="item.teamName1"
               [src]="item.image1 !== '' ? (this.imagePath + '/images/' + item.image1) : '../../../../assets/default-team-logo.png'"
-              class="team-image" alt="">
-            <p>{{item.teamName1}}</p>
+              class="team-image" [alt]="item.teamName1" />
+<!--            <p>{{item.teamName1}}</p>-->
           </div>
           <div>
             <h1>{{item.teamResult1}}</h1>
@@ -44,9 +45,10 @@
           </div>
           <div class="text-center">
             <img
+              [matTooltip]="item.teamName2"
               [src]="item.image2 !== '' ? (this.imagePath + '/images/' + item.image2) : '../../../../assets/default-team-logo.png'"
-              class="team-image" alt="">
-            <p>{{item.teamName2}}</p>
+              class="team-image" [alt]="item.teamName2" />
+<!--            <p>{{item.teamName2}}</p>-->
           </div>
         </div>
       </div>
@@ -59,9 +61,10 @@
         <div class="col-6 d-flex align-items-center justify-content-evenly">
           <div class="text-center">
             <img
+              [matTooltip]="item.teamName1"
               [src]="item.image1 !== '' ? (this.imagePath + '/images/' + item.image1) : '../../../../assets/default-team-logo.png'"
-              class="team-image" alt="">
-            <p>{{item.teamName1}}</p>
+              class="team-image" [alt]="item.teamName1" />
+<!--            <p>{{item.teamName1}}</p>-->
           </div>
           <div>
             <h1>{{item.teamResult1Admin}}</h1>
@@ -73,16 +76,17 @@
           </div>
           <div class="text-center">
             <img
+              [matTooltip]="item.teamName2"
               [src]="item.image2 !== '' ? (this.imagePath + '/images/' + item.image2) : '../../../../assets/default-team-logo.png'"
-              class="team-image" alt="">
-            <p>{{item.teamName2}}</p>
+              class="team-image" [alt]="item.teamName2" />
+<!--            <p>{{item.teamName2}}</p>-->
           </div>
         </div>
       </div>
     </div>
     <div class="col-12 d-flex justify-content-center align-items-center" style="flex-direction: column;">
       <div class="text-center">
-        <h2 class="fw-bold">Puntuacion</h2>
+        <h2 class="fw-bold">Puntuación</h2>
       </div>
       <h1 class="m-0">{{item.resultado}}</h1>
       <span class="badge bg-success" *ngIf="item.status === 'F'">Finalizado</span>
@@ -97,9 +101,10 @@
         <div class="col-6 d-flex align-items-center justify-content-evenly">
           <div class="text-center">
             <img
+              [matTooltip]="item.teamName1"
               [src]="item.image1 !== '' ? (this.imagePath + '/images/' + item.image1) : '../../../../assets/default-team-logo.png'"
-              class="team-image" alt="">
-            <p>{{item.teamName1}}</p>
+              class="team-image" [alt]="item.teamName1" />
+<!--            <p>{{item.teamName1}}</p>-->
           </div>
           <div>
             <h1>{{item.teamResult1}}</h1>
@@ -111,9 +116,10 @@
           </div>
           <div class="text-center">
             <img
+              [matTooltip]="item.teamName2"
               [src]="item.image2 !== '' ? (this.imagePath + '/images/' + item.image2) : '../../../../assets/default-team-logo.png'"
-              class="team-image" alt="">
-            <p>{{item.teamName2}}</p>
+              class="team-image" [alt]="item.teamName2" />
+<!--            <p>{{item.teamName2}}</p>-->
           </div>
         </div>
       </div>
@@ -123,9 +129,10 @@
         <div class="col-6 d-flex align-items-center justify-content-evenly">
           <div class="text-center">
             <img
+              [matTooltip]="item.teamName1"
               [src]="item.image1 !== '' ? (this.imagePath + '/images/' + item.image1) : '../../../../assets/default-team-logo.png'"
-              class="team-image" alt="">
-            <p>{{item.teamName1}}</p>
+              class="team-image" [alt]="item.teamName1" />
+<!--            <p>{{item.teamName1}}</p>-->
           </div>
           <div>
             <h1>{{item.teamResult1Admin}}</h1>
@@ -137,9 +144,11 @@
           </div>
           <div class="text-center">
             <img
+              [matTooltip]="item.teamName2"
               [src]="item.image2 !== '' ? (this.imagePath + '/images/' + item.image2) : '../../../../assets/default-team-logo.png'"
-              class="team-image" alt="">
-            <p>{{item.teamName2}}</p>
+              class="team-image" [alt]="item.teamName2"
+            />
+<!--            <p>{{item.teamName2}}</p>-->
           </div>
         </div>
       </div>
@@ -155,7 +164,8 @@
   <div class="row user-panel mt-3 d-none d-md-flex" *ngIf="data">
     <div class="col-5  d-flex justify-content-around align-items-center border-right">
       <img src="../../../../assets/example-user.png" class="pool-image" alt="pool image">
-      <h1 class="m-0">{{username}}</h1></div>
+      <h1 class="m-0">{{username}}</h1>
+    </div>
     <div class="col-3 d-flex justify-content-center align-items-center border-right"><h1
       class="m-0">{{data.resultado}} PTS</h1>
     </div>

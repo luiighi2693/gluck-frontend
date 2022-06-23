@@ -1,13 +1,14 @@
 .home__banner--item {
   background-color: #fff;
   color: #000000;
-  font-size: 22px;
   font-weight: 500;
   padding: 4rem 0;
   margin-bottom: 1rem;
+  font-size: 26px;
   border-radius: 25px;
   border: 1px solid #333232;
 }
+
 
 .home__banner--item:hover, .home__banner--item:focus {
   color: #F6DD06;
@@ -21,6 +22,13 @@
   padding: 4rem;
   margin: 1rem 0;
 }
+.main__banner--text:hover {
+  cursor: pointer;
+  background-color: #000000;
+  color: #F6DD06;
+}
+
+
 
 .main__banner--text > h1 {
   line-height: 4rem;
