@@ -41,6 +41,7 @@ export class PoolComponent implements OnInit, AfterViewInit {
   privatePools = [];
   weeklyPools = [];
   monthlyPools = [];
+  todayDate = new Date();
 
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -213,8 +214,18 @@ export class PoolComponent implements OnInit, AfterViewInit {
     });
   }
 
-  goToEditResults(poolId) {
-    this.router.navigate([`/home/pools/pool-register/${poolId}`]);
+  goToEditResults(pool) {
+    console.log(pool);
+    if (pool.timeRemaining === '00:00:00' && !pool.registered) {
+      alert('este evento esta cerrado');
+    } else if (pool.registered) {
+      this.router.navigate([`/home/pools/pool-register/${pool.id}`]);
+    }
+    // if (new Date() > new Date(pool.date)) {
+    //   alert('este evento esta cerrado');
+    // } else if (pool.registered) {
+    //   this.router.navigate([`/home/pools/pool-register/${pool.id}`]);
+    // }
   }
 
   updateMoney() {

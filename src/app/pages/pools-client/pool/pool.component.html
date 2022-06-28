@@ -31,7 +31,7 @@
           <!-- Progress Column -->
           <ng-container matColumnDef="name">
             <th class="pool" mat-header-cell *matHeaderCellDef mat-sort-header> Nombre</th>
-            <td class="pool pointer" (click)="goToEditResults(row.id)" mat-cell *matCellDef="let row"> {{row.name}} </td>
+            <td class="pool pointer" (click)="goToEditResults(row)" mat-cell *matCellDef="let row"> {{row.name}} </td>
           </ng-container>
 
           <!-- Name Column -->
@@ -76,10 +76,10 @@
           <ng-container matColumnDef="opts">
             <th class="opts" mat-header-cell *matHeaderCellDef mat-sort-header></th>
             <td class="opts" mat-cell *matCellDef="let row">
-              <button mat-flat-button aria-label="enter pool" *ngIf="!row.registered" (click)="registerToPool(row)">
+              <button mat-flat-button aria-label="enter pool" *ngIf="row.timeRemaining !== '00:00:00'" (click)="registerToPool(row)">
                 Entrar <mat-icon>exit_to_app</mat-icon>
               </button>
-              <button mat-flat-button aria-label="enter pool" *ngIf="row.registered" (click)="goToEditResults(row.id)">
+              <button mat-flat-button aria-label="enter pool" *ngIf="row.registered" (click)="goToEditResults(row)">
                 Editar Resultados <mat-icon>exit_to_app</mat-icon>
               </button>
             </td>
@@ -126,7 +126,7 @@
           <!-- Progress Column -->
           <ng-container matColumnDef="name">
             <th class="pool" mat-header-cell *matHeaderCellDef mat-sort-header> Nombre</th>
-            <td class="pool pointer" (click)="goToEditResults(row.id)" mat-cell *matCellDef="let row"> {{row.name}} </td>
+            <td class="pool pointer" (click)="goToEditResults(row)" mat-cell *matCellDef="let row"> {{row.name}} </td>
           </ng-container>
 
           <!-- Name Column -->
@@ -171,10 +171,10 @@
           <ng-container matColumnDef="opts">
             <th class="opts" mat-header-cell *matHeaderCellDef mat-sort-header></th>
             <td class="opts" mat-cell *matCellDef="let row">
-              <button mat-flat-button aria-label="enter pool" *ngIf="!row.registered" (click)="registerToPool(row)">
+              <button mat-flat-button aria-label="enter pool" *ngIf="row.timeRemaining !== '00:00:00'" (click)="registerToPool(row)">
                 Entrar <mat-icon>exit_to_app</mat-icon>
               </button>
-              <button mat-flat-button aria-label="enter pool" *ngIf="row.registered" (click)="goToEditResults(row.id)">
+              <button mat-flat-button aria-label="enter pool" *ngIf="row.registered" (click)="goToEditResults(row)">
                 Editar Resultados <mat-icon>exit_to_app</mat-icon>
               </button>
             </td>
@@ -219,7 +219,7 @@
           <!-- Progress Column -->
           <ng-container matColumnDef="name">
             <th class="pool" mat-header-cell *matHeaderCellDef mat-sort-header> Nombre</th>
-            <td class="pool pointer " (click)="goToEditResults(row.id)" mat-cell *matCellDef="let row"> {{row.name}} </td>
+            <td class="pool pointer " (click)="goToEditResults(row)" mat-cell *matCellDef="let row"> {{row.name}} </td>
           </ng-container>
 
           <!-- Name Column -->
@@ -264,10 +264,10 @@
           <ng-container matColumnDef="opts">
             <th class="opts" mat-header-cell *matHeaderCellDef mat-sort-header></th>
             <td class="opts" mat-cell *matCellDef="let row">
-              <button mat-flat-button aria-label="enter pool" *ngIf="!row.registered" (click)="registerToPool(row)">
+              <button mat-flat-button aria-label="enter pool" *ngIf="row.timeRemaining !== '00:00:00' && todayDate < row.date" (click)="registerToPool(row)">
                 Entrar <mat-icon>exit_to_app</mat-icon>
               </button>
-              <button mat-flat-button aria-label="enter pool" *ngIf="row.registered" (click)="goToEditResults(row.id)">
+              <button mat-flat-button aria-label="enter pool" *ngIf="row.registered" (click)="goToEditResults(row)">
                 Editar Resultados <mat-icon>exit_to_app</mat-icon>
               </button>
             </td>
@@ -312,7 +312,7 @@
           <!-- Progress Column -->
           <ng-container matColumnDef="name">
             <th class="pool" mat-header-cell *matHeaderCellDef mat-sort-header> Nombre</th>
-            <td class="pool pointer"  (click)="goToEditResults(row.id)" mat-cell *matCellDef="let row"> {{row.name}} </td>
+            <td class="pool pointer"  (click)="goToEditResults(row)" mat-cell *matCellDef="let row"> {{row.name}} </td>
           </ng-container>
 
           <!-- Name Column -->
@@ -357,10 +357,10 @@
           <ng-container matColumnDef="opts">
             <th class="opts" mat-header-cell *matHeaderCellDef mat-sort-header></th>
             <td class="opts" mat-cell *matCellDef="let row">
-              <button mat-flat-button aria-label="enter pool" *ngIf="!row.registered" (click)="registerToPool(row)">
+              <button mat-flat-button aria-label="enter pool" *ngIf="row.timeRemaining !== '00:00:00'" (click)="registerToPool(row)">
                 Entrar <mat-icon>exit_to_app</mat-icon>
               </button>
-              <button mat-flat-button aria-label="enter pool" *ngIf="row.registered" (click)="goToEditResults(row.id)">
+              <button mat-flat-button aria-label="enter pool" *ngIf="row.registered" (click)="goToEditResults(row)">
                 Editar Resultados <mat-icon>exit_to_app</mat-icon>
               </button>
             </td>
