@@ -20,9 +20,39 @@
   <figure class="m-0">
     <img src="../../../../assets/banner-1-gluck.png" class="main__banner--image" alt="">
   </figure>
-  <div class="main__banner--text" (click)="goToExternalUrl('https://glucktv.com/inicio')">
-    <h1>Quinielas Calientes</h1>
+<!--  <div class="main__banner&#45;&#45;text" (click)="goToExternalUrl('https://glucktv.com/inicio')">-->
+<!--    <h1>Quinielas Calientes</h1>-->
+<!--  </div>-->
+
+  <div class="row my-3" >
+    <div class="col-12 col-md-8 offset-md-2">
+      <div class="current-pools">
+        <div class="current__pools--header">
+          <h1>Qunielas calientes</h1>
+        </div>
+        <div class="current__pools--content">
+          <div class="current-pool" *ngFor="let pool of hotPools, index as i">
+            <p [matTooltip]="pool.name">{{pool.name | maxLength}}</p>
+            <img [matTooltip]="pool.sport.name" [src]="catchSport(pool.sport.name)" width="25" alt="">
+            <p>{{pool.matches.length}} (partidos)</p>
+            <p class="time-remaining">
+              <mat-icon class="me-2">access_time</mat-icon>
+              {{pool.timeRemaining}}</p>
+            <!--              <span class="pool-status" [matTooltip]="pool.result" [ngStyle]="-->
+            <!--              {'background-color': (pool.result === 'IN PROCESS')-->
+            <!--              ? '#F6DD06'-->
+            <!--              : (pool.result === 'FINISHED')-->
+            <!--              ? 'red'-->
+            <!--              : (pool.result === 'FOR START'-->
+            <!--              ? 'gray'-->
+            <!--              : 'none')}">-->
+            <!--              </span>-->
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
+
   <figure class="m-0">
     <img src="../../../../assets/banner-2-gluck.png" class="main__banner--image" alt="">
   </figure>

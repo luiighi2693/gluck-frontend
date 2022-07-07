@@ -65,11 +65,11 @@
             </div>
           </div>
           <div class="row">
-            <div class="col-12 col-md-4">
+            <div class="col-12 col-md-3">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Estatus de Quiniela</mat-label>
                 <mat-select formControlName="status">
-                  <mat-option>- Estatus -</mat-option>
+                  <mat-option disabled>- Estatus -</mat-option>
                   <mat-option value="1">Activo</mat-option>
                   <mat-option value="2">Cerrado</mat-option>
                 </mat-select>
@@ -78,11 +78,11 @@
                 </mat-error>
               </mat-form-field>
             </div>
-            <div class="col-12 col-md-4">
+            <div class="col-12 col-md-3">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Penalty</mat-label>
                 <mat-select formControlName="penalty" [(ngModel)]="doPenaltiesExist">
-                  <mat-option>- Penalty -</mat-option>
+                  <mat-option disabled>- Penalty -</mat-option>
                   <mat-option value="0">Si</mat-option>
                   <mat-option value="1">No</mat-option>
                 </mat-select>
@@ -91,11 +91,24 @@
                 </mat-error>
               </mat-form-field>
             </div>
-            <div class="col-12 col-md-4">
+            <div class="col-12 col-md-3">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Cantidad de Grupos</mat-label>
                 <input matInput type="number" placeholder="Cantidad de Grupos" formControlName="groups" [(ngModel)]="amountOfGroups"
                        autocomplete="off">
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-3">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Es quiniela caliente ?</mat-label>
+                <mat-select formControlName="hot">
+                  <mat-option disabled>- Es quiniela caliente ? -</mat-option>
+                  <mat-option [value]="1">Si</mat-option>
+                  <mat-option [value]="0">No</mat-option>
+                </mat-select>
+                <mat-error>
+                  Este Campo es <strong>Requerido.</strong>
+                </mat-error>
               </mat-form-field>
             </div>
           </div>

@@ -149,6 +149,7 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
       matches: ['', Validators.required],
       usersLimit: ['', Validators.required],
       status: ['', Validators.required],
+      hot: ['', Validators.required],
       penalty: ['', Validators.required],
       groups: [''],
       teamsPerGroup: [''],
@@ -243,7 +244,7 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
   registerPool() {
     this.loaderValue.updateIsloading(true);
     const {
-      name, sport, color, matches, usersLimit, status, penalty, groups, teamsPerGroup, type, league, password,
+      name, hot, sport, color, matches, usersLimit, status, penalty, groups, teamsPerGroup, type, league, password,
       rules
     } = this.config.value;
     const {amountInput, coinsInput, dateFinish, timeFinish, awardType, awardValue} = this.endPools.value;
@@ -259,7 +260,7 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
     const usersForPool = this.selection.selected;
     const {result, winner, draw, loser} = this.poolResults.value;
     const colorValue = color.hex.includes('#') ? color.hex : `#${color.hex}`;
-    this.admin.createAndUpdatePool(name, sport, colorValue, matches, usersLimit, status, penalty, groups, teamsPerGroup, type,
+    this.admin.createAndUpdatePool(name, hot, sport, colorValue, matches, usersLimit, status, penalty, groups, teamsPerGroup, type,
       league, password, rules, matchesInfo, groupsInfo, usersForPool, result, winner, draw, loser, amountInput, coinsInput, dateFinish, timeFinish,
       awardType, awardValue,
       'create').subscribe(data => {

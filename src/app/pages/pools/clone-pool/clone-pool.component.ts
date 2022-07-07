@@ -179,6 +179,7 @@ export class ClonePoolComponent implements OnInit, AfterViewInit {
       color: ['', Validators.required],
       matches: ['', Validators.required],
       usersLimit: ['', Validators.required],
+      hot: ['', Validators.required],
       status: ['', Validators.required],
       penalty: ['', Validators.required],
       groups: [''],
@@ -206,6 +207,7 @@ export class ClonePoolComponent implements OnInit, AfterViewInit {
 
   updateForms() {
     this.config.get('name').setValue(this.poolData.name);
+    this.config.get('hot').setValue(this.poolData.hot);
     this.config.get('sport').setValue(this.poolData.sport);
     this.config.get('color').setValue(this.poolData.color);
     this.config.get('matches').setValue(this.poolData.matches);
@@ -252,7 +254,7 @@ export class ClonePoolComponent implements OnInit, AfterViewInit {
   registerPool() {
     this.loaderValue.updateIsloading(true);
     const {
-      name, sport, color, matches, usersLimit, status, penalty, groups, teamsPerGroup, type, league, password,
+      name, hot, sport, color, matches, usersLimit, status, penalty, groups, teamsPerGroup, type, league, password,
       rules
     } = this.config.value;
     const {amountInput, coinsInput, dateFinish, timeFinish, awardType, awardValue} = this.endPools.value;
@@ -271,7 +273,7 @@ export class ClonePoolComponent implements OnInit, AfterViewInit {
     const groupsInfo = this.arrayOfGroups;
     const usersForPool = this.selection.selected;
     const {result, winner, draw, loser} = this.results.value;
-    this.admin.createAndUpdatePool(name, sport, color, matches, usersLimit, status, penalty, groups, teamsPerGroup, type, league, password,
+    this.admin.createAndUpdatePool(name, hot, sport, color, matches, usersLimit, status, penalty, groups, teamsPerGroup, type, league, password,
       rules, matchesInfo, groupsInfo, usersForPool, result, winner, draw, loser, amountInput, coinsInput, finishDate, timeFinish, awardType, awardValue,
       'create', this.currentPool).subscribe(data => {
       this.loaderValue.updateIsloading(false);

@@ -38,8 +38,8 @@ export class AdminComponent implements OnInit {
   constructor(
     private handleAlertsProvider: HandleAlertsProvider,
     private router: Router,
-    private admin: AdminService,
     private fb: FormBuilder,
+    private admin: AdminService,
     private loaderValue: LoaderProvider,
   ) {
     this.admin.initToken();
