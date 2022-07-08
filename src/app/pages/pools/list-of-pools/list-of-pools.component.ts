@@ -102,10 +102,12 @@ export class ListOfPoolsComponent implements OnInit, AfterViewInit {
   }
 
   goToDetail(status, id) {
-    if (status !== 1) {
-      this.router.navigate([`admin/pools/pools-results/${id}`]);
-    } else {
-      this.handleAlertsProvider.presentSnackbarError('Esta Quiniela esta en Proceso...');
-    }
+    this.router.navigate([`admin/pools/pools-results/${id}`]);
+
+    // if (status !== 1) {
+    //   this.router.navigate([`admin/pools/pools-results/${id}`]);
+    // } else {
+    //   this.handleAlertsProvider.presentSnackbarError('Esta Quiniela esta en Proceso...');
+    // }
   }
 }

@@ -59,6 +59,7 @@ export class PoolsResultsDetailComponent implements OnInit, AfterViewInit {
     this.loaderValue.updateIsloading(true);
     this.admin.getResultsByPool(this.currentPool).subscribe(res => {
       this.loaderValue.updateIsloading(false);
+      console.log('results by pool', res);
       if (res.code === 'D200') {
         this.dataSource = new MatTableDataSource<UserData>(res.data);
         this.dataSource.paginator = this.paginator;

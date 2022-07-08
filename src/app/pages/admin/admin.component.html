@@ -31,7 +31,7 @@
             </button>
           </div>
           <div class="current__pools--content">
-            <div class="current-pool" *ngFor="let pool of inProcessList, index as i">
+            <div class="current-pool" *ngFor="let pool of inProcessList, index as i" (click)="goToDetailPool(pool.id)">
               <p [matTooltip]="pool.name">{{pool.name | maxLength}}</p>
               <img [matTooltip]="pool.sport" [src]="catchSport(pool.sport)" width="25" alt="">
               <p>{{pool.matches}} (partidos)</p>
@@ -61,7 +61,7 @@
             </button>
           </div>
           <div class="current__pools--content">
-            <div class="current-pool" *ngFor="let pool of finishedList, index as i">
+            <div class="current-pool" *ngFor="let pool of finishedList, index as i" (click)="goToDetailPool(pool.id)">
               <p [matTooltip]="pool.name">{{pool.name | maxLength}}</p>
               <img [matTooltip]="pool.sport" [src]="catchSport(pool.sport)" width="25" alt="">
               <p>{{pool.matches}} (partidos)</p>

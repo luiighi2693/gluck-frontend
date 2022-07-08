@@ -155,4 +155,8 @@ export class AdminComponent implements OnInit {
       return 'assets/soccer-ball-variant.svg';
     }
   }
+
+  goToDetailPool(id: number) {
+    this.router.navigate([`/admin/pools/edit-pool/${id}`]);
+  }
 }
