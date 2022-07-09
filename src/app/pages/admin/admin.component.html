@@ -37,7 +37,7 @@
               <p>{{pool.matches}} (partidos)</p>
               <p class="time-remaining">
                 <mat-icon class="me-2">access_time</mat-icon>
-                {{pool.timeRemaining}}</p>
+                {{inProcessTimers[i]}}</p>
 <!--              <span class="pool-status" [matTooltip]="pool.result" [ngStyle]="-->
 <!--              {'background-color': (pool.result === 'IN PROCESS')-->
 <!--              ? '#F6DD06'-->
@@ -65,7 +65,7 @@
               <p [matTooltip]="pool.name">{{pool.name | maxLength}}</p>
               <img [matTooltip]="pool.sport" [src]="catchSport(pool.sport)" width="25" alt="">
               <p>{{pool.matches}} (partidos)</p>
-              <p class="time-remaining">
+              <p class="time-remaining-finalized">
                 <mat-icon class="me-2">access_time</mat-icon>
                 {{pool.timeRemaining}}</p>
 <!--              <span class="pool-status" [matTooltip]="pool.result" [ngStyle]="-->

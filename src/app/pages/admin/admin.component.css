@@ -148,6 +148,26 @@
   align-items: center;
 }
 
+.time-remaining-yellow {
+  background-color: yellow;
+  color: white;
+  font-size: 12px;
+  padding: .3rem 1rem;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.time-remaining-finalized {
+  background-color: red;
+  color: white;
+  font-size: 12px;
+  padding: .3rem 1rem;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+}
+
 
 @media (max-width: 768px ) {
   .home__banner--item {

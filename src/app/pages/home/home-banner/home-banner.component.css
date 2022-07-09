@@ -9,6 +9,17 @@
   border: 1px solid #333232;
 }
 
+.time-remaining {
+  background-color: green;
+  color: white;
+  font-size: 12px;
+  padding: .3rem 1rem;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+}
+
+
 
 .home__banner--item:hover, .home__banner--item:focus {
   color: #F6DD06;

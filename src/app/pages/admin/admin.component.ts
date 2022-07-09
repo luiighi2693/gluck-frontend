@@ -31,6 +31,10 @@ export class AdminComponent implements OnInit {
   inProcessList = [];
   finishedList = [];
 
+  // timer settings
+  inProcessTimers = [];
+  inProcessTimerControllers = [];
+
   displayedColumns: string[] = ['username', 'email', 'opts'];
   dataSource: MatTableDataSource<UserData>;
   selection = new SelectionModel<UserData>(true, []);
@@ -99,7 +103,31 @@ export class AdminComponent implements OnInit {
       this.loaderValue.updateIsloading(false);
       if (res.code === 'D200') {
         this.inProcessList = res.pools.filter(x => x.result === 'IN PROCESS');
+        console.log('resres' , this.inProcessList);
         this.finishedList = res.pools.filter(x => x.result === 'FINISHED');
+        this.inProcessList.forEach((e, i) => {
+          this.inProcessTimerControllers[i] = setInterval(() => {
+            const futureDate = new Date(e.timeRemaining).getTime();
+            // const futureDate = new Date('2022-08-06 17:00:00').getTime();
+            const today = new Date().getTime();
+            const distance = futureDate - today;
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const min = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60 ));
+            const sec = Math.floor((distance % (1000 * 60)) / (1000));
+
+            const timer = `${days} : ${hours} : ${min} : ${sec}`;
+            this.inProcessTimers[i] = timer;
+            if (distance < 0) {
+              clearInterval(this.inProcessTimerControllers[i]);
+              this.inProcessTimers[i] = 'Finalizado...';
+            }
+          }, 1000);
+        });
+
+        this.finishedList.forEach((e, i) => {
+          e.timeRemaining = moment(e.timeRemaining).format('LL');
+        });
         // this.startCounter(res.pools);
 
       } else if (res.code === 'D401' || res.code === 'D302' || res.code === 'D403') {

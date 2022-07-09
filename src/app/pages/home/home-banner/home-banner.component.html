@@ -34,10 +34,14 @@
           <div class="current-pool" *ngFor="let pool of hotPools, index as i">
             <p [matTooltip]="pool.name">{{pool.name | maxLength}}</p>
             <img [matTooltip]="pool.sport.name" [src]="catchSport(pool.sport.name)" width="25" alt="">
-            <p>{{pool.matches.length}} (partidos)</p>
+<!--            <p>{{pool.matches.length}} (partidos)</p>-->
+            <p></p>
             <p class="time-remaining">
               <mat-icon class="me-2">access_time</mat-icon>
-              {{pool.timeRemaining}}</p>
+              {{ timers[i] }}</p>
+            <button mat-raised-button style="background-color: #F6DD06; border-radius: 15px" (click)="registerToPool(pool)">Entrar</button>
+
+            <button mat-raised-button style="background-color: #F6DD06; border-radius: 15px" (click)="registerToPool(pool)">Entrar</button>
             <!--              <span class="pool-status" [matTooltip]="pool.result" [ngStyle]="-->
             <!--              {'background-color': (pool.result === 'IN PROCESS')-->
             <!--              ? '#F6DD06'-->
@@ -53,7 +57,7 @@
     </div>
   </div>
 
-  <figure class="m-0">
+  <figure class="m-0" style="cursor: pointer" (click)="goToExternalUrl('https://glucktv.com/inicio')">
     <img src="../../../../assets/banner-2-gluck.png" class="main__banner--image" alt="">
   </figure>
 </div>
