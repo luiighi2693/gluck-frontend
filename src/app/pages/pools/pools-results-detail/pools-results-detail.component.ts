@@ -82,7 +82,9 @@ export class PoolsResultsDetailComponent implements OnInit, AfterViewInit {
     }
   }
 
-  goToDetail(userID: any) {
-    this.router.navigate([`/admin/pools/results-per-user/${userID}/${this.currentPool}`]);
+  goToDetail(userID: any, resultado: number) {
+    if (resultado !== 0) {
+      this.router.navigate([`/admin/pools/results-per-user/${userID}/${this.currentPool}`]);
+    }
   }
 }
