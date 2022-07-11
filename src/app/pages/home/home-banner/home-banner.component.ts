@@ -36,15 +36,17 @@ export class HomeBannerComponent implements OnInit {
   }
 
   setPoolData() {
+    const userId = sessionStorage.getItem('id');
     this.loaderValue.updateIsloading(true);
-    this.admin.getPools().subscribe(res => {
+    this.admin.getHotPools(userId).subscribe(res => {
       this.loaderValue.updateIsloading(false);
       if (res.code === 'D200') {
-        this.hotPools = res.data.filter(x => x.hot === 1);
+        this.hotPools = res.pools;
+        console.log('hot pools', this.hotPools);
         this.hotPools.forEach((e, i) => {
           this.timerControllers[i] = setInterval(() => {
-            const finishDateTime =  e.dateFinish + ' ' + e.timeFinish;
-            const futureDate = new Date(finishDateTime).getTime();
+            // const finishDateTime =  e.dateFinish + ' ' + e.timeFinish;
+            const futureDate = new Date(e.timeRemaining).getTime();
             // const futureDate = new Date('2022-08-06 17:00:00').getTime();
             const today = new Date().getTime();
             const distance = futureDate - today;
@@ -92,12 +94,12 @@ export class HomeBannerComponent implements OnInit {
     this.amountSelected = data.amountInput;
     this.coinsSelected = data.coinsInput;
     const dialogRef = this.handleAlertsProvider.registerPoolDialog(
-      data.rowid,
+      data.id,
       data.name,
       this.user,
       data.amountInput + '$ ' + data.coinsInput + 'G',
       data.awardValue,
-      data.limit_user,
+      data.participants,
       '../../../../../assets/example-user.png',
       data.rules === '' ? '../../../../../assets/default-rules.png' : (this.imagePath + '/images/' + data.rules),
       '',
@@ -107,7 +109,7 @@ export class HomeBannerComponent implements OnInit {
       if (res === null) {
         if (data.password === '' || data.password === null) {
           // if (res === null) {
-          this.callRegisterPool(data.rowid);
+          this.callRegisterPool(data.id);
           // } else {
           //   this.handleAlertsProvider.presentGenericAlert('Las Claves no coinciden!', 'Aviso');
           // }
@@ -115,14 +117,14 @@ export class HomeBannerComponent implements OnInit {
           if (data.password !== res) {
             this.handleAlertsProvider.presentGenericAlert('Las Claves no coinciden!', 'Aviso');
           } else {
-            this.callRegisterPool(data.rowid);
+            this.callRegisterPool(data.id);
           }
         }
       } else {
         if (data.password !== res) {
           this.handleAlertsProvider.presentGenericAlert('Las Claves no coinciden!', 'Aviso');
         } else {
-          this.callRegisterPool(data.rowid);
+          this.callRegisterPool(data.id);
         }
       }
     });
