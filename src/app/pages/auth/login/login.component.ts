@@ -16,6 +16,7 @@ export class LoginComponent implements OnInit {
   loginForm: FormGroup;
   siteKey: string;
   captcha: boolean;
+  returnUrl: any;
 
   constructor(
     private authService: AuthService,
@@ -25,6 +26,7 @@ export class LoginComponent implements OnInit {
     private loaderValue: LoaderProvider,
   ) {
     this.siteKey = environment.siteKey;
+    this.returnUrl = this.route.snapshot.queryParams.returnUrl;
   }
 
   ngOnInit() {
@@ -86,10 +88,21 @@ export class LoginComponent implements OnInit {
             sessionStorage.setItem('coins', data.coins);
             sessionStorage.setItem('dateCreate', data.createDate);
             sessionStorage.setItem('img', data.img);
+            // localstorage
+            localStorage.setItem('token', data.accessToken);
+            localStorage.setItem('username', data.username);
+            localStorage.setItem('email', data.email);
+            localStorage.setItem('id', data.id);
+            localStorage.setItem('isAdmin', data.isAdmin);
+            localStorage.setItem('money', data.amount);
+            localStorage.setItem('coins', data.coins);
+            localStorage.setItem('dateCreate', data.createDate);
+            localStorage.setItem('img', data.img);
             if (data.isAdmin) {
               this.router.navigate(['/admin']);
             } else {
-              this.router.navigate(['/home']);
+              console.log('cai aqui!!!,', this.returnUrl);
+              this.router.navigate([this.returnUrl !== '' ? this.returnUrl :  '/home']);
             }
           }
         });
@@ -111,10 +124,21 @@ export class LoginComponent implements OnInit {
           sessionStorage.setItem('coins', data.coins);
           sessionStorage.setItem('dateCreate', data.createDate);
           sessionStorage.setItem('img', data.img);
+          // localstorage
+          localStorage.setItem('token', data.accessToken);
+          localStorage.setItem('username', data.username);
+          localStorage.setItem('email', data.email);
+          localStorage.setItem('id', data.id);
+          localStorage.setItem('isAdmin', data.isAdmin);
+          localStorage.setItem('money', data.amount);
+          localStorage.setItem('coins', data.coins);
+          localStorage.setItem('dateCreate', data.createDate);
+          localStorage.setItem('img', data.img);
           if (data.isAdmin) {
             this.router.navigate(['/admin']);
           } else {
-            this.router.navigate(['/home']);
+            console.log('cai aqui!!!,', this.returnUrl);
+            this.router.navigate([this.returnUrl !== '' ? this.returnUrl :  '/home']);
           }
         }
       });

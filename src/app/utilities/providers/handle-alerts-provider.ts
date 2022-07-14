@@ -12,6 +12,7 @@ import {InputDialogComponent} from '../../shared/alerts/input-dialog/input-dialo
 import {RulesDialogComponent} from '../../shared/alerts/rules-dialog/rules-dialog.component';
 import {TimeRemainingComponent} from '../../shared/alerts/time-remaining/time-remaining.component';
 import {ParticipantsComponent} from '../../shared/alerts/participants/participants.component';
+import {GeneratedUrlComponent} from '../../shared/alerts/generated-url/generated-url.component';
 
 @Injectable({
   providedIn: 'root'
@@ -88,6 +89,12 @@ export class HandleAlertsProvider {
     return this.dialog.open(ParticipantsComponent, {
       panelClass: 'dialog-container-custom',
       data: {participants}
+    });
+  }
+
+  presentGeneratedUrlDialog(url: string ) {
+    return this.dialog.open(GeneratedUrlComponent, {
+      data: {url}
     });
   }
 }

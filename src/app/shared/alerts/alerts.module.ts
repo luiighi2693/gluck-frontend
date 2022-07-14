@@ -12,6 +12,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { RulesDialogComponent } from './rules-dialog/rules-dialog.component';
 import { TimeRemainingComponent } from './time-remaining/time-remaining.component';
 import { ParticipantsComponent } from './participants/participants.component';
+import { GeneratedUrlComponent } from './generated-url/generated-url.component';
 
 
 @NgModule({
@@ -24,7 +25,8 @@ import { ParticipantsComponent } from './participants/participants.component';
     InputDialogComponent,
     RulesDialogComponent,
     TimeRemainingComponent,
-    ParticipantsComponent
+    ParticipantsComponent,
+    GeneratedUrlComponent
   ],
   imports: [
     CommonModule,

@@ -110,4 +110,9 @@ export class ListOfPoolsComponent implements OnInit, AfterViewInit {
     //   this.handleAlertsProvider.presentSnackbarError('Esta Quiniela esta en Proceso...');
     // }
   }
+
+  generateUrl(row) {
+    console.log(row);
+    this.handleAlertsProvider.presentGeneratedUrlDialog('http://localhost:4200/admin/pools/list-of-pools');
+  }
 }

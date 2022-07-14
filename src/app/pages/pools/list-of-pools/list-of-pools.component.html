@@ -68,14 +68,17 @@
         <ng-container matColumnDef="opts">
           <th class="opts" mat-header-cell *matHeaderCellDef mat-sort-header></th>
           <td class="opts" mat-cell *matCellDef="let row">
-            <button mat-icon-button aria-label="edit" (click)="editPool(row.rowid)">
+            <button matTooltip="Editar quiniela" mat-icon-button aria-label="edit" (click)="editPool(row.rowid)">
               <mat-icon>edit</mat-icon>
             </button>
-            <button mat-icon-button aria-label="delete" (click)="deletePool(row)">
+            <button matTooltip="Eliminar quiniela" mat-icon-button aria-label="delete" (click)="deletePool(row)">
               <mat-icon>delete</mat-icon>
             </button>
-            <button mat-icon-button aria-label="delete" (click)="clonePool(row.rowid)">
+            <button matTooltip="Clonar quiniela" mat-icon-button aria-label="delete" (click)="clonePool(row.rowid)">
               <mat-icon>file_copy</mat-icon>
+            </button>
+            <button matTooltip="Generar Url de registro" mat-icon-button aria-label="delete" (click)="generateUrl(row)">
+              <mat-icon>link</mat-icon>
             </button>
           </td>
         </ng-container>
