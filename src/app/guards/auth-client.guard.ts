@@ -24,9 +24,10 @@ export class AuthClientGuard implements CanActivate {
     // return true;
     if (!this.auth.isAuthenticated()) {
       console.log(state.url, 'previus url!!');
+      console.log(state.url.length);
       this.router.navigate(['/auth'], {
         queryParams: {
-          returnUrl: state.url
+          returnUrl: state.url?.length <= 1 ? null : state.url
         }
       });
       this.handleAlertsProvider.presentGenericAlert('Debe iniciar session antes de ingresar a el resto de la aplicacion...');

@@ -6,13 +6,17 @@ import {LegalAgreementComponent} from './shared/components/legal-agreement/legal
 
 const routes: Routes = [
   {
-    path: 'home',
+    path: '',
     canActivate: [AuthClientGuard],
     component: LayoutComponent,
     children: [
       {
         path: '',
         loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule)
+      },
+      {
+        path: 'share',
+        loadChildren: () => import('./pages/share/share.module').then(m => m.ShareModule)
       },
       {
         path: 'profile',

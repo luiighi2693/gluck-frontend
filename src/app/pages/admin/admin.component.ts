@@ -105,10 +105,11 @@ export class AdminComponent implements OnInit {
         this.inProcessList = res.pools.filter(x => x.result === 'IN PROCESS');
         console.log('resres' , this.inProcessList);
         this.finishedList = res.pools.filter(x => x.result === 'FINISHED');
+        // TODO agregar valor de time...
         this.inProcessList.forEach((e, i) => {
           this.inProcessTimerControllers[i] = setInterval(() => {
-            const futureDate = new Date(e.timeRemaining).getTime();
-            // const futureDate = new Date('2022-08-06 17:00:00').getTime();
+            // const futureDate = new Date(e.timeRemaining).getTime();
+            const futureDate = new Date('2022-07-18 19:46:00').getTime();
             const today = new Date().getTime();
             const distance = futureDate - today;
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
@@ -119,6 +120,8 @@ export class AdminComponent implements OnInit {
             const timer = `${days} : ${hours} : ${min} : ${sec}`;
             this.inProcessTimers[i] = timer;
             if (distance < 0) {
+              console.log(distance);
+              console.log('timer finalizado!');
               clearInterval(this.inProcessTimerControllers[i]);
               this.inProcessTimers[i] = 'Finalizado...';
             }

@@ -330,4 +330,24 @@ export class AdminService {
   getRankingForPool(id): Observable<any> {
     return this.http.get(`${environment.basePath}/api/result/getRankingForPool?poolId=${id}`);
   }
+
+//  generateLink
+  getGeneratedLinkByPool(poolId): Observable<any> {
+    return this.http.get(`${environment.basePath}/api/pool/getLinkByPool?poolId=${poolId}`);
+  }
+
+  registerUserByUrl(userId, code): Observable<any> {
+    const params = {
+      userId,
+      code
+    };
+    return this.http.post(`${environment.basePath}/api/pool/registerUserPoolByLinkCode`, params, {headers});
+  }
+
+  updatePoolStatusToInProcess(poolId): Observable<any> {
+    const params = {
+      poolId
+    };
+    return this.http.post(`${environment.basePath}/api/pool/updatePoolStatusToInProcess`, params, {headers})
+  }
 }

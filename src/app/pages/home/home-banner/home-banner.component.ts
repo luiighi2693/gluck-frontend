@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {AdminService} from '../../../services/admin.service';
 import {LoaderProvider} from '../../../utilities/providers/loader-provider';
 import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-provider';
@@ -19,6 +19,7 @@ export class HomeBannerComponent implements OnInit {
   hotPools = [];
   timers = [];
   timerControllers = [];
+
   constructor(
     private router: Router,
     private handleAlertsProvider: HandleAlertsProvider,
@@ -43,23 +44,35 @@ export class HomeBannerComponent implements OnInit {
       if (res.code === 'D200') {
         this.hotPools = res.pools;
         console.log('hot pools', this.hotPools);
+        this.hotPools.forEach(pool => {
+          const poolDate = new Date(pool.timeRemaining).getTime();
+          // const poolDate = new Date('2022-07-18 22:36:00').getTime();
+
+          const currentDate = new Date().getTime();
+          pool.isFinished = poolDate - currentDate < 0;
+        });
+        console.log('hot pools edited!!!', this.hotPools);
         this.hotPools.forEach((e, i) => {
           this.timerControllers[i] = setInterval(() => {
-            // const finishDateTime =  e.dateFinish + ' ' + e.timeFinish;
             const futureDate = new Date(e.timeRemaining).getTime();
-            // const futureDate = new Date('2022-08-06 17:00:00').getTime();
+            // const futureDate = new Date('2022-07-24 22:36:00').getTime();
             const today = new Date().getTime();
             const distance = futureDate - today;
             const days = Math.floor(distance / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const min = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60 ));
+            const min = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
             const sec = Math.floor((distance % (1000 * 60)) / (1000));
 
             const timer = `${days} : ${hours} : ${min} : ${sec}`;
             this.timers[i] = timer;
-            if (distance < 0) {
+            if (distance < 0 && e.isFinished) {
               clearInterval(this.timerControllers[i]);
-              this.timers[i] = 'Finalizado...';
+              this.timers[i] = 'Finalizado old...';
+            }
+            if (distance < 0 && !e.isFinished) {
+              clearInterval(this.timerControllers[i]);
+              this.admin.updatePoolStatusToInProcess(e.id).subscribe();
+              this.timers[i] = 'just Finalizado...';
             }
           }, 1000);
 
@@ -167,6 +180,26 @@ export class HomeBannerComponent implements OnInit {
     // } else if (pool.registered) {
     //   this.router.navigate([`/home/pools/pool-register/${pool.id}`]);
     // }
+  }
+
+  getCurrentUser() {
+    const id = sessionStorage.getItem('id');
+    this.loaderValue.updateIsloading(true);
+    this.admin.getUser(id).subscribe(response => {
+      this.loaderValue.updateIsloading(false);
+      if (response.code === 'D200') {
+        const userData = response.data;
+        console.log(userData);
+        // this.event.trigger('getCoins', userData.coins);
+        // this.event.trigger('getMoney', userData.money);
+        // this.updateProfileForm.setValue(this.userData);
+      } else if (response.code === 'A401' || response.code === 'A302' || response.code === 'A403') {
+        this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
+        this.router.navigate(['/auth']);
+      }
+    }, err => {
+      this.handleAlertsProvider.presentGenericAlert(err);
+    });
   }
 }
 

@@ -102,7 +102,11 @@ export class LoginComponent implements OnInit {
               this.router.navigate(['/admin']);
             } else {
               console.log('cai aqui!!!,', this.returnUrl);
-              this.router.navigate([this.returnUrl !== '' ? this.returnUrl :  '/home']);
+              if (this.returnUrl) {
+                this.router.navigate([this.returnUrl]);
+              } else {
+                this.router.navigate(['']);
+              }
             }
           }
         });
@@ -138,7 +142,11 @@ export class LoginComponent implements OnInit {
             this.router.navigate(['/admin']);
           } else {
             console.log('cai aqui!!!,', this.returnUrl);
-            this.router.navigate([this.returnUrl !== '' ? this.returnUrl :  '/home']);
+            if (this.returnUrl) {
+              this.router.navigate([this.returnUrl]);
+            } else {
+              this.router.navigate(['']);
+            }
           }
         }
       });
