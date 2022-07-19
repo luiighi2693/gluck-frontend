@@ -20,6 +20,7 @@ export class ShareComponent implements OnInit {
     private event: EventBusService,
     private loaderValue: LoaderProvider
   ) {
+    this.admin.initToken();
   }
 
   ngOnInit(): void {
