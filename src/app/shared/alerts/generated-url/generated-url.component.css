@@ -1,0 +1,28 @@
+.url-text {
+  font-size: 22px;
+}
+
+.url-title {
+  text-align: center;
+}
+
+.ok-button {
+  background-color: #F6DD06;
+  color: black;
+}
+
+.url-content {
+  height: 100px;
+  display: flex;
+  align-items: center;
+}
+
+.modal-container {
+  position: relative;
+}
+
+.close-icon {
+  position: absolute;
+  top: 0;
+  right: 0;
+}

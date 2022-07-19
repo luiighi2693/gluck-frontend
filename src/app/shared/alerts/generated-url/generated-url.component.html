@@ -1,0 +1,14 @@
+<div class="modal-container">
+  <button mat-icon-button color="accent" class="close-icon" (click)="onDismiss()" [mat-dialog-close]="true">
+    <mat-icon>close</mat-icon>
+  </button>
+  <h1 mat-dialog-title class="url-title">Url de registro</h1>
+  <div mat-dialog-content class="url-content" *ngIf="data.url">
+    <p class="url-text">{{data.url}}</p>
+  </div>
+  <mat-dialog-actions align="center">
+    <!--  <button mat-button color="warn" mat-dialog-close>Cancel</button>-->
+    <button mat-button class="ok-button" [matTooltip]="isCopied ? 'URL copiada!' : 'Copiar URL' "
+            (click)="copyToClipboard()" cdkFocusInitial>{{ isCopied ? 'Url Copiada!' : 'Copiar' }}</button>
+  </mat-dialog-actions>
+</div>
