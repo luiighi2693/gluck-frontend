@@ -55,8 +55,8 @@ export class ShareComponent implements OnInit {
       if (response.code === 'D200') {
         const userData = response.data;
         console.log(userData);
-        this.event.trigger('getCoins', userData.coins);
-        this.event.trigger('getMoney', userData.money);
+        this.event.trigger('getCoinsForRegisterPull', userData.coins);
+        this.event.trigger('getMoneyForRegisterPull', userData.amount);
         // this.updateProfileForm.setValue(this.userData);
       } else if (response.code === 'A401' || response.code === 'A302' || response.code === 'A403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');

@@ -45,6 +45,14 @@ export class LayoutComponent implements OnInit {
       this.coins = Number(this.money) + payload;
       sessionStorage.setItem('coins', this.coins);
     });
+    this.event.on('getMoneyForRegisterPull', (payload: any) => {
+      this.money = payload;
+      sessionStorage.setItem('money', this.money);
+    });
+    this.event.on('getCoinsorRegisterPull', (payload: any) => {
+      this.coins = payload;
+      sessionStorage.setItem('coins', this.coins);
+    });
     this.loaderValue.getIsLoadingValue().subscribe(res => {
       this.isLoading = res;
     });
