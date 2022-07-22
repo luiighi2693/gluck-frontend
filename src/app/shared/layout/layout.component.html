@@ -4,7 +4,7 @@
 <mat-drawer-container  class="mat-typography"  autosize (backdropClick)="backdropClick()">
   <mat-drawer #drawer [mode]="pageWidth >= 992 ? 'side' : 'over' " [opened]="pageWidth >= 992 ? 'true' : isExpanded" style="width: 310px">
     <mat-nav-list class="nav__list">
-      <figure class="logo__expanded" (click)="backdropClick()" [routerLink]="[isAdmin ? '/admin' : '/home']">
+      <figure class="logo__expanded" (click)="backdropClick()" [routerLink]="[isAdmin ? '/admin' : '/']">
         <img src="../../../assets/logo.png" width="200px" alt="">
       </figure>
       <figure class="avatar">

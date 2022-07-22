@@ -100,6 +100,6 @@ export class ListOfPoolsComponent implements OnInit, AfterViewInit {
   }
 
   goToEditResults(poolId) {
-    this.router.navigate([`/home/pools/pool-register/${poolId}`]);
+    this.router.navigate([`/pools/pool-register/${poolId}`]);
   }
 }

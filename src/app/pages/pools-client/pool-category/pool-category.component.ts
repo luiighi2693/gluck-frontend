@@ -63,7 +63,7 @@ export class PoolCategoryComponent implements OnInit {
 
   goToPool(id, name) {
     sessionStorage.setItem('poolCategory', name);
-    this.router.navigate([`/home/pools/pool/${id}`]);
+    this.router.navigate([`/pools/pool/${id}`]);
   }
 }
 

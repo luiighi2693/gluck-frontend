@@ -19,6 +19,7 @@ export class HomeBannerComponent implements OnInit {
   hotPools = [];
   timers = [];
   timerControllers = [];
+  flag = false;
 
   constructor(
     private router: Router,
@@ -32,12 +33,12 @@ export class HomeBannerComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.user = sessionStorage.getItem('username');
+    this.user = localStorage.getItem('username');
     this.setPoolData();
   }
 
   setPoolData() {
-    const userId = sessionStorage.getItem('id');
+    const userId = localStorage.getItem('id');
     this.loaderValue.updateIsloading(true);
     this.admin.getHotPools(userId).subscribe(res => {
       this.loaderValue.updateIsloading(false);
@@ -67,16 +68,17 @@ export class HomeBannerComponent implements OnInit {
             this.timers[i] = timer;
             if (distance < 0 && e.isFinished) {
               clearInterval(this.timerControllers[i]);
-              this.timers[i] = 'Finalizado old...';
+              this.timers[i] = 'Finalizado...';
             }
             if (distance < 0 && !e.isFinished) {
               clearInterval(this.timerControllers[i]);
               this.admin.updatePoolStatusToInProcess(e.id).subscribe();
-              this.timers[i] = 'just Finalizado...';
+              this.timers[i] = 'Finalizado...';
             }
           }, 1000);
 
         });
+        this.flag = true;
         // this.startCounter(res.pools);
 
       } else if (res.code === 'D401' || res.code === 'D302' || res.code === 'D403') {
@@ -98,9 +100,9 @@ export class HomeBannerComponent implements OnInit {
     window.open(url, '_blank');
   }
 
-  goToDetail(id: number) {
-    this.router.navigate([``]);
-  }
+  // goToDetail(id: number) {
+  //   this.router.navigate([``]);
+  // }
 
   registerToPool(data) {
     console.log(data);
@@ -145,11 +147,10 @@ export class HomeBannerComponent implements OnInit {
 
   private callRegisterPool(id) {
     this.loaderValue.updateIsloading(true);
-    this.admin.registerUserPool(id, sessionStorage.getItem('id')).subscribe(data => {
+    this.admin.registerUserPool(id, localStorage.getItem('id')).subscribe(data => {
       this.loaderValue.updateIsloading(false);
       if (data.code === 'D200') {
-        this.updateMoney();
-        this.updateCoins();
+        this.getCurrentUser();
         this.goToEditResults(id);
       } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
@@ -158,40 +159,15 @@ export class HomeBannerComponent implements OnInit {
     });
   }
 
-  updateMoney() {
-    this.event.trigger('getMoney', this.amountSelected * (-1));
-  }
-
-  updateCoins() {
-    this.event.trigger('getCoins', this.coinsSelected * (-1));
-  }
-
-  goToEditResults(pool) {
-    this.router.navigate([`/home/pools/pool-register/${pool}`]);
-
-    // if (pool.timeRemaining === '00:00:00' && !pool.registered) {
-    //   alert('este evento esta cerrado');
-    // } else if (pool.registered) {
-    //   this.router.navigate([`/home/pools/pool-register/${pool.id}`]);
-    // }
-
-    // if (new Date() > new Date(pool.date)) {
-    //   alert('este evento esta cerrado');
-    // } else if (pool.registered) {
-    //   this.router.navigate([`/home/pools/pool-register/${pool.id}`]);
-    // }
-  }
-
   getCurrentUser() {
-    const id = sessionStorage.getItem('id');
+    const id = localStorage.getItem('id');
     this.loaderValue.updateIsloading(true);
     this.admin.getUser(id).subscribe(response => {
       this.loaderValue.updateIsloading(false);
       if (response.code === 'D200') {
         const userData = response.data;
-        console.log(userData);
-        // this.event.trigger('getCoins', userData.coins);
-        // this.event.trigger('getMoney', userData.money);
+        this.event.trigger('getCoins', {type: 'spent', amount: userData.coins});
+        this.event.trigger('getMoney', {type: 'spent', amount: userData.money});
         // this.updateProfileForm.setValue(this.userData);
       } else if (response.code === 'A401' || response.code === 'A302' || response.code === 'A403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
@@ -200,6 +176,21 @@ export class HomeBannerComponent implements OnInit {
     }, err => {
       this.handleAlertsProvider.presentGenericAlert(err);
     });
+  }
+  goToEditResults(pool) {
+    this.router.navigate([`/pools/pool-register/${pool}`]);
+
+    // if (pool.timeRemaining === '00:00:00' && !pool.registered) {
+    //   alert('este evento esta cerrado');
+    // } else if (pool.registered) {
+    //   this.router.navigate([`/pools/pool-register/${pool.id}`]);
+    // }
+
+    // if (new Date() > new Date(pool.date)) {
+    //   alert('este evento esta cerrado');
+    // } else if (pool.registered) {
+    //   this.router.navigate([`/pools/pool-register/${pool.id}`]);
+    // }
   }
 }
 

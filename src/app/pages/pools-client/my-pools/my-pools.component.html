@@ -74,8 +74,8 @@
           <ng-container matColumnDef="opts">
             <th class="opts" mat-header-cell *matHeaderCellDef mat-sort-header></th>
             <td class="opts" mat-cell *matCellDef="let row">
-              <button mat-flat-button aria-label="enter pool" class="action-button mb-1" (click)="goToEditResult(row.id)">
-                Editar Resultados
+              <button *ngIf="row.remainingTime !== '00:00:00'" mat-flat-button aria-label="enter pool" class="action-button mb-1" (click)="goToEditResult(row.id)">
+                {{ row.remainingTime === '00:00:00' ? 'Ver Resultados' : 'Editar Resultados' }}
               </button>
               <button mat-flat-button aria-label="see Ranking" class="action-button" (click)="registerToPool(row.id, row.name)">
                 Ver Ranking

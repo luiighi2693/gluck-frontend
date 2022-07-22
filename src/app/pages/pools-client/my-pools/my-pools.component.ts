@@ -144,7 +144,7 @@ export class MyPoolsComponent implements OnInit, AfterViewInit {
 
   registerToPool(id, name) {
     sessionStorage.setItem('poolName', name);
-    this.router.navigate([`/home/pools/pools-results/${id}`]);
+    this.router.navigate([`/pools/pools-results/${id}`]);
   }
 
   private formatDate(n: number) {
@@ -152,10 +152,10 @@ export class MyPoolsComponent implements OnInit, AfterViewInit {
   }
 
   goToEditResult(id) {
-    this.router.navigate([`/home/pools/pool-register/${id}`]);
+    this.router.navigate([`/pools/pool-register/${id}`]);
   }
 
   goToRanking(id) {
-    this.router.navigate([`/home/pools/ranking/${id}`]);
+    this.router.navigate([`/pools/ranking/${id}`]);
   }
 }

@@ -62,7 +62,7 @@ export class PoolsResultsComponent implements OnInit, AfterViewInit {
   }
 
   goToMyResults() {
-    this.router.navigate([`/home/pools/my-results/${this.currentPool}`]);
+    this.router.navigate([`/pools/my-results/${this.currentPool}`]);
   }
 
   goToOtherResults(userID, username) {

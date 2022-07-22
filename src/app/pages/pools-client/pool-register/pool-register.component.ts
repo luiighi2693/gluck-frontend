@@ -227,7 +227,7 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
           this.loaderValue.updateIsloading(false);
           if (res.code === 'D200') {
             this.handleAlertsProvider.presentSnackbarSuccess('Has registrado los datos correctamente!');
-            this.router.navigate(['home/pools']);
+            this.router.navigate(['/pools']);
           } else if (res.code === 'A401' || res.code === 'A302' || res.code === 'A403') {
             this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
             this.router.navigate(['/auth']);
@@ -242,7 +242,7 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
         this.loaderValue.updateIsloading(false);
         if (res.code === 'D200') {
           this.handleAlertsProvider.presentSnackbarSuccess('Has registrado los datos correctamente!');
-          this.router.navigate(['home/pools']);
+          this.router.navigate(['/pools']);
         } else if (res.code === 'A401' || res.code === 'A302' || res.code === 'A403') {
           this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
           this.router.navigate(['/auth']);

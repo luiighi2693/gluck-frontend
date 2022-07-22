@@ -15,7 +15,7 @@ export class AdminService {
   }
 
   initToken() {
-    headers = new HttpHeaders().set('token', sessionStorage.getItem('token'));
+    headers = new HttpHeaders().set('token', localStorage.getItem('token'));
   }
 
   getUsers(): Observable<any> {

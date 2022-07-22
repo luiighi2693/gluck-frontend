@@ -101,9 +101,9 @@ export class LoginComponent implements OnInit {
             if (data.isAdmin) {
               this.router.navigate(['/admin']);
             } else {
-              console.log('cai aqui!!!,', this.returnUrl);
+              console.log('cai aqui!!! recaptcha,', this.returnUrl.trim());
               if (this.returnUrl) {
-                this.router.navigate([this.returnUrl]);
+                this.router.navigateByUrl(this.returnUrl);
               } else {
                 this.router.navigate(['']);
               }
@@ -141,9 +141,10 @@ export class LoginComponent implements OnInit {
           if (data.isAdmin) {
             this.router.navigate(['/admin']);
           } else {
+            console.log(this.returnUrl.split(''));
             console.log('cai aqui!!!,', this.returnUrl);
             if (this.returnUrl) {
-              this.router.navigate([this.returnUrl]);
+              this.router.navigateByUrl(this.returnUrl);
             } else {
               this.router.navigate(['']);
             }
@@ -173,7 +174,7 @@ export class LoginComponent implements OnInit {
   //       if (data.isAdmin) {
   //         this.router.navigate(['/admin']);
   //       } else {
-  //         this.router.navigate(['/home']);
+  //         this.router.navigate(['/']);
   //       }
   //     }
   //   });
@@ -192,5 +193,15 @@ export class LoginComponent implements OnInit {
     sessionStorage.removeItem('coins');
     sessionStorage.removeItem('dateCreate');
     sessionStorage.removeItem('img');
+    // localstorage
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    localStorage.removeItem('email');
+    localStorage.removeItem('id');
+    localStorage.removeItem('isAdmin');
+    localStorage.removeItem('money');
+    localStorage.removeItem('coins');
+    localStorage.removeItem('dateCreate');
+    localStorage.removeItem('img');
   }
 }

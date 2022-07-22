@@ -33,7 +33,7 @@ export class ProfileFormComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.id = sessionStorage.getItem('id');
+    this.id = localStorage.getItem('id');
     this.createForm();
     this.getCurrentUser();
   }
@@ -89,8 +89,8 @@ export class ProfileFormComponent implements OnInit {
       this.loaderValue.updateIsloading(false);
       if (res.code === 'D200') {
         this.handleAlertsProvider.presentSnackbarSuccess('Se actualizaron los datos con exito!');
-        sessionStorage.setItem('img', img);
-        this.router.navigate(['home']);
+        localStorage.setItem('img', img);
+        this.router.navigate(['/']);
       } else if (res.code === 'A401' || res.code === 'A302' || res.code === 'A403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
         this.router.navigate(['/auth']);

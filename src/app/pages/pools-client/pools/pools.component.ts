@@ -43,6 +43,6 @@ export class PoolsComponent implements OnInit {
   }
 
   goToCategory(path) {
-    this.router.navigate([`/home/pools/pool-category/${path}`]);
+    this.router.navigate([`/pools/pool-category/${path}`]);
   }
 }

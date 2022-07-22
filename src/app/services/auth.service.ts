@@ -14,7 +14,7 @@ export class AuthService {
   constructor(private http: HttpClient) { }
 
   public isAuthenticated(): boolean {
-    const token = sessionStorage.getItem('token');
+    const token = localStorage.getItem('token');
     return !jwtHelper.isTokenExpired(token);
   }
 

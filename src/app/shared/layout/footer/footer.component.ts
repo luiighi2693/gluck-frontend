@@ -23,7 +23,7 @@ export class FooterComponent implements OnInit {
     if (sessionStorage.getItem('isAdmin')) {
       this.router.navigate(['/admin/legal-agreement']);
     } else {
-      this.router.navigate(['/home/legal-agreement']);
+      this.router.navigate(['/legal-agreement']);
     }
   }
 }

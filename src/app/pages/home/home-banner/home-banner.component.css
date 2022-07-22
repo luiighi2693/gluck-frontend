@@ -9,8 +9,18 @@
   border: 1px solid #333232;
 }
 
-.time-remaining {
+.bg-green {
   background-color: green;
+  color: white;
+  font-size: 12px;
+  padding: .3rem 1rem;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.bg-red {
+  background-color: red;
   color: white;
   font-size: 12px;
   padding: .3rem 1rem;
@@ -113,12 +123,20 @@
   margin-top: 0.5rem;
 }
 
-.time-remaining {
+
+.bg-green {
   background-color: green;
-  color: white;
-  font-size: 12px;
   padding: .3rem 1rem;
   border-radius: 15px;
   display: flex;
   align-items: center;
 }
+
+.bg-red {
+  background-color: red;
+  padding: .3rem 1rem;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+}
+

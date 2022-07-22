@@ -35,11 +35,11 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.isMobile = window.innerWidth < 992;
-    this.userImage = sessionStorage.getItem('img');
-    this.token = sessionStorage.getItem('token');
-    this.isAdmin = JSON.parse(sessionStorage.getItem('isAdmin'));
-    this.name = sessionStorage.getItem('username');
-    this.dateCreate = sessionStorage.getItem('dateCreate').slice(0, 10);
+    this.userImage = localStorage.getItem('img');
+    this.token = localStorage.getItem('token');
+    this.isAdmin = JSON.parse(localStorage.getItem('isAdmin'));
+    this.name = localStorage.getItem('username');
+    this.dateCreate = localStorage.getItem('dateCreate').slice(0, 10);
   }
 
   toggle() {
@@ -56,7 +56,7 @@ export class HeaderComponent implements OnInit {
     if (this.isAdmin) {
       this.router.navigate(['/admin/edit-profile']);
     } else {
-      this.router.navigate(['/home/profile']);
+      this.router.navigate(['/profile']);
     }
   }
 

@@ -204,8 +204,9 @@ export class PoolComponent implements OnInit, AfterViewInit {
     this.admin.registerUserPool(id, sessionStorage.getItem('id')).subscribe(data => {
       this.loaderValue.updateIsloading(false);
       if (data.code === 'D200') {
-        this.updateMoney();
-        this.updateCoins();
+        // this.updateMoney();
+        // this.updateCoins();
+        this.getCurrentUser();
         this.goToEditResults(id);
       } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
@@ -219,7 +220,7 @@ export class PoolComponent implements OnInit, AfterViewInit {
     if (pool.timeRemaining === '00:00:00' && !pool.registered) {
       alert('este evento esta cerrado');
     } else if (pool.registered) {
-      this.router.navigate([`/home/pools/pool-register/${pool.id}`]);
+      this.router.navigate([`/pools/pool-register/${pool.id}`]);
     }
     // if (new Date() > new Date(pool.date)) {
     //   alert('este evento esta cerrado');
@@ -228,11 +229,30 @@ export class PoolComponent implements OnInit, AfterViewInit {
     // }
   }
 
-  updateMoney() {
-    this.event.trigger('getMoney', this.amountSelected * (-1));
-  }
+  // updateMoney() {
+  //   this.event.trigger('getMoney', this.amountSelected * (-1));
+  // }
+  //
+  // updateCoins() {
+  //   this.event.trigger('getCoins', this.coinsSelected * (-1));
+  // }
 
-  updateCoins() {
-    this.event.trigger('getCoins', this.coinsSelected * (-1));
+  getCurrentUser() {
+    const id = sessionStorage.getItem('id');
+    this.loaderValue.updateIsloading(true);
+    this.admin.getUser(id).subscribe(response => {
+      this.loaderValue.updateIsloading(false);
+      if (response.code === 'D200') {
+        const userData = response.data;
+        this.event.trigger('getCoins', {type: 'spent', amount: userData.coins});
+        this.event.trigger('getMoney', {type: 'spent', amount: userData.money});
+        // this.updateProfileForm.setValue(this.userData);
+      } else if (response.code === 'A401' || response.code === 'A302' || response.code === 'A403') {
+        this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
+        this.router.navigate(['/auth']);
+      }
+    }, err => {
+      this.handleAlertsProvider.presentGenericAlert(err);
+    });
   }
 }

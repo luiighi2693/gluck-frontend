@@ -38,11 +38,21 @@ export class LayoutComponent implements OnInit {
   ngOnInit(): void {
     this.userImage = sessionStorage.getItem('img');
     this.event.on('getMoney', (payload: any) => {
-      this.money = Number(this.money) + payload;
+      if (payload.type === 'add') {
+        this.money = Number(this.money) + payload.amount;
+      }
+      if (payload.type === 'spent') {
+        this.money = payload.amount;
+      }
       sessionStorage.setItem('money', this.money);
     });
     this.event.on('getCoins', (payload: any) => {
-      this.coins = Number(this.money) + payload;
+      if (payload.type === 'add') {
+        this.coins = Number(this.coins) + payload.amount;
+      }
+      if (payload.type === 'spent') {
+        this.coins = payload.amount;
+      }
       sessionStorage.setItem('coins', this.coins);
     });
     this.event.on('getMoneyForRegisterPull', (payload: any) => {

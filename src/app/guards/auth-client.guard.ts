@@ -30,8 +30,7 @@ export class AuthClientGuard implements CanActivate {
           returnUrl: state.url?.length <= 1 ? null : state.url
         }
       });
-      this.handleAlertsProvider.presentGenericAlert('Debe iniciar session antes de ingresar a el resto de la aplicacion...');
-      // this.loaderValue.updateIsloading(false);
+      // this.handleAlertsProvider.presentGenericAlert('Debe iniciar session antes de ingresar a el resto de la aplicacion...');
       return false;
     }
     return true;

@@ -35,7 +35,7 @@ export class RegisterPoolDialogComponent implements OnInit {
   }
 
   register(id) {
-    this.router.navigate([`/home/pools/register-to-pool/${id}`]);
+    this.router.navigate([`/pools/register-to-pool/${id}`]);
   }
 
   ShowRules(rules: string) {

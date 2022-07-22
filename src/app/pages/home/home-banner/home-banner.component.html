@@ -30,18 +30,18 @@
         <div class="current__pools--header">
           <h1>Quinielas calientes</h1>
         </div>
-        <div class="current__pools--content">
+        <div class="current__pools--content" *ngIf="hotPools.length > 0">
           <div class="current-pool" *ngFor="let pool of hotPools, index as i">
             <p [matTooltip]="pool.name">{{pool.name | maxLength}}</p>
 <!--            <img [matTooltip]="pool.sport.name" [src]="catchSport(pool.sport.name)" width="25" alt="">-->
 <!--            <p>{{pool.matches.length}} (partidos)</p>-->
             <p></p>
-            <p class="time-remaining">
+            <p  [className]="timers[i] === 'Finalizado...' ? 'bg-red' : 'bg-green' ">
               <mat-icon class="me-2">access_time</mat-icon>
               {{ timers[i] }}</p>
-            <button mat-raised-button style="background-color: #F6DD06; border-radius: 15px" *ngIf="!pool.registered" [disabled]="timers[i] === 'Finalizado...'" (click)="registerToPool(pool)">Registrarme</button>
+            <button mat-raised-button style="background-color: #F6DD06; border-radius: 15px" *ngIf="!pool.registered" [disabled]="timers[i] === 'Finalizado...'" (click)="registerToPool(pool)">{{ timers[i] === 'Finalizado...' ? 'Este evento ya ha comenzado!' : 'Registrarme' }}</button>
 
-            <button mat-raised-button style="background-color: #F6DD06; border-radius: 15px" *ngIf="pool.registered" [disabled]="timers[i] === 'Finalizado...'" (click)="registerToPool(pool)">Entrar</button>
+            <button mat-raised-button style="background-color: #F6DD06; border-radius: 15px" *ngIf="pool.registered" [disabled]="timers[i] === 'Finalizado...'" (click)="registerToPool(pool)">{{ timers[i] === 'Finalizado...' ? 'Este evento ya ha comenzado!' : 'Entrar' }}</button>
             <!--              <span class="pool-status" [matTooltip]="pool.result" [ngStyle]="-->
             <!--              {'background-color': (pool.result === 'IN PROCESS')-->
             <!--              ? '#F6DD06'-->
