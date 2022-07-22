@@ -101,11 +101,11 @@ export class LoginComponent implements OnInit {
             if (data.isAdmin) {
               this.router.navigate(['/admin']);
             } else {
-              console.log('cai aqui!!! recaptcha,', this.returnUrl.trim());
+              console.log('cai aqui!!! recaptcha,', this.returnUrl);
               if (this.returnUrl) {
                 this.router.navigateByUrl(this.returnUrl);
               } else {
-                this.router.navigate(['']);
+                this.router.navigate(['/']);
               }
             }
           }
@@ -115,6 +115,7 @@ export class LoginComponent implements OnInit {
       const {username, password} = this.loginForm.value;
       this.loaderValue.updateIsloading(true);
       this.authService.login(username, password).subscribe(data => {
+        console.log(data);
         this.loaderValue.updateIsloading(false);
         if (data.hasError) {
           this.handleAlertsProvider.presentGenericAlert('No se ha encontrado el usuario solicitado... intente de nuevo', 'No se Pudo completar la accion...');
@@ -141,12 +142,11 @@ export class LoginComponent implements OnInit {
           if (data.isAdmin) {
             this.router.navigate(['/admin']);
           } else {
-            console.log(this.returnUrl.split(''));
             console.log('cai aqui!!!,', this.returnUrl);
             if (this.returnUrl) {
               this.router.navigateByUrl(this.returnUrl);
             } else {
-              this.router.navigate(['']);
+              this.router.navigate(['/']);
             }
           }
         }
