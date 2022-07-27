@@ -231,7 +231,10 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
     this.endPools.get('coinsInput').setValue(this.poolData.coinsInput);
     // console.log(moment(this.poolData.dateFinish, 'YYYY-MM-DD').add(1, 'days').format('YYYY-MM-DD'));
     this.endPools.get('dateFinish').setValue(moment(this.poolData.dateFinish, 'YYYY-MM-DD').add(1, 'days').format('YYYY-MM-DD'));
-    this.endPools.get('timeFinish').setValue(this.poolData.timeFinish === null ? null : this.poolData.timeFinish.split(':')[0] + ':' + this.poolData.timeFinish.split(':')[1] + ' ' + (Number(this.poolData.timeFinish.split(':')[0]) > 11 ? 'pm' : 'am'));
+    console.log('timeFinish', this.poolData.timeFinish);
+    // this.endPools.get('timeFinish').setValue(this.poolData.timeFinish === null ? null : this.poolData.timeFinish.split(':')[0] + ':' + this.poolData.timeFinish.split(':')[1] + ' ' + (Number(this.poolData.timeFinish.split(':')[0]) > 11 ? 'pm' : 'am'));
+    this.endPools.get('timeFinish').setValue(this.poolData.timeFinish === null ? null : this.poolData.timeFinish.split(':')[0] + ':' + this.poolData.timeFinish.split(':')[1]);
+    console.log('timeFinish', this.endPools.get('timeFinish'));
     this.endPools.get('awardType').setValue(this.poolData.awardType);
     this.endPools.get('awardValue').setValue(this.poolData.awardValue);
   }

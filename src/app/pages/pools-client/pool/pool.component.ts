@@ -216,7 +216,7 @@ export class PoolComponent implements OnInit, AfterViewInit {
   }
 
   goToEditResults(pool) {
-    console.log(pool);
+    console.log('goToEdit', pool);
     if (pool.timeRemaining === '00:00:00' && !pool.registered) {
       alert('este evento esta cerrado');
     } else if (pool.registered) {

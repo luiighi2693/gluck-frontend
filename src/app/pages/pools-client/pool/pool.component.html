@@ -76,7 +76,7 @@
           <ng-container matColumnDef="opts">
             <th class="opts" mat-header-cell *matHeaderCellDef mat-sort-header></th>
             <td class="opts" mat-cell *matCellDef="let row">
-              <button mat-flat-button aria-label="enter pool" *ngIf="row.timeRemaining !== '00:00:00'" (click)="registerToPool(row)">
+              <button mat-flat-button aria-label="enter pool" *ngIf="row.timeRemaining !== '00:00:00' && !row.registered" (click)="registerToPool(row)">
                 Entrar <mat-icon>exit_to_app</mat-icon>
               </button>
               <button mat-flat-button aria-label="enter pool" *ngIf="row.registered" (click)="goToEditResults(row)">
