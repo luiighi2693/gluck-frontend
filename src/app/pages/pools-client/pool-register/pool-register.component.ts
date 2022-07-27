@@ -121,6 +121,7 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
           match.resultTeam2 = 0;
         });
         this.pool = res.data;
+        console.log(res.data);
         console.log('pool', this.pool);
 
         if (this.pool.league === 'Copa America') {
@@ -231,6 +232,8 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
           } else if (res.code === 'A401' || res.code === 'A302' || res.code === 'A403') {
             this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
             this.router.navigate(['/auth']);
+          } else if (res.code === 'D400') {
+            this.handleAlertsProvider.presentSnackbarError(res.message, );
           }
         });
       }
@@ -246,6 +249,8 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
         } else if (res.code === 'A401' || res.code === 'A302' || res.code === 'A403') {
           this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
           this.router.navigate(['/auth']);
+        } else if (res.code === 'D400') {
+          this.handleAlertsProvider.presentSnackbarError(res.message);
         }
       });
     }

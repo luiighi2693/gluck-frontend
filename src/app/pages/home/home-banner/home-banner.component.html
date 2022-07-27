@@ -41,7 +41,7 @@
               {{ timers[i] }}</p>
             <button mat-raised-button style="background-color: #F6DD06; border-radius: 15px" *ngIf="!pool.registered" [disabled]="timers[i] === 'Finalizado...'" (click)="registerToPool(pool)">{{ timers[i] === 'Finalizado...' ? 'Este evento ya ha comenzado!' : 'Registrarme' }}</button>
 
-            <button mat-raised-button style="background-color: #F6DD06; border-radius: 15px" *ngIf="pool.registered" [disabled]="timers[i] === 'Finalizado...'" (click)="registerToPool(pool)">{{ timers[i] === 'Finalizado...' ? 'Este evento ya ha comenzado!' : 'Entrar' }}</button>
+            <button mat-raised-button style="background-color: #F6DD06; border-radius: 15px" *ngIf="pool.registered" [disabled]="timers[i] === 'Finalizado...'" (click)="goToEditResults(pool.id)">{{ timers[i] === 'Finalizado...' ? 'Este evento ya ha comenzado!' : 'Entrar' }}</button>
             <!--              <span class="pool-status" [matTooltip]="pool.result" [ngStyle]="-->
             <!--              {'background-color': (pool.result === 'IN PROCESS')-->
             <!--              ? '#F6DD06'-->

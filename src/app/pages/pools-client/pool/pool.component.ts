@@ -207,7 +207,7 @@ export class PoolComponent implements OnInit, AfterViewInit {
         // this.updateMoney();
         // this.updateCoins();
         this.getCurrentUser();
-        this.goToEditResults(id);
+        this.goToEditResults(id, true);
       } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
         this.router.navigate(['/auth']);
@@ -215,7 +215,10 @@ export class PoolComponent implements OnInit, AfterViewInit {
     });
   }
 
-  goToEditResults(pool) {
+  goToEditResults(pool, flag) {
+    if (flag) {
+      this.router.navigate([`/pools/pool-register/${pool.id}`]);
+    }
     console.log('goToEdit', pool);
     if (pool.timeRemaining === '00:00:00' && !pool.registered) {
       alert('este evento esta cerrado');
