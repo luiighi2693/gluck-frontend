@@ -247,8 +247,8 @@ export class PoolComponent implements OnInit, AfterViewInit {
       this.loaderValue.updateIsloading(false);
       if (response.code === 'D200') {
         const userData = response.data;
-        this.event.trigger('getCoins', {type: 'spent', amount: userData.coins});
-        this.event.trigger('getMoney', {type: 'spent', amount: userData.money});
+        this.event.trigger('getCoinsForRegisterPull', userData.coins);
+        this.event.trigger('getMoneyForRegisterPull',  userData.amount);
         // this.updateProfileForm.setValue(this.userData);
       } else if (response.code === 'A401' || response.code === 'A302' || response.code === 'A403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
