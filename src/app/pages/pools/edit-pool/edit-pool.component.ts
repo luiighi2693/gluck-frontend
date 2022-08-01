@@ -180,6 +180,7 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
       color: ['', Validators.required],
       hot: ['', Validators.required],
       matches: [''],
+      tournament_type: [''],
       usersLimit: ['', Validators.required],
       status: ['', Validators.required],
       penalty: ['', Validators.required],
@@ -221,6 +222,7 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
     this.config.get('league').setValue(this.poolData.league);
     this.config.get('password').setValue(this.poolData.password);
     this.config.get('rules').setValue(this.poolData.rules);
+    this.config.get('tournament_type').setValue(this.poolData.tournament_type);
 
     this.results.get('winner').setValue(this.poolData.winner);
     this.results.get('loser').setValue(this.poolData.loser);

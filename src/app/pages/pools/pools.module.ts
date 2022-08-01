@@ -14,6 +14,7 @@ import { MAT_COLOR_FORMATS, NgxMatColorPickerModule, NGX_MAT_COLOR_FORMATS } fro
 import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 import { ResultsPerUserComponent } from './results-per-user/results-per-user.component';
 import {ClonePoolComponent} from './clone-pool/clone-pool.component';
+import {MatRadioModule} from '@angular/material/radio';
 
 @NgModule({
   declarations: [
@@ -61,7 +62,8 @@ import {ClonePoolComponent} from './clone-pool/clone-pool.component';
         path: 'clone-pool/:id',
         component: ClonePoolComponent
       }
-    ])
+    ]),
+    MatRadioModule
   ],  providers: [
     { provide: MAT_COLOR_FORMATS, useValue: NGX_MAT_COLOR_FORMATS }
   ],

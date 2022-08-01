@@ -142,6 +142,7 @@
                 <mat-label>Liga - Torneo</mat-label>
                 <mat-select formControlName="league">
                   <mat-option>- Liga - Torneo -</mat-option>
+                  <mat-option value="generic">Torneo</mat-option>
                   <mat-option value="La Liga">La Liga</mat-option>
                   <mat-option value="Premier League">Premier League</mat-option>
                   <mat-option value="Boundes Liga">Boundes Liga</mat-option>
@@ -166,6 +167,18 @@
                   <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
                 </button>
                 <mat-error>Este Campo es <b>Requerido</b>.</mat-error>
+              </mat-form-field>
+            </div>
+            <div class="col-12 col-md-3" *ngIf="config.value.league === 'generic' ">
+              <mat-form-field appearance="outline" class="w-100">
+                <mat-label>Valores de torneo</mat-label>
+                <mat-select formControlName="tournament_type" >
+                  <mat-option value="4tos">Cuartos de final</mat-option>
+                  <mat-option value="8vos">Octavos de final</mat-option>
+                </mat-select>
+                <mat-error>
+                  Este Campo es <strong>Requerido.</strong>
+                </mat-error>
               </mat-form-field>
             </div>
             <div class="col-12 col-md-3 text-center">

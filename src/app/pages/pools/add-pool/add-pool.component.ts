@@ -43,6 +43,7 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
   teams = [];
   limitOfUsers: any;
   hide = true;
+  isTournament = false;
 
   displayedColumns: string[] = ['rowid', 'username', 'name', 'email', 'amount', 'coins', 'status', 'opts'];
   displayedColumnsMobile: string[] = ['username', 'opts'];
@@ -151,6 +152,7 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
       status: ['', Validators.required],
       hot: ['', Validators.required],
       penalty: ['', Validators.required],
+      tournament_type : [''],
       groups: [''],
       teamsPerGroup: [''],
       type: ['', Validators.required],
@@ -316,5 +318,15 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
       }, 300);
     }
 
+  }
+
+  selectGeneric(event) {
+    this.isTournament = event.value === 'generic';
+    if (event.value === 'generic') {
+      this.config.get('tournament_type').setValidators(Validators.required);
+    } else {
+      this.config.get('tournament_type').clearValidators();
+      this.config.get('tournament_type').setValue(null);
+    }
   }
 }
