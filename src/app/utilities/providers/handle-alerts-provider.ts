@@ -72,9 +72,9 @@ export class HandleAlertsProvider {
   }
 
 
-  presentErrorDialogOk(message: string, title = '¡Ha ocurrido un error!') {
+  presentErrorDialogOk(message: string, title = '¡Ha ocurrido un error!', fn = () => {}) {
     return this.dialog.open(OkConfirmationAlertComponent, {
-      data: {title, message}
+      data: {title, message, fn}
     });
   }
 

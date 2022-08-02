@@ -177,6 +177,7 @@ export class HomeBannerComponent implements OnInit {
       this.handleAlertsProvider.presentGenericAlert(err);
     });
   }
+
   goToEditResults(pool) {
     this.router.navigate([`/pools/pool-register/${pool}`]);
 

@@ -271,7 +271,6 @@ export class AdminService {
   }
 
   clientRegisterToPool(userId, data): Observable<any> {
-
     return this.http.post(`${environment.basePath}/api/result/updateResultByUserAndPool?userId=${userId}`, data, {headers});
   }
 
@@ -342,6 +341,14 @@ export class AdminService {
       code
     };
     return this.http.post(`${environment.basePath}/api/pool/registerUserPoolByLinkCode`, params, {headers});
+  }
+
+  getPoolInfo(userId, code): Observable<any> {
+    const params = {
+      userId,
+      code
+    } ;
+    return this.http.post(`${environment.basePath}/api/pool/getPoolInfo`, params);
   }
 
   updatePoolStatusToInProcess(poolId): Observable<any> {
