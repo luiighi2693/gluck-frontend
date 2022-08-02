@@ -58,7 +58,7 @@ export class ShareComponent implements OnInit {
             //   this.poolData.password);
             console.log(this.poolData);
           } else {
-            this.handleAlertsProvider.presentErrorDialogOk(res.message, 'Ha ocurrido un error!', () => this.router.navigate(['']));
+            this.handleAlertsProvider.presentSnackbarError(res.message);
           }
         });
         // this.admin.registerUserByUrl(userId, url.code).subscribe(res => {
