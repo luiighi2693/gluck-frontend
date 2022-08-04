@@ -15,11 +15,12 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
   pool: any;
   matches: any;
   userId: any;
-  teams: any;
+  teams = [];
 
   currentPool: string | number;
   imagePath;
   bracketsData = brackets;
+  finalEighths = [];
   finalQuarters = [];
   semifinals = [];
   final = [];
@@ -39,8 +40,8 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
 
   ngOnInit(): void {
     this.userId = sessionStorage.getItem('id');
-    this.getParam();
     this.setTeamsData();
+    this.getParam();
     // if (this.pool.league === 'Copa America') {
     //   this.setArrays();
     // }
@@ -77,12 +78,44 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
 
   }
 
+  setArraysWith8vos() {
+
+    for (let i = 0; i < 8; i++) {
+      this.finalEighths.push({
+        team1: null, resultTeam1: 0, team2: null, resultTeam2: 0, date: '2021-09-11', time: '00:00:00', status: 0
+      });
+    }
+
+    for (let i = 0; i < 4; i++) {
+      this.finalQuarters.push({
+        team1: null, resultTeam1: 0, team2: null, resultTeam2: 0, date: '2021-09-11', time: '00:00:00', status: 0
+      });
+    }
+
+    for (let i = 0; i < 2; i++) {
+      this.semifinals.push({
+        team1: null, resultTeam1: 0, team2: null, resultTeam2: 0, date: '2021-09-11', time: '00:00:00', status: 0
+      });
+    }
+
+    for (let i = 0; i < 1; i++) {
+      this.final.push({
+        team1: null, resultTeam1: 0, team2: null, resultTeam2: 0, date: '2021-09-11', time: '00:00:00', status: 0
+      });
+    }
+
+    for (let i = 0; i < 1; i++) {
+      this.thirdPosition.push({
+        team1: null, resultTeam1: 0, team2: null, resultTeam2: 0, date: '2021-09-11', time: '00:00:00', status: 0
+      });
+    }
+  }
+
   setTeamsData() {
     this.loaderValue.updateIsloading(true);
     this.admin.getTeams().subscribe(data => {
       this.loaderValue.updateIsloading(false);
       if (data.code === 'D200') {
-        console.log(data);
         this.teams = data.data.sort((a, b) => {
           if (a.name < b.name) {
             return -1;
@@ -92,6 +125,7 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
           }
           return 0;
         });
+        console.log(this.teams.length);
       } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
         this.router.navigate(['/auth']);
@@ -121,19 +155,26 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
           match.resultTeam2 = 0;
         });
         this.pool = res.data;
-        console.log(res.data);
-        console.log('pool', this.pool);
 
         if (this.pool.league === 'Copa America') {
-          let allGroups = res.data.groupsInfo.map(x => x.teams).join();
+          const allGroups = res.data.groupsInfo.map(x => x.teams).join();
           this.teams = this.teams.filter(x => allGroups.includes(x.rowid));
 
           this.setArrays();
         }
 
+        if (this.pool.league === 'generic') {
+          const allGroupsWithEighths = res.data.groupsInfo.map(x => x.teams).join();
+          console.log(allGroupsWithEighths);
+          this.teams = this.teams.filter(x => allGroupsWithEighths.includes(x.rowid));
+          console.log(this.teams);
+          this.setArraysWith8vos();
+        }
+
         this.loaderValue.updateIsloading(true);
         this.admin.getResultsByPoolAndUser(sessionStorage.getItem('id'), this.currentPool).subscribe(data2 => {
           this.loaderValue.updateIsloading(false);
+          console.log(this.teams);
           if (data2.code === 'D200') {
             this.matches.forEach(match => {
               const result = data2.data.find(x => (x.teamId1 === match.team1) && (x.teamId2 === match.team2));
@@ -142,6 +183,7 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
                 match.resultTeam2 = result.teamResult2;
               }
             });
+            console.log(this.matches);
 
             // en algun momento se lleno los brackets
             if (this.pool.league === 'Copa America') {
@@ -157,7 +199,13 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
                 this.finalQuarters = [];
                 arrayBracket.slice(0, 4).forEach(result => {
                   this.finalQuarters.push({
-                    team1: result.teamId1, resultTeam1: result.teamResult1, team2: result.teamId2, resultTeam2: result.teamResult2, date: result.date, time: result.hour, status: 0
+                    team1: result.teamId1,
+                    resultTeam1: result.teamResult1,
+                    team2: result.teamId2,
+                    resultTeam2: result.teamResult2,
+                    date: result.date,
+                    time: result.hour,
+                    status: 0
                   });
                 });
 
@@ -165,7 +213,13 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
                 this.semifinals = [];
                 arrayBracket.slice(4, 6).forEach(result => {
                   this.semifinals.push({
-                    team1: result.teamId1, resultTeam1: result.teamResult1, team2: result.teamId2, resultTeam2: result.teamResult2, date: result.date, time: result.hour, status: 0
+                    team1: result.teamId1,
+                    resultTeam1: result.teamResult1,
+                    team2: result.teamId2,
+                    resultTeam2: result.teamResult2,
+                    date: result.date,
+                    time: result.hour,
+                    status: 0
                   });
                 });
 
@@ -173,7 +227,13 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
                 this.final = [];
                 arrayBracket.slice(6, 7).forEach(result => {
                   this.final.push({
-                    team1: result.teamId1, resultTeam1: result.teamResult1, team2: result.teamId2, resultTeam2: result.teamResult2, date: result.date, time: result.hour, status: 0
+                    team1: result.teamId1,
+                    resultTeam1: result.teamResult1,
+                    team2: result.teamId2,
+                    resultTeam2: result.teamResult2,
+                    date: result.date,
+                    time: result.hour,
+                    status: 0
                   });
                 });
 
@@ -181,16 +241,22 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
                 this.thirdPosition = [];
                 arrayBracket.slice(7, 8).forEach(result => {
                   this.thirdPosition.push({
-                    team1: result.teamId1, resultTeam1: result.teamResult1, team2: result.teamId2, resultTeam2: result.teamResult2, date: result.date, time: result.hour, status: 0
+                    team1: result.teamId1,
+                    resultTeam1: result.teamResult1,
+                    team2: result.teamId2,
+                    resultTeam2: result.teamResult2,
+                    date: result.date,
+                    time: result.hour,
+                    status: 0
                   });
                 });
-
-
               }
             }
           } else if (data2.code === 'A401' || data2.code === 'A302' || data2.code === 'A403') {
             this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
             this.router.navigate(['/auth']);
+          } else {
+            console.log(this.teams);
           }
         }, error => {
           this.handleAlertsProvider.presentGenericAlert(error);
@@ -233,7 +299,7 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
             this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
             this.router.navigate(['/auth']);
           } else if (res.code === 'D400') {
-            this.handleAlertsProvider.presentSnackbarError(res.message, );
+            this.handleAlertsProvider.presentSnackbarError(res.message,);
           }
         });
       }

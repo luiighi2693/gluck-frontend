@@ -90,7 +90,234 @@
     </div>
   </div>
 
-  <div *ngIf="pool.league === 'Copa America' || pool.league === 'Generico' " class="row">
+  <div *ngIf="pool.league === 'generic'" class="row">
+    <div class="col-12 text-center">
+      <h1 class="yellow-title">Fase de Eliminacion</h1>
+    </div>
+    <!--    <app-battle-table [round]="fakeRoundData" [category]="category" ></app-battle-table>-->
+    <div class="playoffs-wrapper">
+      <div class="row">
+        <div class="col-3">
+          <div class="col-name">
+            <h2>octavos de Final</h2>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="col-name">
+            <h2>Cuartos de Final</h2>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="col-name">
+            <h2>Semifinales</h2>
+          </div>
+        </div>
+        <div class="col-3">
+          <div class="col-name">
+            <h2>Final</h2>
+          </div>
+        </div>
+      </div>
+      <div class="row align-items-center">
+        <div class="col-3">
+          {{ teams.length }}
+          <div *ngFor="let match of finalEighths">
+            <div class="teams-group">
+              <div class="team row px-3">
+                <div class="col-10 d-flex align-items-center team-info ">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Selecciona un equipo</mat-label>
+                    <mat-select [(ngModel)]="match.team1">
+                      <mat-option *ngFor="let team of teams" [value]="team.rowid">
+                        {{team.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-2 dark-input d-flex align-items-center justify-content-center">
+                  <!--                  <p class="text-white fw-bold m-0">{{ round.result_team_1 }}</p>-->
+                  <input type="number" class="text-white  fw-bold m-0" [(ngModel)]="match.resultTeam1">
+                </div>
+              </div>
+              <div class="team row px-3">
+                <div class="col-10 d-flex align-items-center team-info ">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Selecciona un equipo</mat-label>
+                    <mat-select [(ngModel)]="match.team2">
+                      <mat-option *ngFor="let team of teams" [value]="team.rowid">
+                        {{team.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-2 dark-input d-flex align-items-center justify-content-center">
+                  <!--                  <p class="text-white fw-bold m-0">{{ round.result_team_2 }}</p>-->
+                  <input type="number" class="text-white  fw-bold m-0" [(ngModel)]="match.resultTeam2">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-3">
+          <div *ngFor="let match of finalQuarters">
+            <div class="teams-group">
+              <div class="team row px-3">
+                <div class="col-10 d-flex align-items-center team-info ">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Selecciona un equipo</mat-label>
+                    <mat-select [(ngModel)]="match.team1">
+                      <mat-option *ngFor="let team of teams" [value]="team.rowid">
+                        {{team.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-2 dark-input d-flex align-items-center justify-content-center">
+                  <!--                  <p class="text-white fw-bold m-0">{{ round.result_team_1 }}</p>-->
+                  <input type="number" class="text-white  fw-bold m-0" [(ngModel)]="match.resultTeam1">
+                </div>
+              </div>
+              <div class="team row px-3">
+                <div class="col-10 d-flex align-items-center team-info ">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Selecciona un equipo</mat-label>
+                    <mat-select [(ngModel)]="match.team2">
+                      <mat-option *ngFor="let team of teams" [value]="team.rowid">
+                        {{team.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-2 dark-input d-flex align-items-center justify-content-center">
+                  <!--                  <p class="text-white fw-bold m-0">{{ round.result_team_2 }}</p>-->
+                  <input type="number" class="text-white  fw-bold m-0" [(ngModel)]="match.resultTeam2">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-3">
+
+          <div *ngFor="let match of semifinals" style="margin-top: 8rem">
+            <div class="teams-group">
+              <div class="team row px-3">
+                <div class="col-10 d-flex align-items-center team-info ">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Selecciona un equipo</mat-label>
+                    <mat-select [(ngModel)]="match.team1">
+                      <mat-option *ngFor="let team of teams" [value]="team.rowid">
+                        {{team.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-2 dark-input d-flex align-items-center justify-content-center">
+                  <!--                  <p class="text-white fw-bold m-0">{{ round.result_team_1 }}</p>-->
+                  <input type="number" class="text-white  fw-bold m-0" [(ngModel)]="match.resultTeam1">
+                </div>
+              </div>
+              <div class="team row px-3">
+                <div class="col-10 d-flex align-items-center team-info ">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Selecciona un equipo</mat-label>
+                    <mat-select [(ngModel)]="match.team2">
+                      <mat-option *ngFor="let team of teams" [value]="team.rowid">
+                        {{team.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-2 dark-input d-flex align-items-center justify-content-center">
+                  <!--                  <p class="text-white fw-bold m-0">{{ round.result_team_2 }}</p>-->
+                  <input type="number" class="text-white  fw-bold m-0" [(ngModel)]="match.resultTeam2">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-3">
+
+          <div *ngFor="let match of final" style="margin-top: 16rem">
+            <div class="teams-group">
+              <div class="team row px-3">
+                <div class="col-10 d-flex align-items-center team-info ">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Selecciona un equipo</mat-label>
+                    <mat-select [(ngModel)]="match.team1">
+                      <mat-option *ngFor="let team of teams" [value]="team.rowid">
+                        {{team.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-2 dark-input d-flex align-items-center justify-content-center">
+                  <!--                  <p class="text-white fw-bold m-0">{{ round.result_team_1 }}</p>-->
+                  <input type="number" class="text-white  fw-bold m-0" [(ngModel)]="match.resultTeam1">
+                </div>
+              </div>
+              <div class="team row px-3">
+                <div class="col-10 d-flex align-items-center team-info ">
+                  <mat-form-field appearance="outline">
+                    <mat-label>Selecciona un equipo</mat-label>
+                    <mat-select [(ngModel)]="match.team2">
+                      <mat-option *ngFor="let team of teams" [value]="team.rowid">
+                        {{team.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-2 dark-input d-flex align-items-center justify-content-center">
+                  <!--                  <p class="text-white fw-bold m-0">{{ round.result_team_2 }}</p>-->
+                  <input type="number" class="text-white  fw-bold m-0" [(ngModel)]="match.resultTeam2">
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="teams-group" *ngFor="let anotherMatch of thirdPosition">
+            <div class="col-name">
+              <h2>Mejor Tercero</h2>
+            </div>
+            <div class="team row px-3">
+              <div class="col-10 d-flex align-items-center team-info ">
+                <mat-form-field appearance="outline">
+                  <mat-label>Selecciona un equipo</mat-label>
+                  <mat-select [(ngModel)]="anotherMatch.team1">
+                    <mat-option *ngFor="let team of teams" [value]="team.rowid">
+                      {{team.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-2 dark-input d-flex align-items-center justify-content-center">
+                <!--                  <p class="text-white fw-bold m-0">{{ round.result_team_1 }}</p>-->
+                <input type="number" class="text-white  fw-bold m-0" [(ngModel)]="anotherMatch.resultTeam1">
+              </div>
+            </div>
+            <div class="team row px-3">
+              <div class="col-10 d-flex align-items-center team-info ">
+                <mat-form-field appearance="outline">
+                  <mat-label>Selecciona un equipo</mat-label>
+                  <mat-select [(ngModel)]="anotherMatch.team2">
+                    <mat-option *ngFor="let team of teams" [value]="team.rowid">
+                      {{team.name}}
+                    </mat-option>
+                  </mat-select>
+                </mat-form-field>
+              </div>
+              <div class="col-2 dark-input d-flex align-items-center justify-content-center">
+                <!--                  <p class="text-white fw-bold m-0">{{ round.result_team_2 }}</p>-->
+                <input type="number" class="text-white  fw-bold m-0" [(ngModel)]="anotherMatch.resultTeam2">
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div *ngIf="pool.league === 'Copa America'" class="row">
     <div class="col-12 text-center">
       <h1 class="yellow-title">Fase de Eliminacion</h1>
     </div>

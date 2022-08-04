@@ -85,6 +85,15 @@
             </td>
           </ng-container>
 
+          <ng-container matColumnDef="link">
+            <th class="" mat-header-cell *matHeaderCellDef mat-sort-header></th>
+            <td class="" mat-cell *matCellDef="let row">
+              <button *ngIf="row.timeRemaining !== '00:00:00' && row.status === 1 && isEnoughSpace(row.participants)" matTooltip="Generar Url de registro" mat-icon-button aria-label="delete" (click)="generateUrl(row)">
+                <mat-icon>link</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
@@ -176,6 +185,15 @@
               </button>
               <button mat-flat-button aria-label="enter pool" *ngIf="row.registered" (click)="goToEditResults(row)">
                 Editar Resultados <mat-icon>exit_to_app</mat-icon>
+              </button>
+
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="link">
+            <th class="" mat-header-cell *matHeaderCellDef mat-sort-header></th>
+            <td class="" mat-cell *matCellDef="let row">
+              <button *ngIf="row.timeRemaining !== '00:00:00' && row.status === 1 && isEnoughSpace(row.participants)" matTooltip="Generar Url de registro" mat-icon-button aria-label="delete" (click)="generateUrl(row)">
+                <mat-icon>link</mat-icon>
               </button>
             </td>
           </ng-container>
@@ -273,6 +291,15 @@
             </td>
           </ng-container>
 
+          <ng-container matColumnDef="link">
+            <th class="" mat-header-cell *matHeaderCellDef mat-sort-header></th>
+            <td class="" mat-cell *matCellDef="let row">
+              <button *ngIf="row.timeRemaining !== '00:00:00' && row.status === 1 && isEnoughSpace(row.participants)" matTooltip="Generar Url de registro" mat-icon-button aria-label="delete" (click)="generateUrl(row)">
+                <mat-icon>link</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
           <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
           <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
 
@@ -362,6 +389,15 @@
               </button>
               <button mat-flat-button aria-label="enter pool" *ngIf="row.registered" (click)="goToEditResults(row)">
                 Editar Resultados <mat-icon>exit_to_app</mat-icon>
+              </button>
+            </td>
+          </ng-container>
+
+          <ng-container matColumnDef="link">
+            <th class="" mat-header-cell *matHeaderCellDef mat-sort-header></th>
+            <td class="" mat-cell *matCellDef="let row">
+              <button *ngIf="row.timeRemaining !== '00:00:00' && row.status === 1 && isEnoughSpace(row.participants)" matTooltip="Generar Url de registro" mat-icon-button aria-label="delete" (click)="generateUrl(row)">
+                <mat-icon>link</mat-icon>
               </button>
             </td>
           </ng-container>
