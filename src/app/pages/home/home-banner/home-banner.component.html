@@ -32,6 +32,10 @@
         </div>
         <div class="current__pools--content" *ngIf="hotPools.length > 0">
           <div class="current-pool" *ngFor="let pool of hotPools, index as i">
+            <button matTooltip="Generar Url de registro" mat-icon-button aria-label="delete"
+                    (click)="generateUrl(pool)">
+              <mat-icon>link</mat-icon>
+            </button>
             <p [matTooltip]="pool.name">{{pool.name | maxLength}}</p>
 <!--            <img [matTooltip]="pool.sport.name" [src]="catchSport(pool.sport.name)" width="25" alt="">-->
 <!--            <p>{{pool.matches.length}} (partidos)</p>-->

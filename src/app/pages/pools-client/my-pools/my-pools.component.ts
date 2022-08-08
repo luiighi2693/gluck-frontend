@@ -158,4 +158,24 @@ export class MyPoolsComponent implements OnInit, AfterViewInit {
   goToRanking(id) {
     this.router.navigate([`/pools/ranking/${id}`]);
   }
+
+  isEnoughSpace(participants: any) {
+    const peopleIn = Number(participants.split('/')[0]);
+    const maxPeople = Number(participants.split('/')[1]);
+
+    return peopleIn < maxPeople;
+  }
+
+
+  generateUrl(row) {
+    console.log(row);
+    this.loaderValue.updateIsloading(true);
+    this.admin.getGeneratedLinkByPool(row.rowid).subscribe(res => {
+      if (res.code === 'D200') {
+        this.handleAlertsProvider.presentGeneratedUrlDialog(res.link);
+      }
+      this.loaderValue.updateIsloading(false);
+    });
+    // this.handleAlertsProvider.presentGeneratedUrlDialog('http://localhost:4200/admin/pools/list-of-pools');
+  }
 }
