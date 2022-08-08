@@ -118,20 +118,16 @@ export class PoolComponent implements OnInit, AfterViewInit {
     );
     dialogRef.afterClosed().subscribe(res => {
       console.log(res);
-      if (res === null) {
-        if (data.password === '' || data.password === null) {
-          // if (res === null) {
-            this.callRegisterPool(data.id);
-          // } else {
-          //   this.handleAlertsProvider.presentGenericAlert('Las Claves no coinciden!', 'Aviso');
-          // }
-        } else {
-          if (data.password !== res) {
-            this.handleAlertsProvider.presentGenericAlert('Las Claves no coinciden!', 'Aviso');
-          } else {
-            this.callRegisterPool(data.id);
-          }
-        }
+      console.log(res === data.password);
+
+      if  (res === null && (!data.password)) {
+        this.callRegisterPool(data);
+      }
+      if  (res === data.password) {
+        this.callRegisterPool(data);
+      }
+      if (res !== data.password) {
+        this.handleAlertsProvider.presentGenericAlert('Las Claves no coinciden!', 'Aviso');
       }
     });
   }
@@ -199,15 +195,15 @@ export class PoolComponent implements OnInit, AfterViewInit {
     return n < 10 ? ('0' + n) : n;
   }
 
-  private callRegisterPool(id) {
+  private callRegisterPool(pool) {
     this.loaderValue.updateIsloading(true);
-    this.admin.registerUserPool(id, sessionStorage.getItem('id')).subscribe(data => {
+    this.admin.registerUserPool(pool.id, sessionStorage.getItem('id')).subscribe(data => {
       this.loaderValue.updateIsloading(false);
       if (data.code === 'D200') {
         // this.updateMoney();
         // this.updateCoins();
         this.getCurrentUser();
-        this.goToEditResults(id, true);
+        this.goToEditResults(pool, true);
       } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
         this.router.navigate(['/auth']);

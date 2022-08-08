@@ -112,26 +112,14 @@ export class ShareComponent implements OnInit {
     );
     dialogRef.afterClosed().subscribe(res => {
       console.log(res);
-      if (res === null) {
-        if (data.password === '' || data.password === null) {
-          // if (res === null) {
-          this.callRegisterPool(data.id);
-          // } else {
-          //   this.handleAlertsProvider.presentGenericAlert('Las Claves no coinciden!', 'Aviso');
-          // }
-        } else {
-          if (data.password !== res) {
-            this.handleAlertsProvider.presentGenericAlert('Las Claves no coinciden!', 'Aviso');
-          } else {
-            this.callRegisterPool(data.id);
-          }
-        }
-      } else {
-        if (data.password !== res) {
-          this.handleAlertsProvider.presentGenericAlert('Las Claves no coinciden!', 'Aviso');
-        } else {
-          this.callRegisterPool(data.id);
-        }
+      if  (res === null && (!data.password)) {
+        this.callRegisterPool(data.id);
+      }
+      if  (res === data.password) {
+        this.callRegisterPool(data.id);
+      }
+      if (res !== data.password) {
+        this.handleAlertsProvider.presentGenericAlert('Las Claves no coinciden!', 'Aviso');
       }
     });
   }
