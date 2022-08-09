@@ -169,7 +169,7 @@ export class HomeBannerComponent implements OnInit {
   generateUrl(row) {
     console.log(row);
     this.loaderValue.updateIsloading(true);
-    this.admin.getGeneratedLinkByPool(row.rowid).subscribe(res => {
+    this.admin.getGeneratedLinkByPool(row.id).subscribe(res => {
       if (res.code === 'D200') {
         this.handleAlertsProvider.presentGeneratedUrlDialog(res.link);
       }
