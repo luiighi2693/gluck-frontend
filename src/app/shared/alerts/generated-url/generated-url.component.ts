@@ -9,6 +9,7 @@ import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-p
 })
 export class GeneratedUrlComponent implements OnInit {
   isCopied = false;
+  clipboard = window.navigator.clipboard;
 
   constructor(
     private handleAlertsProvider: HandleAlertsProvider,
@@ -23,7 +24,7 @@ export class GeneratedUrlComponent implements OnInit {
   }
 
   copyToClipboard() {
-    window.navigator.clipboard.writeText(this.data.url);
+    this.clipboard.writeText(this.data.url);
     this.isCopied = true;
     this.handleAlertsProvider.presentSnackbarSuccess('Se copio la URL en el porta papeles!');
   }

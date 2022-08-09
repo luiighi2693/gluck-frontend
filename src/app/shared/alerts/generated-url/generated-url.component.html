@@ -8,7 +8,9 @@
   </div>
   <mat-dialog-actions align="center">
     <!--  <button mat-button color="warn" mat-dialog-close>Cancel</button>-->
-    <button mat-button class="ok-button" [matTooltip]="isCopied ? 'URL copiada!' : 'Copiar URL' "
+    <button *ngIf="clipboard !== undefined" mat-button class="ok-button" [matTooltip]="isCopied ? 'URL copiada!' : 'Copiar URL' "
             (click)="copyToClipboard()" cdkFocusInitial>{{ isCopied ? 'Url Copiada!' : 'Copiar' }}</button>
+    <button *ngIf="clipboard === undefined" mat-button class="ok-button" matTooltip="Debe copiar manualmente"
+            (click)="copyToClipboard()" cdkFocusInitial>Cerrar</button>
   </mat-dialog-actions>
 </div>
