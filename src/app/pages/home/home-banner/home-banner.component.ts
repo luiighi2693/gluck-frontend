@@ -115,7 +115,7 @@ export class HomeBannerComponent implements OnInit {
       data.amountInput + '$ ' + data.coinsInput + 'G',
       data.awardValue,
       data.participants,
-      '../../../../../assets/example-user.png',
+      '../../../../../assets/logo.png',
       data.rules === '' ? '../../../../../assets/default-rules.png' : (this.imagePath + '/images/' + data.rules),
       '',
     );
