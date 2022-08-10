@@ -557,8 +557,8 @@
             <div class="col-12 col-md-3">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Tipo de Premio</mat-label>
-                <mat-select formControlName="awardType" [(ngModel)]="awardType" ngModelOptions="{standalone: true}"
-                            (ngModelChange)="getAward()">
+                <mat-select formControlName="awardType" [(ngModel)]="awardType"
+                            ngModelOptions="{standalone: true}" (ngModelChange)="getAward()">
                   <mat-option>- Tipo de Premio -</mat-option>
                   <mat-option value="fijo">Fijo</mat-option>
                   <mat-option value="total">Total</mat-option>
@@ -569,9 +569,9 @@
               </mat-form-field>
             </div>
             <div class="col-12 col-md-3">
-              <mat-form-field appearance="outline" class="w-100">-0
+              <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Valor de Premio Total</mat-label>
-                <input matInput type="text" [readOnly]="awardType === 'total'"
+                <input matInput type="text" [readOnly]="awardType === 'fijo'"
                        formControlName="awardValue" placeholder="Valor de premio"
                        autocomplete="off">
                 <mat-error>

@@ -314,11 +314,16 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
 
   getAward() {
     console.log(this.awardType);
-    if (this.awardType === 'total') {
+    console.log(this.awardType.length);
+    console.log(this.endPools.get('awardValue').value);
+    if (this.awardType === 'fijo') {
+      console.log('hello there')
       const value = this.selection.selected.length * Number(this.endPools.get('amountInput').value === '' ? 0 : this.endPools.get('amountInput').value);
+      console.log(value)
       this.endPools.get('awardValue').setValue(value);
 
     } else {
+      console.log('no es')
       this.endPools.get('awardValue').setValue(0);
     }
   }

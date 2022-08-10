@@ -306,7 +306,7 @@ export class ClonePoolComponent implements OnInit, AfterViewInit {
   }
 
   getAward() {
-    if (this.awardType === 'total') {
+    if (this.awardType === 'fijo') {
       const value = this.selection.selected.length * Number(this.endPools.get('amountInput').value === '' ? 0 : this.endPools.get('amountInput').value);
       this.endPools.get('awardValue').setValue(value);
 
