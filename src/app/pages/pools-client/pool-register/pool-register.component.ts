@@ -306,6 +306,7 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
     } else {
       this.loaderValue.updateIsloading(true);
       this.pool.matchesInfo = this.matches;
+      console.log(this.pool);
 
       this.admin.clientRegisterToPool(this.userId, this.pool).subscribe(res => {
         this.loaderValue.updateIsloading(false);

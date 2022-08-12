@@ -37,6 +37,8 @@ export class MyPoolsComponent implements OnInit, AfterViewInit {
   progress: PeriodicElement[] = [];
   historical: PeriodicElement[] = [];
 
+  timers = [];
+
   constructor(
     private handleAlertsProvider: HandleAlertsProvider,
     private router: Router,
@@ -111,20 +113,25 @@ export class MyPoolsComponent implements OnInit, AfterViewInit {
   }
 
   startCounter(list, dataSource) {
-    list.forEach(item => {
+    list.forEach((item, i) => {
+      // console.log(moment.duration(moment().diff(item.remainingTime)));
       const eventTime = item.remainingTime === null ? moment() : moment(item.remainingTime);
       const currentTime = moment();
       const leftTime = eventTime.valueOf() - currentTime.valueOf();
       let duration = moment.duration(leftTime, 'milliseconds');
+      // console.log('duration', duration.asSeconds());
+      // console.log('remainingTime', item.remainingTime);
 
-      setInterval(() => {
+      this.timers[i] = setInterval(() => {
 
         // Time Out check
         if (duration.asSeconds() > 0) {
           duration = moment.duration(duration.asSeconds() - 1, 'seconds');
           // tslint:disable-next-line:max-line-length
-          item.remainingTime = (duration.days() > 0 ? (duration.days() + ' dia(s) ') : '') + this.formatDate(duration.hours()) + ':' + this.formatDate(duration.minutes()) + ':' + this.formatDate(duration.seconds());
+          item.remainingTime = (duration.months() > 0 ? (duration.months() + ' mes(es) ') : '') + (duration.days() > 0 ? (duration.days() + ' dia(s) ') : '') + this.formatDate(duration.hours()) + ':' + this.formatDate(duration.minutes()) + ':' + this.formatDate(duration.seconds());
         } else {
+          this.admin.updatePoolStatusToInProcess(item.id).subscribe();
+          clearInterval(this.timers[i]);
           item.remainingTime = '00:00:00';
         }
 

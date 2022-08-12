@@ -274,7 +274,7 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
     });
 
     const finishDate = (dateFinish === moment(this.poolData.dateFinish, 'YYYY-MM-DD').add(1, 'days').format('YYYY-MM-DD')) ?
-      moment(dateFinish, 'YYYY-MM-DD').subtract(1, 'days').format('YYYY-MM-DD') : dateFinish;
+      moment(dateFinish, 'YYYY-MM-DD').subtract(1, 'days').format('YYYY-MM-DD') : moment(dateFinish).format('YYYY-MM-DD');
 
     const matchesInfo = this.arrayOfMatches;
     const groupsInfo = this.arrayOfGroups;
