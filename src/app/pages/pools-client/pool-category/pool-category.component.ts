@@ -10,6 +10,12 @@ export class PoolCategoryComponent implements OnInit {
 
   pools = [
     {
+      name: 'Generic',
+      id: 'torneos',
+      img: '../../../../assets/tournament-cup.jpg',
+      disabled: false
+    },
+    {
       name: 'Copa America',
       id: 'copa-america',
       img: '../../../../assets/copa-america.png',

@@ -364,7 +364,7 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
   }
 
   makeSecondStep() {
-    if (this.config.get('league').value === 'Copa America') {
+    if (this.config.get('league').value === ('Copa America' || 'generic')) {
       if (this.poolData.matches < Number(this.config.get('matches').value)) {
         const lenght = Number(this.config.get('matches').value) - this.poolData.matches;
         for (let i = 0; i < lenght; i++) {

@@ -125,7 +125,8 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
           }
           return 0;
         });
-        console.log(this.teams.length);
+        console.log('teams.length', this.teams.length);
+        console.log('teams', this.teams);
       } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
         this.router.navigate(['/auth']);
@@ -167,15 +168,16 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
           const allGroupsWithEighths = res.data.groupsInfo.map(x => x.teams).join();
           console.log(allGroupsWithEighths);
           this.teams = this.teams.filter(x => allGroupsWithEighths.includes(x.rowid));
-          console.log(this.teams);
+          console.log('TEANS', this.teams);
           this.setArraysWith8vos();
         }
 
         this.loaderValue.updateIsloading(true);
-        this.admin.getResultsByPoolAndUser(sessionStorage.getItem('id'), this.currentPool).subscribe(data2 => {
+        this.admin.getResultsByPoolAndUser(localStorage.getItem('id'), this.currentPool).subscribe(data2 => {
           this.loaderValue.updateIsloading(false);
-          console.log(this.teams);
           if (data2.code === 'D200') {
+            console.log('data2', data2)
+
             this.matches.forEach(match => {
               const result = data2.data.find(x => (x.teamId1 === match.team1) && (x.teamId2 === match.team2));
               if (result !== undefined) {
@@ -185,15 +187,36 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
             });
             console.log(this.matches);
 
+
             // en algun momento se lleno los brackets
-            if (this.pool.league === 'Copa America') {
+            if (this.pool.league === 'Copa America' || this.pool.league === 'generic') {
+              console.log('i am here!')
               let allMatches = this.matches;
               this.matches = allMatches.filter(x => x.bracketType === null);
+
 
               // partidos de eliminatorias
               if (data2.data.length > 0) {
 
                 let arrayBracket = data2.data.slice(data2.data.length - 8, data2.data.length);
+
+                console.log('arrayBracket', arrayBracket)
+
+                this.finalEighths = [];
+                // llenamos 8vos
+                if (this.pool.league === 'generic') {
+                  arrayBracket.slice(0, 8).forEach(result => {
+                    this.finalEighths.push({
+                      team1: result.teamId1,
+                      resultTeam1: result.teamResult1,
+                      team2: result.teamId2,
+                      resultTeam2: result.teamResult2,
+                      date: result.date,
+                      time: result.hour,
+                      status: 0
+                    });
+                  });
+                }
 
                 // llenamos 4tos
                 this.finalQuarters = [];
@@ -252,6 +275,7 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
                 });
               }
             }
+
           } else if (data2.code === 'A401' || data2.code === 'A302' || data2.code === 'A403') {
             this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
             this.router.navigate(['/auth']);
@@ -277,10 +301,10 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
   }
 
   registerValues() {
-    if (this.pool.league === 'Copa America') {
+    if (this.pool.league === 'Copa America' || this.pool.league === 'generic') {
       console.log(this.finalQuarters, this.semifinals, this.thirdPosition, this.final);
       console.log(this.final.every(this.someValidation));
-      if (this.finalQuarters.every(this.someValidation) || this.semifinals.every(this.someValidation) || this.final.every(this.someValidation) || this.thirdPosition.every(this.someValidation)) {
+      if (this.finalEighths.every(this.someValidation) || this.finalQuarters.every(this.someValidation) || this.semifinals.every(this.someValidation) || this.final.every(this.someValidation) || this.thirdPosition.every(this.someValidation)) {
         this.handleAlertsProvider.presentGenericAlert('Has colocado un partido con dos resultados iguales "Empate", por favor cambialo...');
         return;
       } else {

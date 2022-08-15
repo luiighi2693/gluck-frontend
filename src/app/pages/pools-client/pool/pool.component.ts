@@ -119,15 +119,17 @@ export class PoolComponent implements OnInit, AfterViewInit {
     dialogRef.afterClosed().subscribe(res => {
       console.log(res);
       console.log(res === data.password);
+      console.log(data.password);
 
       if  (res === null && (!data.password)) {
-        this.callRegisterPool(data);
-      }
-      if  (res === data.password) {
-        this.callRegisterPool(data);
-      }
-      if (res !== data.password) {
-        this.handleAlertsProvider.presentGenericAlert('Las Claves no coinciden!', 'Aviso');
+        console.log('i am here 1');
+        return this.callRegisterPool(data);
+      } else if (res === data.password) {
+        console.log('i am here 2');
+        return this.callRegisterPool(data);
+      } else if (res !== data.password) {
+        console.log('i am here 3');
+        return this.handleAlertsProvider.presentGenericAlert('Las Claves no coinciden!', 'Aviso');
       }
     });
   }
