@@ -176,7 +176,7 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
         this.admin.getResultsByPoolAndUser(localStorage.getItem('id'), this.currentPool).subscribe(data2 => {
           this.loaderValue.updateIsloading(false);
           if (data2.code === 'D200') {
-            console.log('data2', data2)
+            console.log('data2', data2);
 
             this.matches.forEach(match => {
               const result = data2.data.find(x => (x.teamId1 === match.team1) && (x.teamId2 === match.team2));
@@ -309,6 +309,7 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
         return;
       } else {
         this.loaderValue.updateIsloading(true);
+        this.matches.push(...this.finalEighths);
         this.matches.push(...this.finalQuarters);
         this.matches.push(...this.semifinals);
         this.matches.push(...this.thirdPosition);
