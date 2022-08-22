@@ -221,9 +221,9 @@ export class AdminService {
     return this.http.get(`${environment.basePath}/api/result/getResultsUserForClient?userId=${user}`, {headers});
   }
 
-  createAndUpdatePool(name, hot, sport, color, matches, usersLimit, status, penalty, groups, teamsPerGroup, type, league, password, rules,
+  createAndUpdatePool(tournamentType, name, hot, sport, color, matches, usersLimit, status, penalty, groups, teamsPerGroup, type, league, password, rules,
                       matchesInfo, groupsInfo, usersForPool, result, winner, draw, loser, amountInput, coinsInput, dateFinish,
-                      timeFinish, awardType, awardValue, variable, id = null): Observable<any> {
+                      timeFinish, awardType, awardValue, variable, id = null, ): Observable<any> {
     const params = {
       name,
       hot,
@@ -253,6 +253,7 @@ export class AdminService {
       awardType,
       awardValue,
       id,
+      tournamentType
     };
 
 

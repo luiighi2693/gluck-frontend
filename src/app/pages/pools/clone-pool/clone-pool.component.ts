@@ -60,6 +60,7 @@ export class ClonePoolComponent implements OnInit, AfterViewInit {
   awardType;
   usersData = [];
   usersForPool = [];
+  isTournament = false;
 
   constructor(
     private handleAlertsProvider: HandleAlertsProvider,
@@ -182,6 +183,7 @@ export class ClonePoolComponent implements OnInit, AfterViewInit {
       hot: ['', Validators.required],
       status: ['', Validators.required],
       penalty: ['', Validators.required],
+      tournamentType : [''],
       groups: [''],
       teamsPerGroup: [''],
       type: ['', Validators.required],
@@ -220,6 +222,7 @@ export class ClonePoolComponent implements OnInit, AfterViewInit {
     this.config.get('league').setValue(this.poolData.league);
     this.config.get('password').setValue(this.poolData.password);
     this.config.get('rules').setValue(this.poolData.rules);
+    this.config.get('tournamentType').setValue(this.poolData.tournamentType);
 
     this.results.get('winner').setValue(this.poolData.winner);
     this.results.get('loser').setValue(this.poolData.loser);
@@ -255,7 +258,7 @@ export class ClonePoolComponent implements OnInit, AfterViewInit {
     this.loaderValue.updateIsloading(true);
     const {
       name, hot, sport, color, matches, usersLimit, status, penalty, groups, teamsPerGroup, type, league, password,
-      rules
+      rules, tournamentType
     } = this.config.value;
     const {amountInput, coinsInput, dateFinish, timeFinish, awardType, awardValue} = this.endPools.value;
     // convert all times in good format
@@ -273,7 +276,7 @@ export class ClonePoolComponent implements OnInit, AfterViewInit {
     const groupsInfo = this.arrayOfGroups;
     const usersForPool = this.selection.selected;
     const {result, winner, draw, loser} = this.results.value;
-    this.admin.createAndUpdatePool(name, hot, sport, color, matches, usersLimit, status, penalty, groups, teamsPerGroup, type, league, password,
+    this.admin.createAndUpdatePool(tournamentType, name, hot, sport, color, matches, usersLimit, status, penalty, groups, teamsPerGroup, type, league, password,
       rules, matchesInfo, groupsInfo, usersForPool, result, winner, draw, loser, amountInput, coinsInput, finishDate, timeFinish, awardType, awardValue,
       'create', this.currentPool).subscribe(data => {
       this.loaderValue.updateIsloading(false);
@@ -363,7 +366,48 @@ export class ClonePoolComponent implements OnInit, AfterViewInit {
     }
   }
 
+  validateChangeTeamGroup(event: any, i, j) {
+    let result = [];
+    result = result.concat(...this.arrayOfGroups.map(x => x.teams));
+
+    // coincidences
+    if (result.filter(x => x === event).length > 1) {
+      setTimeout(() => {
+        this.arrayOfGroups[i].teams[j] = 0;
+        this.handleAlertsProvider.presentSnackbarError('Este Equipo ya fue seleccionado!');
+
+      }, 300);
+    }
+
+  }
+
+  validateNameGroupChange(event: any, i) {
+    let result = [];
+    result = result.concat(...this.arrayOfGroups.map(x => x.name));
+
+    // coincidences
+    if (result.filter(x => x.trim() === event.trim()).length > 1) {
+      setTimeout(() => {
+        this.arrayOfGroups[i].name = '';
+        this.handleAlertsProvider.presentSnackbarError('el nombre de este grupo ya existe!');
+
+      }, 2000);
+    }
+
+  }
+
+
   isBracket(match) {
     return match.bracketType !== null && match.bracketType !== undefined;
+  }
+
+  selectGeneric(event) {
+    this.isTournament = event.value === 'generic';
+    if (event.value === 'generic') {
+      this.config.get('tournamentType').setValidators(Validators.required);
+    } else {
+      this.config.get('tournamentType').clearValidators();
+      this.config.get('tournamentType').setValue(null);
+    }
   }
 }

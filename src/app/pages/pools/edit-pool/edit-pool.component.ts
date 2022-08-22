@@ -61,6 +61,8 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
   awardType;
   usersData = [];
   usersForPool = [];
+  isTournament = false;
+
 
   constructor(
     private handleAlertsProvider: HandleAlertsProvider,
@@ -180,7 +182,7 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
       color: ['', Validators.required],
       hot: ['', Validators.required],
       matches: [''],
-      tournament_type: [''],
+      tournamentType: [''],
       usersLimit: ['', Validators.required],
       status: ['', Validators.required],
       penalty: ['', Validators.required],
@@ -222,7 +224,7 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
     this.config.get('league').setValue(this.poolData.league);
     this.config.get('password').setValue(this.poolData.password);
     this.config.get('rules').setValue(this.poolData.rules);
-    this.config.get('tournament_type').setValue(this.poolData.tournament_type);
+    this.config.get('tournamentType').setValue(this.poolData.tournamentType);
 
     this.results.get('winner').setValue(this.poolData.winner);
     this.results.get('loser').setValue(this.poolData.loser);
@@ -262,7 +264,7 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
     this.loaderValue.updateIsloading(true);
     const {
       name, hot, sport, color, matches, usersLimit, status, penalty, groups, teamsPerGroup, type, league, password,
-      rules
+      rules, tournamentType
     } = this.config.value;
     const {amountInput, coinsInput, dateFinish, timeFinish, awardType, awardValue} = this.endPools.value;
     // convert all times in good format
@@ -280,7 +282,7 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
     const groupsInfo = this.arrayOfGroups;
     const usersForPool = this.selection.selected;
     const {result, winner, draw, loser} = this.results.value;
-    this.admin.createAndUpdatePool(name, hot, sport, color, matches, usersLimit, status, penalty, groups, teamsPerGroup, type, league, password,
+    this.admin.createAndUpdatePool(tournamentType, name, hot, sport, color, matches, usersLimit, status, penalty, groups, teamsPerGroup, type, league, password,
       rules, matchesInfo, groupsInfo, usersForPool, result, winner, draw, loser, amountInput, coinsInput, finishDate, timeFinish, awardType, awardValue,
       'update', this.currentPool).subscribe(data => {
       this.loaderValue.updateIsloading(false);
@@ -379,5 +381,15 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
 
   isBracket(match) {
     return match.bracketType !== null && match.bracketType !== undefined;
+  }
+
+  selectGeneric(event) {
+    this.isTournament = event.value === 'generic';
+    if (event.value === 'generic') {
+      this.config.get('tournamentType').setValidators(Validators.required);
+    } else {
+      this.config.get('tournamentType').clearValidators();
+      this.config.get('tournamentType').setValue(null);
+    }
   }
 }

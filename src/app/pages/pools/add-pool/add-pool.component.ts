@@ -41,6 +41,7 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
   arrayOfGroups = [];
   sports = [];
   teams = [];
+  matchesTeams = [];
   limitOfUsers: any;
   hide = true;
   isTournament = false;
@@ -120,10 +121,15 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
       this.loaderValue.updateIsloading(false);
       if (data.code === 'D200') {
         this.teams = data.data.sort((a, b) => {
-          if (a.name < b.name) { return -1; }
-          if (a.name > b.name) { return 1; }
+          if (a.name < b.name) {
+            return -1;
+          }
+          if (a.name > b.name) {
+            return 1;
+          }
           return 0;
         });
+        console.log(this.teams);
       } else if (data.code === 'A401' || data.code === 'A302' || data.code === 'A403') {
         this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
         this.router.navigate(['/auth']);
@@ -152,7 +158,7 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
       status: ['', Validators.required],
       hot: ['', Validators.required],
       penalty: ['', Validators.required],
-      tournament_type : [''],
+      tournamentType: [''],
       groups: [''],
       teamsPerGroup: [''],
       type: ['', Validators.required],
@@ -247,7 +253,7 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
     this.loaderValue.updateIsloading(true);
     const {
       name, hot, sport, color, matches, usersLimit, status, penalty, groups, teamsPerGroup, type, league, password,
-      rules
+      rules, tournamentType
     } = this.config.value;
     const {amountInput, coinsInput, dateFinish, timeFinish, awardType, awardValue} = this.endPools.value;
     // this.arrayOfMatches.forEach(match => {
@@ -262,7 +268,7 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
     const usersForPool = this.selection.selected;
     const {result, winner, draw, loser} = this.poolResults.value;
     const colorValue = color.hex.includes('#') ? color.hex : `#${color.hex}`;
-    this.admin.createAndUpdatePool(name, hot, sport, colorValue, matches, usersLimit, status, penalty, groups, teamsPerGroup, type,
+    this.admin.createAndUpdatePool(tournamentType, name, hot, sport, colorValue, matches, usersLimit, status, penalty, groups, teamsPerGroup, type,
       league, password, rules, matchesInfo, groupsInfo, usersForPool, result, winner, draw, loser, amountInput, coinsInput, dateFinish, timeFinish,
       awardType, awardValue,
       'create').subscribe(data => {
@@ -320,13 +326,48 @@ export class AddPoolComponent implements OnInit, AfterViewInit {
 
   }
 
+  validateNameGroupChange(event: any, i) {
+    let result = [];
+    result = result.concat(...this.arrayOfGroups.map(x => x.name));
+
+    // coincidences
+    if (result.filter(x => x.trim() === event.trim()).length > 1) {
+      setTimeout(() => {
+        this.arrayOfGroups[i].name = '';
+        this.handleAlertsProvider.presentSnackbarError('el nombre de este grupo ya existe!');
+
+      }, 2000);
+    }
+
+  }
+
+  // TODO filtrar equipos por equipos seleccionados en grupos
+
+  makeTeamsBasedOnGroupTeams() {
+    // @ts-ignore
+    const filteredTeamsByGroup = this.arrayOfGroups.map(x => x.teams).flat();
+
+    let filteredTeamsByGroupData = [];
+
+    this.teams.forEach((team, index) => {
+      if (filteredTeamsByGroup.includes(team.rowid)) {
+        filteredTeamsByGroupData.push(team);
+      }
+    });
+
+    this.matchesTeams = filteredTeamsByGroupData;
+
+    console.log(filteredTeamsByGroup);
+    console.log('here!', filteredTeamsByGroupData);
+  }
+
   selectGeneric(event) {
     this.isTournament = event.value === 'generic';
     if (event.value === 'generic') {
-      this.config.get('tournament_type').setValidators(Validators.required);
+      this.config.get('tournamentType').setValidators(Validators.required);
     } else {
-      this.config.get('tournament_type').clearValidators();
-      this.config.get('tournament_type').setValue(null);
+      this.config.get('tournamentType').clearValidators();
+      this.config.get('tournamentType').setValue(null);
     }
   }
 }

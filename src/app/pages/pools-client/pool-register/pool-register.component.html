@@ -97,7 +97,7 @@
     <!--    <app-battle-table [round]="fakeRoundData" [category]="category" ></app-battle-table>-->
     <div class="playoffs-wrapper">
       <div class="row">
-        <div class="col-3">
+        <div class="col-3" *ngIf="pool.tournamentType === '8vos'">
           <div class="col-name">
             <h2>octavos de Final</h2>
           </div>
@@ -119,14 +119,14 @@
         </div>
       </div>
       <div class="row align-items-center">
-        <div class="col-3">
-          <div *ngFor="let match of finalEighths">
+        <div class="col-3" *ngIf="pool.tournamentType === '8vos' ">
+          <div *ngFor="let match of finalEighths, index as i">
             <div class="teams-group">
               <div class="team row px-3">
                 <div class="col-10 d-flex align-items-center team-info ">
                   <mat-form-field appearance="outline">
                     <mat-label>Selecciona un equipo</mat-label>
-                    <mat-select [(ngModel)]="match.team1">
+                    <mat-select [(ngModel)]="match.team1" (selectionChange)="handleSelectTeam($event, i)">
                       <mat-option *ngFor="let team of teams" [value]="team.rowid">
                         {{team.name}}
                       </mat-option>

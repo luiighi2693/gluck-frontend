@@ -165,11 +165,15 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
         }
 
         if (this.pool.league === 'generic') {
-          const allGroupsWithEighths = res.data.groupsInfo.map(x => x.teams).join();
-          console.log(allGroupsWithEighths);
-          this.teams = this.teams.filter(x => allGroupsWithEighths.includes(x.rowid));
-          console.log('TEANS', this.teams);
-          this.setArraysWith8vos();
+          if (this.pool.tournamentType === '8vos') {
+            const allGroupsWithEighths = res.data.groupsInfo.map(x => x.teams).join();
+            this.teams = this.teams.filter(x => allGroupsWithEighths.includes(x.rowid));
+            this.setArraysWith8vos();
+          } else {
+            const allGroups = res.data.groupsInfo.map(x => x.teams).join();
+            this.teams = this.teams.filter(x => allGroups.includes(x.rowid));
+            this.setArrays();
+          }
         }
 
         this.loaderValue.updateIsloading(true);
@@ -190,7 +194,7 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
 
             // en algun momento se lleno los brackets
             if (this.pool.league === 'Copa America' || this.pool.league === 'generic') {
-              console.log('i am here!')
+              console.log('i am here!');
               let allMatches = this.matches;
               this.matches = allMatches.filter(x => x.bracketType === null);
 
@@ -198,13 +202,16 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
               // partidos de eliminatorias
               if (data2.data.length > 0) {
 
-                let arrayBracket = data2.data.slice(data2.data.length - 8, data2.data.length);
+                let arrayBracket;
 
-                console.log('arrayBracket', arrayBracket)
+                arrayBracket = data2.data.slice(data2.data.length - 8, data2.data.length);
+
+
+                console.log('arrayBracket', arrayBracket);
 
                 this.finalEighths = [];
                 // llenamos 8vos
-                if (this.pool.league === 'generic') {
+                if (this.pool.tournamentType === '8vos') {
                   arrayBracket.slice(0, 8).forEach(result => {
                     this.finalEighths.push({
                       team1: result.teamId1,
@@ -303,17 +310,16 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
   registerValues() {
     if (this.pool.league === 'Copa America' || this.pool.league === 'generic') {
       console.log(this.finalQuarters, this.semifinals, this.thirdPosition, this.final);
-      console.log(this.final.every(this.someValidation));
-      if (this.finalEighths.every(this.someValidation) || this.finalQuarters.every(this.someValidation) || this.semifinals.every(this.someValidation) || this.final.every(this.someValidation) || this.thirdPosition.every(this.someValidation)) {
+      this.matches.push(...this.finalEighths);
+      this.matches.push(...this.finalQuarters);
+      this.matches.push(...this.semifinals);
+      this.matches.push(...this.thirdPosition);
+      this.matches.push(...this.final);
+      if (this.matches.every(this.someValidation)) {
         this.handleAlertsProvider.presentGenericAlert('Has colocado un partido con dos resultados iguales "Empate", por favor cambialo...');
         return;
       } else {
         this.loaderValue.updateIsloading(true);
-        this.matches.push(...this.finalEighths);
-        this.matches.push(...this.finalQuarters);
-        this.matches.push(...this.semifinals);
-        this.matches.push(...this.thirdPosition);
-        this.matches.push(...this.final);
         this.pool.matchesInfo = this.matches;
         this.admin.clientRegisterToPool(this.userId, this.pool).subscribe(res => {
           this.loaderValue.updateIsloading(false);
@@ -324,7 +330,7 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
             this.handleAlertsProvider.presentGenericAlert('Por favor inicie sesion de nuevo...', 'Su Sesion Expiro!');
             this.router.navigate(['/auth']);
           } else if (res.code === 'D400') {
-            this.handleAlertsProvider.presentSnackbarError(res.message,);
+            this.handleAlertsProvider.presentSnackbarError(res.message);
           }
         });
       }
@@ -346,5 +352,10 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
         }
       });
     }
+  }
+
+  handleSelectTeam($event: any, index: number) {
+    console.log($event);
+    console.log(index);
   }
 }

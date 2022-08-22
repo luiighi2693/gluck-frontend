@@ -168,7 +168,7 @@
             <div class="col-12 col-md-3" *ngIf="isTournament">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Valores de torneo</mat-label>
-                <mat-select formControlName="tournament_type" >
+                <mat-select formControlName="tournamentType" >
                   <mat-option value="4tos">Cuartos de final</mat-option>
                   <mat-option value="8vos">Octavos de final</mat-option>
                 </mat-select>
@@ -218,7 +218,7 @@
             <div class="col-12">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Nombre de Grupo</mat-label>
-                <input matInput [(ngModel)]="group.name" placeholder='Nombre de Grupo' autocomplete="off">
+                <input matInput [(ngModel)]="group.name" placeholder='Nombre de Grupo' autocomplete="off" (ngModelChange)="validateNameGroupChange($event, i)">
               </mat-form-field>
             </div>
             <div class="row">
@@ -237,7 +237,7 @@
         </div>
         <div>
           <button mat-button matStepperPrevious>Atras</button>
-          <button mat-button matStepperNext class="action-button">Siguiente</button>
+          <button mat-button matStepperNext (click)="makeTeamsBasedOnGroupTeams()" class="action-button">Siguiente</button>
         </div>
         <!--        </form>-->
       </mat-step>
@@ -264,7 +264,7 @@
                   <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Equipo 1</mat-label>
                     <mat-select [(ngModel)]="match.team1">
-                      <mat-option *ngFor="let team of teams, index as i" [value]="team.rowid">{{team.name}}</mat-option>
+                      <mat-option *ngFor="let team of matchesTeams, index as i" [value]="team.rowid">{{team.name}}</mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>
@@ -291,7 +291,7 @@
                   <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Equipo 2</mat-label>
                     <mat-select [(ngModel)]="match.team2">
-                      <mat-option *ngFor="let team of teams, index as i" [value]="team.rowid">{{team.name}}</mat-option>
+                      <mat-option *ngFor="let team of matchesTeams, index as i" [value]="team.rowid">{{team.name}}</mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>
