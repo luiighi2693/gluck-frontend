@@ -373,12 +373,12 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
   }
 
   handleResult($event: any, arr: any[], match: any, i: number) {
-    if (match.resultTeam1 === match.resultTeam2) {
-      this.handleAlertsProvider.presentErrorDialogOk('Debes agregar valores de penalties');
-    } else {
-      arr[i].penalty1 = 0;
-      arr[i].penalty2 = 0;
-    }
+    // if (match.resultTeam1 === match.resultTeam2) {
+    //   this.handleAlertsProvider.presentErrorDialogOk('Debes agregar valores de penalties');
+    // } else {
+    //   arr[i].penalty1 = 0;
+    //   arr[i].penalty2 = 0;
+    // }
     console.log($event.target.value);
     console.log(arr);
     console.log(match);
