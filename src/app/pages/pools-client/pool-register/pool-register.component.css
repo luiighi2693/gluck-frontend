@@ -122,6 +122,22 @@
   border-bottom-right-radius: 15px;
 }
 
+.penalty {
+  width: 30px;
+}
+
+.penalty > input {
+  border:none;
+  color: white;
+  width: 30px;
+  text-align: center;
+  background-image:none;
+  background-color:transparent;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  box-shadow: none;
+}
+
 .dark-input > input {
   border:none;
   color: white;

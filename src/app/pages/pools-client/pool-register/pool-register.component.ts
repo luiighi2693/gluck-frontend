@@ -82,31 +82,31 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
 
     for (let i = 0; i < 8; i++) {
       this.finalEighths.push({
-        team1: null, resultTeam1: 0, team2: null, resultTeam2: 0, date: '2021-09-11', time: '00:00:00', status: 0
+        team1: null, resultTeam1: 0, team2: null, resultTeam2: 0, date: '2021-09-11', time: '00:00:00', status: 0, penalty1: 0, penalty2: 0,
       });
     }
 
     for (let i = 0; i < 4; i++) {
       this.finalQuarters.push({
-        team1: null, resultTeam1: 0, team2: null, resultTeam2: 0, date: '2021-09-11', time: '00:00:00', status: 0
+        team1: null, resultTeam1: 0, team2: null, resultTeam2: 0, date: '2021-09-11', time: '00:00:00', status: 0, penalty1: 0, penalty2: 0
       });
     }
 
     for (let i = 0; i < 2; i++) {
       this.semifinals.push({
-        team1: null, resultTeam1: 0, team2: null, resultTeam2: 0, date: '2021-09-11', time: '00:00:00', status: 0
+        team1: null, resultTeam1: 0, team2: null, resultTeam2: 0, date: '2021-09-11', time: '00:00:00', status: 0, penalty1: 0, penalty2: 0
       });
     }
 
     for (let i = 0; i < 1; i++) {
       this.final.push({
-        team1: null, resultTeam1: 0, team2: null, resultTeam2: 0, date: '2021-09-11', time: '00:00:00', status: 0
+        team1: null, resultTeam1: 0, team2: null, resultTeam2: 0, date: '2021-09-11', time: '00:00:00', status: 0, penalty1: 0, penalty2: 0
       });
     }
 
     for (let i = 0; i < 1; i++) {
       this.thirdPosition.push({
-        team1: null, resultTeam1: 0, team2: null, resultTeam2: 0, date: '2021-09-11', time: '00:00:00', status: 0
+        team1: null, resultTeam1: 0, team2: null, resultTeam2: 0, date: '2021-09-11', time: '00:00:00', status: 0, penalty1: 0, penalty2: 0
       });
     }
   }
@@ -218,6 +218,8 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
                       resultTeam1: result.teamResult1,
                       team2: result.teamId2,
                       resultTeam2: result.teamResult2,
+                      penalty1: result.penalty1,
+                      penalty2: result.penalty2,
                       date: result.date,
                       time: result.hour,
                       status: 0
@@ -233,6 +235,8 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
                     resultTeam1: result.teamResult1,
                     team2: result.teamId2,
                     resultTeam2: result.teamResult2,
+                    penalty1: result.penalty1,
+                    penalty2: result.penalty2,
                     date: result.date,
                     time: result.hour,
                     status: 0
@@ -247,6 +251,8 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
                     resultTeam1: result.teamResult1,
                     team2: result.teamId2,
                     resultTeam2: result.teamResult2,
+                    penalty1: result.penalty1,
+                    penalty2: result.penalty2,
                     date: result.date,
                     time: result.hour,
                     status: 0
@@ -261,6 +267,8 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
                     resultTeam1: result.teamResult1,
                     team2: result.teamId2,
                     resultTeam2: result.teamResult2,
+                    penalty1: result.penalty1,
+                    penalty2: result.penalty2,
                     date: result.date,
                     time: result.hour,
                     status: 0
@@ -275,6 +283,8 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
                     resultTeam1: result.teamResult1,
                     team2: result.teamId2,
                     resultTeam2: result.teamResult2,
+                    penalty1: result.penalty1,
+                    penalty2: result.penalty2,
                     date: result.date,
                     time: result.hour,
                     status: 0
@@ -354,8 +364,24 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
     }
   }
 
-  handleSelectTeam($event: any, index: number) {
+  handleSelectTeam($event: any, match: any) {
+    if (match.team1 === match.team2) {
+      this.handleAlertsProvider.presentSnackbarError('Has seleccionado dos equipos iguales para un partido!');
+    }
     console.log($event);
-    console.log(index);
+    console.log(match);
+  }
+
+  handleResult($event: any, arr: any[], match: any, i: number) {
+    if (match.resultTeam1 === match.resultTeam2) {
+      this.handleAlertsProvider.presentErrorDialogOk('Debes agregar valores de penalties');
+    } else {
+      arr[i].penalty1 = 0;
+      arr[i].penalty2 = 0;
+    }
+    console.log($event.target.value);
+    console.log(arr);
+    console.log(match);
+    console.log(i);
   }
 }
