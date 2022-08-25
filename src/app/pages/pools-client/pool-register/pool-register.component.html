@@ -19,14 +19,14 @@
                   class="team-image" alt="">
 <!--                <p class="team-text">{{match.teamName1}}</p>-->
               </div>
-              <input type="number" [disabled]="pool.status === 0" [(ngModel)]="match.resultTeam1"
+              <input (change)="fillMatch()" type="number" [disabled]="pool.status === 0" [(ngModel)]="match.resultTeam1"
                      [ngModelOptions]="{standalone: true}" class="input">
             </div>
             <div class="col-2 d-flex justify-content-center align-items-center">
               <p style="font-size: 26px">VS</p>
             </div>
             <div class="col-5 d-flex justify-content-around align-items-center">
-              <input type="number" [disabled]="pool.status === 0" [(ngModel)]="match.resultTeam2"
+              <input (change)="fillMatch()"  type="number" [disabled]="pool.status === 0" [(ngModel)]="match.resultTeam2"
                      [ngModelOptions]="{standalone: true}" class="input">
               <div class="text-center">
                 <img
@@ -93,6 +93,7 @@
   <div *ngIf="pool.league === 'generic'" class="row">
     <div class="col-12 text-center">
       <h1 class="yellow-title">Fase de Eliminacion</h1>
+      <button mat-button class="submit" [disabled]="!allMatchesFilled" (click)="setPhase()">Generar siguiente ronda</button>
     </div>
     <!--    <app-battle-table [round]="fakeRoundData" [category]="category" ></app-battle-table>-->
     <div class="playoffs-wrapper">
@@ -119,7 +120,7 @@
         </div>
       </div>
       <div class="row align-items-center">
-        <div class="col-3" *ngIf="pool.tournamentType === '8vos' ">
+        <div class="col-3" *ngIf="finalEighths.length > 0">
           <div *ngFor="let match of finalEighths, index as i">
             <div class="teams-group">
               <div class="team row px-3">
@@ -169,7 +170,7 @@
             </div>
           </div>
         </div>
-        <div class="col-3">
+        <div class="col-3" *ngIf="finalQuarters.length > 0">
           <div *ngFor="let match of finalQuarters, index as i">
             <div class="teams-group">
               <div class="team row px-3">
@@ -219,9 +220,9 @@
               </div>
             </div>
           </div>
-        </div>
-        <div class="col-3">
 
+        </div>
+        <div class="col-3" *ngIf="semifinals.length > 0">
           <div *ngFor="let match of semifinals, index as i" style="margin-top: 8rem">
             <div class="teams-group">
               <div class="team row px-3">
@@ -271,9 +272,9 @@
               </div>
             </div>
           </div>
-        </div>
-        <div class="col-3">
 
+        </div>
+        <div class="col-3" *ngIf="final.length > 0">
           <div *ngFor="let match of final, index as i" style="margin-top: 16rem">
             <div class="teams-group">
               <div class="team row px-3">
@@ -322,56 +323,57 @@
               </div>
             </div>
           </div>
-          <div class="teams-group" *ngFor="let anotherMatch of thirdPosition, index as i">
-            <div class="col-name">
-              <h2>Mejor Tercero</h2>
-            </div>
-            <div class="team row px-3">
-              <div class="col-8 d-flex align-items-center team-info ">
-                <mat-form-field appearance="outline" class="w-100">
-                  <mat-label>Selecciona un equipo</mat-label>
-                  <mat-select [(ngModel)]="anotherMatch.team1" (selectionChange)="handleSelectTeam($event, anotherMatch)">
-                    <mat-option *ngFor="let team of teams" [value]="team.rowid">
-                      {{team.name}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
+          <div *ngIf="thirdPosition.length > 0">
+            <div class="teams-group" *ngFor="let anotherMatch of thirdPosition, index as i">
+              <div class="col-name">
+                <h2>Mejor Tercero</h2>
               </div>
-              <div class="col-2 dark-input d-flex align-items-center justify-content-center">
-                <!--                  <p class="text-white fw-bold m-0">{{ round.result_team_1 }}</p>-->
-                <input type="number" (change)="handleResult($event, thirdPosition, anotherMatch,  i)" class="text-white  fw-bold m-0" [(ngModel)]="anotherMatch.resultTeam1">
+              <div class="team row px-3">
+                <div class="col-8 d-flex align-items-center team-info ">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Selecciona un equipo</mat-label>
+                    <mat-select [(ngModel)]="anotherMatch.team1" (selectionChange)="handleSelectTeam($event, anotherMatch)">
+                      <mat-option *ngFor="let team of teams" [value]="team.rowid">
+                        {{team.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-2 dark-input d-flex align-items-center justify-content-center">
+                  <!--                  <p class="text-white fw-bold m-0">{{ round.result_team_1 }}</p>-->
+                  <input type="number" (change)="handleResult($event, thirdPosition, anotherMatch,  i)" class="text-white  fw-bold m-0" [(ngModel)]="anotherMatch.resultTeam1">
+                </div>
+                <!--              <div *ngIf="anotherMatch.resultTeam1 === anotherMatch.resultTeam2" class="col-2 penalty">-->
+                <!--                <p class="text-white m-0">P</p>-->
+                <!--                <div class=" d-flex align-items-center justify-content-center penalty w-100">-->
+                <!--                  <input type="number"   class="mt-2  fw-bold m-0" [(ngModel)]="anotherMatch.penalty1">-->
+                <!--                </div>-->
+                <!--              </div>-->
               </div>
-<!--              <div *ngIf="anotherMatch.resultTeam1 === anotherMatch.resultTeam2" class="col-2 penalty">-->
-<!--                <p class="text-white m-0">P</p>-->
-<!--                <div class=" d-flex align-items-center justify-content-center penalty w-100">-->
-<!--                  <input type="number"   class="mt-2  fw-bold m-0" [(ngModel)]="anotherMatch.penalty1">-->
-<!--                </div>-->
-<!--              </div>-->
-            </div>
-            <div class="team row px-3">
-              <div class="col-8 d-flex align-items-center team-info ">
-                <mat-form-field appearance="outline" class="w-100">
-                  <mat-label>Selecciona un equipo</mat-label>
-                  <mat-select [(ngModel)]="anotherMatch.team2 " (selectionChange)="handleSelectTeam($event, anotherMatch)">
-                    <mat-option *ngFor="let team of teams" [value]="team.rowid">
-                      {{team.name}}
-                    </mat-option>
-                  </mat-select>
-                </mat-form-field>
+              <div class="team row px-3">
+                <div class="col-8 d-flex align-items-center team-info ">
+                  <mat-form-field appearance="outline" class="w-100">
+                    <mat-label>Selecciona un equipo</mat-label>
+                    <mat-select [(ngModel)]="anotherMatch.team2 " (selectionChange)="handleSelectTeam($event, anotherMatch)">
+                      <mat-option *ngFor="let team of teams" [value]="team.rowid">
+                        {{team.name}}
+                      </mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+                <div class="col-2 dark-input d-flex align-items-center justify-content-center">
+                  <!--                  <p class="text-white fw-bold m-0">{{ round.result_team_2 }}</p>-->
+                  <input type="number" (change)="handleResult($event, thirdPosition, anotherMatch,  i)" class="text-white  fw-bold m-0" [(ngModel)]="anotherMatch.resultTeam2">
+                </div>
+                <!--              <div *ngIf="anotherMatch.resultTeam1 === anotherMatch.resultTeam2" class="col-2 penalty">-->
+                <!--                <p class="text-white m-0">P</p>-->
+                <!--                <div class=" d-flex align-items-center justify-content-center penalty w-100">-->
+                <!--                  <input type="number" class="mt-2  fw-bold m-0" [(ngModel)]="anotherMatch.penalty2">-->
+                <!--                </div>-->
+                <!--              </div>-->
               </div>
-              <div class="col-2 dark-input d-flex align-items-center justify-content-center">
-                <!--                  <p class="text-white fw-bold m-0">{{ round.result_team_2 }}</p>-->
-                <input type="number" (change)="handleResult($event, thirdPosition, anotherMatch,  i)" class="text-white  fw-bold m-0" [(ngModel)]="anotherMatch.resultTeam2">
-              </div>
-<!--              <div *ngIf="anotherMatch.resultTeam1 === anotherMatch.resultTeam2" class="col-2 penalty">-->
-<!--                <p class="text-white m-0">P</p>-->
-<!--                <div class=" d-flex align-items-center justify-content-center penalty w-100">-->
-<!--                  <input type="number" class="mt-2  fw-bold m-0" [(ngModel)]="anotherMatch.penalty2">-->
-<!--                </div>-->
-<!--              </div>-->
             </div>
           </div>
-
         </div>
       </div>
     </div>

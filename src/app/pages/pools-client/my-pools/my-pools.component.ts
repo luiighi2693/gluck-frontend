@@ -25,7 +25,7 @@ export interface PeriodicElement {
 export class MyPoolsComponent implements OnInit, AfterViewInit {
   @ViewChild(MatAccordion) accordion: MatAccordion;
 
-  displayedColumns: string[] = [ 'name', 'dollarPrice', 'gCoinPrice', 'prize', 'participants', 'remainingTime', 'opts'];
+  displayedColumns: string[] = ['name', 'dollarPrice', 'gCoinPrice', 'prize', 'participants', 'remainingTime', 'opts'];
 
   dataSourceRegistered = new MatTableDataSource<PeriodicElement>();
   dataSourceProgress = new MatTableDataSource<PeriodicElement>();
@@ -130,9 +130,11 @@ export class MyPoolsComponent implements OnInit, AfterViewInit {
           // tslint:disable-next-line:max-line-length
           item.remainingTime = (duration.months() > 0 ? (duration.months() + ' mes(es) ') : '') + (duration.days() > 0 ? (duration.days() + ' dia(s) ') : '') + this.formatDate(duration.hours()) + ':' + this.formatDate(duration.minutes()) + ':' + this.formatDate(duration.seconds());
         } else {
-          this.admin.updatePoolStatusToInProcess(item.id).subscribe();
-          clearInterval(this.timers[i]);
-          item.remainingTime = '00:00:00';
+          this.admin.updatePoolStatusToInProcess(item.id).subscribe(_ => {
+            clearInterval(this.timers[i]);
+            item.remainingTime = '00:00:00';
+
+          });
         }
 
         dataSource = new MatTableDataSource<PeriodicElement>(list);
