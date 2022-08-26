@@ -5,7 +5,6 @@ import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-p
 import {environment} from '../../../../environments/environment';
 import {LoaderProvider} from '../../../utilities/providers/loader-provider';
 import {brackets, champion} from '../../../../assets/mock/mock-brackets';
-import {group} from '@angular/animations';
 
 @Component({
   selector: 'app-pool-register',
@@ -206,7 +205,12 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
 
                 let arrayBracket;
 
-                arrayBracket = data2.data.slice(data2.data.length - (this.pool.tournamentType === '8vos' ? 16 : 8), data2.data.length);
+                if (this.pool.tournamentType === '8vos') {
+                  arrayBracket = data2.data.slice(data2.data.length - 16, data2.data.length);
+                } else {
+                  arrayBracket = data2.data.slice(data2.data.length - 8, data2.data.length);
+                }
+
 
                 console.log('arrayBracket', arrayBracket);
 
@@ -327,6 +331,7 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
       this.matches.push(...this.thirdPosition);
       this.matches.push(...this.final);
       if (this.matches.every(this.someValidation)) {
+        // console.log('se coloco algun partido 0 - 0')
         this.handleAlertsProvider.presentGenericAlert('Has colocado un partido con dos resultados iguales "Empate", por favor cambialo...');
         return;
       } else {
@@ -411,16 +416,27 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
   }
 
   setQuarters() {
+    this.finalQuarters = [];
     this.handleAlertsProvider.presentSnackbarSuccess('Se genero la siguiente fase: Cuartos de final');
     let groupMatches = this.getBracketMatches('4tos', this.pool.tournamentType);
 
     // B1 con A2, A1 con B2, D1 con C2, C1 con D2
 
-    for (let i = 0; i < 4; i++) {
+    console.log('here!!!!', groupMatches);
+
+    const filteredMatches = [
+      [groupMatches[0].ranking[0], groupMatches[1].ranking[1]], // A1 vs B2
+      [groupMatches[0].ranking[1], groupMatches[1].ranking[0]], // A2 vs B1
+      [groupMatches[2].ranking[0], groupMatches[3].ranking[1]], // C1 vs D2
+      [groupMatches[2].ranking[1], groupMatches[3].ranking[0]], // C2 vs D1
+    ];
+
+    console.log(filteredMatches);
+    filteredMatches.forEach(duplaMatch => {
       this.finalQuarters.push({
-        team1: null,
+        team1: duplaMatch[0].team,
         resultTeam1: 0,
-        team2: null,
+        team2: duplaMatch[1].team,
         resultTeam2: 0,
         date: '2021-09-11',
         time: '00:00:00',
@@ -428,7 +444,8 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
         penalty1: 0,
         penalty2: 0
       });
-    }
+    });
+
     this.semifinals = [];
     this.final = [];
     this.thirdPosition = [];
@@ -487,8 +504,6 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
   fillMatch() {
     const test = (match) => (match.resultTeam1 !== null && match.resultTeam2 !== null);
     this.allMatchesFilled = !!this.matches.every(test);
-    console.log(this.matches.some(test));
-    console.log(this.matches);
   }
 
   getBracketMatches(type, bracketType, data = null) {
@@ -554,6 +569,7 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
     }
     if (type === '4tos' && bracketType === '4tos') {
       let groupMatches = this.pool.groupsInfo;
+      console.log('groupMatches', groupMatches);
       this.matches.forEach(match => {
         // debemos saber a que grupo pertenece el partido
         const index = groupMatches.findIndex(x => x.teams.includes(match.team1));
