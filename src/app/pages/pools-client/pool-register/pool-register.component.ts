@@ -5,6 +5,7 @@ import {HandleAlertsProvider} from '../../../utilities/providers/handle-alerts-p
 import {environment} from '../../../../environments/environment';
 import {LoaderProvider} from '../../../utilities/providers/loader-provider';
 import {brackets, champion} from '../../../../assets/mock/mock-brackets';
+import {group} from '@angular/animations';
 
 @Component({
   selector: 'app-pool-register',
@@ -205,8 +206,7 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
 
                 let arrayBracket;
 
-                arrayBracket = data2.data.slice(data2.data.length - 8, data2.data.length);
-
+                arrayBracket = data2.data.slice(data2.data.length - (this.pool.tournamentType === '8vos' ? 16 : 8), data2.data.length);
 
                 console.log('arrayBracket', arrayBracket);
 
@@ -388,6 +388,9 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
 
   setEights() {
     this.handleAlertsProvider.presentSnackbarSuccess('Se genero la siguiente fase: Octavos de final');
+
+    let groupMatches = this.getBracketMatches('8vos', this.pool.tournamentType);
+
     for (let i = 0; i < 8; i++) {
       this.finalEighths.push({
         team1: null,
@@ -405,6 +408,10 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
 
   setQuarters() {
     this.handleAlertsProvider.presentSnackbarSuccess('Se genero la siguiente fase: Cuartos de final');
+    let groupMatches = this.getBracketMatches('4tos', this.pool.tournamentType);
+
+    // B1 con A2, A1 con B2, D1 con C2, C1 con D2
+
     for (let i = 0; i < 4; i++) {
       this.finalQuarters.push({
         team1: null,
@@ -478,18 +485,125 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
     console.log(this.matches);
   }
 
-  setPhase() {
-    if (this.finalEighths.length < 1 && this.pool.tournamentType === '8vos') {
-      this.setEights();
-    } else if (this.finalQuarters.length < 1) {
-      this.setQuarters();
-    } else if (this.semifinals.length < 1) {
-      this.setSemiFinal();
-    } else if (this.final.length < 1) {
-      this.setFinal();
-    } else if (this.thirdPosition.length < 1) {
-      this.setThirdPosition();
+  getBracketMatches(type, bracketType, data = null) {
+    if (type === '8vos' && bracketType === '8vos') {
+      let groupMatches = this.pool.groupsInfo;
+      this.matches.forEach(match => {
+        // debemos saber a que grupo pertenece el partido
+        const index = groupMatches.findIndex(x => x.teams.includes(match.team1));
+
+        if (!groupMatches[index].matches) {
+          groupMatches[index].matches = [];
+        }
+        groupMatches[index].matches.push(match);
+      });
+
+      groupMatches.forEach(groupMatch => {
+        // inicializamos ranking
+        groupMatch.ranking = [];
+
+        groupMatch.teams.forEach(team => {
+          groupMatch.ranking.push({
+            team,
+            result: 0
+          });
+        });
+
+        if (groupMatch.matches) {
+          // cargamos resultados en base a los partidos
+          groupMatch.matches.forEach(match => {
+            // team1 gana
+            if (match.result1 > match.result2) {
+              const index = groupMatch.ranking.findIndex(x => x.team === match.team1);
+              groupMatch.ranking[index].result += 1;
+            }
+            // team2 gana
+            if (match.result1 < match.result2) {
+              const index = groupMatch.ranking.findIndex(x => x.team === match.team2);
+              groupMatch.ranking[index].result += 1;
+            }
+            // empate
+            if (match.result1 === match.result2) {
+              // team1 gana
+              if (match.penalty1 > match.penalty2) {
+                const index = groupMatch.ranking.findIndex(x => x.team === match.team1);
+                groupMatch.ranking[index].result += 1;
+              } else {
+                const index = groupMatch.ranking.findIndex(x => x.team === match.team2);
+                groupMatch.ranking[index].result += 1;
+              }
+            }
+          });
+        }
+
+        groupMatch.ranking.sort((a, b) => b.result - a.result);
+      });
+
+      console.log(groupMatches);
+
+      return groupMatches;
     }
+    if (type === '4tos' && bracketType === '8vos') {
+
+    }
+    if (type === '4tos' && bracketType === '4tos') {
+      let groupMatches = this.pool.groupsInfo;
+      this.matches.forEach(match => {
+        // debemos saber a que grupo pertenece el partido
+        const index = groupMatches.findIndex(x => x.teams.includes(match.team1));
+
+        if (!groupMatches[index].matches) {
+          groupMatches[index].matches = [];
+        }
+        groupMatches[index].matches.push(match);
+      });
+
+      groupMatches.forEach(groupMatch => {
+        // inicializamos ranking
+        groupMatch.ranking = [];
+
+        groupMatch.teams.forEach(team => {
+          groupMatch.ranking.push({
+            team,
+            result: 0
+          });
+        });
+
+        if (groupMatch.matches) {
+          // cargamos resultados en base a los partidos
+          groupMatch.matches.forEach(match => {
+            // team1 gana
+            if (match.result1 > match.result2) {
+              const index = groupMatch.ranking.findIndex(x => x.team === match.team1);
+              groupMatch.ranking[index].result += 1;
+            }
+            // team2 gana
+            if (match.result1 < match.result2) {
+              const index = groupMatch.ranking.findIndex(x => x.team === match.team2);
+              groupMatch.ranking[index].result += 1;
+            }
+            // empate
+            if (match.result1 === match.result2) {
+              // team1 gana
+              if (match.penalty1 > match.penalty2) {
+                const index = groupMatch.ranking.findIndex(x => x.team === match.team1);
+                groupMatch.ranking[index].result += 1;
+              } else {
+                const index = groupMatch.ranking.findIndex(x => x.team === match.team2);
+                groupMatch.ranking[index].result += 1;
+              }
+            }
+          });
+        }
+
+        groupMatch.ranking.sort((a, b) => b.result - a.result);
+      });
+
+      console.log(groupMatches);
+      return groupMatches;
+    }
+
+    return null;
   }
 }
 
