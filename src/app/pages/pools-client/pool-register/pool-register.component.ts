@@ -534,17 +534,17 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
           // cargamos resultados en base a los partidos
           groupMatch.matches.forEach(match => {
             // team1 gana
-            if (match.result1 > match.result2) {
+            if (match.resultTeam1 > match.resultTeam2) {
               const index = groupMatch.ranking.findIndex(x => x.team === match.team1);
               groupMatch.ranking[index].result += 1;
             }
             // team2 gana
-            if (match.result1 < match.result2) {
+            if (match.resultTeam1 < match.resultTeam2) {
               const index = groupMatch.ranking.findIndex(x => x.team === match.team2);
               groupMatch.ranking[index].result += 1;
             }
             // empate
-            if (match.result1 === match.result2) {
+            if (match.resultTeam1 === match.resultTeam2) {
               // team1 gana
               if (match.penalty1 > match.penalty2) {
                 const index = groupMatch.ranking.findIndex(x => x.team === match.team1);
@@ -595,17 +595,17 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
           // cargamos resultados en base a los partidos
           groupMatch.matches.forEach(match => {
             // team1 gana
-            if (match.result1 > match.result2) {
+            if (match.resultTeam1 > match.resultTeam2) {
               const index = groupMatch.ranking.findIndex(x => x.team === match.team1);
               groupMatch.ranking[index].result += 1;
             }
             // team2 gana
-            if (match.result1 < match.result2) {
+            if (match.resultTeam1 < match.resultTeam2) {
               const index = groupMatch.ranking.findIndex(x => x.team === match.team2);
               groupMatch.ranking[index].result += 1;
             }
             // empate
-            if (match.result1 === match.result2) {
+            if (match.resultTeam1 === match.resultTeam2) {
               // team1 gana
               if (match.penalty1 > match.penalty2) {
                 const index = groupMatch.ranking.findIndex(x => x.team === match.team1);
