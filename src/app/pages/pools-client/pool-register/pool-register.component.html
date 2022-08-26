@@ -93,7 +93,10 @@
   <div *ngIf="pool.league === 'generic'" class="row">
     <div class="col-12 text-center">
       <h1 class="yellow-title">Fase de Eliminacion</h1>
-      <button mat-button class="submit" [disabled]="!allMatchesFilled" (click)="setPhase()">Generar siguiente ronda</button>
+      <button mat-button class="submit" [disabled]="!allMatchesFilled" (click)="setEights()">Generar Octavos</button>
+      <button mat-button class="submit" (click)="setQuarters()">Generar Cuartos</button>
+      <button mat-button class="submit" (click)="setSemiFinal()">Generar Semi f.</button>
+      <button mat-button class="submit" (click)="setFinal()">Generar Final</button>
     </div>
     <!--    <app-battle-table [round]="fakeRoundData" [category]="category" ></app-battle-table>-->
     <div class="playoffs-wrapper">

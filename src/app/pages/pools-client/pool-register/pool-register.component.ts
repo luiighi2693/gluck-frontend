@@ -404,6 +404,10 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
         penalty2: 0
       });
     }
+    this.finalQuarters = [];
+    this.semifinals = [];
+    this.final = [];
+    this.thirdPosition = [];
   }
 
   setQuarters() {
@@ -425,6 +429,9 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
         penalty2: 0
       });
     }
+    this.semifinals = [];
+    this.final = [];
+    this.thirdPosition = [];
   }
 
   setSemiFinal() {
@@ -442,10 +449,13 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
         penalty2: 0
       });
     }
+    this.final = [];
+    this.thirdPosition = [];
+
   }
 
   setFinal() {
-    this.handleAlertsProvider.presentSnackbarSuccess('Se genero la siguiente fase: Final');
+    this.handleAlertsProvider.presentSnackbarSuccess('Se genero la siguiente fase: Final y Mejor tercero');
     for (let i = 0; i < 1; i++) {
       this.final.push({
         team1: null,
@@ -459,10 +469,6 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
         penalty2: 0
       });
     }
-  }
-
-  setThirdPosition() {
-    this.handleAlertsProvider.presentSnackbarSuccess('Se genero la siguiente fase: Mejor tercero');
     for (let i = 0; i < 1; i++) {
       this.thirdPosition.push({
         team1: null,
@@ -606,6 +612,8 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
     return null;
   }
 }
+
+
 
 
 
