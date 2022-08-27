@@ -379,12 +379,12 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
   }
 
   handleResult($event: any, arr: any[], match: any, i: number) {
-    // if (match.resultTeam1 === match.resultTeam2) {
-    //   this.handleAlertsProvider.presentErrorDialogOk('Debes agregar valores de penalties');
-    // } else {
-    //   arr[i].penalty1 = 0;
-    //   arr[i].penalty2 = 0;
-    // }
+    if (match.resultTeam1 === match.resultTeam2) {
+      this.handleAlertsProvider.presentErrorDialogOk('Debes agregar valores de penalties', 'Aviso!');
+    } else {
+      arr[i].penalty1 = 0;
+      arr[i].penalty2 = 0;
+    }
     console.log($event.target.value);
     console.log(arr);
     console.log(match);
@@ -433,6 +433,8 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
 
     filteredMatches.forEach(duplaMatch => {
       this.finalQuarters.push({
+        penalty1: 0,
+        penalty2: 0,
         team1: duplaMatch[0].team,
         resultTeam1: 0,
         team2: duplaMatch[1].team,
@@ -440,8 +442,6 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
         date: '2021-09-11',
         time: '00:00:00',
         status: 0,
-        penalty1: 0,
-        penalty2: 0
       });
     });
 
@@ -461,29 +461,53 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
       if (i === 0) {
         if (match.resultTeam1 > match.resultTeam2) {
           nextMatches[0].push(match.team1);
-        } else {
+        } else if (match.resultTeam1 < match.resultTeam2) {
           nextMatches[0].push(match.team2);
+        } else if (match.resultTeam1 === match.resultTeam2) {
+          if (match.penalty1 > match.penalty2) {
+            nextMatches[0].push(match.team1);
+          } else {
+            nextMatches[0].push(match.team2);
+          }
         }
       }
       if (i === 1) {
         if (match.resultTeam1 > match.resultTeam2) {
           nextMatches[0].push(match.team1);
-        } else {
+        } else if (match.resultTeam1 < match.resultTeam2) {
           nextMatches[0].push(match.team2);
+        } else if (match.resultTeam1 === match.resultTeam2) {
+          if (match.penalty1 > match.penalty2) {
+            nextMatches[0].push(match.team1);
+          } else {
+            nextMatches[0].push(match.team2);
+          }
         }
       }
       if (i === 2) {
         if (match.resultTeam1 > match.resultTeam2) {
           nextMatches[1].push(match.team1);
-        } else {
+        } else if (match.resultTeam1 < match.resultTeam2) {
           nextMatches[1].push(match.team2);
+        } else if (match.resultTeam1 === match.resultTeam2) {
+          if (match.penalty1 > match.penalty2) {
+            nextMatches[1].push(match.team1);
+          } else {
+            nextMatches[1].push(match.team2);
+          }
         }
       }
       if (i === 3) {
         if (match.resultTeam1 > match.resultTeam2) {
           nextMatches[1].push(match.team1);
-        } else {
+        } else if (match.resultTeam1 < match.resultTeam2) {
           nextMatches[1].push(match.team2);
+        } else if (match.resultTeam1 === match.resultTeam2) {
+          if (match.penalty1 > match.penalty2) {
+            nextMatches[1].push(match.team1);
+          } else {
+            nextMatches[1].push(match.team2);
+          }
         }
       }
     });
@@ -518,18 +542,34 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
         if (match.resultTeam1 > match.resultTeam2) {
           finalMatch[0].push(match.team1);
           thirdMatch[0].push(match.team2);
-        } else {
+        } else if (match.resultTeam1 < match.resultTeam2) {
           thirdMatch[0].push(match.team1);
           finalMatch[0].push(match.team2);
+        } else if (match.resultTeam1 === match.resultTeam2) {
+          if (match.penalty1 > match.penalty2) {
+            finalMatch[0].push(match.team1);
+            thirdMatch[0].push(match.team2);
+          } else {
+            thirdMatch[0].push(match.team1);
+            finalMatch[0].push(match.team2);
+          }
         }
       }
       if (i === 1) {
         if (match.resultTeam1 > match.resultTeam2) {
           finalMatch[0].push(match.team1);
           thirdMatch[0].push(match.team2);
-        } else {
+        } else if (match.resultTeam1 < match.resultTeam2) {
           thirdMatch[0].push(match.team1);
           finalMatch[0].push(match.team2);
+        } else if (match.resultTeam1 === match.resultTeam2) {
+          if (match.penalty1 > match.penalty2) {
+            finalMatch[0].push(match.team1);
+            thirdMatch[0].push(match.team2);
+          } else {
+            thirdMatch[0].push(match.team1);
+            finalMatch[0].push(match.team2);
+          }
         }
       }
     });
