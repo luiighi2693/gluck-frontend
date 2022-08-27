@@ -94,16 +94,16 @@
     <div class="col-12 text-center">
       <h1 class="yellow-title">Fase de Eliminacion</h1>
       <div class="row d-flex justify-content-center">
-        <div class="col-3" *ngIf="pool.tournamentType === '8vos'">
+        <div class="col-12 col-md-3" *ngIf="pool.tournamentType === '8vos'">
           <button  mat-button class="submit w-100 m-2" [disabled]="!allMatchesFilled" (click)="setEights()">Generar Octavos</button>
         </div>
-        <div class="col-3">
+        <div class="col-12 col-md-3">
           <button mat-button class="submit w-100 m-2" [disabled]="pool.tournamentType === '8vos' && finalEighths.length < 1 || pool.tournamentType === '4tos' && !allMatchesFilled " (click)="setQuarters()">Generar Cuartos</button>
         </div>
-        <div class="col-3">
+        <div class="col-12 col-md-3">
           <button mat-button class="submit w-100 m-2" [disabled]="finalQuarters.length < 1 " (click)="setSemiFinal()">Generar Semi f.</button>
         </div>
-        <div class="col-3">
+        <div class="col-12 col-md-3">
           <button mat-button class="submit w-100 m-2" [disabled]="semifinals.length < 1" (click)="setFinal()">Generar Final</button>
         </div>
       </div>
