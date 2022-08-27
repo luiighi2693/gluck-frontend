@@ -392,6 +392,10 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
   }
 
   setEights() {
+    this.finalQuarters = [];
+    this.semifinals = [];
+    this.final = [];
+    this.thirdPosition = [];
     this.handleAlertsProvider.presentSnackbarSuccess('Se genero la siguiente fase: Octavos de final');
 
     let groupMatches = this.getBracketMatches('8vos', this.pool.tournamentType);
@@ -409,20 +413,16 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
         penalty2: 0
       });
     }
-    this.finalQuarters = [];
-    this.semifinals = [];
-    this.final = [];
-    this.thirdPosition = [];
+
   }
 
   setQuarters() {
+    this.semifinals = [];
+    this.final = [];
+    this.thirdPosition = [];
     this.finalQuarters = [];
     this.handleAlertsProvider.presentSnackbarSuccess('Se genero la siguiente fase: Cuartos de final');
     let groupMatches = this.getBracketMatches('4tos', this.pool.tournamentType);
-
-    // B1 con A2, A1 con B2, D1 con C2, C1 con D2
-
-    console.log('here!!!!', groupMatches);
 
     const filteredMatches = [
       [groupMatches[0].ranking[0], groupMatches[1].ranking[1]], // A1 vs B2
@@ -431,7 +431,6 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
       [groupMatches[2].ranking[1], groupMatches[3].ranking[0]], // C2 vs D1
     ];
 
-    console.log(filteredMatches);
     filteredMatches.forEach(duplaMatch => {
       this.finalQuarters.push({
         team1: duplaMatch[0].team,
@@ -446,18 +445,54 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
       });
     });
 
-    this.semifinals = [];
-    this.final = [];
-    this.thirdPosition = [];
+
   }
 
   setSemiFinal() {
-    this.handleAlertsProvider.presentSnackbarSuccess('Se genero la siguiente fase: Semifinales');
-    for (let i = 0; i < 2; i++) {
+    this.semifinals = [];
+    this.final = [];
+    this.thirdPosition = [];
+    const nextMatches = [
+      [],
+      [],
+    ];
+
+    this.finalQuarters.forEach((match, i) => {
+      if (i === 0) {
+        if (match.resultTeam1 > match.resultTeam2) {
+          nextMatches[0].push(match.team1);
+        } else {
+          nextMatches[0].push(match.team2);
+        }
+      }
+      if (i === 1) {
+        if (match.resultTeam1 > match.resultTeam2) {
+          nextMatches[0].push(match.team1);
+        } else {
+          nextMatches[0].push(match.team2);
+        }
+      }
+      if (i === 2) {
+        if (match.resultTeam1 > match.resultTeam2) {
+          nextMatches[1].push(match.team1);
+        } else {
+          nextMatches[1].push(match.team2);
+        }
+      }
+      if (i === 3) {
+        if (match.resultTeam1 > match.resultTeam2) {
+          nextMatches[1].push(match.team1);
+        } else {
+          nextMatches[1].push(match.team2);
+        }
+      }
+    });
+
+    nextMatches.forEach(tuplaMatch => {
       this.semifinals.push({
-        team1: null,
+        team1: tuplaMatch[0],
         resultTeam1: 0,
-        team2: null,
+        team2: tuplaMatch[1],
         resultTeam2: 0,
         date: '2021-09-11',
         time: '00:00:00',
@@ -465,19 +500,45 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
         penalty1: 0,
         penalty2: 0
       });
-    }
-    this.final = [];
-    this.thirdPosition = [];
+    });
+    this.handleAlertsProvider.presentSnackbarSuccess('Se genero la siguiente fase: Semifinales');
+
 
   }
 
   setFinal() {
-    this.handleAlertsProvider.presentSnackbarSuccess('Se genero la siguiente fase: Final y Mejor tercero');
-    for (let i = 0; i < 1; i++) {
+    this.final = [];
+    this.thirdPosition = [];
+    const thirdMatch = [[]];
+    const finalMatch = [[]];
+
+    // se genera final
+    this.semifinals.forEach((match, i) => {
+      if (i === 0) {
+        if (match.resultTeam1 > match.resultTeam2) {
+          finalMatch[0].push(match.team1);
+          thirdMatch[0].push(match.team2);
+        } else {
+          thirdMatch[0].push(match.team1);
+          finalMatch[0].push(match.team2);
+        }
+      }
+      if (i === 1) {
+        if (match.resultTeam1 > match.resultTeam2) {
+          finalMatch[0].push(match.team1);
+          thirdMatch[0].push(match.team2);
+        } else {
+          thirdMatch[0].push(match.team1);
+          finalMatch[0].push(match.team2);
+        }
+      }
+    });
+
+    finalMatch.forEach(tuplaMatch => {
       this.final.push({
-        team1: null,
+        team1: tuplaMatch[0],
         resultTeam1: 0,
-        team2: null,
+        team2: tuplaMatch[1],
         resultTeam2: 0,
         date: '2021-09-11',
         time: '00:00:00',
@@ -485,12 +546,13 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
         penalty1: 0,
         penalty2: 0
       });
-    }
-    for (let i = 0; i < 1; i++) {
+    });
+
+    thirdMatch.forEach(tuplaMatch => {
       this.thirdPosition.push({
-        team1: null,
+        team1: tuplaMatch[0],
         resultTeam1: 0,
-        team2: null,
+        team2: tuplaMatch[1],
         resultTeam2: 0,
         date: '2021-09-11',
         time: '00:00:00',
@@ -498,7 +560,8 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
         penalty1: 0,
         penalty2: 0
       });
-    }
+    });
+    this.handleAlertsProvider.presentSnackbarSuccess('Se genero la siguiente fase: Final y Mejor tercero');
   }
 
   fillMatch() {

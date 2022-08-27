@@ -136,7 +136,7 @@
                 <mat-label>Liga - Torneo</mat-label>
                 <mat-select formControlName="league" (selectionChange)="selectGeneric($event)">
                   <mat-option>- Liga - Torneo -</mat-option>
-                  <mat-option value="generic">Generico</mat-option>
+                  <mat-option value="generic">Torneo</mat-option>
                   <mat-option value="La Liga">La Liga</mat-option>
                   <mat-option value="Premier League">Premier League</mat-option>
                   <mat-option value="Boundes Liga">Boundes Liga</mat-option>
@@ -163,10 +163,10 @@
                 <mat-error>Este Campo es <b>Requerido</b>.</mat-error>
               </mat-form-field>
             </div>
-            <div class="col-12 col-md-3" *ngIf="isTournament">
+            <div class="col-12 col-md-3" *ngIf="config.value.league === 'generic' ">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Valores de torneo</mat-label>
-                <mat-select formControlName="tournament_type" >
+                <mat-select formControlName="tournamentType" >
                   <mat-option value="4tos">Cuartos de final</mat-option>
                   <mat-option value="8vos">Octavos de final</mat-option>
                 </mat-select>
@@ -200,7 +200,7 @@
         </form>
       </mat-step>
 
-      <mat-step *ngIf="config.value.league === 'Copa America'">
+      <mat-step *ngIf="config.value.league === 'Copa America' || config.value.league === 'generic'">
         <!--        <form [formGroup]="groups">-->
         <ng-template matStepLabel>Groups</ng-template>
         <div *ngFor="let group of arrayOfGroups, index as i">

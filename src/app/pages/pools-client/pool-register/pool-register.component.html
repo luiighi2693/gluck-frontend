@@ -93,10 +93,20 @@
   <div *ngIf="pool.league === 'generic'" class="row">
     <div class="col-12 text-center">
       <h1 class="yellow-title">Fase de Eliminacion</h1>
-      <button mat-button class="submit" [disabled]="!allMatchesFilled" (click)="setEights()">Generar Octavos</button>
-      <button mat-button class="submit" (click)="setQuarters()">Generar Cuartos</button>
-      <button mat-button class="submit" (click)="setSemiFinal()">Generar Semi f.</button>
-      <button mat-button class="submit" (click)="setFinal()">Generar Final</button>
+      <div class="row d-flex justify-content-center">
+        <div class="col-3" *ngIf="pool.tournamentType === '8vos'">
+          <button  mat-button class="submit w-100 m-2" [disabled]="!allMatchesFilled" (click)="setEights()">Generar Octavos</button>
+        </div>
+        <div class="col-3">
+          <button mat-button class="submit w-100 m-2" [disabled]="pool.tournamentType === '8vos' && finalEighths.length < 1 || pool.tournamentType === '4tos' && !allMatchesFilled " (click)="setQuarters()">Generar Cuartos</button>
+        </div>
+        <div class="col-3">
+          <button mat-button class="submit w-100 m-2" [disabled]="finalQuarters.length < 1 " (click)="setSemiFinal()">Generar Semi f.</button>
+        </div>
+        <div class="col-3">
+          <button mat-button class="submit w-100 m-2" [disabled]="semifinals.length < 1" (click)="setFinal()">Generar Final</button>
+        </div>
+      </div>
     </div>
     <!--    <app-battle-table [round]="fakeRoundData" [category]="category" ></app-battle-table>-->
     <div class="playoffs-wrapper">
@@ -130,7 +140,7 @@
                 <div class="col-8 d-flex align-items-center team-info ">
                   <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Selecciona un equipo</mat-label>
-                    <mat-select [(ngModel)]="match.team1" (selectionChange)="handleSelectTeam($event, match)">
+                    <mat-select disabled [(ngModel)]="match.team1" (selectionChange)="handleSelectTeam($event, match)">
                       <mat-option *ngFor="let team of teams" [value]="team.rowid">
                         {{team.name}}
                       </mat-option>
@@ -152,7 +162,7 @@
                 <div class="col-8 d-flex align-items-center team-info ">
                   <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Selecciona un equipo</mat-label>
-                    <mat-select [(ngModel)]="match.team2" (selectionChange)="handleSelectTeam($event, match)">
+                    <mat-select disabled [(ngModel)]="match.team2" (selectionChange)="handleSelectTeam($event, match)">
                       <mat-option *ngFor="let team of teams" [value]="team.rowid">
                         {{team.name}}
                       </mat-option>
@@ -180,7 +190,7 @@
                 <div class="col-8 d-flex align-items-center team-info ">
                   <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Selecciona un equipo</mat-label>
-                    <mat-select [(ngModel)]="match.team1" (selectionChange)="handleSelectTeam($event, match)">
+                    <mat-select disabled [(ngModel)]="match.team1" (selectionChange)="handleSelectTeam($event, match)">
                       <mat-option *ngFor="let team of teams" [value]="team.rowid">
                         {{team.name}}
                       </mat-option>
@@ -203,7 +213,7 @@
                 <div class="col-8 d-flex align-items-center team-info ">
                   <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Selecciona un equipo</mat-label>
-                    <mat-select [(ngModel)]="match.team2" (selectionChange)="handleSelectTeam($event, match)">
+                    <mat-select disabled [(ngModel)]="match.team2" (selectionChange)="handleSelectTeam($event, match)">
                       <mat-option *ngFor="let team of teams" [value]="team.rowid">
                         {{team.name}}
                       </mat-option>
@@ -232,7 +242,7 @@
                 <div class="col-8 d-flex align-items-center team-info ">
                   <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Selecciona un equipo</mat-label>
-                    <mat-select [(ngModel)]="match.team1" (selectionChange)="handleSelectTeam($event, match)">
+                    <mat-select disabled [(ngModel)]="match.team1" (selectionChange)="handleSelectTeam($event, match)">
                       <mat-option *ngFor="let team of teams" [value]="team.rowid">
                         {{team.name}}
                       </mat-option>
@@ -255,7 +265,7 @@
                 <div class="col-8 d-flex align-items-center team-info ">
                   <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Selecciona un equipo</mat-label>
-                    <mat-select [(ngModel)]="match.team2" (selectionChange)="handleSelectTeam($event, match)">
+                    <mat-select disabled [(ngModel)]="match.team2" (selectionChange)="handleSelectTeam($event, match)">
                       <mat-option *ngFor="let team of teams" [value]="team.rowid">
                         {{team.name}}
                       </mat-option>
@@ -284,7 +294,7 @@
                 <div class="col-8 d-flex align-items-center team-info ">
                   <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Selecciona un equipo</mat-label>
-                    <mat-select [(ngModel)]="match.team1" (selectionChange)="handleSelectTeam($event, match)">
+                    <mat-select disabled [(ngModel)]="match.team1" (selectionChange)="handleSelectTeam($event, match)">
                       <mat-option *ngFor="let team of teams" [value]="team.rowid">
                         {{team.name}}
                       </mat-option>
@@ -306,7 +316,7 @@
                 <div class="col-8 d-flex align-items-center team-info ">
                   <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Selecciona un equipo</mat-label>
-                    <mat-select [(ngModel)]="match.team2" (selectionChange)="handleSelectTeam($event, match)">
+                    <mat-select disabled [(ngModel)]="match.team2" (selectionChange)="handleSelectTeam($event, match)">
                       <mat-option *ngFor="let team of teams" [value]="team.rowid">
                         {{team.name}}
                       </mat-option>
@@ -335,7 +345,7 @@
                 <div class="col-8 d-flex align-items-center team-info ">
                   <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Selecciona un equipo</mat-label>
-                    <mat-select [(ngModel)]="anotherMatch.team1" (selectionChange)="handleSelectTeam($event, anotherMatch)">
+                    <mat-select disabled [(ngModel)]="anotherMatch.team1" (selectionChange)="handleSelectTeam($event, anotherMatch)">
                       <mat-option *ngFor="let team of teams" [value]="team.rowid">
                         {{team.name}}
                       </mat-option>
@@ -357,7 +367,7 @@
                 <div class="col-8 d-flex align-items-center team-info ">
                   <mat-form-field appearance="outline" class="w-100">
                     <mat-label>Selecciona un equipo</mat-label>
-                    <mat-select [(ngModel)]="anotherMatch.team2 " (selectionChange)="handleSelectTeam($event, anotherMatch)">
+                    <mat-select disabled [(ngModel)]="anotherMatch.team2 " (selectionChange)="handleSelectTeam($event, anotherMatch)">
                       <mat-option *ngFor="let team of teams" [value]="team.rowid">
                         {{team.name}}
                       </mat-option>

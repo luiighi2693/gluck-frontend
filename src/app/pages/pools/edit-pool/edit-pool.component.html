@@ -206,7 +206,7 @@
         </form>
       </mat-step>
 
-      <mat-step>
+      <mat-step  *ngIf="config.value.league === 'Copa America' || config.value.league === 'generic'">
         <!--        <form [formGroup]="groups">-->
         <ng-template matStepLabel>Grupos</ng-template>
         <div *ngFor="let group of arrayOfGroups, index as i">
@@ -220,7 +220,7 @@
             <div class="col-12">
               <mat-form-field appearance="outline" class="w-100">
                 <mat-label>Nombre de Grupo</mat-label>
-                <input matInput [(ngModel)]="group.name" placeholder='Nombre de Grupo' autocomplete="off">
+                <input matInput [(ngModel)]="group.name" placeholder='Nombre de Grupo' autocomplete="off" (ngModelChange)="validateNameGroupChange($event, i">
               </mat-form-field>
             </div>
             <div class="row">

@@ -233,10 +233,8 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
 
     this.endPools.get('amountInput').setValue(this.poolData.amountInput);
     this.endPools.get('coinsInput').setValue(this.poolData.coinsInput);
-    // console.log(moment(this.poolData.dateFinish, 'YYYY-MM-DD').add(1, 'days').format('YYYY-MM-DD'));
     this.endPools.get('dateFinish').setValue(moment(this.poolData.dateFinish, 'YYYY-MM-DD').add(1, 'days').format('YYYY-MM-DD'));
     console.log('timeFinish', this.poolData.timeFinish);
-    // this.endPools.get('timeFinish').setValue(this.poolData.timeFinish === null ? null : this.poolData.timeFinish.split(':')[0] + ':' + this.poolData.timeFinish.split(':')[1] + ' ' + (Number(this.poolData.timeFinish.split(':')[0]) > 11 ? 'pm' : 'am'));
     this.endPools.get('timeFinish').setValue(this.poolData.timeFinish === null ? null : this.poolData.timeFinish.split(':')[0] + ':' + this.poolData.timeFinish.split(':')[1]);
     console.log('timeFinish', this.endPools.get('timeFinish'));
     this.endPools.get('awardType').setValue(this.poolData.awardType);
@@ -319,13 +317,13 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
     console.log(this.awardType.length);
     console.log(this.endPools.get('awardValue').value);
     if (this.awardType === 'fijo') {
-      console.log('hello there')
+      console.log('hello there');
       const value = this.selection.selected.length * Number(this.endPools.get('amountInput').value === '' ? 0 : this.endPools.get('amountInput').value);
-      console.log(value)
+      console.log(value);
       this.endPools.get('awardValue').setValue(value);
 
     } else {
-      console.log('no es')
+      console.log('no es');
       this.endPools.get('awardValue').setValue(0);
     }
   }
@@ -391,5 +389,20 @@ export class EditPoolComponent implements OnInit, AfterViewInit {
       this.config.get('tournamentType').clearValidators();
       this.config.get('tournamentType').setValue(null);
     }
+  }
+
+  validateNameGroupChange(event: any, i) {
+    let result = [];
+    result = result.concat(...this.arrayOfGroups.map(x => x.name));
+
+    // coincidences
+    if (result.filter(x => x.trim() === event.trim()).length > 1) {
+      setTimeout(() => {
+        this.arrayOfGroups[i].name = '';
+        this.handleAlertsProvider.presentSnackbarError('el nombre de este grupo ya existe!');
+
+      }, 2000);
+    }
+
   }
 }
