@@ -425,10 +425,10 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
     let groupMatches = this.getBracketMatches('4tos', this.pool.tournamentType);
 
     const filteredMatches = [
-      [groupMatches[0].ranking[0], groupMatches[1].ranking[1]], // A1 vs B2
-      [groupMatches[0].ranking[1], groupMatches[1].ranking[0]], // A2 vs B1
-      [groupMatches[2].ranking[0], groupMatches[3].ranking[1]], // C1 vs D2
-      [groupMatches[2].ranking[1], groupMatches[3].ranking[0]], // C2 vs D1
+      [groupMatches[0].ranking[0], groupMatches[0].ranking[1]], // A1 vs B2
+      [groupMatches[1].ranking[0], groupMatches[1].ranking[1]], // A2 vs B1
+      [groupMatches[2].ranking[0], groupMatches[2].ranking[1]], // C1 vs D2
+      [groupMatches[3].ranking[0], groupMatches[3].ranking[1]], // C2 vs D1
     ];
 
     filteredMatches.forEach(duplaMatch => {
