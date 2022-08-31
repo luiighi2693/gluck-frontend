@@ -261,10 +261,16 @@
             <div class="col-12 col-md-5 ">
               <div class="row">
                 <div class="col-12 col-md-8">
-                  <mat-form-field appearance="outline" class="w-100">
+                  <mat-form-field appearance="outline" class="w-100"  *ngIf="config.value.league === 'Copa America' || config.value.league === 'generic'">
                     <mat-label>Equipo 1</mat-label>
                     <mat-select [(ngModel)]="match.team1">
                       <mat-option *ngFor="let team of matchesTeams, index as i" [value]="team.rowid">{{team.name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" class="w-100"  *ngIf="config.value.league !== 'Copa America' && config.value.league !== 'generic'">
+                    <mat-label>Equipo 1</mat-label>
+                    <mat-select [(ngModel)]="match.team1" >
+                      <mat-option *ngFor="let team of teams, index as i" [value]="team.rowid">{{team.name}}</mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>
@@ -288,10 +294,16 @@
             <div class="col-12 col-md-5 offset-md-2">
               <div class="row">
                 <div class="col-12 col-md-8">
-                  <mat-form-field appearance="outline" class="w-100">
+                  <mat-form-field appearance="outline" class="w-100"  *ngIf="config.value.league === 'Copa America' || config.value.league === 'generic'">
                     <mat-label>Equipo 2</mat-label>
                     <mat-select [(ngModel)]="match.team2">
                       <mat-option *ngFor="let team of matchesTeams, index as i" [value]="team.rowid">{{team.name}}</mat-option>
+                    </mat-select>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" class="w-100"  *ngIf="config.value.league !== 'Copa America' && config.value.league !== 'generic'">
+                    <mat-label>Equipo 2</mat-label>
+                    <mat-select [(ngModel)]="match.team2" >
+                      <mat-option *ngFor="let team of teams, index as i" [value]="team.rowid">{{team.name}}</mat-option>
                     </mat-select>
                   </mat-form-field>
                 </div>

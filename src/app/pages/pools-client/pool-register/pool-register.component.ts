@@ -400,39 +400,20 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
 
     let groupMatches = this.getBracketMatches('8vos', this.pool.tournamentType);
 
-    for (let i = 0; i < 8; i++) {
-      this.finalEighths.push({
-        team1: null,
-        resultTeam1: 0,
-        team2: null,
-        resultTeam2: 0,
-        date: '2021-09-11',
-        time: '00:00:00',
-        status: 0,
-        penalty1: 0,
-        penalty2: 0
-      });
-    }
-
-  }
-
-  setQuarters() {
-    this.semifinals = [];
-    this.final = [];
-    this.thirdPosition = [];
-    this.finalQuarters = [];
-    this.handleAlertsProvider.presentSnackbarSuccess('Se genero la siguiente fase: Cuartos de final');
-    let groupMatches = this.getBracketMatches('4tos', this.pool.tournamentType);
-
     const filteredMatches = [
-      [groupMatches[0].ranking[0], groupMatches[0].ranking[1]], // A1 vs B2
-      [groupMatches[1].ranking[0], groupMatches[1].ranking[1]], // A2 vs B1
-      [groupMatches[2].ranking[0], groupMatches[2].ranking[1]], // C1 vs D2
-      [groupMatches[3].ranking[0], groupMatches[3].ranking[1]], // C2 vs D1
+      [groupMatches[0].ranking[0], groupMatches[1].ranking[1]], // A1 vs B2
+      [groupMatches[0].ranking[1], groupMatches[1].ranking[0]], // A2 vs B1
+      [groupMatches[2].ranking[0], groupMatches[3].ranking[1]], // C1 vs D2
+      [groupMatches[2].ranking[1], groupMatches[3].ranking[0]], // C2 vs D1
+
+      [groupMatches[3].ranking[0], groupMatches[4].ranking[1]], // E1 vs F2
+      [groupMatches[3].ranking[1], groupMatches[4].ranking[0]], // E2 vs F1
+      [groupMatches[5].ranking[0], groupMatches[6].ranking[1]], // G1 vs H2
+      [groupMatches[5].ranking[1], groupMatches[6].ranking[0]], // G2 vs H1
     ];
 
     filteredMatches.forEach(duplaMatch => {
-      this.finalQuarters.push({
+      this.finalEighths.push({
         penalty1: 0,
         penalty2: 0,
         team1: duplaMatch[0].team,
@@ -444,6 +425,170 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
         status: 0,
       });
     });
+
+  }
+
+  setQuarters() {
+    this.semifinals = [];
+    this.final = [];
+    this.thirdPosition = [];
+    this.finalQuarters = [];
+    this.handleAlertsProvider.presentSnackbarSuccess('Se genero la siguiente fase: Cuartos de final');
+    let groupMatches;
+    let filteredMatches = [];
+    const nextMatches = [
+      [],
+      [],
+      [],
+      [],
+    ];
+
+    if (this.pool.tournamentType === '4tos') {
+      groupMatches = this.getBracketMatches('4tos', this.pool.tournamentType);
+
+      filteredMatches = [
+        [groupMatches[0].ranking[0], groupMatches[1].ranking[1]], // A1 vs B2
+        [groupMatches[0].ranking[1], groupMatches[1].ranking[0]], // A2 vs B1
+        [groupMatches[2].ranking[0], groupMatches[3].ranking[1]], // C1 vs D2
+        [groupMatches[2].ranking[1], groupMatches[3].ranking[0]], // C2 vs D1
+      ];
+
+      filteredMatches.forEach(duplaMatch => {
+        this.finalQuarters.push({
+          penalty1: 0,
+          penalty2: 0,
+          team1: duplaMatch[0].team,
+          resultTeam1: 0,
+          team2: duplaMatch[1].team,
+          resultTeam2: 0,
+          date: '2021-09-11',
+          time: '00:00:00',
+          status: 0,
+        });
+      });
+    } else {
+
+      this.finalEighths.forEach((match, i) => {
+        if (i === 0) {
+          if (match.resultTeam1 > match.resultTeam2) {
+            nextMatches[0].push(match.team1);
+          } else if (match.resultTeam1 < match.resultTeam2) {
+            nextMatches[0].push(match.team2);
+          } else if (match.resultTeam1 === match.resultTeam2) {
+            if (match.penalty1 > match.penalty2) {
+              nextMatches[0].push(match.team1);
+            } else {
+              nextMatches[0].push(match.team2);
+            }
+          }
+        }
+        if (i === 1) {
+          if (match.resultTeam1 > match.resultTeam2) {
+            nextMatches[0].push(match.team1);
+          } else if (match.resultTeam1 < match.resultTeam2) {
+            nextMatches[0].push(match.team2);
+          } else if (match.resultTeam1 === match.resultTeam2) {
+            if (match.penalty1 > match.penalty2) {
+              nextMatches[0].push(match.team1);
+            } else {
+              nextMatches[0].push(match.team2);
+            }
+          }
+        }
+        if (i === 2) {
+          if (match.resultTeam1 > match.resultTeam2) {
+            nextMatches[1].push(match.team1);
+          } else if (match.resultTeam1 < match.resultTeam2) {
+            nextMatches[1].push(match.team2);
+          } else if (match.resultTeam1 === match.resultTeam2) {
+            if (match.penalty1 > match.penalty2) {
+              nextMatches[1].push(match.team1);
+            } else {
+              nextMatches[1].push(match.team2);
+            }
+          }
+        }
+        if (i === 3) {
+          if (match.resultTeam1 > match.resultTeam2) {
+            nextMatches[1].push(match.team1);
+          } else if (match.resultTeam1 < match.resultTeam2) {
+            nextMatches[1].push(match.team2);
+          } else if (match.resultTeam1 === match.resultTeam2) {
+            if (match.penalty1 > match.penalty2) {
+              nextMatches[1].push(match.team1);
+            } else {
+              nextMatches[1].push(match.team2);
+            }
+          }
+        }
+        if (i === 4) {
+          if (match.resultTeam1 > match.resultTeam2) {
+            nextMatches[1].push(match.team1);
+          } else if (match.resultTeam1 < match.resultTeam2) {
+            nextMatches[1].push(match.team2);
+          } else if (match.resultTeam1 === match.resultTeam2) {
+            if (match.penalty1 > match.penalty2) {
+              nextMatches[1].push(match.team1);
+            } else {
+              nextMatches[1].push(match.team2);
+            }
+          }
+        }
+        if (i === 5) {
+          if (match.resultTeam1 > match.resultTeam2) {
+            nextMatches[1].push(match.team1);
+          } else if (match.resultTeam1 < match.resultTeam2) {
+            nextMatches[1].push(match.team2);
+          } else if (match.resultTeam1 === match.resultTeam2) {
+            if (match.penalty1 > match.penalty2) {
+              nextMatches[1].push(match.team1);
+            } else {
+              nextMatches[1].push(match.team2);
+            }
+          }
+        }
+        if (i === 8) {
+          if (match.resultTeam1 > match.resultTeam2) {
+            nextMatches[1].push(match.team1);
+          } else if (match.resultTeam1 < match.resultTeam2) {
+            nextMatches[1].push(match.team2);
+          } else if (match.resultTeam1 === match.resultTeam2) {
+            if (match.penalty1 > match.penalty2) {
+              nextMatches[1].push(match.team1);
+            } else {
+              nextMatches[1].push(match.team2);
+            }
+          }
+        }
+        if (i === 7) {
+          if (match.resultTeam1 > match.resultTeam2) {
+            nextMatches[1].push(match.team1);
+          } else if (match.resultTeam1 < match.resultTeam2) {
+            nextMatches[1].push(match.team2);
+          } else if (match.resultTeam1 === match.resultTeam2) {
+            if (match.penalty1 > match.penalty2) {
+              nextMatches[1].push(match.team1);
+            } else {
+              nextMatches[1].push(match.team2);
+            }
+          }
+        }
+      });
+
+      nextMatches.forEach(tuplaMatch => {
+        this.finalQuarters.push({
+          team1: tuplaMatch[0],
+          resultTeam1: 0,
+          team2: tuplaMatch[1],
+          resultTeam2: 0,
+          date: '2021-09-11',
+          time: '00:00:00',
+          status: 0,
+          penalty1: 0,
+          penalty2: 0
+        });
+      });
+    }
 
 
   }
