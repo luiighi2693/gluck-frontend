@@ -33,6 +33,7 @@
     "bootstrap": "^5.0.2",
     "leaflet": "^1.7.1",
     "moment": "^2.29.1",
+    "moment-timezone": "^0.5.37",
     "ng-simple-event-bus": "^1.0.1",
     "ngx-captcha": "^9.0.1",
     "ngx-material-timepicker": "^5.5.3",

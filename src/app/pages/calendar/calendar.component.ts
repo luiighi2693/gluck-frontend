@@ -4,6 +4,8 @@ import {HandleAlertsProvider} from '../../utilities/providers/handle-alerts-prov
 import {Router} from '@angular/router';
 import {AdminService} from '../../services/admin.service';
 import {LoaderProvider} from '../../utilities/providers/loader-provider';
+import * as momentTz from 'moment-timezone';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-calendar',
@@ -30,6 +32,8 @@ export class CalendarComponent implements OnInit {
         const events = [];
         res.data.forEach(e => {
           const date = e.date_Sport + 'T' + e.hour + '.000Z';
+          console.log('date', momentTz(date).tz('America/Florida').format('YYYY MM DD, h:mm:ss a'));
+          console.log('OLD DATE', moment(date).format('YYYY MM DD, h:mm:ss a'));
           events.push({
             title: e.name + ' ' + e.label,
             date,
@@ -44,6 +48,7 @@ export class CalendarComponent implements OnInit {
         });
 
         this.calendarOptions = {
+          timeZone: 'America/Florida',
           initialView: 'dayGridMonth',
           headerToolbar: {
             left: 'prev next today',
