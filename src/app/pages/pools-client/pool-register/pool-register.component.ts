@@ -378,12 +378,103 @@ export class PoolRegisterComponent implements OnInit, AfterViewInit {
     console.log(match);
   }
 
-  handleResult($event: any, arr: any[], match: any, i: number) {
+  handleResult($event: any, arr: any[], match: any, i: number, type: string, isPenalty = false) {
+    const octavosTeamOne = document.getElementById(`octavosTeamOne${i}`);
+    const octavosTeamTwo = document.getElementById(`octavosTeamTwo${i}`);
+    const cuartosTeamOne = document.getElementById(`cuartosTeamOne${i}`);
+    const cuartosTeamTwo = document.getElementById(`cuartosTeamTwo${i}`);
+    const semiTeamOne = document.getElementById(`semiTeamOne${i}`);
+    const semiTeamTwo = document.getElementById(`semiTeamTwo${i}`);
+    const finalTeamOne = document.getElementById(`finalTeamOne${i}`);
+    const finalTeamTwo = document.getElementById(`finalTeamTwo${i}`);
+    const thirdTeamOne = document.getElementById(`thirdTeamOne${i}`);
+    const thirdTeamTwo = document.getElementById(`thirdTeamTwo${i}`);
+
+    if (isPenalty) {
+      console.log('es penalty');
+      if (match.penalty1 === match.penalty2) {
+        console.log('empate de nuevo');
+        console.log(type);
+        if (type === 'octavos') {
+          octavosTeamOne.style.backgroundColor = 'red';
+          octavosTeamTwo.style.backgroundColor = 'red';
+        } else if (type === 'cuartos') {
+          cuartosTeamOne.style.background = 'red';
+          cuartosTeamTwo.style.background = 'red';
+        } else if (type === 'semi') {
+          semiTeamOne.style.background = 'red';
+          semiTeamTwo.style.background = 'red';
+        } else if (type === 'final') {
+          finalTeamOne.style.background = 'red';
+          finalTeamTwo.style.background = 'red';
+        } else if (type === 'third') {
+          thirdTeamOne.style.background = 'red';
+          thirdTeamTwo.style.background = 'red';
+        }
+        this.handleAlertsProvider.presentErrorDialogOk('Debes agregar valores de penalties', 'Aviso!');
+        return;
+      } else {
+        console.log('un equipo gana!');
+        if (type === 'octavos') {
+          octavosTeamOne.style.backgroundColor = 'black';
+          octavosTeamTwo.style.backgroundColor = 'black';
+        } else if (type === 'cuartos') {
+          cuartosTeamOne.style.background = 'black';
+          cuartosTeamTwo.style.background = 'black';
+        } else if (type === 'semi') {
+          semiTeamOne.style.background = 'black';
+          semiTeamTwo.style.background = 'black';
+        } else if (type === 'final') {
+          finalTeamOne.style.background = 'black';
+          finalTeamTwo.style.background = 'black';
+        } else if (type === 'third') {
+          thirdTeamOne.style.background = 'black';
+          thirdTeamTwo.style.background = 'black';
+        }
+        console.log(type);
+        return;
+      }
+    }
+
     if (match.resultTeam1 === match.resultTeam2) {
-      this.handleAlertsProvider.presentErrorDialogOk('Debes agregar valores de penalties', 'Aviso!');
+      if (match.penalty1 === match.penalty2) {
+        this.handleAlertsProvider.presentErrorDialogOk('Debes agregar valores de penalties', 'Aviso!');
+      }
+      if (type === 'octavos') {
+        octavosTeamOne.style.backgroundColor = 'red';
+        octavosTeamTwo.style.backgroundColor = 'red';
+      } else if (type === 'cuartos') {
+        cuartosTeamOne.style.background = 'red';
+        cuartosTeamTwo.style.background = 'red';
+      } else if (type === 'semi') {
+        semiTeamOne.style.background = 'red';
+        semiTeamTwo.style.background = 'red';
+      } else if (type === 'final') {
+        finalTeamOne.style.background = 'red';
+        finalTeamTwo.style.background = 'red';
+      } else if (type === 'third') {
+        thirdTeamOne.style.background = 'red';
+        thirdTeamTwo.style.background = 'red';
+      }
     } else {
       arr[i].penalty1 = 0;
       arr[i].penalty2 = 0;
+      if (type === 'octavos') {
+        octavosTeamOne.style.backgroundColor = 'black';
+        octavosTeamTwo.style.backgroundColor = 'black';
+      } else if (type === 'cuartos') {
+        cuartosTeamOne.style.background = 'black';
+        cuartosTeamTwo.style.background = 'black';
+      } else if (type === 'semi') {
+        semiTeamOne.style.background = 'black';
+        semiTeamTwo.style.background = 'black';
+      } else if (type === 'final') {
+        finalTeamOne.style.background = 'black';
+        finalTeamTwo.style.background = 'black';
+      } else if (type === 'third') {
+        thirdTeamOne.style.background = 'black';
+        thirdTeamTwo.style.background = 'black';
+      }
     }
     console.log($event.target.value);
     console.log(arr);

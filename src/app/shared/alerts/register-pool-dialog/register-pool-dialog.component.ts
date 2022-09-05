@@ -18,7 +18,8 @@ export class RegisterPoolDialogComponent implements OnInit {
       poolId: string | number,
       title: string,
       user: string,
-      cost: string,
+      cost: any,
+      coins: any,
       prize: string,
       image: string,
       participants: string,
@@ -28,6 +29,7 @@ export class RegisterPoolDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    console.log(this.data);
   }
 
   onDismiss() {

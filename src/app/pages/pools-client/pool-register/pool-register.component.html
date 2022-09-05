@@ -149,12 +149,12 @@
                 </div>
                 <div class="col-2 dark-input d-flex align-items-center justify-content-center">
                   <!--                  <p class="text-white fw-bold m-0">{{ round.result_team_1 }}</p>-->
-                  <input type="number" (change)="handleResult($event, finalEighths, match,  i)" class="text-white  fw-bold m-0" [(ngModel)]="match.resultTeam1">
+                  <input type="number"  id="{{ 'octavosTeamOne' + i }}" (change)="handleResult($event, finalEighths, match,  i, 'octavos')" class="text-white  fw-bold m-0" [(ngModel)]="match.resultTeam1">
                 </div>
                 <div *ngIf="match.resultTeam1 === match.resultTeam2" class="col-2 penalty">
                   <p class="text-white m-0">P</p>
                   <div class=" d-flex align-items-center justify-content-center penalty w-100">
-                    <input type="number" class="mt-2  fw-bold m-0" [(ngModel)]="match.penalty1">
+                    <input type="number"  (change)="handleResult($event, finalEighths, match,  i, 'octavos', true)" class="mt-2  fw-bold m-0" [(ngModel)]="match.penalty1">
                   </div>
                 </div>
               </div>
@@ -171,12 +171,12 @@
                 </div>
                 <div class="col-2 dark-input d-flex align-items-center justify-content-center">
                   <!--                  <p class="text-white fw-bold m-0">{{ round.result_team_2 }}</p>-->
-                  <input type="number" (change)="handleResult($event, finalEighths, match,  i)" class="text-white  fw-bold m-0" [(ngModel)]="match.resultTeam2">
+                  <input type="number"  id="{{ 'octavosTeamTwo' + i }}" (change)="handleResult($event, finalEighths, match,  i, 'octavos')" class="text-white  fw-bold m-0" [(ngModel)]="match.resultTeam2">
                 </div>
                 <div *ngIf="match.resultTeam1 === match.resultTeam2" class="col-2 penalty">
                   <p class="text-white m-0">P</p>
                   <div class=" d-flex align-items-center justify-content-center penalty w-100">
-                    <input type="number" class="mt-2  fw-bold m-0" [(ngModel)]="match.penalty2">
+                    <input type="number"  (change)="handleResult($event, finalEighths, match,  i, 'octavos', true)" class="mt-2  fw-bold m-0" [(ngModel)]="match.penalty2">
                   </div>
                 </div>
               </div>
@@ -198,14 +198,14 @@
                   </mat-form-field>
 
                 </div>
-                <div class="col-2 dark-input d-flex align-items-center justify-content-center">
+                <div class="col-2 dark-input d-flex align-items-center justify-content-center" >
                   <!--                  <p class="text-white fw-bold m-0">{{ round.result_team_1 }}</p>-->
-                  <input type="number" (change)="handleResult($event, finalQuarters, match,  i)" class="text-white  fw-bold m-0" [(ngModel)]="match.resultTeam1">
+                  <input type="number" id="{{ 'cuartosTeamOne' + i }}" (change)="handleResult($event, finalQuarters, match,  i, 'cuartos')" class="text-white  fw-bold m-0" [(ngModel)]="match.resultTeam1">
                 </div>
                 <div *ngIf="match.resultTeam1 === match.resultTeam2" class="col-2 penalty">
                   <p class="text-white m-0">P</p>
                   <div class=" d-flex align-items-center justify-content-center penalty w-100">
-                    <input type="number"  class="mt-2 fw-bold m-0" [(ngModel)]="match.penalty1">
+                    <input type="number"  (change)="handleResult($event, finalQuarters, match,  i, 'cuartos', true)" class="mt-2 fw-bold m-0" [(ngModel)]="match.penalty1">
                   </div>
                 </div>
               </div>
@@ -222,12 +222,12 @@
                 </div>
                 <div class="col-2 dark-input d-flex align-items-center justify-content-center">
                   <!--                  <p class="text-white fw-bold m-0">{{ round.result_team_2 }}</p>-->
-                  <input type="number" (change)="handleResult($event, finalQuarters, match,  i)" class="text-white  fw-bold m-0" [(ngModel)]="match.resultTeam2">
+                  <input type="number" id="{{ 'cuartosTeamTwo' + i }}" (change)="handleResult($event, finalQuarters, match,  i, 'cuartos')" class="text-white  fw-bold m-0" [(ngModel)]="match.resultTeam2">
                 </div>
                 <div *ngIf="match.resultTeam1 === match.resultTeam2" class="col-2 penalty">
                   <p class="text-white m-0">P</p>
                   <div class=" d-flex align-items-center justify-content-center penalty w-100">
-                    <input type="number"  class="mt-2  fw-bold m-0" [(ngModel)]="match.penalty2">
+                    <input type="number"  (change)="handleResult($event, finalQuarters, match,  i, 'cuartos', true)" class="mt-2  fw-bold m-0" [(ngModel)]="match.penalty2">
                   </div>
                 </div>
               </div>
@@ -252,12 +252,12 @@
                 </div>
                 <div class="col-2 dark-input d-flex align-items-center justify-content-center">
                   <!--                  <p class="text-white fw-bold m-0">{{ round.result_team_1 }}</p>-->
-                  <input type="number" (change)="handleResult($event, semifinals, match,  i)" class="text-white  fw-bold m-0" [(ngModel)]="match.resultTeam1">
+                  <input type="number" id="{{ 'semiTeamOne' + i }}" (change)="handleResult($event, semifinals, match,  i, 'semi')" class="text-white  fw-bold m-0" [(ngModel)]="match.resultTeam1">
                 </div>
                 <div *ngIf="match.resultTeam1 === match.resultTeam2" class="col-2 penalty">
                   <p class="text-white m-0">P</p>
                   <div class=" d-flex align-items-center justify-content-center penalty w-100">
-                    <input type="number" class="mt-2  fw-bold m-0" [(ngModel)]="match.penalty1">
+                    <input type="number"  (change)="handleResult($event, semifinals, match,  i, 'semi', true)" class="mt-2  fw-bold m-0" [(ngModel)]="match.penalty1">
                   </div>
                 </div>
               </div>
@@ -274,12 +274,12 @@
                 </div>
                 <div class="col-2 dark-input d-flex align-items-center justify-content-center">
                   <!--                  <p class="text-white fw-bold m-0">{{ round.result_team_2 }}</p>-->
-                  <input type="number" (change)="handleResult($event, semifinals, match,  i)" class="text-white  fw-bold m-0" [(ngModel)]="match.resultTeam2">
+                  <input type="number" id="{{ 'semiTeamTwo' + i }}" (change)="handleResult($event, semifinals, match,  i, 'semi')" class="text-white  fw-bold m-0" [(ngModel)]="match.resultTeam2">
                 </div>
                 <div *ngIf="match.resultTeam1 === match.resultTeam2" class="col-2 penalty">
                   <p class="text-white m-0">P</p>
                   <div class=" d-flex align-items-center justify-content-center penalty w-100">
-                    <input type="number"  class="mt-2  fw-bold m-0" [(ngModel)]="match.penalty2">
+                    <input type="number"  (change)="handleResult($event, semifinals, match,  i, 'semi', true)" class="mt-2  fw-bold m-0" [(ngModel)]="match.penalty2">
                   </div>
                 </div>
               </div>
@@ -303,12 +303,12 @@
                 </div>
                 <div class="col-2 dark-input d-flex align-items-center justify-content-center">
                   <!--                  <p class="text-white fw-bold m-0">{{ round.result_team_1 }}</p>-->
-                  <input type="number" (change)="handleResult($event, final, match,  i)" class="text-white  fw-bold m-0" [(ngModel)]="match.resultTeam1">
+                  <input type="number" id="{{ 'finalTeamOne' + i }}" (change)="handleResult($event, final, match,  i, 'final')" class="text-white  fw-bold m-0" [(ngModel)]="match.resultTeam1">
                 </div>
                 <div *ngIf="match.resultTeam1 === match.resultTeam2" class="col-2 penalty">
                   <p class="text-white m-0">P</p>
                   <div class=" d-flex align-items-center justify-content-center penalty w-100">
-                    <input type="number"  class="mt-2  fw-bold m-0" [(ngModel)]="match.penalty1">
+                    <input type="number"  (change)="handleResult($event, final, match,  i, 'final', true)" class="mt-2  fw-bold m-0" [(ngModel)]="match.penalty1">
                   </div>
                 </div>
               </div>
@@ -325,12 +325,12 @@
                 </div>
                 <div class="col-2 dark-input d-flex align-items-center justify-content-center">
                   <!--                  <p class="text-white fw-bold m-0">{{ round.result_team_2 }}</p>-->
-                  <input type="number" (change)="handleResult($event, final, match,  i)" class="text-white  fw-bold m-0" [(ngModel)]="match.resultTeam2">
+                  <input type="number" id="{{ 'finalTeamTwo' + i }}" (change)="handleResult($event, final, match,  i, 'final')" class="text-white  fw-bold m-0" [(ngModel)]="match.resultTeam2">
                 </div>
                 <div *ngIf="match.resultTeam1 === match.resultTeam2" class="col-2 penalty">
                   <p class="text-white m-0">P</p>
                   <div class=" d-flex align-items-center justify-content-center penalty w-100">
-                    <input type="number"  class="mt-2  fw-bold m-0" [(ngModel)]="match.penalty2">
+                    <input type="number"  (change)="handleResult($event, final, match,  i, 'final', true)" class="mt-2  fw-bold m-0" [(ngModel)]="match.penalty2">
                   </div>
                 </div>
               </div>
@@ -354,12 +354,12 @@
                 </div>
                 <div class="col-2 dark-input d-flex align-items-center justify-content-center">
                   <!--                  <p class="text-white fw-bold m-0">{{ round.result_team_1 }}</p>-->
-                  <input type="number" (change)="handleResult($event, thirdPosition, anotherMatch,  i)" class="text-white  fw-bold m-0" [(ngModel)]="anotherMatch.resultTeam1">
+                  <input type="number" id="{{ 'thirdTeamOne' + i }}" (change)="handleResult($event, thirdPosition, anotherMatch,  i, 'third')" class="text-white  fw-bold m-0" [(ngModel)]="anotherMatch.resultTeam1">
                 </div>
                               <div *ngIf="anotherMatch.resultTeam1 === anotherMatch.resultTeam2" class="col-2 penalty">
                                 <p class="text-white m-0">P</p>
                                 <div class=" d-flex align-items-center justify-content-center penalty w-100">
-                                  <input type="number"   class="mt-2  fw-bold m-0" [(ngModel)]="anotherMatch.penalty1">
+                                  <input type="number"  (change)="handleResult($event, thirdPosition, anotherMatch,  i, 'third', true)"  class="mt-2  fw-bold m-0" [(ngModel)]="anotherMatch.penalty1">
                                 </div>
                               </div>
               </div>
@@ -376,12 +376,12 @@
                 </div>
                 <div class="col-2 dark-input d-flex align-items-center justify-content-center">
                   <!--                  <p class="text-white fw-bold m-0">{{ round.result_team_2 }}</p>-->
-                  <input type="number" (change)="handleResult($event, thirdPosition, anotherMatch,  i)" class="text-white  fw-bold m-0" [(ngModel)]="anotherMatch.resultTeam2">
+                  <input type="number" id="{{ 'thirdTeamTwo' + i }}" (change)="handleResult($event, thirdPosition, anotherMatch,  i, 'third')" class="text-white  fw-bold m-0" [(ngModel)]="anotherMatch.resultTeam2">
                 </div>
                               <div *ngIf="anotherMatch.resultTeam1 === anotherMatch.resultTeam2" class="col-2 penalty">
                                 <p class="text-white m-0">P</p>
                                 <div class=" d-flex align-items-center justify-content-center penalty w-100">
-                                  <input type="number" class="mt-2  fw-bold m-0" [(ngModel)]="anotherMatch.penalty2">
+                                  <input (change)="handleResult($event, thirdPosition, anotherMatch,  i, 'third', true)" type="number" class="mt-2  fw-bold m-0" [(ngModel)]="anotherMatch.penalty2">
                                 </div>
                               </div>
               </div>

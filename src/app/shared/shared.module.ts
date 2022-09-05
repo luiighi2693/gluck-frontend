@@ -10,6 +10,7 @@ import { BreadcrumbComponent } from './components/breadcrumb/breadcrumb.componen
 import { LegalAgreementComponent } from './components/legal-agreement/legal-agreement.component';
 import { MaxLengthPipe } from './pipes/filter-pools.pipe';
 import { ZuluDateTransformPipe } from './pipes/zulu-date-transform.pipe';
+import { ErrorHighlightDirective } from './directives/error-highlight.directive';
 
 
 @NgModule({
@@ -22,12 +23,13 @@ import { ZuluDateTransformPipe } from './pipes/zulu-date-transform.pipe';
     LegalAgreementComponent,
     MaxLengthPipe,
     ZuluDateTransformPipe,
+    ErrorHighlightDirective,
   ],
   imports: [
     CommonModule,
     MaterialModule,
     RouterModule,
   ],
-  exports: [FooterComponent, LoaderComponent, BreadcrumbComponent, MaxLengthPipe, ZuluDateTransformPipe]
+  exports: [FooterComponent, LoaderComponent, BreadcrumbComponent, MaxLengthPipe, ZuluDateTransformPipe, ErrorHighlightDirective]
 })
 export class SharedModule { }

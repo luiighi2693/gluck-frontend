@@ -25,7 +25,8 @@ export class HandleAlertsProvider {
 
   presentInputDialog(title: string, value: string | number) {
     return this.dialog.open(InputDialogComponent, {
-      data: {value, title}
+      data: {value, title},
+      disableClose: true
     });
   }
 
@@ -51,37 +52,41 @@ export class HandleAlertsProvider {
 
   presentGenericAlert(message: string, title = '¡Ha ocurrido un error!') {
     return this.dialog.open(GenericAlertComponent, {
-      data: {title, message}
+      data: {title, message},
+      disableClose: true
     });
   }
 
   registerPoolDialog(
-    poolId: string | number, title: string, user: string, cost: string, prize: string, participants: number,
+    poolId: string | number, title: string, user: string, cost: any, coins: any, prize: string, participants: number,
     image: string, rulesImage: string, password: any) {
     return this.dialog.open(RegisterPoolDialogComponent, {
       panelClass: 'dialog-container-custom',
-      data: {poolId, title, cost, prize, participants, image, user, rulesImage, password}
+      data: {poolId, title, cost, coins, prize, participants, image, user, rulesImage, password},
+      disableClose: true
     });
   }
 
   presentRulesDialog(rulesImage: string) {
     return this.dialog.open(RulesDialogComponent, {
       panelClass: 'dialog-container-custom',
-      data: {rulesImage}
+      data: {rulesImage},
+      disableClose: true
     });
   }
 
 
   presentErrorDialogOk(message: string, title = '¡Ha ocurrido un error!') {
     return this.dialog.open(OkConfirmationAlertComponent, {
-      data: {title, message}
+      data: {title, message},
+      disableClose: true
     });
   }
 
   presentTimeRemainingDialog(time) {
     return this.dialog.open(TimeRemainingComponent, {
       panelClass: 'dialog-container-custom',
-      data: {time}
+      data: {time},
     });
   }
 
@@ -94,7 +99,8 @@ export class HandleAlertsProvider {
 
   presentGeneratedUrlDialog(url: string ) {
     return this.dialog.open(GeneratedUrlComponent, {
-      data: {url}
+      data: {url},
+      disableClose: true
     });
   }
 }

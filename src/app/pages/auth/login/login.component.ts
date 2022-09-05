@@ -77,7 +77,7 @@ export class LoginComponent implements OnInit {
         this.authService.login(username, password).subscribe(data => {
           this.loaderValue.updateIsloading(false);
           if (data.hasError) {
-            this.handleAlertsProvider.presentGenericAlert('No se ha encontrado el usuario solicitado... intente de nuevo', 'No se Pudo completar la accion...');
+            this.handleAlertsProvider.presentGenericAlert('Por favor, verifica tus datos e intentalo de nuevo', data.message);
           } else {
             sessionStorage.setItem('token', data.accessToken);
             sessionStorage.setItem('username', data.username);
@@ -118,7 +118,7 @@ export class LoginComponent implements OnInit {
         console.log(data);
         this.loaderValue.updateIsloading(false);
         if (data.hasError) {
-          this.handleAlertsProvider.presentGenericAlert('No se ha encontrado el usuario solicitado... intente de nuevo', 'No se Pudo completar la accion...');
+          this.handleAlertsProvider.presentGenericAlert('Por favor, verifica tus datos e intentalo de nuevo', data.message);
         } else {
           sessionStorage.setItem('token', data.accessToken);
           sessionStorage.setItem('username', data.username);

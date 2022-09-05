@@ -409,9 +409,14 @@
                 <mat-checkbox (click)="$event.stopPropagation()"
                               color="primary"
                               (change)="$event ? selection.toggle(row.rowid) : null"
-                              [checked]="selection.isSelected(row.rowid)"
-                              [disabled]="getExistInUsersSelected(row.rowid)">
+                              [checked]="selection.isSelected(row.rowid)">
                 </mat-checkbox>
+<!--                <mat-checkbox (click)="$event.stopPropagation()"-->
+<!--                              color="primary"-->
+<!--                              (change)="$event ? selection.toggle(row.rowid) : null"-->
+<!--                              [checked]="selection.isSelected(row.rowid)"-->
+<!--                              [disabled]="getExistInUsersSelected(row.rowid)">-->
+<!--                </mat-checkbox>-->
               </td>
             </ng-container>
             <tr mat-header-row *matHeaderRowDef="displayedColumnsMobile"></tr>
@@ -479,8 +484,7 @@
                 <mat-checkbox (click)="$event.stopPropagation()"
                               color="primary"
                               (change)="$event ? selection.toggle(row.rowid) : null"
-                              [checked]="selection.isSelected(row.rowid)"
-                              [disabled]="getExistInUsersSelected(row.rowid)">
+                              [checked]="selection.isSelected(row.rowid)">
                 </mat-checkbox>
               </td>
             </ng-container>

@@ -7,7 +7,15 @@
     <h1 class="text-center my-4">
       Bienvenido/a {{data.user}}
     </h1>
-    <h2 class="text-center">Costo: <span>${{data.cost}}</span></h2>
+    <div class="d-flex align-items-center justify-content-center">
+      <h2 class="m-0">Costo: </h2>
+      <h2 class="m-0"><mat-icon style="color: green">attach_money</mat-icon> <span style="color: white">{{data.cost}}</span></h2>
+      <span class="d-flex align-items-center">
+        <img src="assets/gluck-coin.png" class="mx-2" alt="">
+        <h2 style="color: white" class="m-0">{{data.coins}}</h2>
+      </span>
+    </div>
+<!--    <h2 class="text-center">Costo: <span>$ {{data.cost}}</span></h2>-->
     <h2 class="text-center">Premio: <span>{{data.prize}}</span></h2>
     <h2 class="text-center">participantes: <span>{{data.participants}}</span></h2>
   </div>
